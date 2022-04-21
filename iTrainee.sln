@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTrainee", "iTrainee.csproj", "{AD3E1CC4-E3F0-425F-B286-ADAADBCFFFAC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTrainee.MVC", "iTrainee.MVC.csproj", "{AD3E1CC4-E3F0-425F-B286-ADAADBCFFFAC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTrainee.APIs", "..\iTrainee.WebAPI\iTrainee.APIs.csproj", "{4CB90F26-E598-40A6-8303-3311F5F0F9AE}"
 EndProject
