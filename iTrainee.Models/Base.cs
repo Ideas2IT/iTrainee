@@ -2,7 +2,7 @@
 
 namespace iTrainee.Models
 {
-    internal class Base
+    public class Base
     {
         public Boolean IsActive { get; set; }
 
