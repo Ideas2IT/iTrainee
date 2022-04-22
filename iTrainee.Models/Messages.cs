@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace iTrainee.Models
+﻿namespace iTrainee.Models
 {
     public class Messages : Base
     {
