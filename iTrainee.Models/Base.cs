@@ -8,11 +8,11 @@ namespace iTrainee.Models
 
         public string InsertedBy { get; set; }
 
-        public string InsertedOn { get; set; }
+        public DateTime InsertedOn { get; set; }
 
         public string UpdatedBy { get; set; }
 
-        public string UpdatedOn { get; set; }
+        public DateTime UpdatedOn { get; set; }
 
     }
 }
