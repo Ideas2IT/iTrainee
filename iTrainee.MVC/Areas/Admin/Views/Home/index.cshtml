@@ -2,6 +2,82 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Inside Admin page</h1>
+<head>
+    <style>
+/*        .admin-dashboard-container {
+            width: 850px;
+        }*/
+        .card {
+            border-top: 3px solid hsl(212, 86%, 64%);
+        }
+
+        .admin-dashboard-row {
+            padding-top: 50px;
+        }
+
+        .card:hover {
+            background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+            border-radius: 8px;
+            box-shadow: rgba(0, 79, 255, 0.3) 0 15px 30px -5px;
+            color: #FFFFFF;
+            cursor: pointer;
+            transform: translateY(-6px);
+            transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
+        }
+    </style>
+</head>
+
+<div class="admin-dashboard-container">
+<div class="row row-cols-1 row-cols-md-2 g-4 admin-dashboard-row">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Mentor</h5>
+        <p class="card-text">Mentor is an advisor, counselor, or guide to a trainee. Click to create, update or delete a mentor</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Trainee</h5>
+        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Batch</h5>
+        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row row-cols-1 row-cols-md-2 g-4 admin-dashboard-row">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Stream</h5>
+        <p class="card-text">Mentor is an advisor, counselor, or guide to a trainee. Click to create, update or delete a mentor</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Topic</h5>
+        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">SubTopic</h5>
+        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
