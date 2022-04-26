@@ -2,4 +2,138 @@
     ViewData["Title"] = "Mentor";
 }
 
-<h1>In mentor home page</h1>
+<style>
+    .card-hover-effect:hover{
+        cursor: pointer;
+        background-color:#1B6EC2;
+        transition-duration:0.5s;
+        transition-delay:0.1s;
+    }
+</style>
+
+
+<div class="modal-body">
+    <div class="mb-lg-5 d-flex">
+        <h1>Hello Mentor</h1>
+        <div class="ml-auto mt-2">
+            @*@Url.Action("actionName", "controllerName", new { Area = "areaName" })*@
+            @*@Html.ActionLink("Trainees", "TraineesList", "Home", new { area = "Trainees" }, null)*@
+           @* @Html.ActionLink("Manage topics", "TopicsList", "Home");*@
+             <a class="btn btn-outline-primary" href="@Url.ActionLink( "TopicsList", "Home", new { Area = "Mentor" })" >Create New</a>
+          @*  <button class="btn btn-primary" onclick='@Html.ActionLink("","TopicsList","~/Mentor/Home" )'>Manage Topics</button>*@
+        </div>
+    </div>
+    <div class="card-group">
+  <div class="card">
+    <div class="card-body card-hover-effect">
+      <h3 class="card-title mb-5">BATCH 1</h3>
+      <div class="d-flex mt-1 mb-1">
+          <h5>Stream:</h5>
+          <p class="ml-3">DOT.NET</p>
+      </div>
+            <div class="d-flex mt-1 mb-1">
+          <h5>No of trainees:</h5>
+          <p class="ml-3">10</p>
+      </div>
+       <div class="d-flex mt-1 mb-1">
+          <h5>Since:</h5>
+          <p class="ml-3">24-07-2021</p>
+      </div>
+      
+    </div>
+  </div>
+   <div class="card">
+    <div class="card-body card-hover-effect">
+      <h3 class="card-title mb-5">BATCH 2</h3>
+      <div class="d-flex mt-1 mb-1">
+          <h5>Stream:</h5>
+          <p class="ml-3">JAVA</p>
+      </div>
+            <div class="d-flex mt-1 mb-1">
+          <h5>No of trainees:</h5>
+          <p class="ml-3">12</p>
+      </div>
+       <div class="d-flex mt-1 mb-1">
+          <h5>Since:</h5>
+          <p class="ml-3">02-08-2021</p>
+      </div>
+      
+    </div>
+  </div>
+    <div class="card">
+    <div class="card-body card-hover-effect">
+      <h3 class="card-title mb-5">BATCH 3</h3>
+      <div class="d-flex mt-1 mb-1">
+          <h5>Stream:</h5>
+          <p class="ml-3">ANGULAR</p>
+      </div>
+            <div class="d-flex mt-1 mb-1">
+          <h5>No of trainees:</h5>
+          <p class="ml-3">7</p>
+      </div>
+       <div class="d-flex mt-1 mb-1">
+          <h5>Since:</h5>
+          <p class="ml-3">18-08-2021</p>
+      </div>
+      
+    </div>
+  </div>
+  </div>
+   <div class="card-group">
+        <div class="card">
+    <div class="card-body card-hover-effect">
+      <h3 class="card-title mb-5">BATCH 4</h3>
+      <div class="d-flex mt-1 mb-1">
+          <h5>Stream:</h5>
+          <p class="ml-3">C#</p>
+      </div>
+            <div class="d-flex mt-1 mb-1">
+          <h5>No of trainees:</h5>
+          <p class="ml-3">5</p>
+      </div>
+       <div class="d-flex mt-1 mb-1">
+          <h5>Since:</h5>
+          <p class="ml-3">22-08-2021</p>
+      </div>
+      
+    </div>
+  </div>
+    <div class="card">
+    <div class="card-body card-hover-effect">
+      <h3 class="card-title mb-5">BATCH 5</h3>
+      <div class="d-flex mt-1 mb-1">
+          <h5>Stream:</h5>
+          <p class="ml-3">PYTHON</p>
+      </div>
+            <div class="d-flex mt-1 mb-1">
+          <h5>No of trainees:</h5>
+          <p class="ml-3">8</p>
+      </div>
+       <div class="d-flex mt-1 mb-1">
+          <h5>Since:</h5>
+          <p class="ml-3">30-08-2021</p>
+      </div>
+      
+    </div>
+  </div>
+    <div class="card">
+    <div class="card-body card-hover-effect">
+      <h3 class="card-title mb-5">BATCH 6</h3>
+      <div class="d-flex mt-1 mb-1">
+          <h5>Stream:</h5>
+          <p class="ml-3">REACT</p>
+      </div>
+            <div class="d-flex mt-1 mb-1">
+          <h5>No of trainees:</h5>
+          <p class="ml-3">10</p>
+      </div>
+       <div class="d-flex mt-1 mb-1">
+          <h5>Since:</h5>
+          <p class="ml-3">06-09-2021</p>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+</div>
