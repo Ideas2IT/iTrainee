@@ -9,5 +9,10 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
         {
             return View();
         }
+
+        public IActionResult TopicsList()
+        {
+            return View();
+        }
     }
 }
