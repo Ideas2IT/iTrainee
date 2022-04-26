@@ -51,6 +51,24 @@ namespace iTrainee
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapAreaControllerRoute(
+                    name: "Admin",
+                    areaName: "Admin",
+                    pattern: "Admin/{controller=Home}/{action=Index}/{id?}"
+                    );
+
+                endpoints.MapAreaControllerRoute(
+                    name: "Mentor",
+                    areaName: "Mentor",
+                    pattern: "Mentor/{controller=Home}/{action=Index}/{id?}"
+                    );
+
+                endpoints.MapAreaControllerRoute(
+                    name: "Trainee",
+                    areaName: "Trainee",
+                    pattern: "Trainee/{controller=Home}/{action=Index}/{id?}"
+                    );
             });
         }
     }
