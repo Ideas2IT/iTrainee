@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\iTrainee.Models\iTrainee.Models.csproj" />
+    <ProjectReference Include="..\iTrainee.Services\iTrainee.Services.csproj" />
   </ItemGroup>
 
 </Project>

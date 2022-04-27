@@ -15,15 +15,12 @@ namespace iTrainee.Services.Implementations
             Topics topic = new Topics();
             topic.Id = 1;
             topic.Name = "Web API";
-            topic.StreamId = 1;
-            topic.ReferenceURL = "www.webAPI.com";
-            topic.IsActive = true;
-            topic.InsertedBy = "Admin";
-            topic.InsertedOn = DateTime.Now;
-            topic.UpdatedBy = "None";
-            topic.UpdatedOn = DateTime.Now;
+            Topics topic1 = new Topics();
+            topic1.Id = 1;
+            topic1.Name = "Test";
 
             topicsList.Add(topic);
+            topicsList.Add(topic1);
 
             return topicsList;
         }
