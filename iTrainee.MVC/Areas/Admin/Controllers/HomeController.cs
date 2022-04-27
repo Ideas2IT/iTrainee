@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using iTrainee.Models;
+using System.Collections.Generic;
 
 namespace iTrainee.MVC.Areas.Admin.Controllers
 {
@@ -10,7 +12,14 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult ShowMentors()
+        public IActionResult ShowMentor()
+        {
+            List<User> mentor = new List<User>();
+
+            return View(mentor);
+        }
+
+        public IActionResult CreateMentor()
         {
             return View();
         }
