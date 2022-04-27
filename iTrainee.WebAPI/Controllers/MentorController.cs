@@ -18,6 +18,7 @@ namespace iTrainee.APIs.Controllers
         public IEnumerable<Topics> Get()
         {
             IEnumerable<Topics> result = service.GetAllTopics();
+
             return result;
         }
 

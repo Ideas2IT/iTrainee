@@ -36,9 +36,20 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult ShowTrainee()
+        public IActionResult ManageTrainee()
         {
             List<User> trainees = new List<User>();
+            User user = new User();
+            user.Id = 1;
+            user.FirstName = "Trainee1";
+            user.LastName = "Trainee 1";
+            user.Qualification = "B.E";
+            user.UserName = "my userid";
+            DateTime date2 = new DateTime(2012, 12, 25, 10, 30, 50);
+
+            user.DOB = date2;
+
+            trainees.Add(user);
 
             return View(trainees);
         }
