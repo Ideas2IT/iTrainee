@@ -14,5 +14,10 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public IActionResult CreateTrainee()
+        {
+            return View();
+        }
     }
 }
