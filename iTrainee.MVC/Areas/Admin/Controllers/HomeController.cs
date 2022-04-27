@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using iTrainee.Models;
 using System.Collections.Generic;
+using System;
 
 namespace iTrainee.MVC.Areas.Admin.Controllers
 {
@@ -12,16 +13,22 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult ShowMentor()
+        public IActionResult ManageMentor()
         {
-            List<User> mentor = new List<User>();
+            List<User> mentors = new List<User>();
+            User user = new User();
+            user.Id = 1;
+            user.FirstName = "user1";
+            user.LastName = "lastname1";
+            user.Qualification = "B.E";
+            user.UserName = "my userid";
+            DateTime date2 = new DateTime(2012, 12, 25, 10, 30, 50);
 
-            return View(mentor);
-        }
+            user.DOB = date2;
 
-        public IActionResult CreateMentor()
-        {
-            return View();
+            mentors.Add(user);
+
+            return View(mentors);
         }
 
         public IActionResult CreateTrainee()
