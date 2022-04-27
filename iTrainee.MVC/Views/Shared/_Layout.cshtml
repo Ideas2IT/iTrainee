@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 <body>
-    <header class="header-nav">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+    <header>
+        <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light bg-custom-light">
             <div>
-                <img src="\css\logo.jpg" width="50" height="50" class="d-inline-block align-top" alt=""> &nbsp;
-                <span class="font-weight-bolder fs-6 header-app-name">iTrainee</span>
+                <img src="\css\logo.jpg" width="50" height="50" class="d-inline-block align-top" alt="">
+                <span class="font-weight-bolder fs-6 header-app-name px-3">iTrainee</span>
             </div>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
@@ -22,12 +22,12 @@
 
             <div id="navbarCollapse" class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <i class="header-notification fa-lg fa fa-bell-o">&nbsp&nbsp</i>
+                    <li class="nav-item  px-2">
+                        <i class="header-notification fa-lg fa fa-bell-o"></i>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown px-2">
                         <a class="text-dark nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="\css\logo.jpg" width="40" height="40" class="rounded-circle"> &nbsp <span>User_Name</span> &nbsp
+                            <img src="\css\logo.jpg" width="40" height="40" class="rounded-circle"> <span class="px-2">User_Name</span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="#">Profile</a>
@@ -38,7 +38,93 @@
                 </ul>
             </div>
         </nav>
+
+        <nav class="navbar navbar-expand-md actions-nav">
+            <div class="container-fluid">
+
+                <!-- Toggler/collapsibe Button -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navbar links -->
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav">
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="#">Mentor</a>
+                        </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="#">Trainee</a>
+                        </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="#">Batch</a>
+                        </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="#">Stream</a>
+                        </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="#">Topics</a>
+                        </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="#">Sub Topics</a>
+                        </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="#">Alert Trainee</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
+
+    <div class="container login-container">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-xl-10">
+                    <div class="card" style="border-radius: 1rem;">
+                        <div class="row g-0">
+                            <div class="col-md-6 col-lg-5 d-none d-md-block">
+                            </div>
+                            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                                <div class="card-body p-4 p-lg-5 text-black">
+
+                                    <form>
+
+                                        <div class="d-flex align-items-center mb-3 pb-1">
+                                            <div>
+                                                <img src="\css\logo.jpg" width="100" height="100" class="d-inline-block align-top" alt=""> &nbsp;
+                                                <span class="font-weight-bolder fs-6 login-app-name">iTrainee</span>
+                                            </div>
+                                        </div>
+
+                                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
+
+                                        <div class="form-outline mb-4">
+                                            <input type="email" id="form2Example17" class="form-control form-control-lg" />
+                                            <label class="form-label" for="form2Example17">Email address</label>
+                                        </div>
+
+                                        <div class="form-outline mb-4">
+                                            <input type="password" id="form2Example27" class="form-control form-control-lg" />
+                                            <label class="form-label" for="form2Example27">Password</label>
+                                        </div>
+
+                                        <div class="pt-1 mb-4">
+                                            <button class="btn btn-dark btn-lg btn-block" type="button">Login</button>
+                                        </div>
+
+                                        <a class="big text-muted text-decoration-none" href="#!">Forgot password?</a>
+                                        
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -48,7 +134,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - iTrainee - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - iTrainee
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

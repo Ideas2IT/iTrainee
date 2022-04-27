@@ -1,0 +1,45 @@
+﻿<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#save"><i class="fa fa-pencil"></i>Save</button>
+
+
+<div class="modal fade" id="save" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Save Mentor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-form">
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" name="Id" id="id">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Name</label>
+                        <input type="text" class="form-control" name="Name" id="name" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Mobile Number</label>
+                        <input type="text" class="form-control" name="MobileNumber" id="mobile-number" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Date Of Birth</label>
+                        <input type="date" class="form-control" name="DateOfBirth" id="date-of-birth" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Qualification</label>
+                        <input type="text" class="form-control" name="Qualification" id="qualification" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Address</label>
+                        <input type="text" class="form-control" name="Address" id="address" />
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    @Html.AntiForgeryToken()
+                    <input type="submit" id="save-edit-button" class="btn btn-success" value="Save" name="submit" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
