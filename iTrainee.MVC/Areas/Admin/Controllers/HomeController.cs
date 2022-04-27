@@ -28,5 +28,12 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public IActionResult ShowTrainee()
+        {
+            List<User> trainees = new List<User>();
+
+            return View(trainees);
+        }
     }
 }
