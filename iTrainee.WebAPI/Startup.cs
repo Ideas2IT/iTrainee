@@ -1,6 +1,7 @@
 using iTrainee.Data;
 using iTrainee.Data.Interfaces;
 using iTrainee.Services;
+using iTrainee.Services.Implementations;
 using iTrainee.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,7 +37,7 @@ namespace iTrainee.WebAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "iTrainee.WebAPI", Version = "v1" });
             });
 
-            services.AddSingleton<IUserRepository, UserRepository>();
+           // services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IUserService, UserService>();
         }
 
