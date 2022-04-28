@@ -79,7 +79,7 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
 
             string data = JsonConvert.SerializeObject(topic);
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/values", content).Result;
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Mentor", content).Result;
 
             if (response.IsSuccessStatusCode)
             {

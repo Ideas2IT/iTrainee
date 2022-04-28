@@ -98,12 +98,16 @@
 					<div class="form-group">
 						<input type="hidden" class="form-control" name="Id" id="id">
 					</div>
-					<div class="form-group">
+										<div class="form-group">
+											<label class="col-form-label">Stream Id</label>
+						<input type="text" class="form-control" name="StramId" id="id">
+					</div>
+@*					<div class="form-group">
 						<div class="col-md-4" style="width: 36%;">
 							<label class="col-form-label">Stream</label>
 							@Html.DropDownList("StreamList", "Select stream")
 						</div>
-					</div>
+					</div>*@
 					<div class="form-group">
 						<label class="col-form-label">Name</label>
 						<input type="text" class="form-control" name="Name" id="name" />
@@ -111,6 +115,22 @@
 					<div class="form-group">
 						<label class="col-form-label">Reference URL</label>
 						<input type="text" class="form-control" name="ReferenceURL" id="referenceURL" />
+					</div>
+										<div class="form-group">
+						<label class="col-form-label">Inserted By</label>
+						<input type="text" class="form-control" name="InsertedBy" id="insertedBy" />
+					</div>
+										<div class="form-group">
+						<label class="col-form-label">Inserted On</label>
+						<input type="date" class="form-control" name="InsertedOn" id="insertedOn" />
+					</div>
+										<div class="form-group">
+						<label class="col-form-label">Updated By</label>
+						<input type="text" class="form-control" name="UpdatedBy" id="updatedBy" />
+					</div>
+										<div class="form-group">
+						<label class="col-form-label">Updated On</label>
+						<input type="date" class="form-control" name="UpdatedOn" id="updatedOn" />
 					</div>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 					@Html.AntiForgeryToken()

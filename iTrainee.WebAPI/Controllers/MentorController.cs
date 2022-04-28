@@ -8,14 +8,17 @@ using System.Collections.Generic;
 
 namespace iTrainee.APIs.Controllers
 {
-    [Route("api/[controller]")]
+    [Produces("application/json")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class MentorController : ControllerBase
     {
         private readonly IMentorService service = new MentorService();
+
+
         // GET: api/<MentorController>
         [HttpGet]
-        public IEnumerable<Topics> Get()
+        public IEnumerable<Topics> GetAllTopics()
         {
             IEnumerable<Topics> result = service.GetAllTopics();
 
