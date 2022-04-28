@@ -23,11 +23,7 @@
 
     @if (!ViewData["Title"].Equals("Login Page"))
     {
-        <footer class="border-top footer text-muted">
-            <div class="container">
-                &copy; 2022 - iTrainee
-            </div>
-        </footer>
+        @await Html.PartialAsync("Footer")
     }
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
