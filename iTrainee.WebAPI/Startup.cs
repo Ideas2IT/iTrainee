@@ -1,5 +1,7 @@
 using iTrainee.Data;
+using iTrainee.Data.DataManager;
 using iTrainee.Data.Interfaces;
+using iTrainee.Models;
 using iTrainee.Services;
 using iTrainee.Services.Implementations;
 using iTrainee.Services.Interfaces;
@@ -32,13 +34,16 @@ namespace iTrainee.WebAPI
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "iTrainee.WebAPI", Version = "v1" });
-            });
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "iTrainee.WebAPI", Version = "v1" });
+            //});
+          
 
-           // services.AddSingleton<IUserRepository, UserRepository>();
-            services.AddSingleton<IUserService, UserService>();
+            //services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<IMentorService, MentorService>();
+            services.AddSingleton<IDataManager, DataManager>();
+            //services.Configure<IDataManager>(x = Configuration.GetSection("Connection"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,9 +52,11 @@ namespace iTrainee.WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "iTrainee.APIs v1"));
+                //app.UseSwagger();
+                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "iTrainee.APIs v1"));
             }
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
