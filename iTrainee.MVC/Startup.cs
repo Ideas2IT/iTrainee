@@ -69,6 +69,11 @@ namespace iTrainee
                     areaName: "Trainee",
                     pattern: "Trainee/{controller=Home}/{action=Index}/{id?}"
                     );
+                endpoints.MapAreaControllerRoute(
+                 name: "Shared",
+                 areaName: "Shared",
+                 pattern: "Shared/{controller=Home}/{action=Index}/{id?}"
+                 );
             });
         }
     }
