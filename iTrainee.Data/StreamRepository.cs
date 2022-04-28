@@ -39,7 +39,7 @@ namespace iTrainee.Data
                     foreach (DataRow item in result.Tables[0].Rows)
                     {
                         stream.Id = Convert.ToInt32(item["id"]);
-                        stream.Name = Convert.ToString(item["Name"]);                       
+                        stream.Name = Convert.ToString(item["Name"]);
                     }
                 }
             }
@@ -65,7 +65,7 @@ namespace iTrainee.Data
                         {
                             Id = Convert.ToInt32(item["id"]),
                             Name = Convert.ToString(item["Name"])
-                         });
+                        });
                     }
                 }
             }
@@ -134,3 +134,4 @@ namespace iTrainee.Data
 
     }
 }
+

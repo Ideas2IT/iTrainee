@@ -10,14 +10,21 @@ namespace iTrainee.APIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MentorController : ControllerBase
+    public class TopicsController : ControllerBase
     {
-        private readonly IMentorService service = new MentorService();
+        ITopicsService _topicsService = null;
+
+        public TopicsController(ITopicsService topicService)
+        {
+            _topicsService = topicService;
+        }
+
+
         // GET: api/<MentorController>
         [HttpGet]
         public IEnumerable<Topics> Get()
         {
-            IEnumerable<Topics> result = service.GetAllTopics();
+            IEnumerable<Topics> result = _topicsService.GetAllTopics();
 
             return result;
         }
