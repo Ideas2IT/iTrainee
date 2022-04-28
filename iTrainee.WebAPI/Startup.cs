@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using iTrainee.Data.DataManager;
+using iTrainee.Services.Implementations;
 
 namespace iTrainee.WebAPI
 {
@@ -37,14 +38,14 @@ namespace iTrainee.WebAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "iTrainee.WebAPI", Version = "v1" });
             });
 
-            services.AddSingleton<IUserService, UserService>();
-            services.AddSingleton<IStreamService, StreamService>();
-            services.AddSingleton<IUserRepository, UserRepository>();
-            services.AddSingleton<ITopicsService, TopicsService>();
-            services.AddSingleton<IDataManager, DataManager>();
+            services.AddSingleton<IDataManager>(x => new DataManager(this.Configuration.GetConnectionString("TraineeDB")));
             services.AddSingleton<IStreamRepository, StreamRepository>();
             services.AddSingleton<ITopicsRepository, TopicsRepository>();
-            services.Configure<IDataManager>(x => new DataManager(this.Configuration.GetConnectionString("Connection")));
+            services.AddSingleton<IUserRepository, UserRepository>();
+
+            services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IStreamService, StreamService>();
+            services.AddSingleton<ITopicsService, TopicsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
