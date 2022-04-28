@@ -38,8 +38,5 @@ namespace iTrainee.Data
         {
             return _streamRepository.UpdateStream(stream);
         }
-
-
-
     }
 }

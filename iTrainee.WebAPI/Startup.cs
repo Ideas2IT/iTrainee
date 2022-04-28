@@ -40,6 +40,7 @@ namespace iTrainee.WebAPI
             });
 
             services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IStreamService, StreamService>();
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<ITopicsService, TopicsService>();
             services.AddSingleton<IDataManager, DataManager>();
