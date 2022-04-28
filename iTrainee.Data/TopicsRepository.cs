@@ -43,11 +43,8 @@ namespace iTrainee.Data
                             topic.InsertedOn = insertedDate.Date;
                             topic.UpdatedOn = updatedDate.Date;
 
-
                             topicsList.Add(topic);
                         }
-
-
                     }
                 }
             }

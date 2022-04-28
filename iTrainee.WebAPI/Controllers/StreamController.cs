@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 namespace iTrainee.APIs.Controllers
 {
-    [Route("api/[controller]")]
+    [Produces("application/json")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class StreamController : ControllerBase
     {
@@ -15,7 +16,7 @@ namespace iTrainee.APIs.Controllers
             _streamService = streamService;
         }
         [HttpGet]
-        public IEnumerable<Stream> Get()
+        public IEnumerable<Stream> GetAllStreams()
         {
             var result = _streamService.GetStreams();
             return result;

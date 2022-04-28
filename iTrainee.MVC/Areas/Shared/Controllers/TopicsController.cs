@@ -19,7 +19,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             return View();
         }
 
-        public IActionResult GetTopicss()
+        public IActionResult GetTopics()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "", "");
