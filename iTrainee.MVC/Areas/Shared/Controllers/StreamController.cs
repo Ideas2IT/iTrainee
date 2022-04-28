@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace iTrainee.MVC.Areas.Shared.Controllers
 {
-    public class HomeController : Controller
+    public class StreamController : Controller
     {
-        ILogger<HomeController> _logger;
+        ILogger<StreamController> _logger;
         IConfiguration _configuration;
 
-        public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
+        public StreamController(ILogger<StreamController> logger, IConfiguration configuration)
         {
             _logger = logger;
             _configuration = configuration;
