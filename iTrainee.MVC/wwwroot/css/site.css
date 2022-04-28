@@ -31,7 +31,6 @@ a {
 -------------------------------------------------- */
 html {
   font-size: 14px;
-
 }
 @media (min-width: 768px) {
   html {
@@ -81,9 +80,9 @@ body {
 
 .login-app-name {
     padding-left: 20px;
-    padding-top: 200px;
+    margin-top: 20px;
     color: #00239B;
-    font-size: 40px;
+    font-size: 35px;
 }
 
 .header-notification {
@@ -97,11 +96,11 @@ body {
     font-weight: normal;
     height: 40px;
 }
-.actions-nav a:hover {
-    font-weight: bold;
-    font-size: 18px;
-}
+    .actions-nav a:hover {
+        transform: scale(1.2);
+        text-shadow: .25px 0px .1px, -.25px 0px .1px;
+    }
 
-.gradient-custom-2 {
+.login-gradient {
     background: linear-gradient(144deg,#009ffd, rgb(0,35,155) 50%);
 }
