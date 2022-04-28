@@ -31,7 +31,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "Id",
-                    Value = stream.Id
+                    Value = id
                 });
                 DataSet result = _dataManager.ExecuteStoredProcedure("spGetStream", parameters);
                 if (result?.Tables?.Count != 0)
