@@ -1,17 +1,19 @@
-﻿using iTrainee.Models;
+﻿using iTrainee.Data.Interfaces;
+using iTrainee.Models;
 using iTrainee.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace iTrainee.Services.Implementations
+namespace iTrainee.Services
 {
     public class UserService : IUserService
     {
+        private IUserRepository _userRepository;
+        public UserService(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
         public User GetUser(int id)
         {
-            User user = null;
-            return user;
+            return _userRepository.GetUser(id);
         }
     }
 }
