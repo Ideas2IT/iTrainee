@@ -5,7 +5,7 @@ using System.Text;
 
 namespace iTrainee.Services.Interfaces
 {
-    public interface IMentorService
+    public interface ITopicsService
     {
         IEnumerable<Topics> GetAllTopics();
     }

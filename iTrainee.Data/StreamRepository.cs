@@ -8,7 +8,7 @@ using System.Text;
 
 namespace iTrainee.Data
 {
-	public class StreamRepository
+	public class StreamRepository : IStreamRepository
 	{
         IDataManager _dataManager = null;
 
