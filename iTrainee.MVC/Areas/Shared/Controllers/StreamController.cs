@@ -41,6 +41,5 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             var result = HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "", stream);
             return new JsonResult("");
         }
-
     }
 }

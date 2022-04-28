@@ -1,0 +1,164 @@
+﻿@{
+	ViewData["Title"] = "Mentor";
+}
+
+
+<head>
+	<style>
+		.admin-dashboard-container {
+			margin: auto;
+			width: 90%;
+		}
+
+		.card {
+			border-top: 3px solid rgb(0,35,155);
+		}
+
+/*		.admin-dashboard-row {
+			padding-top: 50px;
+		}*/
+
+		.card:hover {
+			background-image: linear-gradient(144deg,#009ffd, rgb(0,35,155) 50%);
+			border-radius: 8px;
+			box-shadow: rgba(0, 79, 255, 0.3) 0 15px 30px -5px;
+			color: #FFFFFF;
+			cursor: pointer;
+			transform: translateY(-6px);
+			transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
+		}
+
+		.card-hover-effect:hover {
+			cursor: pointer;
+			transition-duration: 0.5s;
+			transition-delay: 0.1s;
+		}
+	</style>
+</head>
+
+    <div class="mb-lg-5 d-flex">
+        <h1>Hello Mentor</h1>
+        <div class="ml-auto mt-2">
+             <a class="btn btn-outline-primary" href="../Topics/ManageTopics" >Manage Topics</a>
+			@* @Html.ActionLink("Manage Topics", "ManageTopics", "Home", new {Area="Mentor"}, new {})*@
+			@* @Html.ActionLink("home", "Index", new { area = "Mentor", controller = "Home" })*@
+        </div>
+    </div>
+
+
+<div class="admin-dashboard-container">
+	<div class="row row-cols-1 row-cols-md-2 g-4">
+
+
+		<div class="col">
+			<div class="card mt-5">
+				<div class="card-body card-hover-effect">
+					<h3 class="card-title mb-5">BATCH 1</h3>
+					<div class="d-flex mt-1 mb-1">
+						<h5>Stream:</h5>
+						<p class="ml-3">DOT.NET</p>
+					</div>
+					<div class="d-flex mt-1 mb-1">
+						<h5>No of trainees:</h5>
+						<p class="ml-3">10</p>
+					</div>
+					<div class="d-flex mt-1 mb-1">
+						<h5>Since:</h5>
+						<p class="ml-3">24-07-2021</p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="col">
+			<div class="card mt-5">
+				<div class="card-body card-hover-effect">
+					<h3 class="card-title mb-5">BATCH 1</h3>
+					<div class="d-flex mt-1 mb-1">
+						<h5>Stream:</h5>
+						<p class="ml-3">DOT.NET</p>
+					</div>
+					<div class="d-flex mt-1 mb-1">
+						<h5>No of trainees:</h5>
+						<p class="ml-3">10</p>
+					</div>
+					<div class="d-flex mt-1 mb-1">
+						<h5>Since:</h5>
+						<p class="ml-3">24-07-2021</p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+		<div class="col">
+			<div class="card mt-5">
+				<div class="card-body card-hover-effect">
+					<h3 class="card-title mb-5">BATCH 1</h3>
+					<div class="d-flex mt-1 mb-1">
+						<h5>Stream:</h5>
+						<p class="ml-3">DOT.NET</p>
+					</div>
+					<div class="d-flex mt-1 mb-1">
+						<h5>No of trainees:</h5>
+						<p class="ml-3">10</p>
+					</div>
+					<div class="d-flex mt-1 mb-1">
+						<h5>Since:</h5>
+						<p class="ml-3">24-07-2021</p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+		<div class="col">
+			<div class="card mt-5">
+				<div class="card-body card-hover-effect">
+					<h3 class="card-title mb-5">BATCH 1</h3>
+					<div class="d-flex mt-1 mb-1">
+						<h5>Stream:</h5>
+						<p class="ml-3">DOT.NET</p>
+					</div>
+					<div class="d-flex mt-1 mb-1">
+						<h5>No of trainees:</h5>
+						<p class="ml-3">10</p>
+					</div>
+					<div class="d-flex mt-1 mb-1">
+						<h5>Since:</h5>
+						<p class="ml-3">24-07-2021</p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+		<div class="col">
+			<div class="card mt-5">
+				<div class="card-body card-hover-effect">
+					<h3 class="card-title mb-5">BATCH 1</h3>
+					<div class="d-flex mt-1 mb-1">
+						<h5>Stream:</h5>
+						<p class="ml-3">DOT.NET</p>
+					</div>
+					<div class="d-flex mt-1 mb-1">
+						<h5>No of trainees:</h5>
+						<p class="ml-3">10</p>
+					</div>
+					<div class="d-flex mt-1 mb-1">
+						<h5>Since:</h5>
+						<p class="ml-3">24-07-2021</p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
