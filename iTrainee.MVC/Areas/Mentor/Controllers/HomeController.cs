@@ -63,8 +63,8 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
    //dynamic mymodel = new ExpandoObject();
    //mymodel.TopicsList = topicsList;
    //mymodel.StreamList = streamList;
-        IMentorService service = new MentorService();
-        ViewBag.StreamList = new SelectList(service.GetAllTopics(), "Id" , "Name");
+     //   IMentorService service = new MentorService();
+    //    ViewBag.StreamList = new SelectList(service.GetAllTopics(), "Id" , "Name");
             return View(topicsList);
         }
 
