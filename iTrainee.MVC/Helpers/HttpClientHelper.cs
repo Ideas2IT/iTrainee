@@ -2,17 +2,14 @@ using iTrainee.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 
 namespace iTrainee.MVC.Helpers
 {
     public static class HttpClientHelper
     {
-       
+
         public static object ExecuteGetApiMethod<T>(string baseUrl, string method, string parameters)
         {
             using (var client = new HttpClient())
@@ -38,7 +35,7 @@ namespace iTrainee.MVC.Helpers
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
-                    return JsonConvert.DeserializeObject<List<Stream>>(data);
+                    return JsonConvert.DeserializeObject<List<T>>(data);
                 }
             }
             return null;

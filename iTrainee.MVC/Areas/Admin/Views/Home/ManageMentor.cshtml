@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<iTrainee.Models.User>
 
 @{
-    ViewBag.Title = "Index";
+    ViewData["Title"] = "ManageMentor";
 }
+
 <head>
 <style>
 .create {
@@ -11,14 +12,12 @@
     text-decoration: underline!important;
     margin:10px 0 5px 0; 
 }
-
 .create:hover {
     color: #0033e2!important;
     text-decoration: none!important;
     transform: translateY(-3.5px);
     transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
 }
-
 .btn-primary {
     background-color: #00239b;
 }
@@ -29,27 +28,31 @@
     <a data-toggle="modal" data-target="#save"><i class="fa fa-user-plus"></i>Create New</a>
 </div>
 <table class="table table-hover">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DOB)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Qualification)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DOB)
+            </th>
+@*            <th>
+                @Html.DisplayNameFor(model => model.RoleId)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Qualification)
+            </th>
+@*            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>*@
+        </tr>
+@foreach (var item in Model) 
+{
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
@@ -61,19 +64,26 @@
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                @item.DOB.ToString("dd/MM/yyyy")
+                                @item.DOB.ToString("dd-MM-yyyy")
+
             </td>
+@*            <td>
+                @Html.DisplayFor(modelItem => item.RoleId)
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Qualification)
             </td>
+@*            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>*@
             <td>
-                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#save" data-id="@item.Id"><i class="fa fa-pencil"></i> Edit</button>
-                <button type="button" class="btn btn-danger btn-xs delete-button" data-id-to-delete="@item.Id" data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> Delete</button>
+                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#save"><i class="fa fa-pencil"></i> Edit</button>
+                <button type="button" class="btn btn-danger btn-xs delete-button" data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> Delete</button>
             </td>
         </tr>
-    }
-
+}
 </table>
+
 
 <div class="modal fade" id="save" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -86,6 +96,9 @@
             </div>
             <div class="modal-body">
                 <form id="edit-form">
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" name="Id" id="id" readonly>
+                    </div>
                     <div class="form-group">
                         <label class="col-form-label">FirstName</label>
                         <input type="text" class="form-control" name="FirstName" id="FirstName" />
@@ -150,202 +163,3 @@
     </div>
 </div>
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>   
-  
-  
-<div class="panel panel-primary">  
-    <div class="panel-heading">  
-        Test Data from API  
-    </div>   <!--en dof panel-heading -->
-    <div class="panel-body">  
-        <table class="table table-bordered" id="Table">  
-            <tr>  
-                <th>Regd No</th>  
-                <th>Name</th>  
-                <th>Address</th>  
-                <th>Phone No</th>  
-                <th>Admission Date</th>  
-            </tr>   <!--end of table-row -->
-        </table>   <!--end of table -->
-    </div> <!--end of Panel-body -->      
-</div> <!--end of Panel -->  
-
-<script>
-        $(document).ready(function () {  
-        $.ajax({  
-            type: "GET",  
-            url: "/api/StudentAPI/GetAllStudents",  
-            contentType: "application/json; charset=utf-8",  
-            dataType: "json",  
-            success: function (data) {  
-                //alert(JSON.stringify(data));                  
-                $("#DIV").html('');   
-                var DIV = '';  
-                $.each(data, function (i, item) {  
-                    var rows = "<tr>" +  
-                        "<td id='RegdNo'>" + item.FirstName + "</td>" +  
-                        "<td id='Name'>" + item.LastName + "</td>" +  
-                        "<td id='Address'>" + item.Qualification + "</td>" +  
-                        "<td id='AdmissionDate'>" + Date(item.DOB,  
-                         "dd-MM-yyyy") + "</td>" +  
-                        "</tr>";  
-                    $('#Table').append(rows);  
-                }); //End of foreach Loop   
-                console.log(data);  
-            }, //End of AJAX Success function  
-  
-            failure: function (data) {  
-                alert(data.responseText);  
-            }, //End of AJAX failure function  
-            error: function (data) {  
-                alert(data.responseText);  
-            } //End of AJAX error function  
-  
-        });         
-    });  
-
-    $(function () {
-
-    //$('#save').on('show.bs.modal', function (event) {
-    //    var button = $(event.relatedTarget)
-    //    var id = button.data('id')
-
-    //    $.ajax({
-    //        url: "/api/TraineeWebApi/Get/" + id,
-    //        type: "GET",
-    //        contentType: "application/json;charset=UTF-8",
-    //        dataType: "json",
-    //        success: function (result) {
-    //            $('#Id').val(result.Id);
-    //            $('#FirstName').val(result.firstName);
-    //            $('#LastName').val(result.lastName);
-    //            $('#DateOfBirth').val(formatDate(result.DateOfBirth));
-    //            $('#qualification').val(result.Qualification);
-    //            checkValidationAndSaveForm();
-    //        },
-    //        error: function () {
-    //            alert("Unexcepted Error!!!");
-    //        }
-    //    });
-    //})
-
-    //function checkValidationAndSaveForm() {
-//        $("#edit-form").validate({
-//            errorClass: 'error',
-//            rules: {
-//                Id: "required",
-//                Name: "required",
-//                MobileNumber: {
-//                    required: true,
-//                    minlength: 10,
-//                    maxlength: 10,
-//                },
-//                DateOfBirth: "required",
-//                Qualification: "required",
-//                Address: "required"
-//            },
-//            messages: {
-//                Id: {
-//                    required: "Please enter valid Id"
-//                },
-//                Name: {
-//                    required: "Please enter valid Name"
-//                },
-//                MobileNumber: {
-//                    required: "Please enter valid MobileNumber",
-//                    maxlength: "Invalid mobile number. Must be 10 digits"
-//                },
-//                DateOfBirth: {
-//                    required: "Please enter valid DateOfBirth"
-//                },
-//                Address: {
-//                    required: "Please enter valid Address"
-//                }
-//            },
-//            submitHandler: function () {
-//                var updatedData = $('#edit-form').serialize();
-
-//                $.ajax({
-//                    url: "/Trainee/Trainee/UpdateTrainee",
-//                    type: "POST",
-//                    dataType: 'json',
-//                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-//                    data: updatedData,
-//                    success: function (result) {
-//                        if ('1' == result) {
-//                            $('#edit').hide();
-//                            $('#message').html("Trainee Updated Successfully");
-//                            $('#notify').modal('show')
-//                            $('#ok-button').on('click', function () {
-//                                window.location.replace(window.location.href)
-//                            });
-//                        } else {
-//                            $('#message').html("Trainee Updated failed");
-//                            $('#thumbs-up').hide();
-//                            $('#notify').modal('show');
-//                        }
-//                    },
-//                    error: function () {
-//                        alert("Unexcepted Error!!!");
-//                    }
-//                });
-//            }
-//        });
-//    }
-
-//    function formatDate(dateOfBirth) {
-//        var dateString = dateOfBirth.substr(6);
-//        var currentTime = new Date(parseInt(dateString));
-//        var month = currentTime.getMonth() + 1;
-//        var day = currentTime.getDate();
-//        var year = currentTime.getFullYear();
-//        day = day < 10 ? "0" + day : day;
-//        month = month < 10 ? "0" + month : month;
-
-//        return year.toString() + "-" + month.toString() + "-" + day.toString();
-//    }
-
-//    $('#delete').on('show.bs.modal', function (event) {
-//        var button = $(event.relatedTarget)
-//        var id = button.data('id-to-delete')
-
-//        $.ajax({
-//            url: "/Trainee/Trainee/GetbyID/" + id,
-//            type: "GET",
-//            contentType: "application/json;charset=UTF-8",
-//            dataType: "json",
-//            success: function (result) {
-//                $('#name-to-delete').html(result.Name);
-//                $('#delete-yes-button').on('click', function () {
-//                    $.ajax({
-//                        url: "/Trainee/Trainee/Delete/" + id,
-//                        type: "GET",
-//                        contentType: "application/json;charset=UTF-8",
-//                        dataType: "json",
-//                        success: function (resultForDelete) {
-//                            if ('1' == resultForDelete) {
-//                                $('#message').html("Trainee Deleted Successfully");
-//                                $('#notify').modal('show');
-//                                $('#ok-button').on('click', function () {
-//                                    window.location.replace(window.location.href)
-//                                });
-//                            } else {
-//                                $('#message').html(resultForDelete);
-//                                $('#thumbs-up').hide();
-//                                $('#notify').modal('show');
-//                            }
-//                        },
-//                        error: function () {
-//                            alert("Unexcepted Error!!!");
-//                        }
-//                    })
-//                });
-//            },
-//            error: function () {
-//                alert("Unexcepted Error!!!");
-//            }
-//        });
-//    })
-//})
-
-</script>

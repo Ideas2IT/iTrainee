@@ -73,7 +73,10 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
 
         public IActionResult ManageStreams()
         {
-            return View();
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            var result = HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllStreams", "");
+
+            return View(result);
         }
 
         public IActionResult CreateTopic()

@@ -5,17 +5,10 @@ using iTrainee.Services;
 using iTrainee.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using iTrainee.Data.DataManager;
 using iTrainee.Services.Implementations;
 
 namespace iTrainee.WebAPI
@@ -38,7 +31,7 @@ namespace iTrainee.WebAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "iTrainee.WebAPI", Version = "v1" });
             });
 
-            services.AddSingleton<IDataManager>(x => new DataManager(this.Configuration.GetConnectionString("Connection")));
+            services.AddSingleton<IDataManager>(x => new DataManager(this.Configuration.GetConnectionString("TraineeDB")));
             services.AddSingleton<IStreamRepository, StreamRepository>();
             services.AddSingleton<ITopicsRepository, TopicsRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
