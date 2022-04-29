@@ -17,9 +17,26 @@ namespace iTrainee.Data
             _dataManager = dataManager;
         }
 
-        public bool DeleteStream(Stream stream)
+        public bool DeleteStream(int id)
         {
-            throw new NotImplementedException();
+
+            bool isDeleted = false;
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
+                _dataManager.ExecuteStoredProcedure("spDeleteStream", parameters);
+                isDeleted = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return isDeleted;
         }
 
         public Stream GetStream(int id)
