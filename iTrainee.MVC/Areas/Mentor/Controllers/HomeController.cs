@@ -16,7 +16,6 @@ using Microsoft.Extensions.Logging;
 
 namespace iTrainee.MVC.Areas.Mentor.Controllers
 {
-
     [Area("Mentor")]
     public class HomeController : Controller
     {
