@@ -56,7 +56,7 @@ namespace iTrainee.Data
             try
             {
                 var parameters = new List<SqlParameter>();
-                DataSet result = _dataManager.ExecuteStoredProcedure("spGetStreams", parameters);
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetStream", parameters);
                 if (result?.Tables?.Count != 0)
                 {
                     foreach (DataRow item in result.Tables[0].Rows)
