@@ -10,6 +10,7 @@ namespace iTrainee.Data.DataManager
         int ExecuteNonQuery(string storeProcedureName, List<SqlParameter> parameters, string outputParam);
         int ExecuteScalar(string query);
         DataSet ExecuteStoredProcedure(string storeProcedureName, List<SqlParameter> parameters);
+        DataSet ExecuteStoredProcedure(string storeProcedureName);
         DataSet ExecuteQuery(string query, List<SqlParameter> parameters);
     }
 }

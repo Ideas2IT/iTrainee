@@ -9,6 +9,10 @@ using System.Dynamic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using iTrainee.Services.Interfaces;
 using iTrainee.Services.Implementations;
+using iTrainee.MVC.Helpers;
+using Microsoft.Extensions.Configuration;
+using iTrainee.MVC.Areas.Shared.Controllers;
+using Microsoft.Extensions.Logging;
 
 namespace iTrainee.MVC.Areas.Mentor.Controllers
 {
@@ -16,16 +20,15 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
     [Area("Mentor")]
     public class HomeController : Controller
     {
-        readonly Uri baseAddress = new Uri("http://localhost:62154");
-        readonly HttpClient client;
+        ILogger<HomeController> _logger;
+        IConfiguration _configuration;
 
-        public HomeController()
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
-            client = new HttpClient
-            {
-                BaseAddress = baseAddress
-            };
+            _logger = logger;
+            _configuration = configuration;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -68,26 +71,13 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
             return View(topicsList);
         }
 
-        public IActionResult CreateTopic()
+        public IActionResult ManageStreams()
         {
             return View();
         }
 
-        [HttpPost]
-        public ActionResult CreateTopic(Topics topic)
+        public IActionResult CreateTopic()
         {
-
-            string data = JsonConvert.SerializeObject(topic);
-            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/values", content).Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index");
-            }
-
-
-
             return View();
         }
     }
