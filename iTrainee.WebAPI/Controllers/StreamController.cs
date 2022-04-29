@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 namespace iTrainee.APIs.Controllers
 {
-    [Route("api/[controller]/Action")]
+    [Produces("application/json")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class StreamController : ControllerBase
     {

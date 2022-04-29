@@ -39,15 +39,14 @@ namespace iTrainee.WebAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "iTrainee.WebAPI", Version = "v1" });
             });
 
-            services.AddSingleton<IDataManager>(x => new DataManager(this.Configuration.GetConnectionString("TraineeDB")));
+            services.AddSingleton<IDataManager>(x => new DataManager(this.Configuration.GetConnectionString("Connection")));
             services.AddSingleton<IStreamRepository, StreamRepository>();
             services.AddSingleton<ITopicsRepository, TopicsRepository>();
+            services.AddSingleton<IUserRepository, UserRepository>();
 
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<IStreamService, StreamService>();
-            services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<ITopicsService, TopicsService>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
