@@ -42,7 +42,7 @@ namespace iTrainee.MVC.Helpers
 
         }
 
-        public static bool ExecutePostApiMethod<T>(string baseUrl, string method, T parameters)
+        public static bool ExecutePostApiMethod<T>(string baseUrl, string method, List<SqlParameter> parameters)
         {
             using (var client = new HttpClient())
             {
@@ -55,6 +55,28 @@ namespace iTrainee.MVC.Helpers
                 var byteContent = new ByteArrayContent(buffer);
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 HttpResponseMessage response = client.PostAsync(method, byteContent).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
+        public static bool ExecuteDeleteApiMethod<T>(string baseUrl, string method)
+        {
+            using (var client = new HttpClient())
+            {
+                client.Timeout = new TimeSpan(0, 5, 0);
+                client.BaseAddress = new Uri(baseUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                //var jsonData = JsonConvert.SerializeObject(parameters);
+                //var buffer = System.Text.Encoding.UTF8.GetBytes(jsonData);
+                //var byteContent = new ByteArrayContent(buffer);
+                //byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                HttpResponseMessage response = client.DeleteAsync(client.BaseAddress+ method).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return true;

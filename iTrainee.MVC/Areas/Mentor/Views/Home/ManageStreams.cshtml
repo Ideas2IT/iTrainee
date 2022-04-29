@@ -9,16 +9,20 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-hover table-bordered">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Id)
             </th>
+
             <th>
+
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-
+            <th>
+                Actions
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -32,10 +36,16 @@
             </td>
 
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
+                <a><i class="glyphicon glyphicon-pencil"></i></a>
+                <a href="#" class="btn btn-primary" ><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+
+                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })*@ |
+                <a class="btn btn-outline-primary" href="/Shared/Stream/DeleteStream/@item.Id" >Delete</a>
+                @*@Html.ActionLink("Delete", "DeleteStream", "Stream", new {  area="Shared", id=item.Id  },new{})*@
+@*                @Html.ActionLink("Link Text", "ActionName", "ControllerName", new { Area = "AreaName" , id = @Model.ID, name = @Model.name })
+*@   
+               @* @Html.ActionLink("Delete", "DeleteStream", "Stream", new {Area="Shared", id=@item.Id})*@
+</td>
         </tr>
 }
     </tbody>

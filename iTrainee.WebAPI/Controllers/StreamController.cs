@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace iTrainee.APIs.Controllers
 {
-    [Produces("application/json")]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class StreamController : ControllerBase
@@ -44,9 +43,9 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpPost]
-        public bool DeleteStream(Stream stream)
+        public bool DeleteStream(int id)
         {
-            var result = _streamService.DeleteStream(stream);
+            var result = _streamService.DeleteStream(id);
             return result;
         }
 
