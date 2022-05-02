@@ -42,5 +42,12 @@ namespace iTrainee.APIs.Controllers
             return result;
         }
 
+        [HttpDelete]
+        public bool DeleteStream(int id)
+        {
+            var result = _streamService.DeleteStream(id);
+            return result;
+        }
+
     }
 }
