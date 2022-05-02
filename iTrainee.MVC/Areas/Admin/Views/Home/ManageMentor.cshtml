@@ -5,54 +5,56 @@
 }
 
 <head>
-<style>
-.create {
-    cursor:pointer;
-    color: #00239b!important;
-    text-decoration: underline!important;
-    margin:10px 0 5px 0; 
-}
-.create:hover {
-    color: #0033e2!important;
-    text-decoration: none!important;
-    transform: translateY(-3.5px);
-    transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
-}
-.btn-primary {
-    background-color: #00239b;
-}
-</style>
+    <style>
+        .create {
+            cursor: pointer;
+            color: #00239b !important;
+            text-decoration: underline !important;
+            margin: 10px 0 5px 0;
+        }
+
+            .create:hover {
+                color: #0033e2 !important;
+                text-decoration: none !important;
+                transform: translateY(-3.5px);
+                transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
+            }
+
+        .btn-primary {
+            background-color: #00239b;
+        }
+    </style>
 </head>
 
 <div class="create">
     <a data-toggle="modal" data-target="#save"><i class="fa fa-user-plus"></i>Create New</a>
 </div>
 <table class="table table-hover">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DOB)
-            </th>
-@*            <th>
-                @Html.DisplayNameFor(model => model.RoleId)
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DOB)
+        </th>
+        @*            <th>
+            @Html.DisplayNameFor(model => model.RoleId)
             </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.Qualification)
-            </th>
-@*            <th>
-                @Html.DisplayNameFor(model => model.UserName)
+        <th>
+            @Html.DisplayNameFor(model => model.Qualification)
+        </th>
+        @*            <th>
+            @Html.DisplayNameFor(model => model.UserName)
             </th>*@
-        </tr>
-@foreach (var item in Model) 
-{
+    </tr>
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
@@ -66,25 +68,42 @@
             <td>
                 @item.DOB.ToString("dd-MM-yyyy")
             </td>
-@*            <td>
+            @*            <td>
                 @Html.DisplayFor(modelItem => item.RoleId)
-            </td>*@
+                </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Qualification)
             </td>
-@*            <td>
+            @*            <td>
                 @Html.DisplayFor(modelItem => item.UserName)
-            </td>*@
+                </td>*@
             <td>
                 <a href="#" class="btn btn-primary" onclick="GetUser(@item.Id)"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
-                <button type="button" class="btn btn-danger btn-xs delete-button" data-id="@item.Id" data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> Delete</button>
-
+<button type="button" class="btn btn-danger btn-xs delete-button" data-id-to-delete="@item.Id" data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> Delete</button>
             </td>
         </tr>
-}
+    }
 </table>
 
-
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure want to delete <span id="name-to-delete"></span>???</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id="delete-yes-button" data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div class="modal fade" id="myModal1">
@@ -94,7 +113,6 @@
                 <h3 class="modal-title">Add/Edit Trainee</h3>
             </div>
             <div class="modal-body" id="myModalBodyDiv1">
-
             </div>
         </div>
     </div>
@@ -103,12 +121,29 @@
 
 @section scripts {
 <script type="text/javascript">
-    
-var GetUser = function (a) {
-    var e = "/Admin/Home/SaveUser?Id=" + a;
-    $("#myModalBodyDiv1").load(e, function () {
-        $("#myModal1").modal("show");
-    });
-};
+
+    var GetUser = function (a) {
+        var e = "/Admin/Home/SaveUser?Id=" + a;
+        $("#myModalBodyDiv1").load(e, function () {
+            $("#myModal1").modal("show");
+        });
+    };
+
+    $('#delete').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id-to-delete')
+
+                    $('#delete-yes-button').on('click', function () {
+                        $.ajax({
+                            url: "/Admin/Home/DeleteUser/" + id,
+                            type: "GET",
+                            contentType: "application/json;charset=UTF-8",
+                            dataType: "json",
+
+                        })
+                    })
+        })
 </script>
+
+
 }

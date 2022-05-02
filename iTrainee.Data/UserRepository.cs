@@ -97,6 +97,7 @@ namespace iTrainee.Data
             }
             return isDeleted;
         }
+
         public bool InsertUser(User user)
         {
             var isSuccess = false;
