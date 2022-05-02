@@ -38,7 +38,7 @@ namespace iTrainee.MVC.Helpers
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
-                    return JsonConvert.DeserializeObject<List<Stream>>(data);
+                    return JsonConvert.DeserializeObject<List<T>>(data);
                 }
             }
             return null;
