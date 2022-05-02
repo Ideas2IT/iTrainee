@@ -32,7 +32,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         {
             var parameters = new List<SqlParameter>();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecutePostApiMethod<Topics>(baseUrl, "", parameters);
+            var result = HttpClientHelper.ExecutePostApiMethod<Topics>(baseUrl, "", topic);
             return new JsonResult("");
         }
     }
