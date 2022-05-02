@@ -50,40 +50,9 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult AddEditStream(Stream stream)
         {
             if(stream.Id > 0)
-            {
-                var parameters = new List<SqlParameter>();
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "Id",
-                    Value = stream.Id
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "Name",
-                    Value = stream.Name
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "InsertedBy",
-                    Value = "Admin"
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "InsertedOn",
-                    Value = "2020-01-10"
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "UpdatedBy",
-                    Value = "Mentor"
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "UpdatedOn",
-                    Value = "2021-01-01"
-                });
+            { 
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/UpdateStream", parameters);
+                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/UpdateStream", stream);
             } else
             {
 
@@ -95,37 +64,10 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         [HttpPost]
         public IActionResult AddStream(Stream stream)
-        {
-            var parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "Name",
-                Value = stream.Name
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "InsertedBy",
-                Value = stream.InsertedBy
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "InsertedOn",
-                Value = stream.InsertedOn
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "UpdatedBy",
-                Value = stream.UpdatedBy
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "UpdatedOn",
-                Value = stream.UpdatedOn
-            });
-
+        { 
 
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/AddStream", parameters);
+            var result = HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/AddStream", stream);
             return new JsonResult("");
         }
 

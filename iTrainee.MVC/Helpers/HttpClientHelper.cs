@@ -43,19 +43,19 @@ namespace iTrainee.MVC.Helpers
 
         }
 
-        public static bool ExecutePostApiMethod<T>(string baseUrl, string method, List<SqlParameter> parameters)
+        public static bool ExecutePostApiMethod<T>(string baseUrl, string method, T model)
         {
             using (var client = new HttpClient())
             {
                 client.Timeout = new TimeSpan(0, 5, 0);
                 client.BaseAddress = new Uri(baseUrl);
-                client.DefaultRequestHeaders.Accept.Clear();
+                                client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var jsonData = JsonConvert.SerializeObject(parameters);
+                var jsonData = JsonConvert.SerializeObject(model);
                 var buffer = System.Text.Encoding.UTF8.GetBytes(jsonData);
                 var byteContent = new ByteArrayContent(buffer);
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                HttpResponseMessage response = client.PostAsync(method, byteContent).Result;
+                HttpResponseMessage response = client.PostAsync(client.BaseAddress + method, byteContent).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return true;

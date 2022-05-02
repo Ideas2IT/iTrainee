@@ -100,6 +100,7 @@ namespace iTrainee.Data
         public bool InsertUser(User user)
         {
             var isSuccess = false;
+
             try
             {
                 var parameters = new List<SqlParameter>();
@@ -121,22 +122,22 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "DOB",
-                    Value = user.DOB
+                    Value = DateTime.Now
                 });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "RoleId",
-                    Value = user.RoleId
+                    Value = 1
                 });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UserName",
-                    Value = user.UserName
+                    Value = "Mentor"
                 });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "Password",
-                    Value = user.Password
+                    Value = "test123"
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -151,7 +152,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "InsertedOn",
-                    Value = "2020-01-10"
+                    Value = DateTime.Now
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -161,7 +162,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedOn",
-                    Value = "2021-01-01"
+                    Value = DateTime.Now
                 });
 
 

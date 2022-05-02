@@ -75,71 +75,28 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             return View(trainees);
         }
 
-        public User GetUser(int id)
+        [HttpGet]
+        public IActionResult SaveUser(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var user = HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + id);
+            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + id);
 
-            return (User)user;
+            return PartialView(user);
         }
 
+        [HttpPost]
         public int SaveUser(User user)
         {
             if (user.Id > 0)
             {
-                var parameters = new List<SqlParameter>();
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "Id",
-                    Value = user.Id
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "FirstName",
-                    Value = user.FirstName
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "LastName",
-                    Value = user.LastName
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "DOB",
-                    Value = user.DOB
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "Qualification",
-                    Value = user.Qualification
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "InsertedBy",
-                    Value = "Admin"
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "InsertedOn",
-                    Value = "2020-01-10"
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "UpdatedBy",
-                    Value = "Mentor"
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "UpdatedOn",
-                    Value = "2021-01-01"
-                });
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", parameters);
+                HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user);
             }
             else
             {
 
             }
+
             return 1;
         }
     }
