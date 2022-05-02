@@ -2,18 +2,15 @@ using iTrainee.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 
 namespace iTrainee.MVC.Helpers
 {
     public static class HttpClientHelper
     {
-       
+
         public static object ExecuteGetApiMethod<T>(string baseUrl, string method, string parameters)
         {
             using (var client = new HttpClient())

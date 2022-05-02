@@ -10,6 +10,5 @@ namespace iTrainee.Services.Interfaces
         bool InsertStream(Stream stream);
         bool UpdateStream(Stream stream);
         bool DeleteStream(int id);
-
     }
 }

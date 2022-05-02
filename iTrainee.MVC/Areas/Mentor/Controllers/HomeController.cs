@@ -74,7 +74,7 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllStreams", "");
-            
+
             return View(result);
         }
 

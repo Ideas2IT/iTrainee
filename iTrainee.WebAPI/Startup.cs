@@ -1,22 +1,15 @@
 using iTrainee.Data;
 using iTrainee.Data.DataManager;
 using iTrainee.Data.Interfaces;
-using iTrainee.Models;
 using iTrainee.Services;
-using iTrainee.Services.Implementations;
 using iTrainee.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using iTrainee.Services.Implementations;
 
 namespace iTrainee.WebAPI
 {
@@ -32,7 +25,6 @@ namespace iTrainee.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -58,8 +50,6 @@ namespace iTrainee.WebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "iTrainee.APIs v1"));
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 
