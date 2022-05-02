@@ -2,6 +2,7 @@
 using iTrainee.Services.Interfaces;
 using System.Collections.Generic;
 using iTrainee.Models;
+using System;
 
 namespace iTrainee.APIs.Controllers
 {
@@ -20,6 +21,22 @@ namespace iTrainee.APIs.Controllers
         {
             var result = _userService.GetMentors();
             return result;
+        }
+
+        [HttpGet]
+        public User GetUser(int id)
+        {
+            var user = _userService.GetUser(id);
+
+            return user;
+        }
+
+        [HttpPost]
+        public bool SaveUser(User user)
+        {
+            var isSuccess = _userService.SaveUser(user);
+
+            return isSuccess;
         }
     }
 }

@@ -9,6 +9,6 @@ namespace iTrainee.Services.Interfaces
         IEnumerable<Stream> GetStreams();
         bool InsertStream(Stream stream);
         bool UpdateStream(Stream stream);
-        bool DeleteStream(Stream stream);
+        bool DeleteStream(int id);
     }
 }

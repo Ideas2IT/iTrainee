@@ -21,5 +21,10 @@ namespace iTrainee.Services
         {
             return _userRepository.GetMentors();
         }
+
+        public bool SaveUser(User user)
+        {
+            return _userRepository.InsertUser(user);
+        }
     }
 }

@@ -193,9 +193,6 @@ namespace iTrainee.Data
 
             return isSuccess;
         }
-
-
-
     }
 }
 

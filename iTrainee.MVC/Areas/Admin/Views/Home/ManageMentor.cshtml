@@ -64,8 +64,7 @@
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                                @item.DOB.ToString("dd-MM-yyyy")
-
+                @item.DOB.ToString("dd-MM-yyyy")
             </td>
 @*            <td>
                 @Html.DisplayFor(modelItem => item.RoleId)
@@ -77,8 +76,8 @@
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>*@
             <td>
-                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#save"><i class="fa fa-pencil"></i> Edit</button>
-                <button type="button" class="btn btn-danger btn-xs delete-button" data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> Delete</button>
+                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-id="@item.Id" data-target="#save"><i class="fa fa-pencil"></i> Edit</button>
+                <button type="button" class="btn btn-danger btn-xs delete-button" data-id="@item.Id" data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> Delete</button>
             </td>
         </tr>
 }
@@ -101,14 +100,14 @@
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">FirstName</label>
-                        <input type="text" class="form-control" name="FirstName" id="FirstName" />
+                        <input type="text" class="form-control" name="FirstName" id="first-name" />
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">LastName</label>
-                        <input type="text" class="form-control" name="LastName" id="LastName" />
+                        <input type="text" class="form-control" name="LastName" id="last-name" />
                     </div>
                     <div class="form-group">
-                        <label class="col-form-label">Date Of Birth</label>
+                        <label class="col-form-lab el">Date Of Birth</label>
                         <input type="date" class="form-control" name="DateOfBirth" id="date-of-birth" />
                     </div>
                     <div class="form-group">
@@ -116,7 +115,6 @@
                         <input type="text" class="form-control" name="Qualification" id="qualification" />
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    @Html.AntiForgeryToken()
                     <input type="submit" id="save-edit-button" class="btn btn-success" value="Save" name="submit" />
                 </form>
             </div>
@@ -162,4 +160,153 @@
         </div>
     </div>
 </div>
+@section scripts {
 
+<script type="text/javascript">
+    $(function () {
+
+    $('#save').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+
+        $.ajax({
+            url: "/Admin/Home/GetUser/" + id,
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                $('#id').val(result.id);
+                $('#first-name').val(result.firstName);
+                $('#last-name').val(result.lastName);
+                //$('#date-of-birth').val(formatDate(result.DOB));
+                $('#qualification').val(result.qualification);
+                checkValidationAndSaveForm();
+            },
+            error: function () {
+                alert("Unexcepted Error!!!");
+            }
+        });
+    })
+
+    function checkValidationAndSaveForm() {
+        $("#edit-form").validate({
+            errorClass: 'error',
+            rules: {
+                Id: "required",
+                Name: "required",
+                //MobileNumber: {
+                //    required: true,
+                //    minlength: 10,
+                //    maxlength: 10,
+                //},
+                //DateOfBirth: "required",
+                //Qualification: "required",
+                //Address: "required"
+            },
+            messages: {
+                Id: {
+                    required: "Please enter valid Id"
+                }
+                //Name: {
+                //    required: "Please enter valid Name"
+                //},
+                //MobileNumber: {
+                //    required: "Please enter valid MobileNumber",
+                //    maxlength: "Invalid mobile number. Must be 10 digits"
+                //},
+                //DateOfBirth: {
+                //    required: "Please enter valid DateOfBirth"
+                //},
+                //Address: {
+                //    required: "Please enter valid Address"
+                //}
+            },
+            submitHandler: function () {
+                var updatedData = $('#edit-form').serialize();
+
+                $.ajax({
+                    url: "/Admin/Home/SaveUser",
+                    type: "POST",
+                    dataType: 'json',
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    data: updatedData,
+                    success: function (result) {
+                        if ('1' == result) {
+                            $('#edit').hide();
+                            $('#message').html("Trainee Updated Successfully");
+                            $('#notify').modal('show')
+                            $('#ok-button').on('click', function () {
+                                window.location.replace(window.location.href)
+                            });
+                        } else {
+                            $('#message').html("Trainee Updated failed");
+                            $('#thumbs-up').hide();
+                            $('#notify').modal('show');
+                        }
+                    },
+                    error: function () {
+                        alert("Unexcepted Error!!!");
+                    }
+                });
+            }
+        });
+    }
+
+    //function formatDate(dateOfBirth) {
+    //    var dateString = dateOfBirth.substr(6);
+    //    var currentTime = new Date(parseInt(dateString));
+    //    var month = currentTime.getMonth() + 1;
+    //    var day = currentTime.getDate();
+    //    var year = currentTime.getFullYear();
+    //    day = day < 10 ? "0" + day : day;
+    //    month = month < 10 ? "0" + month : month;
+
+    //    return year.toString() + "-" + month.toString() + "-" + day.toString();
+    //}
+
+    //$('#delete').on('show.bs.modal', function (event) {
+    //    var button = $(event.relatedTarget)
+    //    var id = button.data('id-to-delete')
+
+    //    $.ajax({
+    //        url: "/Trainee/Trainee/GetbyID/" + id,
+    //        type: "GET",
+    //        contentType: "application/json;charset=UTF-8",
+    //        dataType: "json",
+    //        success: function (result) {
+    //            $('#name-to-delete').html(result.Name);
+    //            $('#delete-yes-button').on('click', function () {
+    //                $.ajax({
+    //                    url: "/Trainee/Trainee/Delete/" + id,
+    //                    type: "GET",
+    //                    contentType: "application/json;charset=UTF-8",
+    //                    dataType: "json",
+    //                    success: function (resultForDelete) {
+    //                        if ('1' == resultForDelete) {
+    //                            $('#message').html("Trainee Deleted Successfully");
+    //                            $('#notify').modal('show');
+    //                            $('#ok-button').on('click', function () {
+    //                                window.location.replace(window.location.href)
+    //                            });
+    //                        } else {
+    //                            $('#message').html(resultForDelete);
+    //                            $('#thumbs-up').hide();
+    //                            $('#notify').modal('show');
+    //                        }
+    //                    },
+    //                    error: function () {
+    //                        alert("Unexcepted Error!!!");
+    //                    }
+    //                })
+    //            });
+    //        },
+    //        error: function () {
+    //            alert("Unexcepted Error!!!");
+    //        }
+    //    });
+    //})
+})
+
+</script>
+
+}

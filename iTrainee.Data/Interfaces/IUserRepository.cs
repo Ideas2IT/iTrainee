@@ -8,5 +8,7 @@ namespace iTrainee.Data.Interfaces
         User GetUser(int id);
         IEnumerable<User> GetMentors();
 
+        bool InsertUser(User user);
+
     }
 }
