@@ -35,12 +35,12 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             return new JsonResult("");
         }
 
-        public IActionResult AddStream(Messages messages)
-        {
-            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecutePostApiMethod<Messages>(baseUrl, "", messages);
-            return new JsonResult("");
-        }
+        //public IActionResult AddStream(Messages messages)
+        //{
+        //    var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+        //    var result = HttpClientHelper.ExecutePostApiMethod<Messages>(baseUrl, "", messages);
+        //    return new JsonResult("");
+        //}
 
     }
 }

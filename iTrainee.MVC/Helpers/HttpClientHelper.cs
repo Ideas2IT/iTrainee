@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -18,7 +19,7 @@ namespace iTrainee.MVC.Helpers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
-                HttpResponseMessage response = client.GetAsync(client.BaseAddress + method).Result;
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + method + parameters).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
@@ -45,7 +46,7 @@ namespace iTrainee.MVC.Helpers
 
         }
 
-        public static bool ExecutePostApiMethod<T>(string baseUrl, string method, T parameters)
+        public static bool ExecutePostApiMethod<T>(string baseUrl, string method, List<SqlParameter> parameters)
         {
             using (var client = new HttpClient())
             {
@@ -58,6 +59,28 @@ namespace iTrainee.MVC.Helpers
                 var byteContent = new ByteArrayContent(buffer);
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 HttpResponseMessage response = client.PostAsync(method, byteContent).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
+        public static bool ExecuteDeleteApiMethod<T>(string baseUrl, string method, string parameter)
+        {
+            using (var client = new HttpClient())
+            {
+                client.Timeout = new TimeSpan(0, 5, 0);
+                client.BaseAddress = new Uri(baseUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+				//var jsonData = JsonConvert.SerializeObject(parameter);
+				//var buffer = System.Text.Encoding.UTF8.GetBytes(jsonData);
+				//var byteContent = new ByteArrayContent(buffer);
+				//byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+				HttpResponseMessage response = client.DeleteAsync(client.BaseAddress + method + parameter).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return true;

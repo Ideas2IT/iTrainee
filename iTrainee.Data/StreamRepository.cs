@@ -17,9 +17,26 @@ namespace iTrainee.Data
             _dataManager = dataManager;
         }
 
-        public bool DeleteStream(Stream stream)
+        public bool DeleteStream(int id)
         {
-            throw new NotImplementedException();
+
+            bool isDeleted = false;
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
+                _dataManager.ExecuteStoredProcedure("spDeleteStream", parameters);
+                isDeleted = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return isDeleted;
         }
 
         public Stream GetStream(int id)
@@ -33,7 +50,7 @@ namespace iTrainee.Data
                     ParameterName = "Id",
                     Value = id
                 });
-                DataSet result = _dataManager.ExecuteStoredProcedure("spGetStream", parameters);
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetStreamById", parameters);
                 if (result?.Tables?.Count != 0)
                 {
                     foreach (DataRow item in result.Tables[0].Rows)
@@ -126,7 +143,55 @@ namespace iTrainee.Data
 
         public bool UpdateStream(Stream stream)
         {
-            throw new NotImplementedException();
+            var isSuccess = false;
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = stream.Id
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Name",
+                    Value = stream.Name
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedBy",
+                    Value = stream.InsertedBy
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedOn",
+                    Value = stream.InsertedOn
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UpdatedBy",
+                    Value = stream.UpdatedBy
+                });
+
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UpdatedOn",
+                    Value = stream.UpdatedOn
+                });
+
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spUpdateStream", parameters);
+                if (result.Tables.Count != 0)
+                {
+                    isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return isSuccess;
         }
 
 

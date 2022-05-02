@@ -14,9 +14,9 @@ namespace iTrainee.Data
             _streamRepository = streamRepository;
         }
 
-        public bool DeleteStream(Stream stream)
+        public bool DeleteStream(int id)
         {
-           return _streamRepository.DeleteStream(stream);
+           return _streamRepository.DeleteStream(id);
         }
 
         public Stream GetStream(int id)

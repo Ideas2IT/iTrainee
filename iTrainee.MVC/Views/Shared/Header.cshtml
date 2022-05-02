@@ -43,7 +43,7 @@
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav">
-                    @if (!ViewData["Title"].Equals("Mentor"))
+                    @if (ViewData["Title"].Equals("Home Page"))
                     {
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="#">Mentor</a>
@@ -54,6 +54,7 @@
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="#">Batch</a>
                         </li>
+
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="#">Stream</a>
                         </li>
@@ -63,13 +64,32 @@
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="#">Sub Topics</a>
                         </li>
+
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="#">Daily Progress</a>
+                        </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="#">Alert Trainee</a>
+                        </li>
+                    }
+                    @if (ViewData["Title"].Equals("Mentor"))
+                    {
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="#">Stream</a>
+                        </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="#">Topics</a>
+                        </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="#">Sub Topics</a>
+                        </li>
+                    }
+                    @if (ViewData["Title"].Equals("Trainee"))
+                    {
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="#">Daily Progress</a>
                         </li>
                     }
-                    <li class="nav-item px-3">
-                        <a class="nav-link text-white" href="#">Alert Trainee</a>
-                    </li>
                 </ul>
             </div>
         </div>
