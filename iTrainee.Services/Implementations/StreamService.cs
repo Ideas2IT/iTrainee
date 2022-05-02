@@ -19,6 +19,11 @@ namespace iTrainee.Data
            return _streamRepository.DeleteStream(id);
         }
 
+        public bool DeleteStream(Stream stream)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Stream GetStream(int id)
         {
             return _streamRepository.GetStream(id);

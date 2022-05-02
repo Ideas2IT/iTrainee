@@ -4,6 +4,7 @@ using iTrainee.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 
 namespace iTrainee.Data
@@ -48,6 +49,28 @@ namespace iTrainee.Data
                 throw ex;
             }
             return users;
+        }
+
+        public bool DeleteUser(int id)
+        {
+
+            bool isDeleted;
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
+                _dataManager.ExecuteStoredProcedure("spDeleteUser", parameters);
+                isDeleted = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return isDeleted;
         }
     }
 }
