@@ -20,22 +20,12 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             _configuration = configuration;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult ManageMentor()
+        public IActionResult ManageUser()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetMentors", "");
 
             return View(result);
-        }
-
-        public IActionResult CreateTrainee()
-        {
-            return View();
         }
 
         [HttpGet]
@@ -45,8 +35,10 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
 
             if (0 < id)
             {
+                TempData.Remove("UserId");
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
                 user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + id);
+                TempData.Add("UserId", id);
             }
 
             return PartialView(user);
@@ -55,13 +47,14 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         [HttpPost]
         public int SaveUser(User user)
         {
+            user.Id = Convert.ToInt32(TempData["UserId"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user);
 
             return 1;
         }
 
-     
+        [HttpPost]
         public IActionResult DeleteUser(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
