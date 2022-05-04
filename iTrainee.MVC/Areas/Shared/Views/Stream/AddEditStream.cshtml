@@ -1,56 +1,20 @@
 ﻿@model iTrainee.Models.Stream
 
-<h4>Stream</h4>
-<hr />
 <div class="row">
-	<div class="col-md-4">
+	<div class="col-lg-12">
+		<form id="streamForm">
 
-
-		<form asp-action="AddEditStream" id="myForm">
-			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group">
-				@Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-sm-4" })
-				<div class="col-md-4">
-					@Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control-sm" } })
-				</div>
+				<label class="col-form-label">Name</label>
+				<input type="text" class="form-control" name="Name" value="@Model.Name" />
 			</div>
-			<div class="form-group">
-				@Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-sm-4" })
-				<div class="col-md-4">
-					@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control-sm" } })
-				</div>
-			</div>
-@*			<div class="form-group">
-				@Html.LabelFor(model => model.InsertedBy, htmlAttributes: new { @class = "control-label col-sm-4" })
-				<div class="col-md-4">
-					@Html.EditorFor(model => model.InsertedBy, new { htmlAttributes = new { @class = "form-control-sm" } })
-				</div>
-			</div>
-			<div class="form-group">
-				<label asp-for="InsertedOn" class="control-label"></label>
-				<input asp-for="InsertedOn" class="form-control" />
-				<span asp-validation-for="InsertedOn" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="UpdatedBy" class="control-label"></label>
-				<input asp-for="UpdatedBy" class="form-control" />
-				<span asp-validation-for="UpdatedBy" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="UpdatedOn" class="control-label"></label>
-				<input asp-for="UpdatedOn" class="form-control" />
-				<span asp-validation-for="UpdatedOn" class="text-danger"></span>
-			</div>*@
-			<div class="form-group">
-				<input id="btnSubmit" type="submit" value="Save" class="btn btn-primary" />
+			<div class="form-group mt-4 float-right">
+				<input id="btnStreamSave" type="submit" value="Save" class="btn btn-primary mr-3" />
 			</div>
 		</form>
 	</div>
 </div>
 
-<div>
-	<a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{
@@ -59,22 +23,21 @@
 }
 
 <script>
-		debugger
 
 		$(document).ready(function () {
 
-		$("#btnSubmit").click(function () {
-			var a = $("#myForm").serialize();
+		$("#btnStreamSave").click(function () {
+			var updatedStreamData = $("#streamForm").serialize();
 			$.ajax({
 				type: "POST",
 				url: "/Shared/Stream/AddEditStream",
-				data: a,
+				data: updatedStreamData,
 				success: function () {
-					$("#myModal1").modal("hide");
-					window.location = ("/Mentor/Home/ManageStreams")
+					$("#streamModal").modal("hide");
+					window.location.replace("/Mentor/Home/ManageStreams")
 				},
 				error: function () {
-					alert("Unable to save/update data");
+					alert("Unable to save data");
 				},
 			});
 		});

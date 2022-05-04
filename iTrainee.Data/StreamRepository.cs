@@ -106,23 +106,23 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "InsertedBy",
-                    Value = stream.InsertedBy
+                    Value = "Mentor"
                 });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "InsertedOn",
-                    Value = stream.InsertedOn
+                    Value = DateTime.Now.ToShortDateString()
                 });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedBy",
-                    Value = stream.UpdatedBy
+                    Value = "Mentor"
                 });
 
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedOn",
-                    Value = stream.UpdatedOn
+                    Value = DateTime.Now.ToShortDateString()
                 });
 
 
@@ -160,23 +160,23 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "InsertedBy",
-                    Value = stream.InsertedBy
+                    Value = "Mentor"
                 });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "InsertedOn",
-                    Value = stream.InsertedOn
+                    Value = DateTime.Now.ToShortDateString()
                 });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedBy",
-                    Value = stream.UpdatedBy
+                    Value = "Mentor"
                 });
 
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedOn",
-                    Value = stream.UpdatedOn
+                    Value = DateTime.Now.ToShortDateString()
                 });
 
 
@@ -193,9 +193,6 @@ namespace iTrainee.Data
 
             return isSuccess;
         }
-
-
-
     }
 }
 

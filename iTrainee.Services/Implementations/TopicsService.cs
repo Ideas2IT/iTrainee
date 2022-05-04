@@ -19,12 +19,30 @@ namespace iTrainee.Services.Implementations
         {
             _topicsRepository = topicsRepository;
         }
+        public bool DeleteTopic(int id)
+        {
+            return _topicsRepository.DeleteTopic(id);
+
+        }
+
+        public Topics GetTopic(int id)
+        {
+            return _topicsRepository.GetTopic(id);
+        }
+
         public IEnumerable<Topics> GetAllTopics()
         {
-            List<Topics> topicsList = _topicsRepository.GetAllTopics();
+            return _topicsRepository.GetAllTopics();
+        }
 
+        public bool InsertTopic(Topics topic)
+        {
+            return _topicsRepository.InsertTopic(topic);
+        }
 
-            return topicsList;
+        public bool UpdateTopic(Topics topic)
+        {
+            return _topicsRepository.UpdateTopic(topic);
         }
     }
 }
