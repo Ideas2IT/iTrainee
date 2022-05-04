@@ -2,18 +2,15 @@ using iTrainee.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 
 namespace iTrainee.MVC.Helpers
 {
     public static class HttpClientHelper
     {
-       
+
         public static object ExecuteGetApiMethod<T>(string baseUrl, string method, string parameters)
         {
             using (var client = new HttpClient())
@@ -52,7 +49,7 @@ namespace iTrainee.MVC.Helpers
             {
                 client.Timeout = new TimeSpan(0, 5, 0);
                 client.BaseAddress = new Uri(baseUrl);
-                client.DefaultRequestHeaders.Accept.Clear();
+                                client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var jsonData = JsonConvert.SerializeObject(model);
                 var buffer = System.Text.Encoding.UTF8.GetBytes(jsonData);

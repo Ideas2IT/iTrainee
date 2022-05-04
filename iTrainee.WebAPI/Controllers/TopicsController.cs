@@ -20,7 +20,7 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Topics> GetAllTopics()
+        public IEnumerable<Topics> Get()
         {
             return _topicsService.GetAllTopics();
         }
