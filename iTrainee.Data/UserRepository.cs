@@ -166,7 +166,7 @@ namespace iTrainee.Data
                 });
 
 
-                DataSet result = _dataManager.ExecuteStoredProcedure("spUpdateUser", parameters);
+                DataSet result = _dataManager.ExecuteStoredProcedure("spSaveUser", parameters);
                 if (result.Tables.Count != 0)
                 {
                     isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);

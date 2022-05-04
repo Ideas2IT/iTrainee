@@ -25,7 +25,7 @@
 </head>
 
 <div class="create">
-    <a data-toggle="modal" data-target="#save"><i class="fa fa-user-plus"></i>Create New</a>
+    <a data-toggle="modal" onclick="GetUser(0)" data-target="#myModal1"><i class="fa fa-user-plus"></i>Create New</a>
 </div>
 <table class="table table-hover">
         <tr>
@@ -76,7 +76,7 @@
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>*@
             <td>
-                <a href="#" class="btn btn-primary" onclick="GetUser(@item.Id)"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+                <button type="button" class="btn btn-primary" onclick="GetUser(@item.Id)"><i class="glyphicon glyphicon-pencil"></i>Edit</button>
                 <button type="button" class="btn btn-danger btn-xs delete-button" data-id="@item.Id" data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> Delete</button>
 
             </td>
@@ -91,7 +91,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Add/Edit Trainee</h3>
+                <h3 class="modal-title">Save User</h3>
             </div>
             <div class="modal-body" id="myModalBodyDiv1">
 
