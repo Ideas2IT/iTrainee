@@ -4,17 +4,27 @@
 	ViewData["Title"] = "ManageStreams";
 }
 
+<style>
+	.btn-add-gradient {
+    background-image: linear-gradient(144deg,#009ffd, rgb(0,35,155) 50%);
+    border-radius: 4px;
+    box-shadow: rgba(0, 79, 255, 0.3) 0 15px 30px -5px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transform: translateY(-6px);
+    transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
+}
+</style>
 
-
-<h1>ManageStreams</h1>
+<h1 class="mt-5">Manage Streams</h1>
 
 <p>
-	<a href="#" class="btn btn-primary" onclick="AddEditStream(0)"><i class="glyphicon glyphicon-pencil"></i> Add New Stream</a>
+	<a href="#" class="btn btn-add-gradient btn-primary float-right mb-3" onclick="AddEditStream(0)"> Add New Stream</a>
 </p>
 <table class="table table-hover table-bordered">
 	<thead>
-		<tr>
-			<th>
+		<tr class="text-center">
+			<th >
 				@Html.DisplayNameFor(model => model.Id)
 			</th>
 
@@ -22,7 +32,7 @@
 
 				@Html.DisplayNameFor(model => model.Name)
 			</th>
-			<th>
+			<th colspan="2">
 				Actions
 			</th>
 		</tr>
@@ -38,85 +48,48 @@
 					@Html.DisplayFor(modelItem => item.Name)
 				</td>
 
-				<td>
-					<a href="#" class="btn btn-primary" onclick="AddEditStream(@item.Id)"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+				<td class="text-center">
+					<a href="#" class="btn btn-primary" onclick="AddEditStream(@item.Id)"><i class="fa fa-pencil"></i> </a> 
+					
+				</td>
+				<td class="text-center">
+					<form id="DeleteStreamForm" method="post">
+<a class="btn btn-danger btn-xs delete-button" href="/Shared/Stream/DeleteStream/@item.Id"><i class="fa fa-trash"></i></a>
+					</form> 
+@*					@using (Html.BeginForm("DeleteStream", "Stream", new { id = item.Id, Area="Shared" }))
+                {
 
-					@*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })*@ |
-					<a class="btn btn-outline-primary" href="/Shared/Stream/DeleteStream/@item.Id">Delete</a>
-					@*@Html.ActionLink("Delete", "DeleteStream", "Stream", new {  area="Shared", id=item.Id  },new{})*@
-					@*                @Html.ActionLink("Link Text", "ActionName", "ControllerName", new { Area = "AreaName" , id = @Model.ID, name = @Model.name })
-					*@
-					@* @Html.ActionLink("Delete", "DeleteStream", "Stream", new {Area="Shared", id=@item.Id})*@
+                }*@
+					@*<a class="btn btn-danger btn-xs delete-button" href="/Shared/Stream/DeleteStream/@item.Id"><i class="fa fa-trash"></i></a>*@
 				</td>
 			</tr>
+		
 		}
 	</tbody>
 </table>
 
-<div class="modal fade" id="myModal1">
+<div class="modal fade" id="streamModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <a href="#" class="close" data-dismiss="modal">&times;</a>
-                <h3 class="modal-title">Add/Edit Trainee</h3>
+                <h3 class="modal-title">Save Stream</h3>
             </div>
-            <div class="modal-body" id="myModalBodyDiv1">
+            <div class="modal-body" id="streamAddEditBody">
 
             </div>
         </div>
     </div>
 </div>
 
-@*<div class="modal fade" id="save" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Save Stream</h5>
-			</div>
-			<div class="modal-body">
-				@using (Html.BeginForm("AddStream", "Stream", FormMethod.Post, new { Area="Shared" }))
-					{
-				<form id="myForm" href="/Shared/Stream/AddStream">
-					<div class="form-group">
-						<input type="hidden" class="form-control" name="Id" id="id">
-					</div>
-					<div class="form-group">
-						<label class="col-form-label">Name</label>
-						<input type="text" class="form-control" name="Name" id="name" />
-					</div>
-					<div class="form-group">
-						<label class="col-form-label">Inserted By</label>
-						<input type="text" value="Admin" class="form-control" name="InsertedBy" id="insertedBy" />
-					</div>
-					<div class="form-group">
-						<label class="col-form-label">Inserted On</label>
-						<input type="date" class="form-control" name="InsertedOn" id="insertedOn" />
-					</div>
-					<div class="form-group">
-						<label class="col-form-label">Updated By</label>
-						<input type="text" value="Mentor" class="form-control" name="UpdatedBy" id="updatedBy" />
-					</div>
-					<div class="form-group">
-						<label class="col-form-label">Updated On</label>
-						<input type="date" class="form-control" name="UpdatedOn" id="updatedOn" />
-					</div>
-					<div class="model-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						@Html.AntiForgeryToken()
-						<input id="btnSubmit" onclick="" type="submit" class="btn btn-success" value="Save" name="submit" />
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>*@
+
 
 <script type="text/javascript">
 	
-var AddEditStream = function (a) {
-    var e = "/Shared/Stream/AddEditStream?Id=" + a;
-    $("#myModalBodyDiv1").load(e, function () {
-        $("#myModal1").modal("show");
+var AddEditStream = function (id) {
+    var editStreamData = "/Shared/Stream/AddEditStream?Id=" + id;
+    $("#streamAddEditBody").load(editStreamData, function () {
+        $("#streamModal").modal("show");
     });
 };
+
 </script>

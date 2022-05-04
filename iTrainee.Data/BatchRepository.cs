@@ -1,50 +1,23 @@
 ﻿using iTrainee.Data.DataManager;
+using iTrainee.Data.Interfaces;
 using iTrainee.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace iTrainee.Data
 {
-    public class TopicsRepository : ITopicsRepository
+    public class BatchRepository : IBatchRepository
     {
         IDataManager _dataManager = null;
 
-        public TopicsRepository(IDataManager dataManager)
+        public BatchRepository(IDataManager dataManager)
         {
             _dataManager = dataManager;
         }
 
-        public List<Topics> GetAllTopics()
-        {
-            var topicsList = new List<Topics>();
-            try
-            {
-                DataSet result = _dataManager.ExecuteStoredProcedure("spGetTopics");
-                if (result?.Tables?.Count != 0)
-                {
-                    foreach (DataRow item in result.Tables[0].Rows)
-                    {
-                        topicsList.Add(new Topics
-                        {
-                            Id = Convert.ToInt32(item["Id"]),
-                            StreamId = Convert.ToInt32(item["StreamId"]),
-                            Name = Convert.ToString(item["Name"]),
-                            ReferenceURL = Convert.ToString(item["ReferenceURL"])
-                        });
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return topicsList;
-        }
-
-        public bool DeleteTopic(int id)
+        public bool DeleteBatch(int id)
         {
 
             bool isDeleted = false;
@@ -56,7 +29,7 @@ namespace iTrainee.Data
                     ParameterName = "Id",
                     Value = id
                 });
-                _dataManager.ExecuteStoredProcedure("spDeleteTopics", parameters);
+                _dataManager.ExecuteStoredProcedure("spDeleteBatch", parameters);
                 isDeleted = true;
             }
             catch (Exception ex)
@@ -66,9 +39,9 @@ namespace iTrainee.Data
             return isDeleted;
         }
 
-        public Topics GetTopic(int id)
+        public Batch GetBatch(int id)
         {
-            var topic = new Topics();
+            var batch = new Batch();
             try
             {
                 var parameters = new List<SqlParameter>();
@@ -77,15 +50,13 @@ namespace iTrainee.Data
                     ParameterName = "Id",
                     Value = id
                 });
-                DataSet result = _dataManager.ExecuteStoredProcedure("spGetTopicById", parameters);
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetBatchById", parameters);
                 if (result?.Tables?.Count != 0)
                 {
                     foreach (DataRow item in result.Tables[0].Rows)
                     {
-                        topic.Id = Convert.ToInt32(item["Id"]);
-                        topic.StreamId = Convert.ToInt32(item["StreamId"]);
-                        topic.Name = Convert.ToString(item["Name"]);
-                        topic.ReferenceURL = Convert.ToString(item["ReferenceURL"]);
+                        batch.Id = Convert.ToInt32(item["id"]);
+                        batch.Name = Convert.ToString(item["Name"]);
                     }
                 }
             }
@@ -93,10 +64,35 @@ namespace iTrainee.Data
             {
                 throw ex;
             }
-            return topic;
+            return batch;
         }
 
-        public bool InsertTopic(Topics topic)
+        public IEnumerable<Batch> GetAllBatches()
+        {
+            var batches = new List<Batch>();
+            try
+            {
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetBatch");
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
+                    {
+                        batches.Add(new Batch
+                        {
+                            Id = Convert.ToInt32(item["id"]),
+                            Name = Convert.ToString(item["Name"])
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return batches;
+        }
+
+        public bool InsertBatch(Batch batch)
         {
             var isSuccess = false;
             try
@@ -104,18 +100,8 @@ namespace iTrainee.Data
                 var parameters = new List<SqlParameter>();
                 parameters.Add(new SqlParameter
                 {
-                    ParameterName = "StreamId",
-                    Value = topic.StreamId
-                });
-                parameters.Add(new SqlParameter
-                {
                     ParameterName = "Name",
-                    Value = topic.Name
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "ReferenceURL",
-                    Value = topic.ReferenceURL
+                    Value = batch.Name
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -139,7 +125,8 @@ namespace iTrainee.Data
                     Value = DateTime.Now.ToShortDateString()
                 });
 
-                DataSet result = _dataManager.ExecuteStoredProcedure("spInsertTopics", parameters);
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spInsertBatch", parameters);
                 if (result.Tables.Count != 0)
                 {
                     isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
@@ -154,7 +141,7 @@ namespace iTrainee.Data
 
         }
 
-        public bool UpdateTopic(Topics topic)
+        public bool UpdateBatch(Batch batch)
         {
             var isSuccess = false;
             try
@@ -163,22 +150,12 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "Id",
-                    Value = topic.Id
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "StreamId",
-                    Value = topic.StreamId
+                    Value = batch.Id
                 });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "Name",
-                    Value = topic.Name
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "ReferenceURL",
-                    Value = topic.ReferenceURL
+                    Value = batch.Name
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -202,7 +179,8 @@ namespace iTrainee.Data
                     Value = DateTime.Now.ToShortDateString()
                 });
 
-                DataSet result = _dataManager.ExecuteStoredProcedure("spUpdateTopics", parameters);
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spUpdateBatch", parameters);
                 if (result.Tables.Count != 0)
                 {
                     isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
@@ -217,3 +195,4 @@ namespace iTrainee.Data
         }
     }
 }
+

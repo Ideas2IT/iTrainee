@@ -3,7 +3,7 @@ using iTrainee.Models;
 using iTrainee.Services.Interfaces;
 using System.Collections.Generic;
 
-namespace iTrainee.Data
+namespace iTrainee.Services.Implementations
 {
     public class StreamService : IStreamService
     {

@@ -30,103 +30,31 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             return View();
         }
 
-        public IActionResult GetStreams()
-        {
-            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "", "");
-            return new JsonResult("");
-        }
-
         [HttpGet]
         public IActionResult AddEditStream(int id)
         {
-
+            TempData.Remove("StreamId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            Stream stream = (Stream)HttpClientHelper.ExecuteGetApiMethod<Stream>(baseUrl, "/Stream/Get?", "Id="+id);
+            var stream = HttpClientHelper.ExecuteGetApiMethod<Stream>(baseUrl, "/Stream/Get?", "Id="+id);
+            TempData.Add("StreamId", id);
             return PartialView(stream);
         }
 
         [HttpPost]
         public IActionResult AddEditStream(Stream stream)
         {
-            if(stream.Id > 0)
+            stream.Id = Convert.ToInt32(TempData["StreamId"]);
+            if (stream.Id > 0)
             {
-                var parameters = new List<SqlParameter>();
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "Id",
-                    Value = stream.Id
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "Name",
-                    Value = stream.Name
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "InsertedBy",
-                    Value = "Admin"
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "InsertedOn",
-                    Value = "2020-01-10"
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "UpdatedBy",
-                    Value = "Mentor"
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "UpdatedOn",
-                    Value = "2021-01-01"
-                });
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/UpdateStream", parameters);
+                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/UpdateStream", stream);
             } else
             {
-
+                var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/AddStream", stream);
             }
 
-
             return PartialView(stream);
-        }
-
-        [HttpPost]
-        public IActionResult AddStream(Stream stream)
-        {
-            var parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "Name",
-                Value = stream.Name
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "InsertedBy",
-                Value = stream.InsertedBy
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "InsertedOn",
-                Value = stream.InsertedOn
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "UpdatedBy",
-                Value = stream.UpdatedBy
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "UpdatedOn",
-                Value = stream.UpdatedOn
-            });
-
-
-            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/AddStream", parameters);
-            return new JsonResult("");
         }
 
         public IActionResult DeleteStream(int id)
