@@ -20,6 +20,11 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             _configuration = configuration;
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         public IActionResult ManageUser()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
@@ -47,7 +52,10 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         [HttpPost]
         public int SaveUser(User user)
         {
-            user.Id = Convert.ToInt32(TempData["UserId"]);
+            if (0 < Convert.ToInt32(TempData["UserId"]))
+            {
+                user.Id = Convert.ToInt32(TempData["UserId"]);
+            }
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user);
 

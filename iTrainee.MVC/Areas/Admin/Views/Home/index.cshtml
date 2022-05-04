@@ -10,6 +10,7 @@
         }
         .card {
             border-top: 3px solid rgb(0,35,155);
+            color: black;
         }
 
         .admin-dashboard-row {
@@ -17,13 +18,16 @@
         }
 
         .card:hover {
-            background-image: linear-gradient(144deg,#009ffd, rgb(0,35,155) 50%);
+			background-color: #F1F3F4;
             border-radius: 8px;
             box-shadow: rgba(0, 79, 255, 0.3) 0 15px 30px -5px;
-            color: #FFFFFF;
             cursor: pointer;
             transform: translateY(-6px);
             transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
+        }
+
+         a {
+            text-decoration: none!important;
         }
     </style>
 </head>
@@ -31,7 +35,7 @@
 <div class="admin-dashboard-container">
 <div class="row row-cols-1 row-cols-md-2 g-4 admin-dashboard-row">
   <div class="col">
-      <a href="../Home/ManageMentor">
+      <a href="/Admin/Home/ManageUser">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Mentor</h5>

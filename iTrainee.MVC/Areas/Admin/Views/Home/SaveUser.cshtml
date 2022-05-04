@@ -1,20 +1,27 @@
 ﻿@model iTrainee.Models.User
-<form id="myForm">
+<form id="myForm" method="Post">
     <div class="form-group">
         <label class="col-form-label">First Name</label>
-        <input type="text" class="form-control" name="FirstName" value="@Model.FirstName" required/>
+        <input type="text" class="form-control" name="FirstName" value="@Model.FirstName" required />
     </div>
     <div class="form-group">
         <label class="col-form-label">Last Name</label>
-        <input type="text" class="form-control" name="LastName" value="@Model.LastName" required/>
+        <input type="text" class="form-control" name="LastName" value="@Model.LastName" required />
     </div>
     <div class="form-group">
         <label class="col-form-lab el">Date Of Birth</label>
-        <input type="date" class="form-control" name="DOB" value="@Model.DOB.ToString("dd/MM/yyyy")" required/>
+        @if (0 == @Model.Id)
+        {
+            <input type="date" class="form-control" name="DOB" required />
+        }
+        else
+        {
+            <input type="date" class="form-control" name="DOB" value="@Model.DOB.ToString("yyyy-MM-dd")" required />
+        }
     </div>
     <div class="form-group">
         <label class="col-form-label">Qualification</label>
-        <input type="text" class="form-control" name="Qualification" value="@Model.Qualification" required/>
+        <input type="text" class="form-control" name="Qualification" value="@Model.Qualification" required />
     </div>
 
     @if (0 == @Model.Id)
@@ -34,20 +41,21 @@
         </div>
         <div class="form-group">
             <label class="col-form-label">User Name</label>
-            <input type="email" class="form-control" name="UserName" required/>
+            <input type="email" class="form-control" name="UserName" required />
         </div>
         <div class="form-group">
             <label class="col-form-label">Password</label>
-            <input type="password" class="form-control" name="Password" placeholder="example@org.com" required/>
+            <input type="password" class="form-control" name="Password" placeholder="example@org.com" required />
         </div>
         <div class="form-group">
             <label class="col-form-label">Confirm Password</label>
-            <input type="password" class="form-control" name="Confirm Password" required/>
+            <input type="password" class="form-control" name="Confirm Password" required />
         </div>
     }
-
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    <input type="submit" class="btn btn-success" value="Save" name="submit" id="btnSubmit" />
+    <div class="form-group mt-4 float-right">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" value="Save" name="submit" id="btnSubmit" class="btn btn-primary mr-3" />
+    </div>
 </form>
 
 @section Scripts {
