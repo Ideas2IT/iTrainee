@@ -1,5 +1,7 @@
 ﻿using iTrainee.Models;
+using iTrainee.MVC.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ namespace iTrainee.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        IConfiguration _configuration;
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -23,8 +26,11 @@ namespace iTrainee.Controllers
             return View();
         }
 
-        public IActionResult Login()
+        [HttpPost]
+        public IActionResult Login(string userName, string password)
         {
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            var user = HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + userName);
             return View();
         }
 

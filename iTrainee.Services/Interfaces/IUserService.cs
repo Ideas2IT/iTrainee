@@ -9,5 +9,6 @@ namespace iTrainee.Services.Interfaces
         IEnumerable<User> GetMentors();
         bool SaveUser(User user);
         bool DeleteUser(int id);
+        User GetUserByUserName(string userName);
     }
 }
