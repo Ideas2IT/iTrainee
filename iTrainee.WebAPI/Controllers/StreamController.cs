@@ -24,29 +24,25 @@ namespace iTrainee.APIs.Controllers
         [HttpGet]
         public Stream Get(int id)
         {
-            var result = _streamService.GetStream(id);
-            return result;
+            return _streamService.GetStream(id);
         }
 
         [HttpPost]
         public bool AddStream(Stream stream)
         {
-            var result = _streamService.InsertStream(stream);
-            return result;
+            return _streamService.InsertStream(stream);
         }
 
         [HttpPost]
         public bool UpdateStream(Stream stream)
         {
-            var result = _streamService.UpdateStream(stream);
-            return result;
+            return _streamService.UpdateStream(stream);
         }
 
         [HttpDelete]
         public bool DeleteStream(int id)
         {
-            var result = _streamService.DeleteStream(id);
-            return result;
+            return _streamService.DeleteStream(id);
         }
 
     }

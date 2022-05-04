@@ -38,5 +38,13 @@ namespace iTrainee.APIs.Controllers
 
             return isSuccess;
         }
+
+        [HttpDelete]
+        public bool DeleteUser(int id)
+        {
+            var isSuccess = _userService.DeleteUser(id);
+
+            return isSuccess;
+        }
     }
 }

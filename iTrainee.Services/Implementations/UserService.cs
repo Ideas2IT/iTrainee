@@ -26,5 +26,10 @@ namespace iTrainee.Services
         {
             return _userRepository.InsertUser(user);
         }
+
+        public bool DeleteUser(int id)
+        {
+            return _userRepository.DeleteUser(id);
+        }
     }
 }

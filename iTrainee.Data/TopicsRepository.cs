@@ -19,32 +19,21 @@ namespace iTrainee.Data
 
         public List<Topics> GetAllTopics()
         {
-            List<Topics> topicsList = new List<Topics>();
+            var topicsList = new List<Topics>();
             try
             {
-                List<SqlParameter> parameters = null;
-                DataSet result = _dataManager.ExecuteStoredProcedure("spInsertStream", parameters);
-                if (result.Tables.Count != 0)
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetTopics");
+                if (result?.Tables?.Count != 0)
                 {
-                    DataTable dataTable = result.Tables[0];
-                    if (dataTable.Rows.Count > 0)
+                    foreach (DataRow item in result.Tables[0].Rows)
                     {
-                        for (int i = 0; i < dataTable.Rows.Count; i++)
+                        topicsList.Add(new Topics
                         {
-                            Topics topic = new Topics();
-                            topic.Id = Convert.ToInt32(dataTable.Rows[i]["Id"]);
-                            topic.StreamId = Convert.ToInt32(dataTable.Rows[i]["StreamId"]);
-                            topic.Name = dataTable.Rows[i]["Name"].ToString();
-                            topic.ReferenceURL = dataTable.Rows[i]["ReferenceURL"].ToString();
-                            topic.InsertedBy = dataTable.Rows[i]["InsertedBy"].ToString();
-                            topic.UpdatedBy = dataTable.Rows[i]["UpdatedBy"].ToString();
-                            DateTime insertedDate = DateTime.Parse(dataTable.Rows[i]["InsertedOn"].ToString());
-                            DateTime updatedDate = DateTime.Parse(dataTable.Rows[i]["UpdatedOn"].ToString());
-                            topic.InsertedOn = insertedDate.Date;
-                            topic.UpdatedOn = updatedDate.Date;
-
-                            topicsList.Add(topic);
-                        }
+                            Id = Convert.ToInt32(item["Id"]),
+                            StreamId = Convert.ToInt32(item["StreamId"]),
+                            Name = Convert.ToString(item["Name"]),
+                            ReferenceURL = Convert.ToString(item["ReferenceURL"])
+                        });
                     }
                 }
             }
@@ -52,8 +41,179 @@ namespace iTrainee.Data
             {
                 throw ex;
             }
-
             return topicsList;
+        }
+
+        public bool DeleteTopic(int id)
+        {
+
+            bool isDeleted = false;
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
+                _dataManager.ExecuteStoredProcedure("spDeleteTopics", parameters);
+                isDeleted = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return isDeleted;
+        }
+
+        public Topics GetTopic(int id)
+        {
+            var topic = new Topics();
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetTopicById", parameters);
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
+                    {
+                        topic.Id = Convert.ToInt32(item["Id"]);
+                        topic.StreamId = Convert.ToInt32(item["StreamId"]);
+                        topic.Name = Convert.ToString(item["Name"]);
+                        topic.ReferenceURL = Convert.ToString(item["ReferenceURL"]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return topic;
+        }
+
+        public bool InsertTopic(Topics topic)
+        {
+            var isSuccess = false;
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "StreamId",
+                    Value = topic.StreamId
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Name",
+                    Value = topic.Name
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "ReferenceURL",
+                    Value = topic.ReferenceURL
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedBy",
+                    Value = "Mentor"
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedOn",
+                    Value = DateTime.Now.ToShortDateString()
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UpdatedBy",
+                    Value = "Mentor"
+                });
+
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UpdatedOn",
+                    Value = DateTime.Now.ToShortDateString()
+                });
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spInsertTopics", parameters);
+                if (result.Tables.Count != 0)
+                {
+                    isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return isSuccess;
+
+        }
+
+        public bool UpdateTopic(Topics topic)
+        {
+            var isSuccess = false;
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = topic.Id
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "StreamId",
+                    Value = topic.StreamId
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Name",
+                    Value = topic.Name
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "ReferenceURL",
+                    Value = topic.ReferenceURL
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedBy",
+                    Value = "Mentor"
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedOn",
+                    Value = DateTime.Now.ToShortDateString()
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UpdatedBy",
+                    Value = "Mentor"
+                });
+
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UpdatedOn",
+                    Value = DateTime.Now.ToShortDateString()
+                });
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spUpdateTopics", parameters);
+                if (result.Tables.Count != 0)
+                {
+                    isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return isSuccess;
         }
     }
 }

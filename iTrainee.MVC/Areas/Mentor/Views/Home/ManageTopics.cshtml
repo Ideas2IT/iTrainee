@@ -4,41 +4,33 @@
 	ViewData["Title"] = "ManageTopics";
 }
 
-<h1>ManageTopics</h1>
 
-<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#save">Add New Topic</button>
-<table class="table">
+
+<h1 class="mt-5">Manage Topics</h1>
+
+<p>
+	<a href="#" class="btn btn-primary float-right mb-3" onclick="AddEditTopic(0)"><i class="glyphicon glyphicon-pencil"></i> Add New Topic</a>
+</p>
+<table class="table table-hover table-bordered">
 	<thead>
 		<tr>
 			<th>
-				Id
+				@Html.DisplayNameFor(model => model.Id)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.StreamId)
+			</th>
+			<th>
 
+				@Html.DisplayNameFor(model => model.Name)
 			</th>
 			<th>
-				Stream Id
+
+				@Html.DisplayNameFor(model => model.ReferenceURL)
 			</th>
 			<th>
-				Name
+				Actions
 			</th>
-			<th>
-				Reference URL
-			</th>
-			<th>
-				Is Active
-			</th>
-			<th>
-				Inserted By
-			</th>
-			<th>
-				Inserted On
-			</th>
-			<th>
-				Updated By
-			</th>
-			<th>
-				Updated On
-			</th>
-			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -57,86 +49,42 @@
 				<td>
 					@Html.DisplayFor(modelItem => item.ReferenceURL)
 				</td>
+
 				<td>
-					@Html.DisplayFor(modelItem => item.IsActive)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.InsertedBy)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.InsertedOn)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.UpdatedBy)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.UpdatedOn)
-				</td>
-				<td>
-					@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-					@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+					<a href="#" class="btn btn-primary" onclick="AddEditTopic(@item.Id)"><i class="glyphicon glyphicon-pencil"></i> Edit</a> |
+					<a class="btn btn-outline-primary" href="/Shared/Topics/DeleteTopic/@item.Id">Delete</a>
+					@*  @using (Html.BeginForm("DeleteStream", "Stream", new { id = item.Id, Area="Shared" }))
+						{
+						<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete record with ID = @item.Id');"><i class="fa fa-trash"></i> Delete</button>
+						}*@
 				</td>
 			</tr>
 		}
 	</tbody>
 </table>
 
-
-
-
-<div class="modal fade" id="save" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
+<div class="modal fade" id="topicModal">
+	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Save Mentor</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
+				<h3 class="modal-title">Save Topic</h3>
 			</div>
-			<div class="modal-body">
-				<form id="edit-form">
-					<div class="form-group">
-						<input type="hidden" class="form-control" name="Id" id="id">
-					</div>
-										<div class="form-group">
-											<label class="col-form-label">Stream Id</label>
-						<input type="text" class="form-control" name="StramId" id="id">
-					</div>
-@*					<div class="form-group">
-						<div class="col-md-4" style="width: 36%;">
-							<label class="col-form-label">Stream</label>
-							@Html.DropDownList("StreamList", "Select stream")
-						</div>
-					</div>*@
-					<div class="form-group">
-						<label class="col-form-label">Name</label>
-						<input type="text" class="form-control" name="Name" id="name" />
-					</div>
-					<div class="form-group">
-						<label class="col-form-label">Reference URL</label>
-						<input type="text" class="form-control" name="ReferenceURL" id="referenceURL" />
-					</div>
-										<div class="form-group">
-						<label class="col-form-label">Inserted By</label>
-						<input type="text" class="form-control" name="InsertedBy" id="insertedBy" />
-					</div>
-										<div class="form-group">
-						<label class="col-form-label">Inserted On</label>
-						<input type="date" class="form-control" name="InsertedOn" id="insertedOn" />
-					</div>
-										<div class="form-group">
-						<label class="col-form-label">Updated By</label>
-						<input type="text" class="form-control" name="UpdatedBy" id="updatedBy" />
-					</div>
-										<div class="form-group">
-						<label class="col-form-label">Updated On</label>
-						<input type="date" class="form-control" name="UpdatedOn" id="updatedOn" />
-					</div>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					@Html.AntiForgeryToken()
-					<input type="submit" id="save-edit-button" class="btn btn-success" value="Save" name="submit" />
-				</form>
+			<div class="modal-body" id="topicAddEditBody">
 			</div>
 		</div>
 	</div>
 </div>
+
+
+
+<script type="text/javascript">
+
+	var AddEditTopic = function (id) {
+		var editTopicData = "/Shared/Topics/AddEditTopic?Id=" + id;
+		$("#topicAddEditBody").load(editTopicData, function () {
+			$("#topicModal").modal("show");
+		});
+	};
+
+
+</script>

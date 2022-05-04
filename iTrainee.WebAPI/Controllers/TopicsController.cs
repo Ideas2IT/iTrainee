@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace iTrainee.APIs.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class TopicsController : ControllerBase
     {
@@ -19,39 +19,34 @@ namespace iTrainee.APIs.Controllers
             _topicsService = topicService;
         }
 
-
-        // GET: api/<MentorController>
         [HttpGet]
         public IEnumerable<Topics> Get()
         {
-            IEnumerable<Topics> result = _topicsService.GetAllTopics();
-
-            return result;
+            return _topicsService.GetAllTopics();
         }
 
-        // GET api/<MentorController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        public Topics Get(int id)
         {
-            return "value";
+            return _topicsService.GetTopic(id);
         }
 
-        // POST api/<MentorController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public bool AddTopic(Topics topic)
         {
+            return _topicsService.InsertTopic(topic);
         }
 
-        // PUT api/<MentorController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost]
+        public bool UpdateTopic(Topics topic)
         {
+            return _topicsService.UpdateTopic(topic);
         }
 
-        // DELETE api/<MentorController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public bool DeleteTopic(int id)
         {
+            return _topicsService.DeleteTopic(id);
         }
     }
 }

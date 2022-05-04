@@ -10,5 +10,7 @@ namespace iTrainee.Data.Interfaces
 
         bool InsertUser(User user);
 
+        bool DeleteUser(int id);
+
     }
 }

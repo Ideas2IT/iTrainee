@@ -60,5 +60,13 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
 
             return 1;
         }
+
+     
+        public IActionResult DeleteUser(int id)
+        {
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            var result = HttpClientHelper.ExecuteDeleteApiMethod<Stream>(baseUrl, "/User/DeleteUser?", "Id=" + id);
+            return new JsonResult("");
+        }
     }
 }
