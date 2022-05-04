@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace iTrainee.Data
 {
@@ -155,22 +154,22 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "DOB",
-                    Value = DateTime.Now
+                    Value = user.DOB
                 });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "RoleId",
-                    Value = 1
+                    Value = 2
                 });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UserName",
-                    Value = "Mentor"
+                    Value = user.UserName
                 });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "Password",
-                    Value = "test123"
+                    Value = user.Password
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -199,7 +198,7 @@ namespace iTrainee.Data
                 });
 
 
-                DataSet result = _dataManager.ExecuteStoredProcedure("spUpdateUser", parameters);
+                DataSet result = _dataManager.ExecuteStoredProcedure("spSaveUser", parameters);
                 if (result.Tables.Count != 0)
                 {
                     isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);

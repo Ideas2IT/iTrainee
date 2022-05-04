@@ -5,7 +5,6 @@ using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using iTrainee.MVC.Helpers;
-using System.Data.SqlClient;
 
 namespace iTrainee.MVC.Areas.Admin.Controllers
 {
@@ -26,25 +25,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult ManageMentors()
-        {
-            List<User> mentors = new List<User>();
-            User user = new User();
-            user.Id = 1;
-            user.FirstName = "user1";
-            user.LastName = "lastname1";
-            user.Qualification = "B.E";
-            user.UserName = "my userid";
-            DateTime date2 = new DateTime(2012, 12, 25, 10, 30, 50);
-
-            user.DOB = date2;
-
-            mentors.Add(user);
-
-            return View(mentors);
-        }
-
-        public IActionResult ManageMentor()
+        public IActionResult ManageUser()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetMentors", "");
@@ -52,34 +33,18 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             return View(result);
         }
 
-        public IActionResult CreateTrainee()
-        {
-            return View();
-        }
-
-        public IActionResult ManageTrainee()
-        {
-            List<User> trainees = new List<User>();
-            User user = new User();
-            user.Id = 1;
-            user.FirstName = "Trainee1";
-            user.LastName = "Trainee 1";
-            user.Qualification = "B.E";
-            user.UserName = "my userid";
-            DateTime date2 = new DateTime(2012, 12, 25, 10, 30, 50);
-
-            user.DOB = date2;
-
-            trainees.Add(user);
-
-            return View(trainees);
-        }
-
         [HttpGet]
         public IActionResult SaveUser(int id)
         {
-            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + id);
+            var user = new User();
+
+            if (0 < id)
+            {
+                TempData.Remove("UserId");
+                var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+                user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + id);
+                TempData.Add("UserId", id);
+            }
 
             return PartialView(user);
         }
@@ -87,20 +52,17 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         [HttpPost]
         public int SaveUser(User user)
         {
-            if (user.Id > 0)
+            if (0 < Convert.ToInt32(TempData["UserId"]))
             {
-                var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user);
+                user.Id = Convert.ToInt32(TempData["UserId"]);
             }
-            else
-            {
-
-            }
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user);
 
             return 1;
         }
 
-     
+        [HttpPost]
         public IActionResult DeleteUser(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
