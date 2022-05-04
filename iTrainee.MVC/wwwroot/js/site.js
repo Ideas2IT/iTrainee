@@ -22,5 +22,4 @@
         return percentage / 100 * 360
 
     }
-
 });

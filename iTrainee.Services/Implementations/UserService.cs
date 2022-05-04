@@ -3,7 +3,7 @@ using iTrainee.Models;
 using iTrainee.Services.Interfaces;
 using System.Collections.Generic;
 
-namespace iTrainee.Services
+namespace iTrainee.Services.Implementations
 {
     public class UserService : IUserService
     {

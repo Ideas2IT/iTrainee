@@ -1,0 +1,62 @@
+﻿@model IEnumerable<iTrainee.Models.Batch>
+
+@{
+    ViewData["Title"] = "ManageBatch";
+}
+
+<style>
+	.btn-add-gradient {
+    background-image: linear-gradient(144deg,#009ffd, rgb(0,35,155) 50%);
+    border-radius: 4px;
+    box-shadow: rgba(0, 79, 255, 0.3) 0 15px 30px -5px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transform: translateY(-6px);
+    transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
+}
+</style>
+
+<h1 class="mt-5">Manage Batches</h1>
+
+<p>
+	<a href="/Shared/Batch/AddEditBatch" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Batch</a>
+</p>
+<table class="table">
+    <thead>
+<tr class="text-center">
+			<th >
+				@Html.DisplayNameFor(model => model.Id)
+			</th>
+
+			<th>
+
+				@Html.DisplayNameFor(model => model.Name)
+			</th>
+			<th colspan="2">
+				Actions
+			</th>
+		</tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+				<td class="text-center">
+					<a href="#" class="btn btn-primary" onclick="AddEditTopic(@item.Id)"><i class="fa fa-pencil"></i></a> 
+					</td>
+					<td class="text-center">
+					<a class="btn btn-danger btn-xs delete-button" href="/Shared/Batch/DeleteBatch/@item.Id"><i class="fa fa-trash"></i></a>
+					@*  @using (Html.BeginForm("DeleteStream", "Stream", new { id = item.Id, Area="Shared" }))
+						{
+						<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete record with ID = @item.Id');"><i class="fa fa-trash"></i> Delete</button>
+						}*@
+				</td>
+        </tr>
+}
+    </tbody>
+</table>

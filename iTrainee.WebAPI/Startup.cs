@@ -33,12 +33,14 @@ namespace iTrainee.WebAPI
 
             services.AddSingleton<IDataManager>(x => new DataManager(this.Configuration.GetConnectionString("TraineeDB")));
             services.AddSingleton<IStreamRepository, StreamRepository>();
+            services.AddSingleton<IBatchRepository, BatchRepository>();
             services.AddSingleton<ITopicsRepository, TopicsRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
-
-            services.AddSingleton<IUserService, UserService>();
+            
             services.AddSingleton<IStreamService, StreamService>();
+            services.AddSingleton<IBatchService, BatchService>();
             services.AddSingleton<ITopicsService, TopicsService>();
+            services.AddSingleton<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
