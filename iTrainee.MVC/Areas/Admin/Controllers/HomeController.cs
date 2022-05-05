@@ -25,15 +25,14 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult ManageUser()
+        public IActionResult ManageUser(string role)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetMentors", "");
+            var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
 
             return View(result);
         }
 
-        [HttpGet]
         public IActionResult SaveUser(int id)
         {
             var user = new User();

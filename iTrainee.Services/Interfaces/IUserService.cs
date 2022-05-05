@@ -6,7 +6,7 @@ namespace iTrainee.Services.Interfaces
     public interface IUserService
     {
         User GetUser(int id);
-        IEnumerable<User> GetMentors();
+        IEnumerable<User> GetUsers(string role);
         bool SaveUser(User user);
         bool DeleteUser(int id);
     }

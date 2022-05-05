@@ -42,9 +42,6 @@
         <th>
             @Html.DisplayNameFor(model => model.DOB)
         </th>
-        @*            <th>
-            @Html.DisplayNameFor(model => model.RoleId)
-            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Qualification)
         </th>
@@ -65,15 +62,9 @@
             <td>
                 @item.DOB.ToString("dd-MM-yyyy")
             </td>
-            @*            <td>
-                @Html.DisplayFor(modelItem => item.RoleId)
-                </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Qualification)
             </td>
-            @*            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-                </td>*@
             <td>
                 <a onclick="GetUser(@item.Id)" ><i class="fa fa-pencil edit-icon"></i></a>
                 <a data-id-to-delete="@item.Id" class="ml-4" data-toggle="modal" data-target="#delete"><i class="fa fa-trash delete-icon"></i></a>
