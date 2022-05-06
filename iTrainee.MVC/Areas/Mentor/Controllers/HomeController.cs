@@ -31,11 +31,13 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
 
         public IActionResult Index()
         {
+            TempData["HeaderRole"] = "Mentor";
             return View();
         }
 
         public IActionResult ManageTopics()
         {
+            TempData["HeaderRole"] = "Mentor";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var topicsList = HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "");
 
@@ -44,6 +46,7 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
 
         public IActionResult ManageStreams()
         {
+            TempData["HeaderRole"] = "Mentor";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var streamList = HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllStreams", "");
             

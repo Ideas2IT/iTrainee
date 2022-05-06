@@ -48,6 +48,9 @@ namespace iTrainee.Data
         }
 
         public IEnumerable<User> GetUsers(string role)
+        {
+            return GetUsers(role);
+        }
         public User GetUserByUserName(string userName, string password)
         {
             var user = new User();
@@ -93,7 +96,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "Role",
-                    Value = role
+                    //Value = role
                 });
 
                 DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserByRole", parameters);

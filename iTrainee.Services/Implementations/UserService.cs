@@ -18,12 +18,15 @@ namespace iTrainee.Services.Implementations
         }
 
         public IEnumerable<User> GetUsers(string role)
+        {
+            return _userRepository.GetUsers(role);
+        }
         public User GetUserByUserName(string userName, string password)
         {
             return _userRepository.GetUserByUserName(userName, password);
         }
 
-        public IEnumerable<User> GetMentors()
+        public IEnumerable<User> GetMentors(string role)
         {
             return _userRepository.GetUsers(role);
         }

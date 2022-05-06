@@ -36,6 +36,7 @@ namespace iTrainee.Controllers
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + UserName + "&Password=" + Password);
+            TempData["HeaderRole"] = user.RoleName;
             return RedirectToAction("Index", "Home", new {Area = user.RoleName});
         }
 
