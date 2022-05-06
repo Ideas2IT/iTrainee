@@ -115,19 +115,17 @@
         $("#myModalBodyDiv1").load(UserPath, function () {
             $("#myModal1").modal("show");
         });
-      
     };
 
     $('#myModal1').on('show.bs.modal', function() {
         debugger
-        if (window.location.search == "?role=Trainee") {
-             $('#Trainee').prop('checked','checked');
-        } else if  (window.location.search == "?role=Mentor") {
-             $('#Mentor').prop('checked','true');
+         if (window.location.search == "?role=Admin") {
+             $('#Admin').prop('checked','checked');
+        } else if (window.location.search == "?role=Mentor") {
+             $('#Mentor').attr('checked','true');
+        } else if (window.location.search == "?role=Trainee") {
+             $('#Trainee').attr('checked','checked');
         }
-    //    } else {
-    //     $('#Trainee').prop('checked','false');
-    //}
     });
 
     $('#delete').on('show.bs.modal', function (event) {

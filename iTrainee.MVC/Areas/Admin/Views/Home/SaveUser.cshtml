@@ -3,7 +3,7 @@
 <head>
     <style>
         .padding-top-15px {
-            padding-top: 5.3px;
+            padding-top: 6.3px;
         }
     </style>
 </head>
@@ -107,6 +107,7 @@
                 data: a,
                 success: function () {
                     $("#myModal1").modal("hide");
+                    window.location.replace(window.location.href);
                 },
                 error: function () {
                     alert("Unable to save/update data");
