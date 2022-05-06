@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 namespace iTrainee.MVC.Areas.Mentor.Controllers
 {
     [Area("Mentor")]
+    [Route("Mentor/[controller]/[action]/{id?}")]
     public class HomeController : Controller
     {
         ILogger<HomeController> _logger;

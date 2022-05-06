@@ -48,6 +48,43 @@ namespace iTrainee.Data
         }
 
         public IEnumerable<User> GetUsers(string role)
+        public User GetUserByUserName(string userName, string password)
+        {
+            var user = new User();
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UserName",
+                    Value = userName
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Password",
+                    Value = password
+                });
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserByUserName", parameters);
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
+                    {
+                        user.Id = Convert.ToInt32(item["id"]);
+                        user.FirstName = Convert.ToString(item["FirstName"]);
+                        user.LastName = Convert.ToString(item["LastName"]);
+                        user.UserName = Convert.ToString(item["UserName"]);
+                        user.RoleName = Convert.ToString(item["RoleName"]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return user;
+        }
+
+        public IEnumerable<User> GetMentors()
         {
             var users = new List<User>();
             try

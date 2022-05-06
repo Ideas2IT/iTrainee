@@ -33,6 +33,14 @@ namespace iTrainee.APIs.Controllers
             return user;
         }
 
+        [HttpGet]
+        public User GetUserByUserName(string userName, string password)
+        {
+            var user = _userService.GetUserByUserName(userName, password);
+
+            return user;
+        }
+
         [HttpPost]
         public bool SaveUser(User user)
         {

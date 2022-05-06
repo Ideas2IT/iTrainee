@@ -9,6 +9,7 @@ using iTrainee.MVC.Helpers;
 namespace iTrainee.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Route("Admin/[controller]/[action]/{id?}")]
     public class HomeController : Controller
     {
         ILogger<HomeController> _logger;
