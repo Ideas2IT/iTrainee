@@ -148,6 +148,21 @@ namespace iTrainee.Data
                 });
                 parameters.Add(new SqlParameter
                 {
+                    ParameterName = "IsAdmin",
+                    Value = user.IsAdmin
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "IsMentor",
+                    Value = user.IsMentor
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "IsTrainee",
+                    Value = user.IsTrainee
+                });
+                parameters.Add(new SqlParameter
+                {
                     ParameterName = "InsertedBy",
                     Value = "Admin"
                 });
@@ -165,6 +180,11 @@ namespace iTrainee.Data
                 {
                     ParameterName = "UpdatedOn",
                     Value = DateTime.Now
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "AutoIncrementedId",
+                    Value = 0
                 });
 
 
