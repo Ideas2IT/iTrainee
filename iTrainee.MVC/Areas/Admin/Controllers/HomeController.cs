@@ -51,10 +51,11 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         [HttpPost]
         public int SaveUser(User user)
         {
-            if (0 < Convert.ToInt32(TempData["UserId"]))
+            if (0 < user.Id)
             {
                 user.Id = Convert.ToInt32(TempData["UserId"]);
             }
+
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user);
 
