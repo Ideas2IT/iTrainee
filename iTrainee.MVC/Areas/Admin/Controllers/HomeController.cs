@@ -23,11 +23,13 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
+            TempData["HeaderRole"] = "Admin";
             return View();
         }
 
         public IActionResult ManageUser(string role)
         {
+            TempData["HeaderRole"] = "Admin";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
 

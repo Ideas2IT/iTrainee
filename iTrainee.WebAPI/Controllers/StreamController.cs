@@ -14,6 +14,7 @@ namespace iTrainee.APIs.Controllers
         {
             _streamService = streamService;
         }
+
         [HttpGet]
         public IEnumerable<Stream> GetAllStreams()
         {

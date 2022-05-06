@@ -43,12 +43,13 @@
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav">
-                    @if (ViewData["Title"].Equals("Home Page"))
+                    @if (TempData["HeaderRole"].Equals("Admin"))
                     {
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Admin/Home/ManageUser?role=Mentor">Mentor</a>
                         </li>
                         <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="/Trainee/Home/Index">Trainee</a>
                             <a class="nav-link text-white" href="/Admin/Home/ManageUser?role=Trainee">Trainee</a>
                         </li>
                         <li class="nav-item px-3">
@@ -56,13 +57,13 @@
                         </li>
 
                         <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="/Mentor/ManageStreams">Stream</a>
+                            <a class="nav-link text-white" href="/Mentor/Home/ManageStreams">Stream</a>
                         </li>
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Mentor/Home/ManageTopics">Topics</a>
                         </li>
                         <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="#">Sub Topics</a>
+                            <a class="nav-link text-white" href="/Mentor/Home/ManageSubTopics">Sub Topics</a>
                         </li>
 
                         <li class="nav-item px-3">
@@ -72,19 +73,19 @@
                             <a class="nav-link text-white" href="#">Alert Trainee</a>
                         </li>
                     }
-                    @if (ViewData["Title"].Equals("Mentor"))
+                    @if (TempData["HeaderRole"].Equals("Mentor"))
                     {
                         <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="#">Stream</a>
+                            <a class="nav-link text-white" href="/Mentor/Home/ManageStreams">Stream</a>
                         </li>
                         <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="#">Topics</a>
+                            <a class="nav-link text-white" href="/Mentor/Home/ManageTopics">Topics</a>
                         </li>
                         <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="#">Sub Topics</a>
+                            <a class="nav-link text-white" href="/Mentor/Home/ManageSubTopics">Sub Topics</a>
                         </li>
                     }
-                    @if (ViewData["Title"].Equals("Trainee"))
+                    @if (TempData["HeaderRole"].Equals("Trainee"))
                     {
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="#">Daily Progress</a>
