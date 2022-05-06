@@ -39,18 +39,18 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         public IActionResult SaveUser(int id)
         {
             var user = new User();
-            if (Convert.ToString(TempData["Role"]) == "Admin")
-            {
-                user.IsAdmin = true;
-            }
-            else if (Convert.ToString(TempData["Role"]) == "Mentor")
-            {
-                user.IsMentor = true;
-            }
-            else if (Convert.ToString(TempData["Role"]) == "Trainee")
-            {
-                user.IsTrainee = true;
-            }
+            //if (Convert.ToString(TempData["Role"]) == "Admin")
+            //{
+            //    user.IsAdmin = true;
+            //}
+            //else if (Convert.ToString(TempData["Role"]) == "Mentor")
+            //{
+            //    user.IsMentor = true;
+            //}
+            //else if (Convert.ToString(TempData["Role"]) == "Trainee")
+            //{
+            //    user.IsTrainee = true;
+            //}
 
             if (0 < id)
             {
