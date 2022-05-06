@@ -74,7 +74,7 @@
 </table>
 
 <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
@@ -98,7 +98,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Save User</h3>
+                <h3 class="modal-title">@ViewBag.Role Details</h3>
             </div>
             <div class="modal-body" id="myModalBodyDiv1">
             </div>
@@ -116,6 +116,17 @@
             $("#myModal1").modal("show");
         });
     };
+
+    $('#myModal1').on('show.bs.modal', function() {
+        debugger
+         if (window.location.search == "?role=Admin") {
+             $('#Admin').prop('checked','checked');
+        } else if (window.location.search == "?role=Mentor") {
+             $('#Mentor').attr('checked','true');
+        } else if (window.location.search == "?role=Trainee") {
+             $('#Trainee').attr('checked','checked');
+        }
+    });
 
     $('#delete').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
