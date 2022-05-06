@@ -32,7 +32,7 @@ namespace iTrainee.Data
                 {
                     foreach (DataRow item in result.Tables[0].Rows)
                     {
-                        user.Id = Convert.ToInt32(item["id"]);
+                        user.Id = Convert.ToInt32(item["Id"]);
                         user.FirstName = Convert.ToString(item["FirstName"]);
                         user.LastName = Convert.ToString(item["LastName"]);
                         user.DOB = Convert.ToDateTime(item["DOB"]);

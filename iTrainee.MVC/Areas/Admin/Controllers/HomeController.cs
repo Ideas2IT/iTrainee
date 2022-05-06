@@ -29,6 +29,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
+
             ViewBag.Role = role;
             TempData.Remove("Role");
             TempData.Add("Role", role);
@@ -38,12 +39,15 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         public IActionResult SaveUser(int id)
         {
             var user = new User();
-            if (TempData["Role"] == "Mentor")
+            if (Convert.ToString(TempData["Role"]) == "Admin")
+            {
+                user.IsAdmin = true;
+            }
+            else if (Convert.ToString(TempData["Role"]) == "Mentor")
             {
                 user.IsMentor = true;
             }
-
-            else if (TempData["Role"] == "Trainee")
+            else if (Convert.ToString(TempData["Role"]) == "Trainee")
             {
                 user.IsTrainee = true;
             }
