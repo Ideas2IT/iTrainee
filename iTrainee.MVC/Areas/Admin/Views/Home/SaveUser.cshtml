@@ -1,5 +1,14 @@
 ﻿@model iTrainee.Models.User
 
+<head>
+    <style>
+        .padding-top-15px {
+            padding-top: 5.3px;
+        }
+    </style>
+</head>
+
+
 <form id="myForm" method="Post">
     <div class="row">
         <div class="col-md-6">
@@ -8,41 +17,57 @@
                 <label class="col-form-label">First Name</label>
                 <input type="text" class="form-control" name="FirstName" value="@Model.FirstName" required />
             </div>
+
+
+            @if (0 == @Model.Id)
+            {
+                <div class="form-group">
+                    <label class="col-form-label">Date Of Birth</label>
+                    <input type="date" class="form-control" name="DOB" required />
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <label class="col-form-label">Date Of Birth</label>
+                    <input type="date" class="form-control" name="DOB" value="@Model.DOB.ToString("yyyy-MM-dd")" required />
+                </div>
+            }
+            <div class="form-group padding-top-15px">
+                <label class="col-form-label d-block">Role</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="Admin" name="IsAdmin" checked="@Model.IsAdmin">
+                    <label class="form-check-label" for="inlineCheckbox1">Admin</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="Mentor" name="IsMentor" checked="@Model.IsMentor">
+                    <label class="form-check-label" for="inlineCheckbox1">Mentor</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="Trainee" name="IsTrainee" checked="@Model.IsTrainee">
+                    <label class="form-check-label" for="inlineCheckbox2">Trainee</label>
+                </div>
+            </div>
+            @if (0 == @Model.Id)
+            {
+                <div class="form-group padding-top-15px">
+                    <label class="col-form-label">Password</label>
+                    <input type="password" class="form-control" name="Password" required />
+                </div>
+            }
+
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label class="col-form-label">Last Name</label>
                 <input type="text" class="form-control" name="LastName" value="@Model.LastName" required />
             </div>
-            <div class="form-group">
-                <label class="col-form-lab el">Date Of Birth</label>
-                @if (0 == @Model.Id)
-                {
-                    <input type="date" class="form-control" name="DOB" required />
-                }
-                else
-                {
-                    <input type="date" class="form-control" name="DOB" value="@Model.DOB.ToString("yyyy-MM-dd")" required />
-                }
-            </div>
+
             <div class="form-group">
                 <label class="col-form-label">Qualification</label>
                 <input type="text" class="form-control" name="Qualification" value="@Model.Qualification" required />
             </div>
-        </div>
-        <div class="col-md-6">
 
-            <label class="col-form-lab el d-block form-group">Choose Role</label>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="Admin" name="IsAdmin" checked="@Model.IsAdmin">
-                <label class="form-check-label" for="inlineCheckbox1">Admin</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="Mentor" name="IsMentor" checked="@Model.IsMentor">
-                <label class="form-check-label" for="inlineCheckbox1">Mentor</label>
-            </div>
-            <div class="form-check form-check-inline form-group">
-                <input class="form-check-input" type="checkbox" id="Trainee" name="IsTrainee" checked="@Model.IsTrainee">
-                <label class="form-check-label" for="inlineCheckbox2">Trainee</label>
-            </div>
 
             @if (0 == @Model.Id)
             {
@@ -51,22 +76,18 @@
                     <input type="email" class="form-control" name="UserName" placeholder="example@org.com" required />
                 </div>
                 <div class="form-group">
-                    <label class="col-form-label">Password</label>
-                    <input type="password" class="form-control" name="Password" required />
-                </div>
-                <div class="form-group">
                     <label class="col-form-label">Confirm Password</label>
                     <input type="password" class="form-control" name="Confirm Password" required />
                 </div>
             }
         </div>
-        <div class="form-group mt-4 float-right">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <input type="submit" value="Save" name="submit" id="btnSubmit" class="btn btn-primary mr-3" />
-        </div>
-     </div>
+    </div>
+    <div class="form-group mt-4 float-right">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" value="Save" name="submit" id="btnSubmit" class="btn btn-primary mr-3" />
+    </div>
+    </div>
 </form>
-</>
 
 @section Scripts {
     @{
@@ -101,7 +122,7 @@
             }
 
             if ($("#Admin").is(':checked')) {
-                $('#Admin').val("true");        
+                $('#Admin').val("true");
             } else {
                 $('#Admin').val("false");
             }
@@ -115,7 +136,7 @@
             }
 
             if ($("#Mentor").is(':checked')) {
-                $('#Mentor').val("true");        
+                $('#Mentor').val("true");
             } else {
                 $('#Mentor').val("false");
             }
@@ -132,7 +153,7 @@
             }
 
             if ($("#Trainee").is(':checked')) {
-                $('#Trainee').val("true");        
+                $('#Trainee').val("true");
             } else {
                 $('#Trainee').val("false");
             }
