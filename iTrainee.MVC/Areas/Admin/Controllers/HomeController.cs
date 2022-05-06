@@ -32,8 +32,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
 
             ViewBag.Role = role;
-            TempData.Remove("Role");
-            TempData.Add("Role", role);
+            TempData["Role"] = role;
             return View(result);
         }
 
@@ -41,12 +40,22 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         {
             var user = new User();
 
+            if ((Convert.ToString(TempData["Role"]) == "Admin"))
+            {
+                user.IsAdmin = true;
+            } else if ((Convert.ToString(TempData["Role"]) == "Mentor"))
+            {
+                user.IsMentor = true;
+            } else if ((Convert.ToString(TempData["Role"]) == "Trainee"))
+            {
+                user.IsTrainee = true;
+            }
+
             if (0 < id)
             {
-                TempData.Remove("UserId");
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
                 user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + id);
-                TempData.Add("UserId", id);
+                TempData["UserId"] = id;
             }
 
             return PartialView(user);

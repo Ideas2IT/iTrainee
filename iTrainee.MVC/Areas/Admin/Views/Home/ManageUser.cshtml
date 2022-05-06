@@ -9,10 +9,12 @@
         color: red;
         font-size: x-large;
     }
-        .edit-icon {
+
+    .edit-icon {
         color: #00239B;
         font-size: x-large;
     }
+
     .btn-add-gradient {
         background-image: linear-gradient(144deg,#009ffd, rgb(0,35,155) 50%);
         border-radius: 4px;
@@ -66,7 +68,7 @@
                 @Html.DisplayFor(modelItem => item.Qualification)
             </td>
             <td>
-                <a onclick="GetUser(@item.Id)" ><i class="fa fa-pencil edit-icon"></i></a>
+                <a onclick="GetUser(@item.Id)"><i class="fa fa-pencil edit-icon"></i></a>
                 <a data-id-to-delete="@item.Id" class="ml-4" data-toggle="modal" data-target="#delete"><i class="fa fa-trash delete-icon"></i></a>
             </td>
         </tr>
@@ -116,17 +118,6 @@
             $("#myModal1").modal("show");
         });
     };
-
-    $('#myModal1').on('show.bs.modal', function() {
-        debugger
-         if (window.location.search == "?role=Admin") {
-             $('#Admin').prop('checked','checked');
-        } else if (window.location.search == "?role=Mentor") {
-             $('#Mentor').attr('checked','true');
-        } else if (window.location.search == "?role=Trainee") {
-             $('#Trainee').attr('checked','checked');
-        }
-    });
 
     $('#delete').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
