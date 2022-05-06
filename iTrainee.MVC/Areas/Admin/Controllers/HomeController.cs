@@ -9,6 +9,7 @@ using iTrainee.MVC.Helpers;
 namespace iTrainee.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Route("Admin/[controller]/[action]/{id?}")]
     public class HomeController : Controller
     {
         ILogger<HomeController> _logger;
@@ -22,14 +23,19 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
+            TempData["HeaderRole"] = "Admin";
             return View();
         }
 
         public IActionResult ManageUser(string role)
         {
+            TempData["HeaderRole"] = "Admin";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
 
+            ViewBag.Role = role;
+            TempData.Remove("Role");
+            TempData.Add("Role", role);
             return View(result);
         }
 
