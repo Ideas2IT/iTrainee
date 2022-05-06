@@ -32,9 +32,9 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpGet]
-        public User GetUserByUserName(string userName)
+        public User GetUserByUserName(string userName, string password)
         {
-            var user = _userService.GetUserByUserName(userName);
+            var user = _userService.GetUserByUserName(userName, password);
 
             return user;
         }

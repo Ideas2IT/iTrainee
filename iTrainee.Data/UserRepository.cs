@@ -47,7 +47,7 @@ namespace iTrainee.Data
             return user;
         }
 
-        public User GetUserByUserName(string userName)
+        public User GetUserByUserName(string userName, string password)
         {
             var user = new User();
             try
@@ -58,7 +58,12 @@ namespace iTrainee.Data
                     ParameterName = "UserName",
                     Value = userName
                 });
-                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserByUsrName", parameters);
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Password",
+                    Value = password
+                });
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserByUserName", parameters);
                 if (result?.Tables?.Count != 0)
                 {
                     foreach (DataRow item in result.Tables[0].Rows)
@@ -66,9 +71,8 @@ namespace iTrainee.Data
                         user.Id = Convert.ToInt32(item["id"]);
                         user.FirstName = Convert.ToString(item["FirstName"]);
                         user.LastName = Convert.ToString(item["LastName"]);
-                        user.RoleId = Convert.ToInt32(item["RoleId"]);
                         user.UserName = Convert.ToString(item["UserName"]);
-                        user.Password = Convert.ToString(item["Password"]);                        
+                        user.RoleName = Convert.ToString(item["RoleName"]);
                     }
                 }
             }

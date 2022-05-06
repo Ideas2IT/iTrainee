@@ -16,9 +16,10 @@ namespace iTrainee.Controllers
         private readonly ILogger<HomeController> _logger;
         IConfiguration _configuration;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
         }
 
         public IActionResult Index()
@@ -26,12 +27,16 @@ namespace iTrainee.Controllers
             return View();
         }
 
+        public IActionResult Login()
+        {            
+            return View();
+        }
         [HttpPost]
-        public IActionResult Login(string userName, string password)
+        public IActionResult Login(string UserName, string Password)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var user = HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + userName);
-            return View();
+            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + UserName + "&Password=" + Password);
+            return RedirectToAction("Index", "Home", new {Area = user.RoleName});
         }
 
         public IActionResult Privacy()

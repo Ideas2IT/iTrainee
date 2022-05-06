@@ -17,9 +17,9 @@ namespace iTrainee.Services.Implementations
             return _userRepository.GetUser(id);
         }
 
-        public User GetUserByUserName(string userName)
+        public User GetUserByUserName(string userName, string password)
         {
-            return _userRepository.GetUserByUserName(userName);
+            return _userRepository.GetUserByUserName(userName, password);
         }
 
         public IEnumerable<User> GetMentors()
