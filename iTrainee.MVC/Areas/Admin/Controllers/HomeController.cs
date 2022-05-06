@@ -26,18 +26,32 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult ManageUser()
+        public IActionResult ManageUser(string role)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetMentors", "");
+            var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
 
+            ViewBag.Role = role;
+            TempData.Remove("Role");
+            TempData.Add("Role", role);
             return View(result);
         }
 
-        [HttpGet]
         public IActionResult SaveUser(int id)
         {
             var user = new User();
+            if (Convert.ToString(TempData["Role"]) == "Admin")
+            {
+                user.IsAdmin = true;
+            }
+            else if (Convert.ToString(TempData["Role"]) == "Mentor")
+            {
+                user.IsMentor = true;
+            }
+            else if (Convert.ToString(TempData["Role"]) == "Trainee")
+            {
+                user.IsTrainee = true;
+            }
 
             if (0 < id)
             {
@@ -53,10 +67,11 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         [HttpPost]
         public int SaveUser(User user)
         {
-            if (0 < Convert.ToInt32(TempData["UserId"]))
+            if (0 < user.Id)
             {
                 user.Id = Convert.ToInt32(TempData["UserId"]);
             }
+
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user);
 

@@ -17,6 +17,7 @@ namespace iTrainee.Services.Implementations
             return _userRepository.GetUser(id);
         }
 
+        public IEnumerable<User> GetUsers(string role)
         public User GetUserByUserName(string userName, string password)
         {
             return _userRepository.GetUserByUserName(userName, password);
@@ -24,7 +25,7 @@ namespace iTrainee.Services.Implementations
 
         public IEnumerable<User> GetMentors()
         {
-            return _userRepository.GetMentors();
+            return _userRepository.GetUsers(role);
         }
 
         public bool SaveUser(User user)

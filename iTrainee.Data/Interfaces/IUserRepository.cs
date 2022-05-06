@@ -6,7 +6,7 @@ namespace iTrainee.Data.Interfaces
     public interface IUserRepository
     {
         User GetUser(int id);
-        IEnumerable<User> GetMentors();
+        IEnumerable<User> GetUsers(string role);
 
         bool InsertUser(User user);
 

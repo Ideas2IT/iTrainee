@@ -1,62 +1,72 @@
 ﻿@model iTrainee.Models.User
-<form id="myForm" method="Post">
-    <div class="form-group">
-        <label class="col-form-label">First Name</label>
-        <input type="text" class="form-control" name="FirstName" value="@Model.FirstName" required />
-    </div>
-    <div class="form-group">
-        <label class="col-form-label">Last Name</label>
-        <input type="text" class="form-control" name="LastName" value="@Model.LastName" required />
-    </div>
-    <div class="form-group">
-        <label class="col-form-lab el">Date Of Birth</label>
-        @if (0 == @Model.Id)
-        {
-            <input type="date" class="form-control" name="DOB" required />
-        }
-        else
-        {
-            <input type="date" class="form-control" name="DOB" value="@Model.DOB.ToString("yyyy-MM-dd")" required />
-        }
-    </div>
-    <div class="form-group">
-        <label class="col-form-label">Qualification</label>
-        <input type="text" class="form-control" name="Qualification" value="@Model.Qualification" required />
-    </div>
 
-    @if (0 == @Model.Id)
-    {
-        <label class="col-form-lab el d-block form-group">Choose Role</label>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label" for="inlineCheckbox1">Admin</label>
+<form id="myForm" method="Post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="hidden" class="form-control" name="Id" value="@Model.Id" required />
+                <label class="col-form-label">First Name</label>
+                <input type="text" class="form-control" name="FirstName" value="@Model.FirstName" required />
+            </div>
+            <div class="form-group">
+                <label class="col-form-label">Last Name</label>
+                <input type="text" class="form-control" name="LastName" value="@Model.LastName" required />
+            </div>
+            <div class="form-group">
+                <label class="col-form-lab el">Date Of Birth</label>
+                @if (0 == @Model.Id)
+                {
+                    <input type="date" class="form-control" name="DOB" required />
+                }
+                else
+                {
+                    <input type="date" class="form-control" name="DOB" value="@Model.DOB.ToString("yyyy-MM-dd")" required />
+                }
+            </div>
+            <div class="form-group">
+                <label class="col-form-label">Qualification</label>
+                <input type="text" class="form-control" name="Qualification" value="@Model.Qualification" required />
+            </div>
         </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label" for="inlineCheckbox1">Mentor</label>
+        <div class="col-md-6">
+
+            <label class="col-form-lab el d-block form-group">Choose Role</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="Admin" name="IsAdmin" checked="@Model.IsAdmin">
+                <label class="form-check-label" for="inlineCheckbox1">Admin</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="Mentor" name="IsMentor" checked="@Model.IsMentor">
+                <label class="form-check-label" for="inlineCheckbox1">Mentor</label>
+            </div>
+            <div class="form-check form-check-inline form-group">
+                <input class="form-check-input" type="checkbox" id="Trainee" name="IsTrainee" checked="@Model.IsTrainee">
+                <label class="form-check-label" for="inlineCheckbox2">Trainee</label>
+            </div>
+
+            @if (0 == @Model.Id)
+            {
+                <div class="form-group">
+                    <label class="col-form-label">User Name</label>
+                    <input type="email" class="form-control" name="UserName" placeholder="example@org.com" required />
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Password</label>
+                    <input type="password" class="form-control" name="Password" required />
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Confirm Password</label>
+                    <input type="password" class="form-control" name="Confirm Password" required />
+                </div>
+            }
         </div>
-        <div class="form-check form-check-inline form-group">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label" for="inlineCheckbox2">Trainee</label>
+        <div class="form-group mt-4 float-right">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <input type="submit" value="Save" name="submit" id="btnSubmit" class="btn btn-primary mr-3" />
         </div>
-        <div class="form-group">
-            <label class="col-form-label">User Name</label>
-            <input type="email" class="form-control" name="UserName" required />
-        </div>
-        <div class="form-group">
-            <label class="col-form-label">Password</label>
-            <input type="password" class="form-control" name="Password" placeholder="example@org.com" required />
-        </div>
-        <div class="form-group">
-            <label class="col-form-label">Confirm Password</label>
-            <input type="password" class="form-control" name="Confirm Password" required />
-        </div>
-    }
-    <div class="form-group mt-4 float-right">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" value="Save" name="submit" id="btnSubmit" class="btn btn-primary mr-3" />
-    </div>
+     </div>
 </form>
+</>
 
 @section Scripts {
     @{
@@ -80,6 +90,52 @@
                     alert("Unable to save/update data");
                 },
             });
+        });
+
+        $("#Admin").click(function () {
+            debugger
+            if ($("#Admin").is(':checked') || $("#Mentor").is(':checked')) {
+                $('#Trainee').attr('disabled', true);
+            } else {
+                $('#Trainee').attr('disabled', false);
+            }
+
+            if ($("#Admin").is(':checked')) {
+                $('#Admin').val("true");        
+            } else {
+                $('#Admin').val("false");
+            }
+        });
+
+        $("#Mentor").click(function () {
+            if ($("#Mentor").is(':checked') || $("#Admin").is(':checked')) {
+                $('#Trainee').attr('disabled', true);
+            } else {
+                $('#Trainee').attr('disabled', false);
+            }
+
+            if ($("#Mentor").is(':checked')) {
+                $('#Mentor').val("true");        
+            } else {
+                $('#Mentor').val("false");
+            }
+        });
+
+        $("#Trainee").click(function () {
+            if ($("#Trainee").is(':checked')) {
+                $('#Admin').attr('disabled', true);
+                $('#Mentor').attr('disabled', true);
+
+            } else {
+                $('#Admin').attr('disabled', false);
+                $('#Mentor').attr('disabled', false);
+            }
+
+            if ($("#Trainee").is(':checked')) {
+                $('#Trainee').val("true");        
+            } else {
+                $('#Trainee').val("false");
+            }
         });
     });
 </script>

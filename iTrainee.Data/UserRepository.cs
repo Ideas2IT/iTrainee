@@ -32,7 +32,7 @@ namespace iTrainee.Data
                 {
                     foreach (DataRow item in result.Tables[0].Rows)
                     {
-                        user.Id = Convert.ToInt32(item["id"]);
+                        user.Id = Convert.ToInt32(item["Id"]);
                         user.FirstName = Convert.ToString(item["FirstName"]);
                         user.LastName = Convert.ToString(item["LastName"]);
                         user.DOB = Convert.ToDateTime(item["DOB"]);
@@ -47,6 +47,7 @@ namespace iTrainee.Data
             return user;
         }
 
+        public IEnumerable<User> GetUsers(string role)
         public User GetUserByUserName(string userName, string password)
         {
             var user = new User();
@@ -88,7 +89,14 @@ namespace iTrainee.Data
             var users = new List<User>();
             try
             {
-                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUser");
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Role",
+                    Value = role
+                });
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserByRole", parameters);
                 if (result?.Tables?.Count != 0)
                 {
                     foreach (DataRow item in result.Tables[0].Rows)
@@ -162,11 +170,6 @@ namespace iTrainee.Data
                 });
                 parameters.Add(new SqlParameter
                 {
-                    ParameterName = "RoleId",
-                    Value = 2
-                });
-                parameters.Add(new SqlParameter
-                {
                     ParameterName = "UserName",
                     Value = user.UserName
                 });
@@ -179,6 +182,21 @@ namespace iTrainee.Data
                 {
                     ParameterName = "Qualification",
                     Value = user.Qualification
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "IsAdmin",
+                    Value = user.IsAdmin
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "IsMentor",
+                    Value = user.IsMentor
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "IsTrainee",
+                    Value = user.IsTrainee
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -199,6 +217,11 @@ namespace iTrainee.Data
                 {
                     ParameterName = "UpdatedOn",
                     Value = DateTime.Now
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "AutoIncrementedId",
+                    Value = 0
                 });
 
 

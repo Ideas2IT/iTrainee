@@ -16,10 +16,12 @@ namespace iTrainee.APIs.Controllers
         {
             _userService = userService;
         }
+
         [HttpGet]
-        public IEnumerable<User> GetMentors()
+        public IEnumerable<User> GetUsers(string role)
         {
-            var result = _userService.GetMentors();
+            var result = _userService.GetUsers(role);
+
             return result;
         }
 
