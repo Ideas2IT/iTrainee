@@ -1,17 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using iTrainee.Models;
-using Newtonsoft.Json;
-using System.Net.Http;
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Dynamic;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using iTrainee.Services.Interfaces;
-using iTrainee.Services.Implementations;
 using iTrainee.MVC.Helpers;
 using Microsoft.Extensions.Configuration;
-using iTrainee.MVC.Areas.Shared.Controllers;
 using Microsoft.Extensions.Logging;
 
 namespace iTrainee.MVC.Areas.Mentor.Controllers
@@ -49,6 +39,13 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
             return View(streamList);
         }
 
+        public IActionResult ManageSubTopics()
+        {
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            var subTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics", "");
+
+            return View(subTopicsList);
+        }
         public IActionResult CreateTopic()
         {
             return View();

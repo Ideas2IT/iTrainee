@@ -82,7 +82,6 @@ namespace iTrainee.MVC.Helpers
                 }
             }
             return false;
-
         }
 
     }
