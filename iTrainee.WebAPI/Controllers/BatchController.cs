@@ -29,7 +29,7 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpPost]
-        public bool AddBatch(Batch batch)
+        public int AddBatch(Batch batch)
         {
             return _batchService.InsertBatch(batch);
         }

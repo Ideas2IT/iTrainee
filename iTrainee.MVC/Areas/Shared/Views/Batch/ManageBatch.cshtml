@@ -16,12 +16,12 @@
 }
 </style>
 
-<h1 class="mt-5">Manage Batches</h1>
+<div class="d-flex justify-content-between mt-4">
+<h3>Manage Batches</h3>
+<a href="/Shared/Batch/AddEditBatch?Id=0" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Batch</a>
+</div>
 
-<p>
-	<a href="/Shared/Batch/AddEditBatch" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Batch</a>
-</p>
-<table class="table">
+<table class="table table-hover table-bordered">
     <thead>
 <tr class="text-center">
 			<th >
@@ -47,7 +47,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
 				<td class="text-center">
-					<a href="#" class="btn btn-primary" onclick="AddEditTopic(@item.Id)"><i class="fa fa-pencil"></i></a> 
+					<a href="/Shared/Batch/AddEditBatch?Id=@item.Id" class="btn btn-primary"><i class="fa fa-pencil"></i></a> 
 					</td>
 					<td class="text-center">
 					<a class="btn btn-danger btn-xs delete-button" href="/Shared/Batch/DeleteBatch/@item.Id"><i class="fa fa-trash"></i></a>

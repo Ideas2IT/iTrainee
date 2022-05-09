@@ -99,7 +99,8 @@ namespace iTrainee.Data
                             FirstName = Convert.ToString(item["FirstName"]),
                             LastName = Convert.ToString(item["LastName"]),
                             DOB = Convert.ToDateTime(item["DOB"]),
-                            Qualification = Convert.ToString(item["Qualification"])
+                            Qualification = Convert.ToString(item["Qualification"]),
+                            UserName = Convert.ToString(item["UserName"])
                         });
                     }
                 }

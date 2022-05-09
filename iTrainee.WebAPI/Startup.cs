@@ -36,12 +36,17 @@ namespace iTrainee.WebAPI
             services.AddSingleton<IBatchRepository, BatchRepository>();
             services.AddSingleton<ITopicsRepository, TopicsRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<IBatchUserRepository, BatchUserRepository>();
+            services.AddSingleton<IBatchStreamRepository, BatchStreamRepository>();
+
             services.AddSingleton<ISubTopicsRepository, SubTopicsRepository>();
 
             services.AddSingleton<IStreamService, StreamService>();
             services.AddSingleton<IBatchService, BatchService>();
             services.AddSingleton<ITopicsService, TopicsService>();
             services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IBatchUserService, BatchUserService>();
+            services.AddSingleton<IBatchStreamService, BatchStreamService>();
             services.AddSingleton<ISubTopicsService, SubTopicsService>();
         }
 
