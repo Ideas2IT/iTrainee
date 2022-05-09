@@ -23,62 +23,26 @@ namespace iTrainee.APIs.Controllers
             return _subTopicsService.GetAllSubTopics();
         }
 
-        //// GET: SubTopicsController/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
+        [HttpGet]
+        public SubTopics Get(int id)
+        {
+            return _subTopicsService.GetSubTopic(id);
+        }
 
-        //// GET: SubTopicsController/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+        [HttpPost]
+        public bool AddTopic(SubTopics topic)
+        {
+            return _subTopicsService.AddSubTopic(topic);
+        }
 
-        //// POST: SubTopicsController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: SubTopicsController/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: SubTopicsController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: SubTopicsController/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
+        [HttpPost]
+        public bool UpdateTopic(SubTopics topic)
+        {
+            return _subTopicsService.UpdateTopic(topic);
+        }
 
         // POST: SubTopicsController/Delete/5
-       [HttpDelete]
+        [HttpDelete]
         public bool DeleteSubTopics(int id)
         {
             return _subTopicsService.DeleteSubTopics(id);

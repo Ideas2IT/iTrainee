@@ -12,5 +12,11 @@ namespace iTrainee.Services.Interfaces
         IEnumerable<SubTopics> GetAllSubTopics();
 
         bool DeleteSubTopics(int id);
+
+        SubTopics GetSubTopic(int id);
+
+        bool AddSubTopic(SubTopics topic);
+
+        bool UpdateTopic(SubTopics topic);
     }
 }

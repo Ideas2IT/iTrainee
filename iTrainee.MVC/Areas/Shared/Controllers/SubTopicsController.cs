@@ -1,6 +1,5 @@
 ﻿using iTrainee.Models;
 using iTrainee.MVC.Helpers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -10,8 +9,8 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 {
     public class SubTopicsController : Controller
     {
-        ILogger<SubTopicsController> _logger;
-        IConfiguration _configuration;
+        private ILogger<SubTopicsController> _logger;
+        private IConfiguration _configuration;
 
         public SubTopicsController(ILogger<SubTopicsController> logger, IConfiguration configuration)
         {
@@ -25,31 +24,31 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddEditStream(int id)
+        public IActionResult AddEditSubTopic(int id)
         {
-            TempData.Remove("StreamId");
+            TempData.Remove("SubTopicsId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var stream = HttpClientHelper.ExecuteGetApiMethod<Stream>(baseUrl, "/Stream/Get?", "Id=" + id);
-            TempData.Add("StreamId", id);
-            return PartialView(stream);
+            var subTopics = HttpClientHelper.ExecuteGetApiMethod<SubTopics>(baseUrl, "/SubTopics/Get?", "Id=" + id);
+            TempData.Add("SubTopicsId", id);
+            return PartialView(subTopics);
         }
 
         [HttpPost]
-        public IActionResult AddEditStream(Stream stream)
+        public IActionResult AddEditSubTopic(SubTopics subTopics)
         {
-            stream.Id = Convert.ToInt32(TempData["StreamId"]);
-            if (stream.Id > 0)
+            subTopics.Id = Convert.ToInt32(TempData["SubTopicsId"]);
+            if (subTopics.Id > 0)
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/UpdateStream", stream);
+                HttpClientHelper.ExecutePostApiMethod<SubTopics>(baseUrl, "/SubTopics/UpdateSubTopics", subTopics);
             }
             else
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/AddStream", stream);
+                HttpClientHelper.ExecutePostApiMethod<SubTopics>(baseUrl, "/Stream/AddSubTopics", subTopics);
             }
 
-            return PartialView(stream);
+            return PartialView(subTopics);
         }
 
         [HttpDelete]

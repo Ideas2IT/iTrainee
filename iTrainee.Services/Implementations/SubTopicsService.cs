@@ -15,6 +15,11 @@ namespace iTrainee.Services.Implementations
             this._subTopicsRepository = subTopicsRepository;
         }
 
+        public bool AddSubTopic(SubTopics topic)
+        {
+            return _subTopicsRepository.InsertSubTopics(topic);
+        }
+
         public bool DeleteSubTopics(int id)
         {
            return _subTopicsRepository.DeleteSubTopics(id);
@@ -23,6 +28,16 @@ namespace iTrainee.Services.Implementations
         public IEnumerable<SubTopics> GetAllSubTopics()
         {
           return _subTopicsRepository.GetAllSubTopics();
+        }
+
+        public SubTopics GetSubTopic(int id)
+        {
+            return _subTopicsRepository.GetSubTopic(id);
+        }
+
+        public bool UpdateTopic(SubTopics topic)
+        {
+            return _subTopicsRepository.UpdateSubTopic(topic);
         }
     }
 }
