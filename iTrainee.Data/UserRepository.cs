@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace iTrainee.Data
 {
@@ -28,16 +27,45 @@ namespace iTrainee.Data
                     ParameterName = "Id",
                     Value = id
                 });
+
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
+
                 DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserById", parameters);
                 if (result?.Tables?.Count != 0)
                 {
                     foreach (DataRow item in result.Tables[0].Rows)
                     {
-                        user.Id = Convert.ToInt32(item["id"]);
+                        user.Id = Convert.ToInt32(item["Id"]);
                         user.FirstName = Convert.ToString(item["FirstName"]);
                         user.LastName = Convert.ToString(item["LastName"]);
                         user.DOB = Convert.ToDateTime(item["DOB"]);
                         user.Qualification = Convert.ToString(item["Qualification"]);
+                    }
+                }
+
+
+
+                DataSet roleOfUser = _dataManager.ExecuteStoredProcedure("spGetUserRoles", parameter);
+
+                DataColumn col = roleOfUser.Tables[0].Columns["RoleId"];
+                foreach (DataRow row in roleOfUser.Tables[0].Rows)
+                {
+                    if(Convert.ToString(row[col]) == "1")
+                    {
+                        user.IsAdmin = true;
+                    }
+                    else if (Convert.ToString(row[col]) == "2")
+                    {
+                        user.IsMentor = true;
+                    }
+                    else if (Convert.ToString(row[col]) == "3")
+                    {
+                        user.IsTrainee = true;
                     }
                 }
             }
@@ -48,7 +76,6 @@ namespace iTrainee.Data
             return user;
         }
 
-        
         public IEnumerable<User> GetUsers(string role)
         {
             var users = new List<User>();
@@ -83,6 +110,41 @@ namespace iTrainee.Data
                 throw ex;
             }
             return users;
+        }
+        public User GetUserByUserName(string userName, string password)
+        {
+            var user = new User();
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UserName",
+                    Value = userName
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Password",
+                    Value = password
+                });
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserByUserName", parameters);
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
+                    {
+                        user.Id = Convert.ToInt32(item["id"]);
+                        user.FirstName = Convert.ToString(item["FirstName"]);
+                        user.LastName = Convert.ToString(item["LastName"]);
+                        user.UserName = Convert.ToString(item["UserName"]);
+                        user.RoleName = Convert.ToString(item["RoleName"]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return user;
         }
 
         public bool DeleteUser(int id)
@@ -132,27 +194,37 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "DOB",
-                    Value = DateTime.Now
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "RoleId",
-                    Value = 1
+                    Value = user.DOB
                 });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UserName",
-                    Value = "Mentor"
+                    Value = user.UserName
                 });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "Password",
-                    Value = "test123"
+                    Value = user.Password
                 });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "Qualification",
                     Value = user.Qualification
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "IsAdmin",
+                    Value = user.IsAdmin
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "IsMentor",
+                    Value = user.IsMentor
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "IsTrainee",
+                    Value = user.IsTrainee
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -174,9 +246,14 @@ namespace iTrainee.Data
                     ParameterName = "UpdatedOn",
                     Value = DateTime.Now
                 });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "AutoIncrementedId",
+                    Value = 0
+                });
 
 
-                DataSet result = _dataManager.ExecuteStoredProcedure("spUpdateUser", parameters);
+                DataSet result = _dataManager.ExecuteStoredProcedure("spSaveUser", parameters);
                 if (result.Tables.Count != 0)
                 {
                     isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);

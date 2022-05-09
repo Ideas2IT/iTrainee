@@ -1,71 +1,71 @@
 ﻿@model IEnumerable<iTrainee.Models.Stream>
 
 @{
-	ViewData["Title"] = "ManageStreams";
+    ViewData["Title"] = "ManageStreams";
 }
 
 <style>
-	.btn-add-gradient {
-    background-image: linear-gradient(144deg,#009ffd, rgb(0,35,155) 50%);
-    border-radius: 4px;
-    box-shadow: rgba(0, 79, 255, 0.3) 0 15px 30px -5px;
-    color: #FFFFFF;
-    cursor: pointer;
-    transform: translateY(-6px);
-    transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
-}
+    .btn-add-gradient {
+        background-image: linear-gradient(144deg,#009ffd, rgb(0,35,155) 50%);
+        border-radius: 4px;
+        box-shadow: rgba(0, 79, 255, 0.3) 0 15px 30px -5px;
+        color: #FFFFFF;
+        cursor: pointer;
+        transform: translateY(-6px);
+        transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
+    }
 </style>
 
 <h2 class="mt-5">Manage Streams</h2>
 
 <p>
-	<a href="#" class="btn btn-add-gradient btn-primary float-right mb-3" onclick="AddEditStream(0)"> Add New Stream</a>
+    <a href="#" class="btn btn-add-gradient btn-primary float-right mb-3" onclick="AddEditStream(0)"> Add New Stream</a>
 </p>
 <table class="table table-hover table-bordered">
-	<thead>
-		<tr class="text-center">
-			<th >
-				@Html.DisplayNameFor(model => model.Id)
-			</th>
+    <thead>
+        <tr class="text-center">
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
 
-			<th>
+            <th>
 
-				@Html.DisplayNameFor(model => model.Name)
-			</th>
-			<th colspan="2">
-				Actions
-			</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var item in Model)
-		{
-			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.Id)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Name)
-				</td>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th colspan="2">
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
 
-				<td class="text-center">
-					<a href="#" class="btn btn-primary" onclick="AddEditStream(@item.Id)"><i class="fa fa-pencil"></i> </a> 
-					
-				</td>
-				<td class="text-center">
-					<form id="DeleteStreamForm" method="post">
-<a class="btn btn-danger btn-xs delete-button" href="/Shared/Stream/DeleteStream/@item.Id"><i class="fa fa-trash"></i></a>
-					</form> 
-@*					@using (Html.BeginForm("DeleteStream", "Stream", new { id = item.Id, Area="Shared" }))
-                {
+                <td class="text-center">
+                    <a href="#" class="btn btn-primary" onclick="AddEditStream(@item.Id)"><i class="fa fa-pencil"></i> </a>
 
-                }*@
-					@*<a class="btn btn-danger btn-xs delete-button" href="/Shared/Stream/DeleteStream/@item.Id"><i class="fa fa-trash"></i></a>*@
-				</td>
-			</tr>
-		
-		}
-	</tbody>
+                </td>
+                <td class="text-center">
+                    <form id="DeleteStreamForm" method="post">
+                        <a class="btn btn-danger btn-xs delete-button" href="/Shared/Stream/DeleteStream/@item.Id"><i class="fa fa-trash"></i></a>
+                    </form>
+                    @*					@using (Html.BeginForm("DeleteStream", "Stream", new { id = item.Id, Area="Shared" }))
+                        {
+
+                        }*@
+                    @*<a class="btn btn-danger btn-xs delete-button" href="/Shared/Stream/DeleteStream/@item.Id"><i class="fa fa-trash"></i></a>*@
+                </td>
+            </tr>
+
+        }
+    </tbody>
 </table>
 
 <div class="modal fade" id="streamModal">
@@ -75,7 +75,6 @@
                 <h3 class="modal-title">Save Stream</h3>
             </div>
             <div class="modal-body" id="streamAddEditBody">
-
             </div>
         </div>
     </div>
@@ -84,12 +83,12 @@
 
 
 <script type="text/javascript">
-	
-var AddEditStream = function (id) {
-    var editStreamData = "/Shared/Stream/AddEditStream?Id=" + id;
-    $("#streamAddEditBody").load(editStreamData, function () {
-        $("#streamModal").modal("show");
-    });
-};
+
+    var AddEditStream = function (id) {
+        var editStreamData = "/Shared/Stream/AddEditStream?Id=" + id;
+        $("#streamAddEditBody").load(editStreamData, function () {
+            $("#streamModal").modal("show");
+        });
+    };
 
 </script>

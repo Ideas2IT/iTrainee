@@ -1,22 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using iTrainee.Models;
-using Newtonsoft.Json;
-using System.Net.Http;
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Dynamic;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using iTrainee.Services.Interfaces;
-using iTrainee.Services.Implementations;
 using iTrainee.MVC.Helpers;
 using Microsoft.Extensions.Configuration;
-using iTrainee.MVC.Areas.Shared.Controllers;
 using Microsoft.Extensions.Logging;
 
 namespace iTrainee.MVC.Areas.Mentor.Controllers
 {
     [Area("Mentor")]
+    [Route("Mentor/[controller]/[action]/{id?}")]
     public class HomeController : Controller
     {
         ILogger<HomeController> _logger;
@@ -30,11 +21,13 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
 
         public IActionResult Index()
         {
+            TempData["HeaderRole"] = "Mentor";
             return View();
         }
 
         public IActionResult ManageTopics()
         {
+            TempData["HeaderRole"] = "Mentor";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var topicsList = HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics");
 
@@ -43,12 +36,20 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
 
         public IActionResult ManageStreams()
         {
+            TempData["HeaderRole"] = "Mentor";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var streamList = HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllStreams");
             
             return View(streamList);
         }
 
+        public IActionResult ManageSubTopics()
+        {
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            var subTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics", "");
+
+            return View(subTopicsList);
+        }
         public IActionResult CreateTopic()
         {
             return View();

@@ -1,49 +1,105 @@
 ﻿@model iTrainee.Models.User
-       <form id="myForm">
-       <div class="form-group">
 
-        @if(Model.Id == 0)
-                {
-                    <input type="hidden" class="form-control" name="Id" id="id" value = "@Model.Id">
+<head>
+    <style>
+        .padding-top-15px {
+            padding-top: 6.3px;
+        }
+    </style>
+</head>
 
-                }
-                else
-                {
-                  <input type="text" class="form-control" name="Id" id="id" value = "@Model.Id" readonly>
-
-                }
+<form id="myForm" method="Post">
+    <div class="row">
+        <div class="col-md-6">
+            @{
+                TempData.Keep("Role");
+            }
+            <div class="form-group">
+                <input type="hidden" class="form-control" name="Id" value="@Model.Id" required />
+                <label class="col-form-label">First Name</label>
+                <input type="text" class="form-control" name="FirstName" value="@Model.FirstName" required />
             </div>
 
-                    <div class="form-group">
-                        <input type="hidden" class="form-control" name="Id" id="id" value = "@Model.Id" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-form-label">FirstName</label>
-                        <input type="text" class="form-control" name="FirstName" value = "@Model.FirstName" id="first-name" />
-                    </div>
-                    <div class="form-group">
-                        <label class="col-form-label">LastName</label>
-                        <input type="text" class="form-control" name="LastName" value = "@Model.LastName" id="last-name" />
-                    </div>
-                    <div class="form-group">
-                        <label class="col-form-lab el">Date Of Birth</label>
-                        <input type="date" class="form-control" name="DateOfBirth" value = "@Model.DOB" id="date-of-birth" />
-                    </div>
-                    <div class="form-group">
-                        <label class="col-form-label">Qualification</label>
-                        <input type="text" class="form-control" name="Qualification" value = "@Model.Qualification"  id="qualification" />
-                    </div>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-success" value="Save" name="submit" id="btnSubmit" />
-                </form>
+            @if (0 == @Model.Id)
+            {
+                <div class="form-group">
+                    <label class="col-form-label">Date Of Birth</label>
+                    <input type="date" class="form-control" name="DOB" required />
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <label class="col-form-label">Date Of Birth</label>
+                    <input type="date" class="form-control" name="DOB" value="@Model.DOB.ToString("yyyy-MM-dd")" required />
+                </div>
+            }
+            <div class="form-group padding-top-15px">
+                <label class="col-form-label d-block">Role</label>
 
-                @section Scripts {
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" value="true" id="Admin" name="IsAdmin" checked="@Model.IsAdmin">
+                    <input type="hidden" value="false" name="IsAdmin" />
+                    <label class="form-check-label" for="Admin">Admin</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" value="true" id="Mentor" name="IsMentor" checked="@Model.IsMentor">
+                    <input type="hidden" value="false" name="IsMentor" />
+                    <label class="form-check-label" for="Mentor">Mentor</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" value="true" id="Trainee" name="IsTrainee" checked="@Model.IsTrainee">
+                    <input type="hidden" value="false" name="IsTrainee" />
+                    <label class="form-check-label" for="Trainee">Trainee</label>
+                </div>
+            </div>
+            @if (0 == @Model.Id)
+            {
+                <div class="form-group padding-top-15px">
+                    <label class="col-form-label">Password</label>
+                    <input type="password" class="form-control" name="Password" required />
+                </div>
+            }
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-form-label">Last Name</label>
+                <input type="text" class="form-control" name="LastName" value="@Model.LastName" required />
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label">Qualification</label>
+                <input type="text" class="form-control" name="Qualification" value="@Model.Qualification" required />
+            </div>
+
+
+            @if (0 == @Model.Id)
+            {
+                <div class="form-group">
+                    <label class="col-form-label">User Name</label>
+                    <input type="email" class="form-control" name="UserName" placeholder="example@org.com" required />
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Confirm Password</label>
+                    <input type="password" class="form-control" name="Confirm Password" required />
+                </div>
+            }
+        </div>
+    </div>
+    <div class="form-group mt-4 float-right">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" value="Save" name="submit" id="btnSubmit" class="btn btn-primary mr-3" />
+    </div>
+</form>
+
+@section Scripts {
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
 }
 
-                <script>
+<script>
         $(document).ready(function () {
 
         $("#btnSubmit").click(function () {
@@ -54,11 +110,40 @@
                 data: a,
                 success: function () {
                     $("#myModal1").modal("hide");
+                    window.location.replace(window.location.href);
                 },
                 error: function () {
                     alert("Unable to save/update data");
                 },
             });
+        });
+
+        $("#Admin").click(function () {
+            debugger
+            if ($("#Admin").is(':checked') || $("#Mentor").is(':checked')) {
+                $('#Trainee').attr('disabled', true);
+            } else {
+                $('#Trainee').attr('disabled', false);
+            }
+        });
+
+        $("#Mentor").click(function () {
+            if ($("#Mentor").is(':checked') || $("#Admin").is(':checked')) {
+                $('#Trainee').attr('disabled', true);
+            } else {
+                $('#Trainee').attr('disabled', false);
+            }
+        });
+
+        $("#Trainee").click(function () {
+            if ($("#Trainee").is(':checked')) {
+                $('#Admin').attr('disabled', true);
+                $('#Mentor').attr('disabled', true);
+
+            } else {
+                $('#Admin').attr('disabled', false);
+                $('#Mentor').attr('disabled', false);
+            }
         });
     });
 </script>
