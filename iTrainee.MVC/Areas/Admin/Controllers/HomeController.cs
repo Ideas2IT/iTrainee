@@ -45,10 +45,12 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             if ((Convert.ToString(TempData["Role"]) == "Admin"))
             {
                 user.IsAdmin = true;
-            } else if ((Convert.ToString(TempData["Role"]) == "Mentor"))
+            }
+            else if ((Convert.ToString(TempData["Role"]) == "Mentor"))
             {
                 user.IsMentor = true;
-            } else if ((Convert.ToString(TempData["Role"]) == "Trainee"))
+            }
+            else if ((Convert.ToString(TempData["Role"]) == "Trainee"))
             {
                 user.IsTrainee = true;
             }
