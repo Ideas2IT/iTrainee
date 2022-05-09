@@ -30,7 +30,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             TempData.Remove("TopicId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var topic = HttpClientHelper.ExecuteGetApiMethod<Topics>(baseUrl, "/Topics/Get?", "Id=" + id);
-            List<Stream> streamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "");
+            List<Stream> streamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams");
             TempData.Add("TopicId", id);
             ViewBag.StreamList = new SelectList(streamList, "Id", "Name");
 

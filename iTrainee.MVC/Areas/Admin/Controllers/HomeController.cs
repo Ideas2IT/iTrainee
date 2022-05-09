@@ -47,7 +47,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         public IActionResult ManageMentor()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetMentors", "");
+            var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetMentors");
 
             return View(result);
         }

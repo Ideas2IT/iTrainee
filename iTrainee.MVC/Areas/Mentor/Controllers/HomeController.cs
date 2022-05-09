@@ -36,7 +36,7 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
         public IActionResult ManageTopics()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var topicsList = HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "");
+            var topicsList = HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics");
 
             return View(topicsList);
         }
@@ -44,7 +44,7 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
         public IActionResult ManageStreams()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var streamList = HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllStreams", "");
+            var streamList = HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllStreams");
             
             return View(streamList);
         }

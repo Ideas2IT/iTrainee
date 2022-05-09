@@ -48,12 +48,20 @@ namespace iTrainee.Data
             return user;
         }
 
-        public IEnumerable<User> GetMentors()
+        
+        public IEnumerable<User> GetUsers(string role)
         {
             var users = new List<User>();
             try
             {
-                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUser");
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Role",
+                    Value = role
+                });
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserByRole", parameters);
                 if (result?.Tables?.Count != 0)
                 {
                     foreach (DataRow item in result.Tables[0].Rows)
@@ -64,7 +72,8 @@ namespace iTrainee.Data
                             FirstName = Convert.ToString(item["FirstName"]),
                             LastName = Convert.ToString(item["LastName"]),
                             DOB = Convert.ToDateTime(item["DOB"]),
-                            Qualification = Convert.ToString(item["Qualification"])
+                            Qualification = Convert.ToString(item["Qualification"]),
+                            UserName = Convert.ToString(item["UserName"])
                         });
                     }
                 }
