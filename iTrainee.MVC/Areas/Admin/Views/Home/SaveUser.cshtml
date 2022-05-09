@@ -8,17 +8,17 @@
     </style>
 </head>
 
-
 <form id="myForm" method="Post">
     <div class="row">
         <div class="col-md-6">
-       
+            @{
+                TempData.Keep("Role");
+            }
             <div class="form-group">
                 <input type="hidden" class="form-control" name="Id" value="@Model.Id" required />
                 <label class="col-form-label">First Name</label>
                 <input type="text" class="form-control" name="FirstName" value="@Model.FirstName" required />
             </div>
-
 
             @if (0 == @Model.Id)
             {
@@ -36,17 +36,21 @@
             }
             <div class="form-group padding-top-15px">
                 <label class="col-form-label d-block">Role</label>
+
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="Admin" name="IsAdmin" checked="@Model.IsAdmin">
-                    <label class="form-check-label" for="inlineCheckbox1">Admin</label>
+                    <input class="form-check-input" type="checkbox" value="true" id="Admin" name="IsAdmin" checked="@Model.IsAdmin">
+                    <input type="hidden" value="false" name="IsAdmin" />
+                    <label class="form-check-label" for="Admin">Admin</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="Mentor" name="IsMentor" checked="@Model.IsMentor">
-                    <label class="form-check-label" for="inlineCheckbox1">Mentor</label>
+                    <input class="form-check-input" type="checkbox" value="true" id="Mentor" name="IsMentor" checked="@Model.IsMentor">
+                    <input type="hidden" value="false" name="IsMentor" />
+                    <label class="form-check-label" for="Mentor">Mentor</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="Trainee" name="IsTrainee" checked="@Model.IsTrainee">
-                    <label class="form-check-label" for="inlineCheckbox2">Trainee</label>
+                    <input class="form-check-input" type="checkbox" value="true" id="Trainee" name="IsTrainee" checked="@Model.IsTrainee">
+                    <input type="hidden" value="false" name="IsTrainee" />
+                    <label class="form-check-label" for="Trainee">Trainee</label>
                 </div>
             </div>
             @if (0 == @Model.Id)
@@ -121,12 +125,6 @@
             } else {
                 $('#Trainee').attr('disabled', false);
             }
-
-            if ($("#Admin").is(':checked')) {
-                $('#Admin').val("true");
-            } else {
-                $('#Admin').val("false");
-            }
         });
 
         $("#Mentor").click(function () {
@@ -134,12 +132,6 @@
                 $('#Trainee').attr('disabled', true);
             } else {
                 $('#Trainee').attr('disabled', false);
-            }
-
-            if ($("#Mentor").is(':checked')) {
-                $('#Mentor').val("true");
-            } else {
-                $('#Mentor').val("false");
             }
         });
 
@@ -151,12 +143,6 @@
             } else {
                 $('#Admin').attr('disabled', false);
                 $('#Mentor').attr('disabled', false);
-            }
-
-            if ($("#Trainee").is(':checked')) {
-                $('#Trainee').val("true");
-            } else {
-                $('#Trainee').val("false");
             }
         });
     });

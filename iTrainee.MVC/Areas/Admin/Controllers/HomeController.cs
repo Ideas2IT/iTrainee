@@ -35,6 +35,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
 
             ViewBag.Role = role;
             TempData["Role"] = role;
+
             return View(result);
         }
 
