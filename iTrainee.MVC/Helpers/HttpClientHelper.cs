@@ -39,7 +39,7 @@ namespace iTrainee.MVC.Helpers
             return null;
         }
 
-        public static object ExecuteGetAllApiMethod<T>(string baseUrl, string method)
+        public static object ExecuteGetAllApiMethod<T>(string baseUrl, string method, string parameters)
         {
 
             using (var client = new HttpClient())
