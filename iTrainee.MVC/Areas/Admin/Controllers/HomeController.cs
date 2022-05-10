@@ -27,17 +27,17 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult ManageUser(string role)
-        {
-            TempData["HeaderRole"] = "Admin";
-            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
+        //public IActionResult ManageUser(string role)
+        //{
+        //    TempData["HeaderRole"] = "Admin";
+        //    var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+        //    //var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
 
-            ViewBag.Role = role;
-            TempData["Role"] = role;
+        //    ViewBag.Role = role;
+        //    TempData["Role"] = role;
 
-            return View(result);
-        }
+        //    return View(result);
+        //}
 
         public IActionResult SaveUser(int id)
         {

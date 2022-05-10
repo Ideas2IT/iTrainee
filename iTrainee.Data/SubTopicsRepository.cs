@@ -73,7 +73,7 @@ namespace iTrainee.Data
                 var parameters = new List<SqlParameter>();
                 parameters.Add(new SqlParameter
                 {
-                    ParameterName = "StreamId",
+                    ParameterName = "TopicId",
                     Value = topic.TopicId
                 });
                 parameters.Add(new SqlParameter
@@ -166,7 +166,7 @@ namespace iTrainee.Data
                     },
                     new SqlParameter
                     {
-                        ParameterName = "StreamId",
+                        ParameterName = "TopicId",
                         Value = topic.TopicId
                     },
                     new SqlParameter

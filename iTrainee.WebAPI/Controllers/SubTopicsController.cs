@@ -1,6 +1,4 @@
 ﻿using iTrainee.Services.Interfaces;
-using iTrainee.Services.Implementations;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using iTrainee.Models;
@@ -30,20 +28,20 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpPost]
-        public bool AddTopic(SubTopics topic)
+        public bool AddSubTopic(SubTopics topic)
         {
             return _subTopicsService.AddSubTopic(topic);
         }
 
         [HttpPost]
-        public bool UpdateTopic(SubTopics topic)
+        public bool UpdateSubTopic(SubTopics topic)
         {
-            return _subTopicsService.UpdateTopic(topic);
+            return _subTopicsService.UpdateSubTopic(topic);
         }
 
         // POST: SubTopicsController/Delete/5
         [HttpDelete]
-        public bool DeleteSubTopics(int id)
+        public bool DeleteSubTopic(int id)
         {
             return _subTopicsService.DeleteSubTopics(id);
         }

@@ -1,12 +1,16 @@
 ﻿using iTrainee.Models;
 using iTrainee.MVC.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 
 namespace iTrainee.MVC.Areas.Shared.Controllers
 {
+    [Area("Shared")]
+    [Route("Shared/[controller]/[action]/{id?}")]
     public class SubTopicsController : Controller
     {
         private ILogger<SubTopicsController> _logger;
@@ -26,33 +30,35 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpGet]
         public IActionResult AddEditSubTopic(int id)
         {
-            TempData.Remove("SubTopicsId");
+            TempData.Remove("SubTopicId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var subTopics = HttpClientHelper.ExecuteGetApiMethod<SubTopics>(baseUrl, "/SubTopics/Get?", "Id=" + id);
-            TempData.Add("SubTopicsId", id);
-            return PartialView(subTopics);
+            var subTopic = HttpClientHelper.ExecuteGetApiMethod<SubTopics>(baseUrl, "/SubTopics/Get?", "Id=" + id);
+            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics");
+            TempData.Add("SubTopicId", id);
+            ViewBag.TopicsList = new SelectList(topicsList, "Id", "Name");
+
+            return PartialView(subTopic);
         }
 
         [HttpPost]
-        public IActionResult AddEditSubTopic(SubTopics subTopics)
+        public IActionResult AddEditSubTopic(SubTopics subTopic)
         {
-            subTopics.Id = Convert.ToInt32(TempData["SubTopicsId"]);
-            if (subTopics.Id > 0)
+            subTopic.Id = Convert.ToInt32(TempData["SubTopicId"]);
+            if (subTopic.Id > 0)
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<SubTopics>(baseUrl, "/SubTopics/UpdateSubTopics", subTopics);
+                HttpClientHelper.ExecutePostApiMethod<SubTopics>(baseUrl, "/SubTopics/UpdateSubTopic", subTopic);
             }
             else
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<SubTopics>(baseUrl, "/Stream/AddSubTopics", subTopics);
+                HttpClientHelper.ExecutePostApiMethod<SubTopics>(baseUrl, "/SubTopics/AddSubTopic", subTopic);
             }
-
-            return PartialView(subTopics);
+            return PartialView(subTopic);
         }
 
-        [HttpDelete]
-        public IActionResult DeleteSubTopics(int id)
+        [HttpPost]
+        public IActionResult DeleteSubTopic(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteDeleteApiMethod<SubTopics>(baseUrl, "/SubTopics/DeleteSubTopic?", "Id=" + id);

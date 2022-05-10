@@ -17,6 +17,6 @@ namespace iTrainee.Services.Interfaces
 
         bool AddSubTopic(SubTopics topic);
 
-        bool UpdateTopic(SubTopics topic);
+        bool UpdateSubTopic(SubTopics topic);
     }
 }
