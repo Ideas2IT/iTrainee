@@ -1,37 +1,7 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
-<head>
-    <style>
-        .admin-dashboard-container {
-            margin: auto;
-            width: 90%;
-        }
-
-        .card {
-            border-top: 3px solid rgb(0,35,155);
-            color: black;
-        }
-
-        .admin-dashboard-row {
-            padding-top: 50px;
-        }
-
-        .card:hover {
-            background-color: #F1F3F4;
-            border-radius: 8px;
-            box-shadow: rgba(0, 79, 255, 0.3) 0 15px 30px -5px;
-            cursor: pointer;
-            transform: translateY(-6px);
-            transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
-        }
-
-        a {
-            text-decoration: none !important;
-        }
-    </style>
-</head>
+<link rel="stylesheet" href="/css/user.css">
 
 <div class="admin-dashboard-container">
     <div class="row row-cols-1 row-cols-md-2 g-4 admin-dashboard-row">
@@ -95,6 +65,7 @@
             </div>
         </div>
         <div class="col">
+              <a href="/Mentor/Home/ManageSubTopics">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">SubTopic</h5>
