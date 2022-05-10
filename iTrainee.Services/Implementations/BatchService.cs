@@ -29,7 +29,7 @@ namespace iTrainee.Services.Implementations
             return _batchRepository.GetAllBatches();
         }
 
-        public bool InsertBatch(Batch batch)
+        public int InsertBatch(Batch batch)
         {
             return _batchRepository.InsertBatch(batch);
         }

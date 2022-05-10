@@ -18,7 +18,7 @@
 <h1>Sub Topics</h1>
 
 <p>
-   <a href="#" class="btn btn-primary btn-add-gradient float-right mb-3" onclick="AddEditTopic(0)"> Add New Sub Topic</a>
+  <a href="#" class="btn btn-primary btn-add-gradient float-right mb-3" onclick="AddEditSubTopic(0)"> Add New Sub Topic</a>
 </p>
 <table class="table table-hover table-bordered">
     <thead>
@@ -54,7 +54,7 @@
                 @Html.DisplayFor(modelItem => item.ReferenceURL)
             </td>
             <td class="text-center">
-					<a href="#" class="btn btn-primary" onclick="AddEditTopic(@item.Id)"><i class="fa fa-pencil"></i></a> 
+					<a href="#" class="btn btn-primary" onclick="AddEditSubTopic(@item.Id)"><i class="fa fa-pencil"></i></a>
 					</td>
 					<td class="text-center">
 					<a class="btn btn-danger btn-xs delete-button" href="/Shared/SubTopics/DeleteSubTopics/@item.Id"><i class="fa fa-trash"></i></a>
@@ -67,3 +67,29 @@
 }
     </tbody>
 </table>
+
+<div class="modal fade" id="subTopicModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title">Save Sub Topic</h3>
+			</div>
+			<div class="modal-body" id="subTopicAddEditBody">
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<script type="text/javascript">
+
+	var AddEditSubTopic = function (id) {
+		var editTopicData = "/Shared/SubTopics/AddEditSubTopic?Id=" + id;
+		$("#subTopicAddEditBody").load(editTopicData, function () {
+			$("#subTopicModal").modal("show");
+		});
+	};
+
+
+</script>

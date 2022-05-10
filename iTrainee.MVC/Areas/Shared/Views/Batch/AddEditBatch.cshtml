@@ -1,0 +1,43 @@
+﻿@model iTrainee.Models.Batch;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+
+
+@{
+	ViewData["Title"] = "AddEditBatch";
+}
+<h3 class="mt-5 mb-4">Save Batch</h3>
+@using (Html.BeginForm())
+{
+	<div class="form-group">
+		<label class="col-form-label">Name</label>
+		<input type="text" class="form-control w-25" name="Name" value="@Model.Name" />
+	</div>
+
+	<div class="form-group">
+		<label class="col-form-label">Mentors</label><br />
+		@Html.ListBoxFor(model=>model.SelectedMentorIds, new MultiSelectList(Model.MentorList, "Id", "UserName"),  htmlAttributes: new { id="multiSelectMentor", @class = "form-control", multiple="multiple" })
+	</div>
+
+	<div class="form-group">
+		<label class="col-form-label">Trainees</label><br />
+		@Html.ListBoxFor(model=>model.SelectedTraineeIds ,new MultiSelectList(Model.TraineeList, "Id", "UserName"),  htmlAttributes: new { id="multiSelectTrainee", @class = "form-control", multiple="multiple" })
+	</div>
+
+	<div class="form-group">
+		<label class="col-form-label">Streams</label><br />
+		@Html.ListBoxFor(model=>model.SelectedStreamIds ,new SelectList(Model.StreamList, "Id", "Name"),  htmlAttributes: new { id="multiSelectStream", @class = "form-control", multiple="multiple" })
+	</div>
+	<input type="submit" class="mt-3 float-right btn btn-primary" value="Save" />
+}
+
+@section scripts{
+<script>
+	$(function(){
+		$("#multiSelectMentor").chosen();
+		$("#multiSelectTrainee").chosen();
+		$("#multiSelectStream").chosen();
+	});
+
+</script>
+
+}
