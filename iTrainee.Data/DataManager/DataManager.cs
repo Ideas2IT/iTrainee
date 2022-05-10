@@ -139,7 +139,7 @@ namespace iTrainee.Data.DataManager
                     adapter.Fill(result);
                     adapter.Dispose();
                     command.Dispose();
-
+                    command.Parameters.Clear();
                 }
                 catch (Exception ex)
                 {
@@ -153,6 +153,40 @@ namespace iTrainee.Data.DataManager
                         connection.Close();
                 }
                 return result;
+            }
+        }
+
+        public int ExecuteReturnId(string storeProcedureName, List<SqlParameter> parameters)
+        {
+            int id = 0;
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+
+                    connection.Open();
+                    var command = new SqlCommand(storeProcedureName, connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    SetParameters(command, parameters);
+                    command.ExecuteNonQuery();
+                    id = Convert.ToInt32(command.Parameters["Id"].Value.ToString());
+                    command.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
+                }
+                finally
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                }
+                return id;
             }
         }
 
@@ -174,7 +208,7 @@ namespace iTrainee.Data.DataManager
                     adapter.Fill(result);
                     adapter.Dispose();
                     command.Dispose();
-
+                    
                 }
                 catch (Exception ex)
                 {

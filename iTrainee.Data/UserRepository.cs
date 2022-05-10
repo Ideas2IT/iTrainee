@@ -27,6 +27,14 @@ namespace iTrainee.Data
                     ParameterName = "Id",
                     Value = id
                 });
+
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
+
                 DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserById", parameters);
                 if (result?.Tables?.Count != 0)
                 {
@@ -37,6 +45,27 @@ namespace iTrainee.Data
                         user.LastName = Convert.ToString(item["LastName"]);
                         user.DOB = Convert.ToDateTime(item["DOB"]);
                         user.Qualification = Convert.ToString(item["Qualification"]);
+                    }
+                }
+
+
+
+                DataSet roleOfUser = _dataManager.ExecuteStoredProcedure("spGetUserRoles", parameter);
+
+                DataColumn col = roleOfUser.Tables[0].Columns["RoleId"];
+                foreach (DataRow row in roleOfUser.Tables[0].Rows)
+                {
+                    if(Convert.ToString(row[col]) == "1")
+                    {
+                        user.IsAdmin = true;
+                    }
+                    else if (Convert.ToString(row[col]) == "2")
+                    {
+                        user.IsMentor = true;
+                    }
+                    else if (Convert.ToString(row[col]) == "3")
+                    {
+                        user.IsTrainee = true;
                     }
                 }
             }
@@ -70,7 +99,8 @@ namespace iTrainee.Data
                             FirstName = Convert.ToString(item["FirstName"]),
                             LastName = Convert.ToString(item["LastName"]),
                             DOB = Convert.ToDateTime(item["DOB"]),
-                            Qualification = Convert.ToString(item["Qualification"])
+                            Qualification = Convert.ToString(item["Qualification"]),
+                            UserName = Convert.ToString(item["UserName"])
                         });
                     }
                 }

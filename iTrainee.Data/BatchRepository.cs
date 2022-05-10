@@ -92,12 +92,15 @@ namespace iTrainee.Data
             return batches;
         }
 
-        public bool InsertBatch(Batch batch)
+        public int InsertBatch(Batch batch)
         {
-            var isSuccess = false;
+            int id = 0;
             try
             {
                 var parameters = new List<SqlParameter>();
+                SqlParameter OutputParam = new SqlParameter("Id", SqlDbType.Int);
+                OutputParam.Direction = ParameterDirection.Output;
+                parameters.Add(OutputParam);
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "Name",
@@ -125,20 +128,14 @@ namespace iTrainee.Data
                     Value = DateTime.Now.ToShortDateString()
                 });
 
-
-                DataSet result = _dataManager.ExecuteStoredProcedure("spInsertBatch", parameters);
-                if (result.Tables.Count != 0)
-                {
-                    isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
-                }
+                id = _dataManager.ExecuteReturnId("spInsertBatch", parameters);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
 
-            return isSuccess;
-
+            return id;
         }
 
         public bool UpdateBatch(Batch batch)
