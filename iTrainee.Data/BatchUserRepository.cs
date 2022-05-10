@@ -138,5 +138,101 @@ namespace iTrainee.Data
 
             return selectedTraineeIds;
         }
+
+        public bool UpdateBatchUser(Batch batch)
+        {
+            DataSet result = null;
+            var isSuccess = false;
+
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "BatchId",
+                    Value = batch.Id
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedBy",
+                    Value = "Admin"
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedOn",
+                    Value = DateTime.Now
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UpdatedBy",
+                    Value = "Mentor"
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UpdatedOn",
+                    Value = DateTime.Now
+                });
+
+                int[] intUserIds = Array.ConvertAll(batch.StringUserIds.Split(','), int.Parse);
+                foreach (int UserId in intUserIds)
+                {
+                    SqlParameter UserIdParam = new SqlParameter();
+                    UserIdParam.ParameterName = "UserId";
+                    UserIdParam.Value = UserId;
+                    parameters.Add(UserIdParam);
+                    result = _dataManager.ExecuteStoredProcedure("spUpdateBatchUser", parameters);
+                    parameters.Remove(UserIdParam);
+                }
+
+                if (result.Tables.Count != 0)
+                {
+                    isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return isSuccess;
+        }
+
+        public bool UnassignUserId(Batch batch)
+        {
+            DataSet result = null;
+            var isSuccess = false;
+
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "BatchId",
+                    Value = batch.Id
+                });
+
+                int[] intUserIds = Array.ConvertAll(batch.StringUserIds.Split(','), int.Parse);
+                foreach (int UserId in intUserIds)
+                {
+                    SqlParameter UserIdParam = new SqlParameter();
+                    UserIdParam.ParameterName = "UserId";
+                    UserIdParam.Value = UserId;
+                    parameters.Add(UserIdParam);
+                    result = _dataManager.ExecuteStoredProcedure("spRemoveUserIdInBatchUser", parameters);
+                    parameters.Remove(UserIdParam);
+                }
+
+                if (result.Tables.Count != 0)
+                {
+                    isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return isSuccess;
+        }
     }
 }

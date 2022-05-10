@@ -12,5 +12,9 @@ namespace iTrainee.Services.Interfaces
         string[] GetSelectedMentors(int id);
 
         string[] GetSelectedTrainees(int id);
+
+        bool UpdateBatchUser(Batch batch);
+
+        bool UnassignUserId(Batch batch);
     }
 }

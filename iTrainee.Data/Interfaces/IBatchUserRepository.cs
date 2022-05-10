@@ -13,5 +13,9 @@ namespace iTrainee.Data.Interfaces
 
         string[] GetSelectedTrainees(int id);
 
+        bool UpdateBatchUser(Batch batch);
+
+        bool UnassignUserId(Batch batch);
+
     }
 }

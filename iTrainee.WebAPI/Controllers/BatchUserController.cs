@@ -32,5 +32,17 @@ namespace iTrainee.APIs.Controllers
         {
             return _batchUserService.GetSelectedTrainees(id);
         }
+
+        [HttpPost]
+        public bool UpdateBatchUser(Batch batch)
+        {
+            return _batchUserService.UpdateBatchUser(batch);
+        }
+
+        [HttpPost]
+        public bool UnassignUserId(Batch batch)
+        {
+            return _batchUserService.UnassignUserId(batch);
+        }
     }
 }

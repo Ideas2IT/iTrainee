@@ -80,7 +80,8 @@ namespace iTrainee.Data
                         batches.Add(new Batch
                         {
                             Id = Convert.ToInt32(item["id"]),
-                            Name = Convert.ToString(item["Name"])
+                            Name = Convert.ToString(item["Name"]),
+                            InsertedOn = Convert.ToDateTime(item["InsertedOn"])
                         });
                     }
                 }
@@ -153,16 +154,6 @@ namespace iTrainee.Data
                 {
                     ParameterName = "Name",
                     Value = batch.Name
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "InsertedBy",
-                    Value = "Mentor"
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "InsertedOn",
-                    Value = DateTime.Now.ToShortDateString()
                 });
                 parameters.Add(new SqlParameter
                 {
