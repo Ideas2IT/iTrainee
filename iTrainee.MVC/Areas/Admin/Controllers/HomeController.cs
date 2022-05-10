@@ -31,7 +31,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         {
             TempData["HeaderRole"] = "Admin";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
+            var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=" + role, "");
 
             ViewBag.Role = role;
             TempData["Role"] = role;

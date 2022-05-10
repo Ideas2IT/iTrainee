@@ -39,13 +39,13 @@ namespace iTrainee.MVC.Helpers
             return null;
         }
 
-        public static object ExecuteGetAllApiMethod<T>(string baseUrl, string method)
+        public static object ExecuteGetAllApiMethod<T>(string baseUrl, string method, string parameters)
         {
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
-                HttpResponseMessage response = client.GetAsync(client.BaseAddress + method + parameters).Result;
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + method).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
