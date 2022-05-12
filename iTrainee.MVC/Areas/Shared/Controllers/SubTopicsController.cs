@@ -40,12 +40,12 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             if (subTopics.Id > 0)
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<SubTopics>(baseUrl, "/SubTopics/UpdateSubTopics", subTopics);
+                HttpClientHelper.ExecutePostApiMethod<SubTopics>(baseUrl, "/SubTopics/UpdateSubTopics", subTopics, "");
             }
             else
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<SubTopics>(baseUrl, "/Stream/AddSubTopics", subTopics);
+                HttpClientHelper.ExecutePostApiMethod<SubTopics>(baseUrl, "/Stream/AddSubTopics", subTopics, "");
             }
 
             return PartialView(subTopics);
@@ -55,7 +55,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult DeleteSubTopics(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteDeleteApiMethod<SubTopics>(baseUrl, "/SubTopics/DeleteSubTopic?", "Id=" + id);
+            var result = HttpClientHelper.ExecuteDeleteApiMethod<SubTopics>(baseUrl, "/SubTopics/DeleteSubTopic?", "Id=" + id, "");
             return new JsonResult("");
         }
     }

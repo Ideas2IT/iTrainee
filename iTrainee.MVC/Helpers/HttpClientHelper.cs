@@ -55,10 +55,11 @@ namespace iTrainee.MVC.Helpers
             return null;
         }
 
-        public static bool ExecutePostApiMethod<T>(string baseUrl, string method, T model)
+        public static bool ExecutePostApiMethod<T>(string baseUrl, string method, T model, string token)
         {
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.Timeout = new TimeSpan(0, 5, 0);
                 client.BaseAddress = new Uri(baseUrl);
                                 client.DefaultRequestHeaders.Accept.Clear();
@@ -94,10 +95,11 @@ namespace iTrainee.MVC.Helpers
             }
         }
 
-        public static bool ExecuteDeleteApiMethod<T>(string baseUrl, string method, string parameter)
+        public static bool ExecuteDeleteApiMethod<T>(string baseUrl, string method, string parameter, string token)
         {
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.Timeout = new TimeSpan(0, 5, 0);
                 client.BaseAddress = new Uri(baseUrl);
                 client.DefaultRequestHeaders.Accept.Clear();

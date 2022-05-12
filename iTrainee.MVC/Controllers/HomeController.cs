@@ -1,5 +1,6 @@
 ﻿using iTrainee.Models;
 using iTrainee.MVC.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -37,6 +38,7 @@ namespace iTrainee.Controllers
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + UserName + "&Password=" + Password);
             TempData["HeaderRole"] = user.RoleName;
+            TempData["UserToken"] = user.Token;
             return RedirectToAction("Index", "Home", new {Area = user.RoleName});
         }
 

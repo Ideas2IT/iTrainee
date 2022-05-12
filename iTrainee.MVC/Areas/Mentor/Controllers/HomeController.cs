@@ -22,6 +22,8 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
         public IActionResult Index()
         {
             TempData["HeaderRole"] = "Mentor";
+            var token = TempData["UserToken"];
+            TempData["UserToken"] = token;
             return View();
         }
 

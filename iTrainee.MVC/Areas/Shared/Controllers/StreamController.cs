@@ -44,14 +44,15 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult AddEditStream(Stream stream)
         {
             stream.Id = Convert.ToInt32(TempData["StreamId"]);
+
             if (stream.Id > 0)
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/UpdateStream", stream);
+                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/UpdateStream", stream, "");
             } else
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/AddStream", stream);
+                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/AddStream", stream, "");
             }
 
             return PartialView(stream);
@@ -60,7 +61,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult DeleteStream(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteDeleteApiMethod<Stream>(baseUrl, "/Stream/DeleteStream?", "Id="+id);
+            var result = HttpClientHelper.ExecuteDeleteApiMethod<Stream>(baseUrl, "/Stream/DeleteStream?", "Id="+id, "");
             return new JsonResult("");
         }
     }

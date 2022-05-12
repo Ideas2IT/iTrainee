@@ -17,6 +17,9 @@
 </style>
 
 <div class="d-flex justify-content-between mt-4">
+	            @{
+                TempData.Peek("UserToken");
+            }
 <h3>Manage Batches</h3>
 <a href="/Shared/Batch/AddEditBatch?Id=0" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Batch</a>
 </div>

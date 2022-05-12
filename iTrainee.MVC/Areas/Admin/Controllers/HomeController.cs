@@ -25,6 +25,8 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         public IActionResult Index()
         {
             TempData["HeaderRole"] = "Admin";
+            var token = TempData["UserToken"];
+            TempData["UserToken"] = token;
             return View();
         }
 
@@ -36,12 +38,14 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
 
             ViewBag.Role = role;
             TempData["Role"] = role;
-
             return View(result);
         }
 
         public IActionResult SaveUser(int id)
         {
+            var userToken = Convert.ToString(TempData["UserToken"]);
+            TempData["UserToken"] = userToken;
+
             var user = new User();
 
             if ((Convert.ToString(TempData["Role"]) == "Admin"))
@@ -70,13 +74,15 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult SaveUser(User user)
         {
+            var token = Convert.ToString(TempData["UserToken"]);
+
             if (0 < user.Id)
             {
                 user.Id = Convert.ToInt32(TempData["UserId"]);
             }
 
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user);
+            HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user, token);
 
             return RedirectToAction("ManageUser", "Home", new { role = Convert.ToString(TempData["Role"]) });
         }
@@ -84,8 +90,9 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult DeleteUser(int id)
         {
+            var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteDeleteApiMethod<Stream>(baseUrl, "/User/DeleteUser?", "Id=" + id);
+            var result = HttpClientHelper.ExecuteDeleteApiMethod<User>(baseUrl, "/User/DeleteUser?", "Id=" + id, token);
             return new JsonResult("");
         }
     }

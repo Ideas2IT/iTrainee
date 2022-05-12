@@ -4,6 +4,9 @@
 <link rel="stylesheet" href="/css/user.css">
 
 <div class="admin-dashboard-container">
+    @{
+        TempData.Peek("UserToken");
+    }
     <div class="row row-cols-1 row-cols-md-2 g-4 admin-dashboard-row">
         <div class="col">
             <a href="/Admin/Home/ManageUser?role=Admin">
@@ -12,8 +15,10 @@
                         <h5 class="card-title">Admin</h5>
                         <p class="card-text">Mentor is an advisor, counselor, or guide to a trainee.</p>
                     </div>
+
                 </div>
             </a>
+
         </div>
         <div class="col">
             <a href="/Admin/Home/ManageUser?role=Mentor">
@@ -32,46 +37,54 @@
                         <h5 class="card-title">Trainee</h5>
                         <p class="card-text">
                             A person undergoing training, gain skills,
-                             of all aspects of the career.
+                            of all aspects of the career.
                         </p>
                     </div>
                 </div>
             </a>
         </div>
         <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Batch</h5>
-                    <p class="card-text">Batch is a group of trainee who have joined on same period</p>
+            <a href="/Shared/Batch/ManageBatch">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Batch</h5>
+                        <p class="card-text">Batch is a group of trainee who have joined on same period</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
     <div class="row row-cols-1 row-cols-md-2 g-4 admin-dashboard-row">
         <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Stream</h5>
-                    <p class="card-text">Stream is a software language assigned to the trainee to learn and work with.</p>
+            <a href="/Mentor/Home/ManageStreams">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Stream</h5>
+                        <p class="card-text">Stream is a software language assigned to the trainee to learn and work with.</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Topic</h5>
-                    <p class="card-text">Manage topics given to the trainee to learn. Click to Create, Update, view the topics</p>
+            <a href="/Mentor/Home/ManageTopics">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Topic</h5>
+                        <p class="card-text">Manage topics given to the trainee to learn. Click to Create, Update, view the topics</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col">
-              <a href="/Mentor/Home/ManageSubTopics">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">SubTopic</h5>
-                    <p class="card-text">Manage subtopics given to the trainee to learn. Click to Create, Update, view the subtopics</p>
+            <a href="/Mentor/Home/ManageSubTopics">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">SubTopic</h5>
+                        <p class="card-text">Manage subtopics given to the trainee to learn. Click to Create, Update, view the subtopics</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 </div>
+

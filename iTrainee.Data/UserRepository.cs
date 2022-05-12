@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace iTrainee.Data
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository :  IUserRepository
     {
         IDataManager _dataManager = null;
         public UserRepository(IDataManager dataManager)
@@ -47,8 +47,6 @@ namespace iTrainee.Data
                         user.Qualification = Convert.ToString(item["Qualification"]);
                     }
                 }
-
-
 
                 DataSet roleOfUser = _dataManager.ExecuteStoredProcedure("spGetUserRoles", parameter);
 
@@ -138,6 +136,10 @@ namespace iTrainee.Data
                         user.UserName = Convert.ToString(item["UserName"]);
                         user.RoleName = Convert.ToString(item["RoleName"]);
                     }
+                }
+                else
+                {
+                    user = null;
                 }
             }
             catch (Exception ex)
