@@ -27,6 +27,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
         public IActionResult ManageBatch()
         {
+            TempData["HeaderRole"] = "Mentor";
             TempData["HeaderRole"] = "Admin";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var batchList = HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches", "");

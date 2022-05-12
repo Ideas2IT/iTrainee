@@ -35,7 +35,7 @@ namespace iTrainee.Services.Implementations
             return _subTopicsRepository.GetSubTopic(id);
         }
 
-        public bool UpdateTopic(SubTopics topic)
+        public bool UpdateSubTopic(SubTopics topic)
         {
             return _subTopicsRepository.UpdateSubTopic(topic);
         }

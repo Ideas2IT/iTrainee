@@ -34,11 +34,11 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=" + role, "");
 
-            ViewBag.Role = role;
-            TempData["Role"] = role;
+        //    ViewBag.Role = role;
+        //    TempData["Role"] = role;
 
-            return View(result);
-        }
+        //    return View(result);
+        //}
 
         public IActionResult SaveUser(int id)
         {

@@ -54,7 +54,7 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
         {
             TempData["HeaderRole"] = "Mentor";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var subTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics", "");
+            var subTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics");
 
             return View(subTopicsList);
         }

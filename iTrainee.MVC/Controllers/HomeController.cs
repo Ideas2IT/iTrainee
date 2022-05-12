@@ -46,6 +46,7 @@ namespace iTrainee.Controllers
             }
             return View(user);
         }
+
         [HttpPost]
         public IActionResult Login(string UserName, string Password)
         {
@@ -63,7 +64,9 @@ namespace iTrainee.Controllers
                 return RedirectToAction("Login", user);
             }
             TempData["HeaderRole"] = user.RoleName;
-            return RedirectToAction("Index", "Home", new {Area = user.RoleName});
+            TempData["HeaderUserName"] = user.FirstName + " " + user.LastName;
+            TempData["UserId"] = user.Id;
+            return RedirectToAction("Index", "Home", new {Area = user.RoleName}, UserName);
         }
 
         public IActionResult Privacy()
