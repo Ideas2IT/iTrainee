@@ -39,7 +39,7 @@ namespace iTrainee.MVC.Helpers
             return null;
         }
 
-        public static object ExecuteGetAllApiMethod<T>(string baseUrl, string method)
+        public static object ExecuteGetAllApiMethod<T>(string baseUrl, string method, string parameters)
         {
 
             using (var client = new HttpClient())
@@ -76,7 +76,7 @@ namespace iTrainee.MVC.Helpers
             return false;
         }
 
-        public static int ExecuteInsertBatchPostApiMethod<T>(string baseUrl, string method, T model)
+        public static int ExecuteInsertPostApiMethod<T>(string baseUrl, string method, T model)
         {
             using (var client = new HttpClient())
             {

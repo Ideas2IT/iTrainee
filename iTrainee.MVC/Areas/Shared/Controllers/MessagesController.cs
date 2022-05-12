@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 
 namespace iTrainee.MVC.Areas.Shared.Controllers
 {
+    [Area("Shared")]
+    [Route("Shared/[controller]/[action]/{id?}")]
     public class MessagesController : Controller
     {
         ILogger<MessagesController> _logger;
@@ -28,10 +30,18 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             return View();
         }
 
+        public IActionResult ManageMessages(int Id)
+        {
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            var batchList = HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "//GetUserMessages", "");
+
+            return View(batchList);
+        }
+
         public IActionResult GetMessages()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "");
+            //var result = HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "");
             return new JsonResult("");
         }
 

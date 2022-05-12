@@ -23,8 +23,9 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
         public IActionResult ManageBatch()
         {
+            TempData["HeaderRole"] = "Mentor";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var batchList = HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches");
+            var batchList = HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches", "");
 
             return View(batchList);
         }
@@ -35,9 +36,9 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             Batch batch = new Batch();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             batch = (Batch)HttpClientHelper.ExecuteGetApiMethod<Batch>(baseUrl, "/Batch/Get?", "Id=" + id);
-            batch.MentorList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Mentor");
-            batch.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Trainee");
-            batch.StreamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams");
+            batch.MentorList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Mentor", "");
+            batch.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Trainee", "");
+            batch.StreamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "");
 
             if (id > 0)
             {
@@ -53,7 +54,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult AddEditBatch(Batch batch)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            int batchId = HttpClientHelper.ExecuteInsertBatchPostApiMethod<Batch>(baseUrl, "/Batch/AddBatch", batch);
+            int batchId = HttpClientHelper.ExecuteInsertPostApiMethod<Batch>(baseUrl, "/Batch/AddBatch", batch);
             batch.Id = batchId;
             string[] UserIdsArray = batch.SelectedMentorIds.Concat(batch.SelectedTraineeIds).ToArray();
             batch.StringUserIds = string.Join(",", UserIdsArray);

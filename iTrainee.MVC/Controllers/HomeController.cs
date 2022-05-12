@@ -31,13 +31,16 @@ namespace iTrainee.Controllers
         {            
             return View();
         }
+
         [HttpPost]
         public IActionResult Login(string UserName, string Password)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + UserName + "&Password=" + Password);
             TempData["HeaderRole"] = user.RoleName;
-            return RedirectToAction("Index", "Home", new {Area = user.RoleName});
+            TempData["HeaderUserName"] = user.FirstName + " " + user.LastName;
+            TempData["UserId"] = user.Id;
+            return RedirectToAction("Index", "Home", new {Area = user.RoleName}, UserName);
         }
 
         public IActionResult Privacy()
