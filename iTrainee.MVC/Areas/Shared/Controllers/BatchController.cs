@@ -131,7 +131,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             } 
             else
             {
-                int batchId = HttpClientHelper.ExecuteInsertBatchPostApiMethod<Batch>(baseUrl, "/Batch/AddBatch", batch);
+                int batchId = HttpClientHelper.ExecuteInsertPostApiMethod<Batch>(baseUrl, "/Batch/AddBatch", batch);
                 batch.Id = batchId;
                 string[] UserIdsArray = batch.SelectedMentorIds.Concat(batch.SelectedTraineeIds).ToArray();
                 batch.StringUserIds = string.Join(",", UserIdsArray);

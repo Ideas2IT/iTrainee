@@ -37,8 +37,8 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         //    ViewBag.Role = role;
         //    TempData["Role"] = role;
 
-        //    return View(result);
-        //}
+            return View(result);
+        }
 
         public IActionResult SaveUser(int id)
         {
