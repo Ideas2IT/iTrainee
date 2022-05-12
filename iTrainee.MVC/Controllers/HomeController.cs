@@ -27,9 +27,24 @@ namespace iTrainee.Controllers
             return View();
         }
 
-        public IActionResult Login()
-        {            
-            return View();
+        public IActionResult Login(User user)
+        {
+            if (Convert.ToString(TempData["IsValidUserName"]) == "false")
+            {
+                TempData["IsValidUserName"] = "false";
+            } else
+            {
+                TempData["IsValidUserName"] = "true";
+            }
+
+            if (Convert.ToString(TempData["IsValidPassword"]) == "false")
+            {
+                TempData["IsValidPassword"] = "false";
+            } else
+            {
+                TempData["IsValidPassword"] = "true";
+            }
+            return View(user);
         }
 
         [HttpPost]
@@ -37,6 +52,17 @@ namespace iTrainee.Controllers
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + UserName + "&Password=" + Password);
+            if(user.UserName == null)
+            {
+                TempData["IsValidUserName"] = "false";
+                user.UserName = UserName;
+                return RedirectToAction("Login", user);
+            }
+            else if(user.Password == null)
+            {
+                TempData["IsValidPassword"] = "false";
+                return RedirectToAction("Login", user);
+            }
             TempData["HeaderRole"] = user.RoleName;
             TempData["HeaderUserName"] = user.FirstName + " " + user.LastName;
             TempData["UserId"] = user.Id;
@@ -51,7 +77,7 @@ namespace iTrainee.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
     }
 }
