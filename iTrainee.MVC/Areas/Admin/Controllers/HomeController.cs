@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace iTrainee.MVC.Areas.Admin.Controllers
 {
+    [Produces("application/json")]
     [Area("Admin")]
     [Route("Admin/[controller]/[action]/{id?}")]
     public class HomeController : Controller
@@ -34,8 +35,8 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=" + role, "");
 
-        //    ViewBag.Role = role;
-        //    TempData["Role"] = role;
+            ViewBag.Role = role;
+            TempData["Role"] = role;
 
             return View(result);
         }
@@ -68,6 +69,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult SaveUser(User user)
         {
             if (0 < user.Id)

@@ -4,6 +4,7 @@
 <div class="row">
 	<div class="col-lg-12">
 		<form id="topicForm">
+			    @Html.AntiForgeryToken()
 			<div class="form-group">
 				<label class="col-form-label">Streams</label><br />
 				@Html.DropDownListFor(model => model.StreamId, ViewBag.streamList as SelectList, "Select stream",  htmlAttributes: new { @class = "form-control"  })

@@ -41,6 +41,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddEditSubTopic(SubTopics subTopic)
         {
             subTopic.Id = Convert.ToInt32(TempData["SubTopicId"]);

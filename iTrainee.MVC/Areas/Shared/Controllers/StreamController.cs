@@ -41,6 +41,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddEditStream(Stream stream)
         {
             stream.Id = Convert.ToInt32(TempData["StreamId"]);
@@ -54,14 +55,14 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
                 HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/AddStream", stream);
             }
 
-            return PartialView(stream);
+            return RedirectToAction("ManageStreams", "Home", new { Area = "Mentor" });
         }
 
         public IActionResult DeleteStream(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteDeleteApiMethod<Stream>(baseUrl, "/Stream/DeleteStream?", "Id="+id);
-            return new JsonResult("");
+            return RedirectToAction("ManageStreams", "Home", new { Area = "Mentor" });
         }
     }
 }

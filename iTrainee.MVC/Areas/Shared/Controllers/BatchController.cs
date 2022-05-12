@@ -59,6 +59,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddEditBatch(Batch batch)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
