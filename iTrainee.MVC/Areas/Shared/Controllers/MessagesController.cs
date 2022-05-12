@@ -33,9 +33,9 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult ManageMessages(int Id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var batchList = HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "//GetUserMessages", "");
+            var messages = HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "//GetUserMessages?", "Id=" + Id);
 
-            return View(batchList);
+            return View(messages);
         }
 
         public IActionResult GetMessages()
