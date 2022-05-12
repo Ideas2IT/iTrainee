@@ -5,6 +5,15 @@
 }
 
 <style>
+			    .delete-icon {
+        color: red;
+        font-size: x-large;
+    }
+
+    .edit-icon {
+        color: #00239B;
+        font-size: x-large;
+    }
 	.btn-add-gradient {
     background-image: linear-gradient(144deg,#009ffd, rgb(0,35,155) 50%);
     border-radius: 4px;
@@ -47,16 +56,54 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
 				<td class="text-center">
-					<a href="/Shared/Batch/AddEditBatch?Id=@item.Id" class="btn btn-primary"><i class="fa fa-pencil"></i></a> 
+					<a href="/Shared/Batch/AddEditBatch?Id=@item.Id" ><i class="fa fa-pencil edit-icon"></i></a> 
 					</td>
 					<td class="text-center">
-					<a class="btn btn-danger btn-xs delete-button" href="/Shared/Batch/DeleteBatch/@item.Id"><i class="fa fa-trash"></i></a>
-					@*  @using (Html.BeginForm("DeleteStream", "Stream", new { id = item.Id, Area="Shared" }))
-						{
-						<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete record with ID = @item.Id');"><i class="fa fa-trash"></i> Delete</button>
-						}*@
+					<a  href="/Shared/Batch/DeleteBatch?Id=@item.Id" ><i class="fa fa-trash delete-icon"></i></a>
 				</td>
         </tr>
 }
     </tbody>
 </table>
+
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure want to delete <span id="name-to-delete"></span>???</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id="delete-yes-button" data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+<script type="text/javascript">
+
+    $('#delete').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id-to-delete')
+
+                    $('#delete-yes-button').on('click', function () {
+                        $.ajax({
+                            url: "/Shared/Batch/DeleteBatch?Id=" + id,
+                            type: "POST",
+                            contentType: "application/json;charset=UTF-8",
+                            dataType: "json",
+                            success: function () {
+					            window.location.href;
+				            },
+                        })
+                    })
+        })
+</script>
+}

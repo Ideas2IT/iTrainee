@@ -5,6 +5,7 @@ using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using iTrainee.MVC.Helpers;
+using Microsoft.AspNetCore.Routing;
 
 namespace iTrainee.MVC.Areas.Admin.Controllers
 {
@@ -31,13 +32,13 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         {
             TempData["HeaderRole"] = "Admin";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
+            var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=" + role, "");
 
-            ViewBag.Role = role;
-            TempData["Role"] = role;
+        //    ViewBag.Role = role;
+        //    TempData["Role"] = role;
 
-            return View(result);
-        }
+        //    return View(result);
+        //}
 
         public IActionResult SaveUser(int id)
         {
@@ -67,7 +68,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public int SaveUser(User user)
+        public ActionResult SaveUser(User user)
         {
             if (0 < user.Id)
             {
@@ -77,7 +78,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user);
 
-            return 1;
+            return RedirectToAction("ManageUser", "Home", new { role = Convert.ToString(TempData["Role"]) });
         }
 
         [HttpPost]

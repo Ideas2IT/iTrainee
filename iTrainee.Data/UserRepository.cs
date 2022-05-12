@@ -48,8 +48,6 @@ namespace iTrainee.Data
                     }
                 }
 
-
-
                 DataSet roleOfUser = _dataManager.ExecuteStoredProcedure("spGetUserRoles", parameter);
 
                 DataColumn col = roleOfUser.Tables[0].Columns["RoleId"];

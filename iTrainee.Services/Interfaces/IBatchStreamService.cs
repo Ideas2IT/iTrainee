@@ -11,5 +11,9 @@ namespace iTrainee.Services.Interfaces
 
         string[] GetSelectedStreams(int id);
 
+        bool UpdateBatchStream(Batch batch);
+
+        bool UnassignStreamId(Batch batch);
+
     }
 }

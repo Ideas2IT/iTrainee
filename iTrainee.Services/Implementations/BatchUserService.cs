@@ -29,5 +29,15 @@ namespace iTrainee.Services.Implementations
         {
             return _batchUserRepository.GetSelectedTrainees(id);
         }
+
+        public bool UpdateBatchUser(Batch batch)
+        {
+            return _batchUserRepository.UpdateBatchUser(batch);
+        }
+
+        public bool UnassignUserId(Batch batch)
+        {
+            return _batchUserRepository.UnassignUserId(batch);
+        }
     }
 }

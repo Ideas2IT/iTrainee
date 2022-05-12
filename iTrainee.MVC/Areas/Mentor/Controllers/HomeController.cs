@@ -3,6 +3,7 @@ using iTrainee.Models;
 using iTrainee.MVC.Helpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace iTrainee.MVC.Areas.Mentor.Controllers
 {
@@ -22,7 +23,13 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
         public IActionResult Index()
         {
             TempData["HeaderRole"] = "Mentor";
-            return View();
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            List<Batch> batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches", "");
+            foreach (var batch in batchList)
+            {
+                batch.SelectedTraineeIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/BatchUser/GetSelectedTrainees?Id=" + batch.Id);
+            }
+            return View(batchList);
         }
 
         public IActionResult ManageTopics()
@@ -47,7 +54,7 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
         {
             TempData["HeaderRole"] = "Mentor";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var subTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics", "");
+            var subTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics");
 
             return View(subTopicsList);
         }

@@ -18,6 +18,7 @@ namespace iTrainee.Data
         }
         public bool InsertBatchStream(Batch batch)
         {
+            DataSet result = null;
             var isSuccess = false;
 
             try
@@ -25,7 +26,7 @@ namespace iTrainee.Data
                 var parameters = new List<SqlParameter>();
                 parameters.Add(new SqlParameter
                 {
-                    ParameterName = "Id",
+                    ParameterName = "BatchId",
                     Value = batch.Id
                 });
                 parameters.Add(new SqlParameter
@@ -49,10 +50,15 @@ namespace iTrainee.Data
                     Value = DateTime.Now
                 });
 
-                DataSet result = _dataManager.ExecuteStoredProcedure("spInsertBatchStream", parameters);
-                if (result.Tables.Count != 0)
+                int[] intStreamIds = Array.ConvertAll(batch.StringStreamIds.Split(','), int.Parse);
+                foreach (int StreamId in intStreamIds)
                 {
-                    isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
+                    SqlParameter StreamIdParam = new SqlParameter();
+                    StreamIdParam.ParameterName = "StreamId";
+                    StreamIdParam.Value = StreamId;
+                    parameters.Add(StreamIdParam);
+                    result = _dataManager.ExecuteStoredProcedure("spInsertBatchStream", parameters);
+                    parameters.Remove(StreamIdParam);
                 }
             }
             catch (Exception ex)
@@ -93,6 +99,102 @@ namespace iTrainee.Data
             }
 
             return selectedStreamIds;
+        }
+
+        public bool UpdateBatchStream(Batch batch)
+        {
+            DataSet result = null;
+            var isSuccess = false;
+
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "BatchId",
+                    Value = batch.Id
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedBy",
+                    Value = "Admin"
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedOn",
+                    Value = DateTime.Now
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UpdatedBy",
+                    Value = "Mentor"
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UpdatedOn",
+                    Value = DateTime.Now
+                });
+
+                int[] intStreamIds = Array.ConvertAll(batch.StringStreamIds.Split(','), int.Parse);
+                foreach (int StreamId in intStreamIds)
+                {
+                    SqlParameter StreamIdParam = new SqlParameter();
+                    StreamIdParam.ParameterName = "StreamId";
+                    StreamIdParam.Value = StreamId;
+                    parameters.Add(StreamIdParam);
+                    result = _dataManager.ExecuteStoredProcedure("spUpdateBatchStream", parameters);
+                    parameters.Remove(StreamIdParam);
+                }
+
+                if (result.Tables.Count != 0)
+                {
+                    isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return isSuccess;
+        }
+
+        public bool UnassignStreamId(Batch batch)
+        {
+            DataSet result = null;
+            var isSuccess = false;
+
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "BatchId",
+                    Value = batch.Id
+                });
+
+                int[] intStreamIds = Array.ConvertAll(batch.StringStreamIds.Split(','), int.Parse);
+                foreach (int StreamId in intStreamIds)
+                {
+                    SqlParameter StreamIdParam = new SqlParameter();
+                    StreamIdParam.ParameterName = "StreamId";
+                    StreamIdParam.Value = StreamId;
+                    parameters.Add(StreamIdParam);
+                    result = _dataManager.ExecuteStoredProcedure("spRemoveStreamIdInBatchStream", parameters);
+                    parameters.Remove(StreamIdParam);
+                }
+
+                if (result.Tables.Count != 0)
+                {
+                    isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return isSuccess;
         }
     }
 }

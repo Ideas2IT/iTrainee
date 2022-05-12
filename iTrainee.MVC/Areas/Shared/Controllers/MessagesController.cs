@@ -41,7 +41,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult GetMessages()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            //var result = HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "");
+            var result = HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "","");
             return new JsonResult("");
         }
 

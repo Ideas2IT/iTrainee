@@ -45,7 +45,7 @@ namespace iTrainee.MVC.Helpers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
-                HttpResponseMessage response = client.GetAsync(client.BaseAddress + method + parameters).Result;
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + method).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
@@ -114,6 +114,5 @@ namespace iTrainee.MVC.Helpers
             }
             return false;
         }
-
     }
 }
