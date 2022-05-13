@@ -1,6 +1,5 @@
 ﻿using iTrainee.Models;
 using iTrainee.MVC.Helpers;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -8,7 +7,6 @@ using System;
 
 namespace iTrainee.MVC.Areas.Shared.Controllers
 {
-    [Authorize]
     [Area("Shared")]
     public class StreamController : Controller
     {
@@ -27,7 +25,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult AddEditStream(int id)
         {
             TempData.Remove("StreamId");
