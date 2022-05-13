@@ -62,7 +62,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult DeleteStream(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteDeleteApiMethod<Stream>(baseUrl, "/Stream/DeleteStream?", "Id="+id);
+            var result = HttpClientHelper.ExecuteDeleteApiMethod<Stream>(baseUrl, "/Stream/DeleteStream?", "Id=" + id, "");
             return RedirectToAction("ManageStreams", "Home", new { Area = "Mentor" });
         }
     }
