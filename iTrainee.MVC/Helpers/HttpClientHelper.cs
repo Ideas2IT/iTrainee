@@ -45,7 +45,7 @@ namespace iTrainee.MVC.Helpers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
-                HttpResponseMessage response = client.GetAsync(client.BaseAddress + method + parameters).Result;
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + method).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
@@ -77,7 +77,7 @@ namespace iTrainee.MVC.Helpers
             return false;
         }
 
-        public static int ExecuteInsertBatchPostApiMethod<T>(string baseUrl, string method, T model)
+        public static int ExecuteInsertPostApiMethod<T>(string baseUrl, string method, T model)
         {
             using (var client = new HttpClient())
             {
@@ -116,6 +116,5 @@ namespace iTrainee.MVC.Helpers
             }
             return false;
         }
-
     }
 }

@@ -75,13 +75,13 @@
 	</tbody>
 </table>
 
-<div class="modal fade" id="subTopicModal">
+<div class="modal fade" id="topicModal">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h3 class="modal-title">Save Topic</h3>
 			</div>
-			<div class="modal-body" id="subTopicAddEditBody">
+			<div class="modal-body" id="topicAddEditBody">
 			</div>
 		</div>
 	</div>
@@ -92,9 +92,9 @@
 <script type="text/javascript">
 
 	var AddEditSubTopic = function (id) {
-		var editTopicData = "/Shared/SubTopics/AddEditSubTopic?Id=" + id;
-		$("#subTopicAddEditBody").load(editTopicData, function () {
-			$("#subTopicModal").modal("show");
+		var editTopicData = "/Shared/Topics/AddEditTopic?Id=" + id;
+		$("#topicAddEditBody").load(editTopicData, function () {
+			$("#topicModal").modal("show");
 		});
 	};
 

@@ -26,5 +26,17 @@ namespace iTrainee.APIs.Controllers
         {
             return _batchStreamService.GetSelectedStreams(id);
         }
+
+        [HttpPost]
+        public bool UpdateBatchStream(Batch batch)
+        {
+            return _batchStreamService.UpdateBatchStream(batch);
+        }
+
+        [HttpPost]
+        public bool UnassignStreamId(Batch batch)
+        {
+            return _batchStreamService.UnassignStreamId(batch);
+        }
     }
 }

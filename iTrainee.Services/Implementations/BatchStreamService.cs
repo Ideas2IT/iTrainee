@@ -24,5 +24,15 @@ namespace iTrainee.Services.Implementations
         {
             return _batchStreamRepository.GetSelectedStreams(id);
         }
+
+        public bool UpdateBatchStream(Batch batch)
+        {
+            return _batchStreamRepository.UpdateBatchStream(batch);
+        }
+
+        public bool UnassignStreamId(Batch batch)
+        {
+            return _batchStreamRepository.UnassignStreamId(batch);
+        }
     }
 }

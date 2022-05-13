@@ -1,163 +1,76 @@
-﻿@{
+﻿@model IEnumerable<iTrainee.Models.Batch>
+
+@{
     ViewData["Title"] = "Mentor";
 }
 
 
 <head>
-    <style>
-        .admin-dashboard-container {
-            margin: auto;
-            width: 90%;
-        }
+	<style>
+
+		.admin-dashboard-container {
+			margin: auto;
+			width: 90%;
+		}
 
         .card {
             border-top: 3px solid rgb(0,35,155);
         }
 
-/*		.admin-dashboard-row {
-            padding-top: 50px;
-        }*/
+			/*		.admin-dashboard-row {
+					padding-top: 50px;
+				}*/
 
-        .card:hover {
-            background-color:#F1F3F4;
-            border-radius: 8px;
-            box-shadow: rgba(0, 79, 255, 0.3) 0 15px 30px -5px;
+			.card:hover {
+				background-color: #F1F3F4;
+				border-radius: 8px;
+				box-shadow: rgba(0, 79, 255, 0.3) 0 15px 30px -5px;
+				cursor: default;
+				transform: translateY(-6px);
+				transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
+			}
 
-            cursor: pointer;
-            transform: translateY(-6px);
-            transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
-        }
-                .btn:hover{
-                        background-image: linear-gradient(144deg,#009ffd, rgb(0,35,155) 50%);
-            border-radius: 8px;
-            box-shadow: rgba(0, 79, 255, 0.3) 0 15px 30px -5px;
-            color: #FFFFFF;
-            cursor: pointer;
-            transform: translateY(-6px);
-            transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
-        }
-    </style>
+		.btn:hover {
+			background-image: linear-gradient(144deg,#009ffd, rgb(0,35,155) 50%);
+			box-shadow: rgba(0, 79, 255, 0.3) 0 15px 30px -5px;
+			color: #FFFFFF;
+			cursor: pointer;
+			transform: translateY(-6px);
+			transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
+		}
+	</style>
 </head>
 
-    <div class=" mt-5">
-        <h1>Hello Mentor,</h1>
-    </div>
+<div class="d-flex justify-content-between mt-4">
+	<h3>Hello Mentor,</h3>
+	<a href="/Shared/Batch/ManageBatch" class="btn btn-primary btn-add-gradient float-right mb-3"> Manage Batches</a>
+</div>
 
 
 <div class="admin-dashboard-container">
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-        @{
-            TempData.Peek("UserToken");
-        }
+	<div class="row row-cols-1 row-cols-md-2 g-4">
 
-        <div class="col">
-            <div class="card mt-5">
-                <div class="card-body">
-                    <h3 class="card-title mb-5">BATCH 1</h3>
-                    <div class="d-flex mt-1 mb-1">
-                        <h5>Stream:</h5>
-                        <p class="ml-3">DOT.NET</p>
-                    </div>
-                    <div class="d-flex mt-1 mb-1">
-                        <h5>No of trainees:</h5>
-                        <p class="ml-3">10</p>
-                    </div>
-                    <div class="d-flex mt-1 mb-1">
-                        <h5>Since:</h5>
-                        <p class="ml-3">24-07-2021</p>
-                    </div>
+		@foreach (var item in Model)
+		{
+			<div class="col-3">
+				<div class="card mt-5">
+					<div class="card-body">
+						<h3 class="card-title mb-5">@item.Name</h3>
+						<div class="d-flex mt-1 mb-1">
+							<h5>No of trainees:</h5>
+							<p class="ml-3">@item.SelectedTraineeIds.Count()</p>
+						</div>
+						<div class="d-flex mt-1 mb-1">
+							<h5>Since:</h5>
+							<p class="ml-3">@item.InsertedOn.ToShortDateString()</p>
+						</div>
 
-                </div>
-            </div>
-        </div>
+					</div>
+				</div>
+			</div>
+		}
 
-        <div class="col">
-            <div class="card mt-5">
-                <div class="card-body card-hover-effect">
-                    <h3 class="card-title mb-5">BATCH 1</h3>
-                    <div class="d-flex mt-1 mb-1">
-                        <h5>Stream:</h5>
-                        <p class="ml-3">DOT.NET</p>
-                    </div>
-                    <div class="d-flex mt-1 mb-1">
-                        <h5>No of trainees:</h5>
-                        <p class="ml-3">10</p>
-                    </div>
-                    <div class="d-flex mt-1 mb-1">
-                        <h5>Since:</h5>
-                        <p class="ml-3">24-07-2021</p>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col">
-            <div class="card mt-5">
-                <div class="card-body card-hover-effect">
-                    <h3 class="card-title mb-5">BATCH 1</h3>
-                    <div class="d-flex mt-1 mb-1">
-                        <h5>Stream:</h5>
-                        <p class="ml-3">DOT.NET</p>
-                    </div>
-                    <div class="d-flex mt-1 mb-1">
-                        <h5>No of trainees:</h5>
-                        <p class="ml-3">10</p>
-                    </div>
-                    <div class="d-flex mt-1 mb-1">
-                        <h5>Since:</h5>
-                        <p class="ml-3">24-07-2021</p>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col">
-            <div class="card mt-5">
-                <div class="card-body card-hover-effect">
-                    <h3 class="card-title mb-5">BATCH 1</h3>
-                    <div class="d-flex mt-1 mb-1">
-                        <h5>Stream:</h5>
-                        <p class="ml-3">DOT.NET</p>
-                    </div>
-                    <div class="d-flex mt-1 mb-1">
-                        <h5>No of trainees:</h5>
-                        <p class="ml-3">10</p>
-                    </div>
-                    <div class="d-flex mt-1 mb-1">
-                        <h5>Since:</h5>
-                        <p class="ml-3">24-07-2021</p>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col">
-            <div class="card mt-5">
-                <div class="card-body card-hover-effect">
-                    <h3 class="card-title mb-5">BATCH 1</h3>
-                    <div class="d-flex mt-1 mb-1">
-                        <h5>Stream:</h5>
-                        <p class="ml-3">DOT.NET</p>
-                    </div>
-                    <div class="d-flex mt-1 mb-1">
-                        <h5>No of trainees:</h5>
-                        <p class="ml-3">10</p>
-                    </div>
-                    <div class="d-flex mt-1 mb-1">
-                        <h5>Since:</h5>
-                        <p class="ml-3">24-07-2021</p>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
+	</div>
 </div>
 
 

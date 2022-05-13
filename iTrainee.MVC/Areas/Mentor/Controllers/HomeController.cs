@@ -3,6 +3,7 @@ using iTrainee.Models;
 using iTrainee.MVC.Helpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace iTrainee.MVC.Areas.Mentor.Controllers
 {
@@ -22,6 +23,13 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
         public IActionResult Index()
         {
             TempData["HeaderRole"] = "Mentor";
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            List<Batch> batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches", "");
+            foreach (var batch in batchList)
+            {
+                batch.SelectedTraineeIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/BatchUser/GetSelectedTrainees?Id=" + batch.Id);
+            }
+            return View(batchList);
             var token = TempData["UserToken"];
             TempData["UserToken"] = token;
             return View();
