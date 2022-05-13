@@ -61,6 +61,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddEditBatch(Batch batch)
         {
             var token = Convert.ToString(TempData["UserToken"]);

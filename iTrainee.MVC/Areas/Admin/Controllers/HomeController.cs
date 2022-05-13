@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace iTrainee.MVC.Areas.Admin.Controllers
 {
+    [Produces("application/json")]
     [Area("Admin")]
     [Route("Admin/[controller]/[action]/{id?}")]
     public class HomeController : Controller

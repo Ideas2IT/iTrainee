@@ -38,6 +38,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddEditTopic(Topics topic)
         {
             topic.Id = Convert.ToInt32(TempData["TopicId"]);
@@ -58,8 +59,8 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult DeleteTopic(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteDeleteApiMethod<Topics>(baseUrl, "/Topics/DeleteTopic?", "Id=" + id, "");
-            return new JsonResult("");
+            HttpClientHelper.ExecuteDeleteApiMethod<Topics>(baseUrl, "/Topics/DeleteTopic?", "Id=" + id);
+            return RedirectToAction("ManageTopics", "Home", new { Area = "Mentor" });
         }
     }
 }
