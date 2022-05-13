@@ -23,6 +23,9 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
         public IActionResult Index()
         {
             TempData["HeaderRole"] = "Mentor";
+            var token = TempData["UserToken"];
+            TempData["UserToken"] = token;
+
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             List<Batch> batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches", "");
             foreach (var batch in batchList)

@@ -27,5 +27,7 @@ namespace iTrainee.Models
         public Boolean IsTrainee { get; set; }
 
         public string RoleName { get; set; } 
+
+        public string Token { get; set; }
     }
 }

@@ -2,41 +2,49 @@
 using iTrainee.Services.Interfaces;
 using System.Collections.Generic;
 using iTrainee.Models;
-using System;
+using Microsoft.AspNetCore.Authorization;
+using iTrainee.APIs.Interfaces;
 
 namespace iTrainee.APIs.Controllers
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {
         IUserService _userService = null;
-        public UserController(IUserService userService)
+        IJWTManagerRepository _jWTManager = null;
+
+        public UserController(IUserService userService, IJWTManagerRepository jWTManager)
         {
             _userService = userService;
+            _jWTManager = jWTManager;
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IEnumerable<User> GetUsers(string role)
         {
-            var result = _userService.GetUsers(role);
-
-            return result;
+            return _userService.GetUsers(role);
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public User GetUser(int id)
         {
-            var user = _userService.GetUser(id);
-
-            return user;
+            return _userService.GetUser(id);
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public User GetUserByUserName(string userName, string password)
         {
             var user = _userService.GetUserByUserName(userName, password);
+            User sendUserName = new User();
+            sendUserName.UserName = userName;
+            Tokens token = _jWTManager.Authenticate(sendUserName);
+            user.Token = token.Token;
 
             return user;
         }
@@ -47,6 +55,7 @@ namespace iTrainee.APIs.Controllers
             var isSuccess = _userService.SaveUser(user);
 
             return isSuccess;
+
         }
 
         [HttpDelete]

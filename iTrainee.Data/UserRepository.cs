@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace iTrainee.Data
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository :  IUserRepository
     {
         IDataManager _dataManager = null;
         public UserRepository(IDataManager dataManager)

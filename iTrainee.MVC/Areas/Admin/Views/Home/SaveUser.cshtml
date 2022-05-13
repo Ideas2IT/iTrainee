@@ -8,6 +8,7 @@
         <div class="col-md-6">
             @{
                 TempData.Keep("Role");
+                TempData.Peek("UserToken");
             }
             <div class="form-group">
                 <input type="hidden" class="form-control" name="Id" value="@Model.Id" required />
@@ -95,7 +96,7 @@
 }
 }
 
-<script>
+<script type="text/javascript">
         $(document).ready(function () {
 
         $("#btnSubmit").click(function () {

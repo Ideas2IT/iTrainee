@@ -1,7 +1,8 @@
-﻿using iTrainee.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using iTrainee.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using iTrainee.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace iTrainee.APIs.Controllers
 {
