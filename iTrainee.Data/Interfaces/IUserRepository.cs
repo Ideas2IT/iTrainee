@@ -11,6 +11,6 @@ namespace iTrainee.Data.Interfaces
         bool InsertUser(User user);
 
         bool DeleteUser(int id);
-        User GetUserByUserName(string userName, string password);
+        User GetUserByUserName(string userName);
     }
 }

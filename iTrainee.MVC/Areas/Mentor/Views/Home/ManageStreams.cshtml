@@ -16,41 +16,30 @@
     }
 </style>
 
-<h2 class="mt-5">Manage Streams</h2>
+<div class="d-flex justify-content-between mt-4">
+<h3>Manage Streams</h3>
+<a href="#" class="btn btn-add-gradient btn-primary float-right mb-3" onclick="AddEditStream(0)"> Add New Stream</a>
+</div>
 
-<p>
-    <a href="#" class="btn btn-add-gradient btn-primary float-right mb-3" onclick="AddEditStream(0)"> Add New Stream</a>
-</p>
 <table class="table table-hover table-bordered">
     <thead>
         <tr class="text-center">
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-
-            <th>
-
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th colspan="2">
-                Actions
-            </th>
+            <th>S.No</th>
+            <th>Stream</th>
+            <th colspan="2">Actions</th>
         </tr>
     </thead>
     <tbody>
+        @{
+            int Count = 1;
+        }
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-
+                <td>@Count</td>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td class="text-center">
                     <a href="#" class="btn btn-primary" onclick="AddEditStream(@item.Id)"><i class="fa fa-pencil"></i> </a>
-
                 </td>
                 <td class="text-center">
                     <form id="DeleteStreamForm" method="post">
@@ -63,7 +52,7 @@
                     @*<a class="btn btn-danger btn-xs delete-button" href="/Shared/Stream/DeleteStream/@item.Id"><i class="fa fa-trash"></i></a>*@
                 </td>
             </tr>
-
+            Count += 1;
         }
     </tbody>
 </table>

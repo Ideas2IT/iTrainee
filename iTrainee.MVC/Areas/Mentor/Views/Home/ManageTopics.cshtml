@@ -16,61 +16,45 @@
 }
 </style>
 
-<h1 class="mt-5">Manage Topics</h1>
+<div class="d-flex justify-content-between mt-4">
+<h3>Manage Topics</h3>
+<a href="#" class="btn btn-primary btn-add-gradient float-right mb-3" onclick="AddEditTopic(0)"> Add New Topic</a>
+</div>
 
-<p>
-	<a href="#" class="btn btn-primary btn-add-gradient float-right mb-3" onclick="AddEditTopic(0)"> Add New Topic</a>
-</p>
 <table class="table table-hover table-bordered">
 	<thead>
 		<tr class="text-center">
-			<th>
-				@Html.DisplayNameFor(model => model.Id)
-			</th>
-			<th>
-				Stream Id
-			</th>
-			<th>
-
-				@Html.DisplayNameFor(model => model.Name)
-			</th>
-			<th>
-
-				Referenece URL
-			</th>
-			<th colspan="2">
-				Actions
-			</th>
+			<th>S.No</th>
+			<th>Stream</th>
+			<th>Topic</th>
+			<th>Referenece URL</th>
+			<th colspan="2">Actions</th>
 		</tr>
 	</thead>
 	<tbody>
+		@{
+			int Count = 1;
+		}
 		@foreach (var item in Model)
 		{
 			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.Id)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.StreamId)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Name)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.ReferenceURL)
-				</td>
+				<td>@Count</td>
+				<td>@Html.DisplayFor(modelItem => item.StreamName)</td>
+				<td>@Html.DisplayFor(modelItem => item.Name)</td>
+				<td>@Html.DisplayFor(modelItem => item.ReferenceURL)</td>
 
 				<td class="text-center">
 					<a href="#" class="btn btn-primary" onclick="AddEditTopic(@item.Id)"><i class="fa fa-pencil"></i></a> 
-					</td>
+				</td>
 					<td class="text-center">
 					<a class="btn btn-danger btn-xs delete-button" href="/Shared/Topics/DeleteTopic/@item.Id"><i class="fa fa-trash"></i></a>
 					@*  @using (Html.BeginForm("DeleteStream", "Stream", new { id = item.Id, Area="Shared" }))
 						{
-						<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete record with ID = @item.Id');"><i class="fa fa-trash"></i> Delete</button>
+						<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete @item.Id');"><i class="fa fa-trash"></i> Delete</button>
 						}*@
 				</td>
 			</tr>
+			Count += 1;
 		}
 	</tbody>
 </table>
