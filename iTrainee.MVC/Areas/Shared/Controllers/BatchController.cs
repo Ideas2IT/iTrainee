@@ -43,13 +43,13 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             TempData["HeaderRole"] = "Admin";
             Batch batch = new Batch();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            batch = (Batch)HttpClientHelper.ExecuteGetApiMethod<Batch>(baseUrl, "/Batch/Get?", "Id=" + id);
             batch.MentorList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Mentor", "");
             batch.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Trainee", "");
             batch.StreamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "");
 
             if (id > 0)
             {
+                batch = (Batch)HttpClientHelper.ExecuteGetApiMethod<Batch>(baseUrl, "/Batch/Get?", "Id=" + id);
                 batch.SelectedMentorIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/BatchUser/GetSelectedMentors?Id=" + id);
                 batch.SelectedTraineeIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/BatchUser/GetSelectedTrainees?Id=" + id);
                 batch.SelectedStreamIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/BatchStream/GetSelectedStreams?Id=" + id);
@@ -104,27 +104,27 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
                         }
                     }
                 }
-                HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/Batch/UpdateBatch", batch);
+                HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/Batch/UpdateBatch", batch, "");
 
                 if(postUserIdsArray.Length != 0)
                 {
                     batch.StringUserIds = string.Join(",", postUserIdsArray);
-                    HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchUser/UpdateBatchUser", batch);
+                    HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchUser/UpdateBatchUser", batch,"");
                 }
                 if(getUserIdsArray.Length != 0)
                 {
                     batch.StringUserIds = string.Join(",", getUserIdsArray);
-                    HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchUser/UnassignUserId", batch);
+                    HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchUser/UnassignUserId", batch,"");
                 }
                 if (postStreamIdsArray.Length != 0)
                 {
                     batch.StringStreamIds = string.Join(",", postStreamIdsArray);
-                    HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchStream/UpdateBatchStream", batch);
+                    HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchStream/UpdateBatchStream", batch, "");
                 }
                 if (getStreamIdsArray.Length != 0)
                 {
                     batch.StringStreamIds = string.Join(",", getStreamIdsArray);
-                    HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchStream/UnassignStreamId", batch);
+                    HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchStream/UnassignStreamId", batch, "");
                 }
 
                 getUserIds = null;
@@ -134,13 +134,13 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             } 
             else
             {
-                int batchId = HttpClientHelper.ExecuteInsertPostApiMethod<Batch>(baseUrl, "/Batch/AddBatch", batch);
+                int batchId = HttpClientHelper.ExecuteInsertPostApiMethod<Batch>(baseUrl, "/Batch/AddBatch", batch, token);
                 batch.Id = batchId;
                 string[] UserIdsArray = batch.SelectedMentorIds.Concat(batch.SelectedTraineeIds).ToArray();
                 batch.StringUserIds = string.Join(",", UserIdsArray);
                 batch.StringStreamIds = string.Join(",", batch.SelectedStreamIds);
-                HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchUser/AddBatchUser", batch);
-                HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchStream/AddBatchStream", batch);
+                HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchUser/AddBatchUser", batch, "");
+                HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchStream/AddBatchStream", batch, "");
             }
 
             return RedirectToAction("ManageBatch", new { Area="Shared" });
@@ -149,7 +149,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult DeleteBatch(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            HttpClientHelper.ExecuteDeleteApiMethod<Batch>(baseUrl, "/Batch/DeleteBatch?", "Id=" + id);
+            HttpClientHelper.ExecuteDeleteApiMethod<Batch>(baseUrl, "/Batch/DeleteBatch?", "Id=" + id, "");
             return RedirectToAction("ManageBatch", new { Area = "Shared" });
         }
     }

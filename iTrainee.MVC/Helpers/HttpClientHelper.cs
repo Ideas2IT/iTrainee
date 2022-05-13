@@ -45,13 +45,14 @@ namespace iTrainee.MVC.Helpers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
-                HttpResponseMessage response = client.GetAsync(client.BaseAddress + method).Result;
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + method + parameters).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
                     return JsonConvert.DeserializeObject<List<T>>(data);
                 }
             }
+
             return null;
         }
 
@@ -77,10 +78,11 @@ namespace iTrainee.MVC.Helpers
             return false;
         }
 
-        public static int ExecuteInsertPostApiMethod<T>(string baseUrl, string method, T model)
+        public static int ExecuteInsertPostApiMethod<T>(string baseUrl, string method, T model, string token)
         {
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.Timeout = new TimeSpan(0, 5, 0);
                 client.BaseAddress = new Uri(baseUrl);
                 client.DefaultRequestHeaders.Accept.Clear();

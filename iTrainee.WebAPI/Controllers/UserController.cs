@@ -44,8 +44,8 @@ namespace iTrainee.APIs.Controllers
             User sendUserName = new User();
             sendUserName.UserName = userName;
             Tokens token = _jWTManager.Authenticate(sendUserName);
-            string userToken = token.Token;
-            user.Token = userToken;
+            user.Token = token.Token;
+
             return user;
         }
 

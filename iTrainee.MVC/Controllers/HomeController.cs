@@ -67,7 +67,8 @@ namespace iTrainee.Controllers
             TempData["HeaderRole"] = user.RoleName;
             TempData["HeaderUserName"] = user.FirstName + " " + user.LastName;
             TempData["UserId"] = user.Id;
-            return RedirectToAction("Index", "Home", new {Area = user.RoleName}, UserName);
+            TempData["UserToken"] = user.Token;
+            return RedirectToAction("Index", "Home", new {Area = user.RoleName});
         }
 
         public IActionResult Privacy()
