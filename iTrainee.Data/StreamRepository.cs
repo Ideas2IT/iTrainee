@@ -111,7 +111,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "InsertedOn",
-                    Value = DateTime.Now.ToShortDateString()
+                    Value = DateTime.Now.Date
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -122,7 +122,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedOn",
-                    Value = DateTime.Now.ToShortDateString()
+                    Value = DateTime.Now.Date
                 });
 
 
@@ -159,16 +159,6 @@ namespace iTrainee.Data
                 });
                 parameters.Add(new SqlParameter
                 {
-                    ParameterName = "InsertedBy",
-                    Value = "Mentor"
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "InsertedOn",
-                    Value = DateTime.Now.ToShortDateString()
-                });
-                parameters.Add(new SqlParameter
-                {
                     ParameterName = "UpdatedBy",
                     Value = "Mentor"
                 });
@@ -176,9 +166,8 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedOn",
-                    Value = DateTime.Now.ToShortDateString()
+                    Value = DateTime.Now.Date
                 });
-
 
                 DataSet result = _dataManager.ExecuteStoredProcedure("spUpdateStream", parameters);
                 if (result.Tables.Count != 0)

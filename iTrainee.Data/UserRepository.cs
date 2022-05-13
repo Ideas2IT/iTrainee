@@ -1,6 +1,5 @@
 ﻿using iTrainee.Data.DataManager;
 using iTrainee.Data.Interfaces;
-using iTrainee.Data.Security;
 using iTrainee.Models;
 using System;
 using System.Collections.Generic;
@@ -110,7 +109,7 @@ namespace iTrainee.Data
             }
             return users;
         }
-        public User GetUserByUserName(string userName, string password)
+        public User GetUserByUserName(string userName)
         {
             var user = new User();
             try
@@ -133,11 +132,6 @@ namespace iTrainee.Data
                         user.UserName = Convert.ToString(item["UserName"]);
                         user.RoleName = Convert.ToString(item["RoleName"]);
                         user.Password = Convert.ToString(item["Password"]);
-                    }
-                    user.Password = EncryptAndDecrypt.ConvertToDecrypt(user.Password);
-                    if (password != user.Password)
-                    {
-                        user.Password = null;
                     }
                 } 
             }
@@ -205,7 +199,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "Password",
-                    Value = EncryptAndDecrypt.ConvertToEncrypt(user.Password)
+                    Value = user.Password
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -235,7 +229,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "InsertedOn",
-                    Value = DateTime.Now
+                    Value = DateTime.Now.Date
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -245,7 +239,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedOn",
-                    Value = DateTime.Now
+                    Value = DateTime.Now.Date
                 });
                 parameters.Add(new SqlParameter
                 {

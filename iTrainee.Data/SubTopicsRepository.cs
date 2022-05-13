@@ -94,7 +94,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "InsertedOn",
-                    Value = DateTime.Now.ToShortDateString()
+                    Value = DateTime.Now.Date
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -105,7 +105,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedOn",
-                    Value = DateTime.Now.ToShortDateString()
+                    Value = DateTime.Now.Date
                 });
 
                 DataSet result = _dataManager.ExecuteStoredProcedure("spInsertSubTopics", parameters);
@@ -181,16 +181,6 @@ namespace iTrainee.Data
                     },
                     new SqlParameter
                     {
-                        ParameterName = "InsertedBy",
-                        Value = "Mentor"
-                    },
-                    new SqlParameter
-                    {
-                        ParameterName = "InsertedOn",
-                        Value = DateTime.Now.ToShortDateString()
-                    },
-                    new SqlParameter
-                    {
                         ParameterName = "UpdatedBy",
                         Value = "Mentor"
                     },
@@ -198,7 +188,7 @@ namespace iTrainee.Data
                     new SqlParameter
                     {
                         ParameterName = "UpdatedOn",
-                        Value = DateTime.Now.ToShortDateString()
+                        Value = DateTime.Now.Date
                     }
                 };
 

@@ -53,7 +53,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
                 HttpClientHelper.ExecutePostApiMethod<Topics>(baseUrl, "/Topics/AddTopic", topic);
             }
 
-            return PartialView(topic);
+            return RedirectToAction("ManageTopics", "Home", new { Area = "Mentor" });
         }
 
         public IActionResult DeleteTopic(int id)
