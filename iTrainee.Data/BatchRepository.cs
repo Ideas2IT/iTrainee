@@ -115,7 +115,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "InsertedOn",
-                    Value = DateTime.Now.ToShortDateString()
+                    Value = DateTime.Now
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -126,7 +126,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedOn",
-                    Value = DateTime.Now.ToShortDateString()
+                    Value = DateTime.Now
                 });
 
                 id = _dataManager.ExecuteReturnId("spInsertBatch", parameters);

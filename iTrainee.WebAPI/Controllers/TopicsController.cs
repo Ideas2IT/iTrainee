@@ -1,6 +1,7 @@
 ﻿using iTrainee.Models;
 using iTrainee.Services.Implementations;
 using iTrainee.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 
 namespace iTrainee.APIs.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class TopicsController : ControllerBase
@@ -20,12 +22,14 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IEnumerable<Topics> GetAllTopics()
         {
             return _topicsService.GetAllTopics();
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public Topics Get(int id)
         {
             return _topicsService.GetTopic(id);

@@ -1,18 +1,14 @@
 ﻿using iTrainee.Models;
 using iTrainee.MVC.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace iTrainee.MVC.Areas.Shared.Controllers
 {
+    [Authorize]
     [Area("Shared")]
     public class StreamController : Controller
     {
@@ -31,6 +27,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult AddEditStream(int id)
         {
             TempData.Remove("StreamId");
@@ -41,19 +38,19 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult AddEditStream(Stream stream)
         {
+            var token = Convert.ToString(TempData["UserToken"]);
             stream.Id = Convert.ToInt32(TempData["StreamId"]);
 
             if (stream.Id > 0)
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/UpdateStream", stream, "");
+                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/UpdateStream", stream, token);
             } else
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/AddStream", stream, "");
+                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/AddStream", stream, token);
             }
 
             return RedirectToAction("ManageStreams", "Home", new { Area = "Mentor" });
@@ -62,7 +59,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult DeleteStream(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteDeleteApiMethod<Stream>(baseUrl, "/Stream/DeleteStream?", "Id="+id);
+            var result = HttpClientHelper.ExecuteDeleteApiMethod<Stream>(baseUrl, "/Stream/DeleteStream?", "Id="+id, Convert.ToString(TempData["UserToken"]));
             return RedirectToAction("ManageStreams", "Home", new { Area = "Mentor" });
         }
     }

@@ -72,26 +72,23 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult SaveUser(User user)
         {
-            //var token = Convert.ToString(TempData["UserToken"]);
-
             if (0 < user.Id)
             {
                 user.Id = Convert.ToInt32(TempData["UserId"]);
             }
 
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user, Convert.ToString(TempData["UserToken"]));
+            HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user, Convert.ToString(TempData["UserToken"]));
 
-            return RedirectToAction("ManagerUser", Convert.ToString(TempData["Role"]));
+            return RedirectToAction("ManageUser", "Home", new { role = Convert.ToString(TempData["Role"]) });
         }
 
-        [HttpPost]
+        [HttpDelete]
         public IActionResult DeleteUser(int id)
         {
-            var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteDeleteApiMethod<User>(baseUrl, "/User/DeleteUser?", "Id=" + id, Convert.ToString(TempData["UserToken"]));
-            return new JsonResult("");
+            return RedirectToAction("ManageUser", "Home", new { role = Convert.ToString(TempData["Role"]) });
         }
     }
 }
