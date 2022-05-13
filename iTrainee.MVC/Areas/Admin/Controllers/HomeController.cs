@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using iTrainee.Models;
-using System.Collections.Generic;
 using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
@@ -34,11 +33,13 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=" + role, "");
 
-        //    ViewBag.Role = role;
-        //    TempData["Role"] = role;
+            //    ViewBag.Role = role;
+            //    TempData["Role"] = role;
 
-        //    return View(result);
-        //}
+            //    return View(result);
+            //}
+            return null;
+        }
 
         public IActionResult SaveUser(int id)
         {
@@ -82,7 +83,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteUser(int id)
+            public IActionResult DeleteUser(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteDeleteApiMethod<Stream>(baseUrl, "/User/DeleteUser?", "Id=" + id);

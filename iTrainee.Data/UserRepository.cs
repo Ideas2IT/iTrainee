@@ -135,6 +135,7 @@ namespace iTrainee.Data
                         user.LastName = Convert.ToString(item["LastName"]);
                         user.UserName = Convert.ToString(item["UserName"]);
                         user.RoleName = Convert.ToString(item["RoleName"]);
+                        user.Password = Convert.ToString(item["Password"]);
                     }
                 }
             }

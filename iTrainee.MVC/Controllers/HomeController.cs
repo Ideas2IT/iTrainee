@@ -3,11 +3,7 @@ using iTrainee.MVC.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace iTrainee.Controllers
 {
@@ -43,6 +39,22 @@ namespace iTrainee.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult ChangePassword()
+        {
+            string UserName = "selvaraj@29";
+            string Password = "Selvaraj2023";
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + UserName + "&Password=" + Password);
+            TempData["HeaderRole"] = "Admin";
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ChangePassword(User user)
+        {
+            return null;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

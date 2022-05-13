@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 namespace iTrainee.MVC.Areas.Shared.Controllers
 {
     [Area("Shared")]
+    [Route("Shared/[controller]/[action]/{id?}")]
     public class TopicsController : Controller
     {
         IConfiguration _configuration;

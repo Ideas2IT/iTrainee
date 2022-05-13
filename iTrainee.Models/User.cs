@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace iTrainee.Models
 {
@@ -18,6 +19,9 @@ namespace iTrainee.Models
 
         public string UserName { get; set; }
 
+        [Required(ErrorMessage = "Please Enter Your Password")]
+        [DataType(DataType.Password)]
+        [StringLength(18, ErrorMessage = "The password must be atleast 3 characters long", MinimumLength = 3)]
         public string Password { get; set; }
 
         public Boolean IsAdmin { get; set; }

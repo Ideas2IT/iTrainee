@@ -33,7 +33,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             TempData.Remove("SubTopicId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var subTopic = HttpClientHelper.ExecuteGetApiMethod<SubTopics>(baseUrl, "/SubTopics/Get?", "Id=" + id);
-            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics");
+            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics","");
             TempData.Add("SubTopicId", id);
             ViewBag.TopicsList = new SelectList(topicsList, "Id", "Name");
 
