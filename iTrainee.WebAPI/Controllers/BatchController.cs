@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace iTrainee.APIs.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class BatchController : ControllerBase
@@ -18,12 +19,14 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IEnumerable<Batch> GetAllBatches()
         {
             return _batchService.GetAllBatches();
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public Batch Get(int id)
         {
             return _batchService.GetBatch(id);

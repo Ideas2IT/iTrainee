@@ -99,14 +99,16 @@
                     $('#delete-yes-button').on('click', function () {
                         $.ajax({
                             url: "/Admin/Home/DeleteUser/" + id,
-                            type: "POST",
-                            contentType: "application/json;charset=UTF-8",
-                            dataType: "json",
-
+                            type: "DELETE",
+                            success: function () {
+                                $("#myModal1").modal("hide");
+                                alert("Data saved successfully");
+                            },
+                            error: function () {
+                                alert("Unable to delete data");
+                            },
                         })
                     })
         })
 </script>
-
-
 }
