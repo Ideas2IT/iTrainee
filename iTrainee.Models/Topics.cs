@@ -9,6 +9,6 @@
         public string Name { get; set; }
 
         public string ReferenceURL { get; set; }
-
+        public string StreamName { get; set; }
     }
 }

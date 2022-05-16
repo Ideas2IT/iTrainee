@@ -65,5 +65,11 @@ namespace iTrainee.APIs.Controllers
 
             return isSuccess;
         }
+
+        [HttpPost]
+        public bool UpdatetUser(User user)
+        {
+            return _userService.UpdatetUser(user);
+        }
     }
 }

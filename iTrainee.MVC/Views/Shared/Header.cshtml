@@ -27,7 +27,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="#">Profile</a>
                       
-	                   <a href="/Home/ChangePassword" class="dropdown-item btn btn-primary"> Change Password</a>
+	                   <a href="/Home/ChangePassword?userId=@TempData["UserId"]" class="dropdown-item btn btn-primary"> Change Password</a>
 
                         <a class="dropdown-item" href="#">Sign Out</a>
                     </div>
@@ -115,27 +115,6 @@
     </div>
 </div>
 
-
-@*@section scripts {
-<script type="text/javascript">
-     debugger
-    function ChangePassword() {
-        debugger
-        var UserPath = "/Home/ChangePassword";
-        $("#changePasswordBody").load(UserPath, function () {
-            $("#changePassword").modal("show");
-        });
-    };
-
-     var GetUser = function (id) {
-        var UserPath = "/Admin/Home/SaveUser?Id=" + id;
-        $("#myModalBodyDiv1").load(UserPath, function () {
-            $("#myModal1").modal("show");
-        });
-    };
-</script>
-
-}*@
 
 <script type="text/javascript">
      debugger

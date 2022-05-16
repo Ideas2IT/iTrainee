@@ -1,10 +1,9 @@
 ﻿using iTrainee.Models;
 using iTrainee.MVC.Helpers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
+using System;
 
 namespace iTrainee.Controllers
 {
@@ -72,20 +71,25 @@ namespace iTrainee.Controllers
             return View();
         }
 
-        public IActionResult ChangePassword()
+        public IActionResult ChangePassword(int userId)
         {
-            string UserName = "selvaraj@29";
-            string Password = "Selvaraj2023";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + UserName + "&Password=" + Password);
+            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + userId);
+            TempData["CurrentPassword"] = user.Password;
+            TempData["UserId"] = user.Id;
             TempData["HeaderRole"] = "Admin";
+            
             return View();
         }
 
         [HttpPost]
-        public IActionResult ChangePassword(User user)
+        public IActionResult ChangePassword(string updatedPassword , int id)
         {
-            return null;
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + id);
+            user.Password = updatedPassword;
+            HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/UpdatetUser", user, "");
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

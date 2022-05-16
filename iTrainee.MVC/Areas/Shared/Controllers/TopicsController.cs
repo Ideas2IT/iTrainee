@@ -60,7 +60,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult DeleteTopic(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            HttpClientHelper.ExecuteDeleteApiMethod<Topics>(baseUrl, "/Topics/DeleteTopic?", "Id=" + id);
+            HttpClientHelper.ExecuteDeleteApiMethod<Topics>(baseUrl, "/Topics/DeleteTopic?", "Id=" + id,"");
             return RedirectToAction("ManageTopics", "Home", new { Area = "Mentor" });
         }
     }

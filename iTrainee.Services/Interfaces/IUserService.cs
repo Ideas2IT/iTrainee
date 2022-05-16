@@ -8,6 +8,7 @@ namespace iTrainee.Services.Interfaces
         User GetUser(int id);
         IEnumerable<User> GetUsers(string role);
         bool SaveUser(User user);
+        bool UpdatetUser(User user);
         bool DeleteUser(int id);
         User GetUserByUserName(string userName, string password);
     }
