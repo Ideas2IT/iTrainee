@@ -23,6 +23,9 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
         public IActionResult Index()
         {
             TempData["HeaderRole"] = "Mentor";
+            var token = TempData["UserToken"];
+            TempData["UserToken"] = token;
+
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             List<Batch> batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches", "");
             foreach (var batch in batchList)
@@ -54,7 +57,7 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
         {
             TempData["HeaderRole"] = "Mentor";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var subTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics","");
+            var subTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics", "");
 
             return View(subTopicsList);
         }

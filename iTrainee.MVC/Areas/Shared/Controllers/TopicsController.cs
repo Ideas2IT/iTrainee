@@ -39,18 +39,19 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddEditTopic(Topics topic)
         {
             topic.Id = Convert.ToInt32(TempData["TopicId"]);
             if (topic.Id > 0)
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<Topics>(baseUrl, "/Topics/UpdateTopic", topic);
+                HttpClientHelper.ExecutePostApiMethod<Topics>(baseUrl, "/Topics/UpdateTopic", topic, "");
             }
             else
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<Topics>(baseUrl, "/Topics/AddTopic", topic);
+                HttpClientHelper.ExecutePostApiMethod<Topics>(baseUrl, "/Topics/AddTopic", topic, "");
             }
 
             return PartialView(topic);
@@ -59,8 +60,8 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult DeleteTopic(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteDeleteApiMethod<Topics>(baseUrl, "/Topics/DeleteTopic?", "Id=" + id);
-            return new JsonResult("");
+            HttpClientHelper.ExecuteDeleteApiMethod<Topics>(baseUrl, "/Topics/DeleteTopic?", "Id=" + id);
+            return RedirectToAction("ManageTopics", "Home", new { Area = "Mentor" });
         }
     }
 }

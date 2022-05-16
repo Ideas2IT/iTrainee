@@ -8,7 +8,7 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
     {
         public IActionResult Index()
         {
-            TempData["Role"] = "Trainee";
+            TempData["HeaderRole"] = "Trainee";
             return View();
         }
     }

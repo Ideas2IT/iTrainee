@@ -1,5 +1,6 @@
 ﻿using iTrainee.Data.DataManager;
 using iTrainee.Data.Interfaces;
+using iTrainee.Data.Security;
 using iTrainee.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace iTrainee.Data
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository :  IUserRepository
     {
         IDataManager _dataManager = null;
         public UserRepository(IDataManager dataManager)
@@ -120,11 +121,7 @@ namespace iTrainee.Data
                     ParameterName = "UserName",
                     Value = userName
                 });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "Password",
-                    Value = password
-                });
+
                 DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserByUserName", parameters);
                 if (result?.Tables?.Count != 0)
                 {
@@ -137,7 +134,12 @@ namespace iTrainee.Data
                         user.RoleName = Convert.ToString(item["RoleName"]);
                         user.Password = Convert.ToString(item["Password"]);
                     }
-                }
+                    user.Password = EncryptAndDecrypt.ConvertToDecrypt(user.Password);
+                    if (password != user.Password)
+                    {
+                        user.Password = null;
+                    }
+                } 
             }
             catch (Exception ex)
             {
@@ -203,7 +205,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "Password",
-                    Value = user.Password
+                    Value = EncryptAndDecrypt.ConvertToEncrypt(user.Password)
                 });
                 parameters.Add(new SqlParameter
                 {

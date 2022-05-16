@@ -5,6 +5,7 @@
 <div class="row">
 	<div class="col-lg-12">
 		<form id="subTopicForm" method="post">
+			    @Html.AntiForgeryToken()
 			<div class="form-group">
 				<label class="col-form-label">Topics</label><br />
 				@Html.DropDownListFor(model => model.TopicId, ViewBag.TopicsList as SelectList, "Select Topics",  htmlAttributes: new { @class = "form-control"  })
