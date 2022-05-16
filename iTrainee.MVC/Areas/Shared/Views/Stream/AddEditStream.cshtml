@@ -3,7 +3,6 @@
 <div class="row">
 	<div class="col-lg-12">
 		<form id="streamForm">
-			    @Html.AntiForgeryToken()
 			<div class="form-group">
 				<label class="col-form-label">Name</label>
 				<input type="text" class="form-control" name="Name" value="@Model.Name" />
@@ -27,6 +26,7 @@
 		$(document).ready(function () {
 
 		$("#btnStreamSave").click(function () {
+			debugger;
 			var updatedStreamData = $("#streamForm").serialize();
 			$.ajax({
 				type: "POST",

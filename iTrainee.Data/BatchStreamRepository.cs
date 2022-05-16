@@ -37,7 +37,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "InsertedOn",
-                    Value = DateTime.Now
+                    Value = DateTime.Now.Date
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -47,7 +47,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedOn",
-                    Value = DateTime.Now
+                    Value = DateTime.Now.Date
                 });
 
                 int[] intStreamIds = Array.ConvertAll(batch.StringStreamIds.Split(','), int.Parse);
@@ -122,7 +122,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "InsertedOn",
-                    Value = DateTime.Now
+                    Value = DateTime.Now.Date
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -132,7 +132,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedOn",
-                    Value = DateTime.Now
+                    Value = DateTime.Now.Date
                 });
 
                 int[] intStreamIds = Array.ConvertAll(batch.StringStreamIds.Split(','), int.Parse);

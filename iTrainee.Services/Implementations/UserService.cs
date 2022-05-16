@@ -1,6 +1,7 @@
 ﻿using iTrainee.Data.Interfaces;
 using iTrainee.Models;
 using iTrainee.Services.Interfaces;
+using iTrainee.Services.Security;
 using System.Collections.Generic;
 
 namespace iTrainee.Services.Implementations
@@ -23,7 +24,13 @@ namespace iTrainee.Services.Implementations
         }
         public User GetUserByUserName(string userName, string password)
         {
-            return _userRepository.GetUserByUserName(userName, password);
+            User user = _userRepository.GetUserByUserName(userName);
+            user.Password = EncryptAndDecrypt.ConvertToDecrypt(user.Password);
+            if (password != user.Password)
+            {
+                user.Password = null;
+            }
+            return user;
         }
 
         public IEnumerable<User> GetMentors(string role)
@@ -33,6 +40,7 @@ namespace iTrainee.Services.Implementations
 
         public bool SaveUser(User user)
         {
+            user.Password = EncryptAndDecrypt.ConvertToEncrypt(user.Password);
             return _userRepository.InsertUser(user);
         }
 
