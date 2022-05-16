@@ -54,7 +54,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
                 TempData["getUserIds"] = batch.SelectedMentorIds.Concat(batch.SelectedTraineeIds).ToList();
                 TempData["getStreamIds"] = batch.SelectedStreamIds.ToList();
             }
-            
+
             return View(batch);
         }
 
