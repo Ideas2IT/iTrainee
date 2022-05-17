@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="/css/user.css">
 
 <form id="myForm" method="Post">
+    @Html.AntiForgeryToken()
     <div class="row">
         <div class="col-md-6">
             @{
@@ -85,6 +86,7 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <input type="submit" value="Save" name="submit" id="btnSubmit" class="btn btn-primary mr-3" />
     </div>
+    
 </form>
 
 @section Scripts {
@@ -93,7 +95,7 @@
 }
 }
 
-<script>
+<script type="text/javascript">
         $(document).ready(function () {
 
         $("#btnSubmit").click(function () {

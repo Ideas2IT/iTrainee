@@ -10,6 +10,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using iTrainee.Services.Implementations;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using iTrainee.APIs;
+using iTrainee.APIs.Interfaces;
+using iTrainee.APIs.JWTManagerRepository;
 
 namespace iTrainee.WebAPI
 {
@@ -25,6 +31,27 @@ namespace iTrainee.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                var Key = Encoding.UTF8.GetBytes(Configuration["JWT:Key"]);
+                o.SaveToken = true;
+                o.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["JWT:Issuer"],
+                    ValidAudience = Configuration["JWT:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Key)
+                };
+            });
+
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -50,6 +77,8 @@ namespace iTrainee.WebAPI
             services.AddSingleton<IBatchUserService, BatchUserService>();
             services.AddSingleton<IBatchStreamService, BatchStreamService>();
             services.AddSingleton<ISubTopicsService, SubTopicsService>();
+            services.AddSingleton<IJWTManagerRepository, JWTManagerRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +92,7 @@ namespace iTrainee.WebAPI
             }
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
@@ -71,5 +101,6 @@ namespace iTrainee.WebAPI
                 endpoints.MapControllers();
             });
         }
+        
     }
 }

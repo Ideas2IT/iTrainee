@@ -4,12 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace iTrainee.MVC.Areas.Shared.Controllers
 {
@@ -43,25 +37,27 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpPost]
         public IActionResult AddEditStream(Stream stream)
         {
+            var token = Convert.ToString(TempData["UserToken"]);
             stream.Id = Convert.ToInt32(TempData["StreamId"]);
+
             if (stream.Id > 0)
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/UpdateStream", stream);
+                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/UpdateStream", stream, token);
             } else
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/AddStream", stream);
+                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/AddStream", stream, token);
             }
 
-            return PartialView(stream);
+            return RedirectToAction("ManageStreams", "Home", new { Area = "Mentor" });
         }
 
         public IActionResult DeleteStream(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteDeleteApiMethod<Stream>(baseUrl, "/Stream/DeleteStream?", "Id="+id);
-            return new JsonResult("");
+            var result = HttpClientHelper.ExecuteDeleteApiMethod<Stream>(baseUrl, "/Stream/DeleteStream?", "Id="+id, Convert.ToString(TempData["UserToken"]));
+            return RedirectToAction("ManageStreams", "Home", new { Area = "Mentor" });
         }
     }
 }

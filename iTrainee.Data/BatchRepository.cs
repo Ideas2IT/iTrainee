@@ -164,7 +164,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedOn",
-                    Value = DateTime.Now.ToShortDateString()
+                    Value = DateTime.Now.Date
                 });
 
 

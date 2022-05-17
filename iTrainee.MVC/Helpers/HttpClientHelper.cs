@@ -52,13 +52,15 @@ namespace iTrainee.MVC.Helpers
                     return JsonConvert.DeserializeObject<List<T>>(data);
                 }
             }
+
             return null;
         }
 
-        public static bool ExecutePostApiMethod<T>(string baseUrl, string method, T model)
+        public static bool ExecutePostApiMethod<T>(string baseUrl, string method, T model, string token)
         {
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.Timeout = new TimeSpan(0, 5, 0);
                 client.BaseAddress = new Uri(baseUrl);
                                 client.DefaultRequestHeaders.Accept.Clear();
@@ -76,10 +78,11 @@ namespace iTrainee.MVC.Helpers
             return false;
         }
 
-        public static int ExecuteInsertPostApiMethod<T>(string baseUrl, string method, T model)
+        public static int ExecuteInsertPostApiMethod<T>(string baseUrl, string method, T model, string token)
         {
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.Timeout = new TimeSpan(0, 5, 0);
                 client.BaseAddress = new Uri(baseUrl);
                 client.DefaultRequestHeaders.Accept.Clear();

@@ -26,6 +26,7 @@
 </style>
 
 <div class="d-flex justify-content-between mt-4">
+
 <h3>Manage Batches</h3>
 <a href="/Shared/Batch/AddEditBatch?Id=0" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Batch</a>
 </div>
@@ -33,24 +34,21 @@
 <table class="table table-hover table-bordered">
     <thead>
 <tr class="text-center">
-			<th >
-				@Html.DisplayNameFor(model => model.Id)
-			</th>
-
-			<th>
-
-				@Html.DisplayNameFor(model => model.Name)
-			</th>
+			<th >S.No</th>
+			<th>@Html.DisplayNameFor(model => model.Name)</th>
 			<th colspan="2">
 				Actions
 			</th>
 		</tr>
     </thead>
     <tbody>
+        @{
+            int Count = 1;
+        }
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @Count
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -61,8 +59,9 @@
 					<td class="text-center">
 					<a  href="/Shared/Batch/DeleteBatch?Id=@item.Id" ><i class="fa fa-trash delete-icon"></i></a>
 				</td>
-        </tr>
-}
+            </tr>
+            Count += 1;
+        }
     </tbody>
 </table>
 

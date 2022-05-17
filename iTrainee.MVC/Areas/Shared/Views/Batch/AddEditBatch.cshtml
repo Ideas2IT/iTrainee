@@ -6,8 +6,11 @@
 	ViewData["Title"] = "AddEditBatch";
 }
 <h3 class="mt-5 mb-4">Save Batch</h3>
+
 @using (Html.BeginForm())
 {
+	    @Html.AntiForgeryToken()
+    
 	<div class="form-group">
 		<label class="col-form-label">Name</label>
 		<input type="text" class="form-control w-25" name="Name" value="@Model.Name" />

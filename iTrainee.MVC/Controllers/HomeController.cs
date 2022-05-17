@@ -1,9 +1,11 @@
 ﻿using iTrainee.Models;
 using iTrainee.MVC.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Web.Mvc;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -11,7 +13,8 @@ using System.Threading.Tasks;
 
 namespace iTrainee.Controllers
 {
-    public class HomeController : Controller
+    [Authorize]
+    public class HomeController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ILogger<HomeController> _logger;
         IConfiguration _configuration;
@@ -47,7 +50,8 @@ namespace iTrainee.Controllers
             return View(user);
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        [AllowAnonymous]
         public IActionResult Login(string UserName, string Password)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
@@ -67,8 +71,8 @@ namespace iTrainee.Controllers
             TempData["HeaderRole"] = user.RoleName;
             TempData["CurrentUserName"] = user.FirstName + " " + user.LastName;
             TempData["UserId"] = user.Id;
-            TempData.Keep();
-            return RedirectToAction("Index", "Home", new {Area = TempData.Peek("HeaderRole")});
+            TempData["UserToken"] = user.Token;
+            return RedirectToAction("Index", "Home", new {Area = user.RoleName});
         }
 
         public IActionResult Privacy()

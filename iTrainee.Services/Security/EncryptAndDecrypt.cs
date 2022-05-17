@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace iTrainee.Data.Security
+namespace iTrainee.Services.Security
 {
     public static class EncryptAndDecrypt
     {

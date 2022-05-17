@@ -11,28 +11,21 @@
 </div>
 <table class="table table-hover table-bordered">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DOB)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Qualification)
-        </th>
+        <th>S.No</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>DOB</th>
+        <th>Qualification</th>
         <th colspan="2">Actions</th>
     </tr>
+    @{
+        int Count = 1;
+    }
     @foreach (var item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @Count
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
@@ -51,6 +44,7 @@
                 <a data-id-to-delete="@item.Id" class="ml-4" data-toggle="modal" data-target="#delete"><i class="fa fa-trash delete-icon"></i></a>
             </td>
         </tr>
+        Count += 1;
     }
 </table>
 
@@ -105,14 +99,16 @@
                     $('#delete-yes-button').on('click', function () {
                         $.ajax({
                             url: "/Admin/Home/DeleteUser/" + id,
-                            type: "POST",
-                            contentType: "application/json;charset=UTF-8",
-                            dataType: "json",
-
+                            type: "DELETE",
+                            success: function () {
+                                $("#myModal1").modal("hide");
+                                alert("Data saved successfully");
+                            },
+                            error: function () {
+                                alert("Unable to delete data");
+                            },
                         })
                     })
         })
 </script>
-
-
 }

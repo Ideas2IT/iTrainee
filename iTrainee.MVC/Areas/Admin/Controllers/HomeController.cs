@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace iTrainee.MVC.Areas.Admin.Controllers
 {
+    [Produces("application/json")]
     [Area("Admin")]
     [Route("Admin/[controller]/[action]/{id?}")]
     public class HomeController : Controller
@@ -25,6 +26,8 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         public IActionResult Index()
         {
             TempData["HeaderRole"] = "Admin";
+            TempData.Peek("UserToken");
+
             return View();
         }
 
@@ -32,11 +35,10 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         {
             TempData["HeaderRole"] = "Admin";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=" + role, "");
+            var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
 
-        //    ViewBag.Role = role;
-        //    TempData["Role"] = role;
-
+            ViewBag.Role = role;
+            TempData["Role"] = role;
             return View(result);
         }
 
@@ -68,7 +70,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveUser(User user)
+        public IActionResult SaveUser(User user)
         {
             if (0 < user.Id)
             {
@@ -76,17 +78,17 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             }
 
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user);
+            HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user, Convert.ToString(TempData["UserToken"]));
 
             return RedirectToAction("ManageUser", "Home", new { role = Convert.ToString(TempData["Role"]) });
         }
 
-        [HttpPost]
+        [HttpDelete]
         public IActionResult DeleteUser(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteDeleteApiMethod<Stream>(baseUrl, "/User/DeleteUser?", "Id=" + id);
-            return new JsonResult("");
+            var result = HttpClientHelper.ExecuteDeleteApiMethod<User>(baseUrl, "/User/DeleteUser?", "Id=" + id, Convert.ToString(TempData["UserToken"]));
+            return RedirectToAction("ManageUser", "Home", new { role = Convert.ToString(TempData["Role"]) });
         }
     }
 }

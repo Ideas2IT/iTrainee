@@ -30,8 +30,8 @@ namespace iTrainee.Data
                         topicsList.Add(new Topics
                         {
                             Id = Convert.ToInt32(item["Id"]),
-                            StreamId = Convert.ToInt32(item["StreamId"]),
-                            Name = Convert.ToString(item["Name"]),
+                            Name = Convert.ToString(item["TopicName"]),
+                            StreamName = Convert.ToString(item["StreamName"]),
                             ReferenceURL = Convert.ToString(item["ReferenceURL"])
                         });
                     }
@@ -125,7 +125,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "InsertedOn",
-                    Value = DateTime.Now.ToShortDateString()
+                    Value = DateTime.Now.Date
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -136,7 +136,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedOn",
-                    Value = DateTime.Now.ToShortDateString()
+                    Value = DateTime.Now.Date
                 });
 
                 DataSet result = _dataManager.ExecuteStoredProcedure("spInsertTopics", parameters);
@@ -182,16 +182,6 @@ namespace iTrainee.Data
                 });
                 parameters.Add(new SqlParameter
                 {
-                    ParameterName = "InsertedBy",
-                    Value = "Mentor"
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "InsertedOn",
-                    Value = DateTime.Now.ToShortDateString()
-                });
-                parameters.Add(new SqlParameter
-                {
                     ParameterName = "UpdatedBy",
                     Value = "Mentor"
                 });
@@ -199,7 +189,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedOn",
-                    Value = DateTime.Now.ToShortDateString()
+                    Value = DateTime.Now.Date
                 });
 
                 DataSet result = _dataManager.ExecuteStoredProcedure("spUpdateTopics", parameters);
