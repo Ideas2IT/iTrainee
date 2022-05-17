@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace iTrainee.Services.Implementations
 {
-    internal class MessagesService : IMessagesService
+    public class MessagesService : IMessagesService
     {
         IMessagesRepository _messagesRepository = null;
 
@@ -13,9 +13,19 @@ namespace iTrainee.Services.Implementations
         {
             _messagesRepository = messagesRepository;
         }
-        public IEnumerable<Messages> GetAllMessages()
+        public IEnumerable<Messages> GetMessagesByUserId(int Id)
         {
-            return _messagesRepository.GetAllMessages();
+            return _messagesRepository.GetMessagesByUserId(Id);
+        }
+
+        public IEnumerable<UserMessages> GetUserMessagesByMessageId(int Id)
+        {
+            return _messagesRepository.GetUserMessagesByMessageId(Id);
+        }
+
+        public bool DeleteMessage(int Id)
+        {
+            return _messagesRepository.DeleteMessage(Id);
         }
     }
 }

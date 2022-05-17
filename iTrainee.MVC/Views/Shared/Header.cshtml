@@ -1,9 +1,5 @@
-﻿@using Microsoft.AspNetCore.Http
-@*
-
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
+﻿
+   
 <header>
     <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light bg-custom-light">
         <div>
@@ -70,7 +66,7 @@
                             <a class="nav-link text-white" href="#">Daily Progress</a>
                         </li>
                         <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="/Shared/Messages/ManageMessages?id=@TempData["UserId"]">Alert Trainee</a>
+                            <a class="nav-link text-white" href="/Shared/Messages/ManageMessages">Alert Trainee</a>
                         </li>
                     }
                     @if (TempData["HeaderRole"].Equals("Mentor"))
@@ -85,7 +81,7 @@
                             <a class="nav-link text-white" href="/Mentor/Home/ManageSubTopics">Sub Topics</a>
                         </li>
                         <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="#">Alert Trainee</a>
+                            <a class="nav-link text-white" href="/Shared/Messages/ManageMessages">Alert Trainee</a>
                         </li>
                     }
                     @if (TempData["HeaderRole"].Equals("Trainee"))

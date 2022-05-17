@@ -106,11 +106,11 @@ namespace iTrainee.MVC.Helpers
                 client.BaseAddress = new Uri(baseUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-				//var jsonData = JsonConvert.SerializeObject(parameter);
-				//var buffer = System.Text.Encoding.UTF8.GetBytes(jsonData);
-				//var byteContent = new ByteArrayContent(buffer);
-				//byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-				HttpResponseMessage response = client.DeleteAsync(client.BaseAddress + method + parameter).Result;
+                //var jsonData = JsonConvert.SerializeObject(parameter);
+                //var buffer = System.Text.Encoding.UTF8.GetBytes(jsonData);
+                //var byteContent = new ByteArrayContent(buffer);
+                //byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                HttpResponseMessage response = client.DeleteAsync(client.BaseAddress + method + parameter).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return true;
