@@ -25,7 +25,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            TempData["HeaderRole"] = "Admin";
+            TempData.Keep("HeaderRole");
             TempData.Peek("UserToken");
 
             return View();
@@ -33,7 +33,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
 
         public IActionResult ManageUser(string role)
         {
-            TempData["HeaderRole"] = "Admin";
+            TempData.Keep("HeaderRole");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
 

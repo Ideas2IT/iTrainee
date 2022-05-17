@@ -51,7 +51,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult DeleteMessage(int Id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteDeleteApiMethod<Messages>(baseUrl, "/Messages/DeleteMessage?", "Id=" + Id);
+            var result = HttpClientHelper.ExecuteDeleteApiMethod<Messages>(baseUrl, "/Messages/DeleteMessage?", "Id=" + Id, Convert.ToString(TempData["UserToken"]));
             return RedirectToAction("ManageMessages");
         }
     }

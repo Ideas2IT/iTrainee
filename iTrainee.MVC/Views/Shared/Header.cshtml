@@ -41,7 +41,7 @@
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav">
-                    @if (TempData["HeaderRole"].Equals("Admin"))
+                    @if (TempData.Peek("HeaderRole").Equals("Admin"))
                     {
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Admin/Home/ManageUser?role=Mentor">Mentor</a>

@@ -28,7 +28,7 @@ namespace iTrainee.APIs.Controllers
             return _messagesService.GetUserMessagesByMessageId(Id);
         }
 
-        [HttpPost]
+        [HttpDelete]
         public bool DeleteMessage(int Id)
         {
             return _messagesService.DeleteMessage(Id);
