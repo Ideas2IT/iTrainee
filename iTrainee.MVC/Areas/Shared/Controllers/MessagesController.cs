@@ -27,11 +27,13 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult Index()
         {
+            TempData.Keep("HeaderRole");
             return View();
         }
 
         public IActionResult ManageMessages(int Id)
         {
+            TempData.Keep("HeaderRole");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var batchList = HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "//GetUserMessages", "");
 
@@ -44,13 +46,5 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             var result = HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "","");
             return new JsonResult("");
         }
-
-        //public IActionResult AddStream(Messages messages)
-        //{
-        //    var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-        //    var result = HttpClientHelper.ExecutePostApiMethod<Messages>(baseUrl, "", messages);
-        //    return new JsonResult("");
-        //}
-
     }
 }

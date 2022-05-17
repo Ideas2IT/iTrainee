@@ -8,7 +8,7 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
     {
         public IActionResult Index()
         {
-            TempData["HeaderRole"] = "Trainee";
+            TempData.Keep("HeaderRole");
             TempData.Peek("UserToken");
             return View();
         }

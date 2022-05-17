@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace iTrainee.Controllers
 {
-    [Authorize]
     public class HomeController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -51,7 +50,6 @@ namespace iTrainee.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.HttpPost]
-        [AllowAnonymous]
         public IActionResult Login(string UserName, string Password)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
@@ -68,7 +66,7 @@ namespace iTrainee.Controllers
                 return RedirectToAction("Login", user);
             }
             TempData["HeaderRole"] = user.RoleName;
-            TempData["HeaderUserName"] = user.FirstName + " " + user.LastName;
+            TempData["CurrentUserName"] = user.FirstName + " " + user.LastName;
             TempData["UserId"] = user.Id;
             TempData["UserToken"] = user.Token;
             return RedirectToAction("Index", "Home", new {Area = user.RoleName});
