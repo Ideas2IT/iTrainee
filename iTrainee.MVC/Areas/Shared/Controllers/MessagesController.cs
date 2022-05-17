@@ -30,27 +30,29 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             return View();
         }
 
-        public IActionResult ManageMessages(int Id)
+        public IActionResult ManageMessages()
         {
+            TempData["HeaderRole"] = "Admin";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var messages = HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "//GetUserMessages?", "Id=" + Id);
+            var messages = HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "/Messages/GetMessagesByUserId?", "Id=" + TempData.Peek("UserId"));
 
             return View(messages);
         }
 
-        public IActionResult GetMessages()
+        public IActionResult ViewAlertDetails(int Id)
+        {
+            TempData["HeaderRole"] = "Admin";
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            var userMessages = HttpClientHelper.ExecuteGetAllApiMethod<UserMessages>(baseUrl, "/Messages/GetUserMessagesByMessageId?", "Id=" + Id);
+
+            return PartialView("ViewAlertDetails", userMessages);
+        }
+        
+        public IActionResult DeleteMessage(int Id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "","");
-            return new JsonResult("");
+            var result = HttpClientHelper.ExecuteDeleteApiMethod<Messages>(baseUrl, "/Messages/DeleteMessage?", "Id=" + Id);
+            return RedirectToAction("ManageMessages");
         }
-
-        //public IActionResult AddStream(Messages messages)
-        //{
-        //    var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-        //    var result = HttpClientHelper.ExecutePostApiMethod<Messages>(baseUrl, "", messages);
-        //    return new JsonResult("");
-        //}
-
     }
 }

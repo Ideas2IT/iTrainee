@@ -11,5 +11,10 @@ namespace iTrainee.Models
         public string Comments { get; set; }
 
         public Boolean IsRead { get; set; }
+
+        public string Sender { get; set; }
+
+        public string Receiver { get; set; }
+        public string Message { get; set; }
     }
 }

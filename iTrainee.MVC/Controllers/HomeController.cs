@@ -63,10 +63,12 @@ namespace iTrainee.Controllers
                 TempData["IsValidPassword"] = "false";
                 return RedirectToAction("Login", user);
             }
+
             TempData["HeaderRole"] = user.RoleName;
-            TempData["HeaderUserName"] = user.FirstName + " " + user.LastName;
+            TempData["CurrentUserName"] = user.FirstName + " " + user.LastName;
             TempData["UserId"] = user.Id;
-            return RedirectToAction("Index", "Home", new {Area = user.RoleName}, UserName);
+            TempData.Keep();
+            return RedirectToAction("Index", "Home", new {Area = TempData.Peek("HeaderRole")});
         }
 
         public IActionResult Privacy()
