@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
+using System.Web.Mvc;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace iTrainee.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ILogger<HomeController> _logger;
         IConfiguration _configuration;
@@ -49,7 +50,7 @@ namespace iTrainee.Controllers
             return View(user);
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public IActionResult Login(string UserName, string Password)
         {
             UserAudit userAudit = new UserAudit();
@@ -67,8 +68,9 @@ namespace iTrainee.Controllers
                 TempData["IsValidPassword"] = "false";
                 return RedirectToAction("Login", user);
             }
+
             TempData["HeaderRole"] = user.RoleName;
-            TempData["HeaderUserName"] = user.FirstName + " " + user.LastName;
+            TempData["CurrentUserName"] = user.FirstName + " " + user.LastName;
             TempData["UserId"] = user.Id;
             TempData["UserToken"] = user.Token;
             var token = Convert.ToString(TempData["UserToken"]);
@@ -81,6 +83,7 @@ namespace iTrainee.Controllers
             TempData["UserDate"] = JsonConvert.SerializeObject(userAudit);
            
             return RedirectToAction("Index", "Home", new { Area = user.RoleName });
+            return RedirectToAction("Index", "Home", new {Area = TempData.Peek("HeaderRole")});
         }
 
         public IActionResult Privacy()

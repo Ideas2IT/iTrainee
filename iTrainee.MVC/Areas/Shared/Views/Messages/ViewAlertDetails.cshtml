@@ -1,0 +1,149 @@
+﻿@model IEnumerable<iTrainee.Models.UserMessages>
+
+@{
+    int count = 0;
+}
+<style>
+    .delete-icon {
+        color: red;
+        font-size: x-large;
+    }
+
+    .edit-icon {
+        color: #00239B;
+        font-size: x-large;
+    }
+
+    .view-icon {
+        font-size: x-large;
+    }
+
+    .actions-column {
+        width: 100px;
+    }
+
+    /*    #chat2 .form-control {
+                                    border-color: transparent;
+                                }
+
+                                    #chat2 .form-control:focus {
+                                        border-color: transparent;
+                                        box-shadow: inset 0px 0px 0px 1px transparent;
+                                    }
+
+                                .divider:after,
+                                .divider:before {
+                                    content: "";
+                                    flex: 1;
+                                    height: 1px;
+                                    background: #eee;
+                                }*/
+</style>
+<div class="container py-5">
+
+    @*<div class="row d-flex justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-6">*@
+
+    <div class="card" id="chat2">
+        <div class="card-header d-flex justify-content-between align-items-center p-3">
+            <h5 class="mb-0">Chat</h5>
+        </div>
+
+        <div class="card-body" style="overflow-y: scroll; position: relative; height: 400px">
+            @foreach (var item in Model)
+            {
+                @if (count == 0)
+                {
+                    <div class="d-flex flex-row justify-content-start">
+                        <div>
+                            <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">@Html.DisplayFor(modelItem => item.Message)</p>
+                            <p class="small ms-3 mb-3 rounded-3 text-muted">@Html.DisplayFor(modelItem => item.Sender)</p>
+                        </div>
+                    </div>
+                    count++;
+                }
+                
+                <div class="d-flex flex-row justify-content-end mb-4 pt-1">
+                    <div>
+                        <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">@Html.DisplayFor(modelItem => item.Comments)</p>
+                        <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">@Html.DisplayFor(modelItem => item.Receiver)</p>
+                    </div>
+                </div>
+
+                @* <div class="divider d-flex align-items-center mb-4">
+                    <p class="text-center mx-3 mb-0" style="color: #a2aab7;">Today</p>
+                    </div>*@
+
+                
+            }
+        </div>
+        @* </div>
+            </div>*@
+    </div>
+</div>
+
+
+@*<div>
+    <h4>UserMessages</h4>
+    <hr />
+    <dl class="row">
+    <dt class = "col-sm-2">
+    @Html.DisplayNameFor(model => model.ToId)
+    </dt>
+    <dd class = "col-sm-10">
+    @Html.DisplayFor(model => model.ToId)
+    </dd>
+    <dt class = "col-sm-2">
+    @Html.DisplayNameFor(model => model.MessageId)
+    </dt>
+    <dd class = "col-sm-10">
+    @Html.DisplayFor(model => model.MessageId)
+    </dd>
+    <dt class = "col-sm-2">
+    @Html.DisplayNameFor(model => model.Comments)
+    </dt>
+    <dd class = "col-sm-10">
+    @Html.DisplayFor(model => model.Comments)
+    </dd>
+    <dt class = "col-sm-2">
+    @Html.DisplayNameFor(model => model.IsRead)
+    </dt>
+    <dd class = "col-sm-10">
+    @Html.DisplayFor(model => model.IsRead)
+    </dd>
+    <dt class = "col-sm-2">
+    @Html.DisplayNameFor(model => model.IsActive)
+    </dt>
+    <dd class = "col-sm-10">
+    @Html.DisplayFor(model => model.IsActive)
+    </dd>
+    <dt class = "col-sm-2">
+    @Html.DisplayNameFor(model => model.InsertedBy)
+    </dt>
+    <dd class = "col-sm-10">
+    @Html.DisplayFor(model => model.InsertedBy)
+    </dd>
+    <dt class = "col-sm-2">
+    @Html.DisplayNameFor(model => model.InsertedOn)
+    </dt>
+    <dd class = "col-sm-10">
+    @Html.DisplayFor(model => model.InsertedOn)
+    </dd>
+    <dt class = "col-sm-2">
+    @Html.DisplayNameFor(model => model.UpdatedBy)
+    </dt>
+    <dd class = "col-sm-10">
+    @Html.DisplayFor(model => model.UpdatedBy)
+    </dd>
+    <dt class = "col-sm-2">
+    @Html.DisplayNameFor(model => model.UpdatedOn)
+    </dt>
+    <dd class = "col-sm-10">
+    @Html.DisplayFor(model => model.UpdatedOn)
+    </dd>
+    </dl>
+    </div>
+    <div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+    </div>*@

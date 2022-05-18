@@ -17,6 +17,7 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
         {
             UserAudit user = JsonConvert.DeserializeObject<UserAudit>(TempData["UserDate"].ToString());
             TempData["HeaderRole"] = "Trainee";
+            TempData.Keep("HeaderRole");
             TempData.Peek("UserToken");
             return View(user);
         }

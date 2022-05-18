@@ -19,7 +19,6 @@ namespace iTrainee.Data
 
         public bool DeleteStream(int id)
         {
-
             bool isDeleted = false;
             try
             {
