@@ -68,6 +68,7 @@ namespace iTrainee.Controllers
 
             TempData["HeaderRole"] = user.RoleName;
             TempData["CurrentUserName"] = user.FirstName + " " + user.LastName;
+            TempData["UserFirstName"] = user.FirstName;
             TempData["UserId"] = user.Id;
             TempData["UserToken"] = user.Token;
             return RedirectToAction("Index", "Home", new {Area = TempData.Peek("HeaderRole")});
