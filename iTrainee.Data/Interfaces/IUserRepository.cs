@@ -9,7 +9,7 @@ namespace iTrainee.Data.Interfaces
         IEnumerable<User> GetUsers(string role);
 
         bool InsertUser(User user);
-        bool UpdatetUser(User user);
+        bool UpdateUser(User user);
         bool DeleteUser(int id);
         User GetUserByUserName(string userName);
     }

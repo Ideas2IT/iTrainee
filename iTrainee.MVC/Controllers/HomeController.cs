@@ -5,14 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Web.Mvc;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace iTrainee.Controllers
 {
-    [Authorize]
+	[Authorize]
     public class HomeController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -89,14 +85,14 @@ namespace iTrainee.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult ChangePassword(string updatedPassword , int id)
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public IActionResult ChangePassword(string updatedPassword , int userId)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + id);
+            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + userId);
             user.Password = updatedPassword;
-            HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/UpdatetUser", user, "");
-            return View();
+            HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/UpdateUser" , user, Convert.ToString(TempData.Peek("UserToken")));
+            return RedirectToAction("Login");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

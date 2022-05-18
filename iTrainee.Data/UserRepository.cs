@@ -43,7 +43,9 @@ namespace iTrainee.Data
                         user.Id = Convert.ToInt32(item["Id"]);
                         user.FirstName = Convert.ToString(item["FirstName"]);
                         user.LastName = Convert.ToString(item["LastName"]);
-                       user.Password = Convert.ToString(item["Password"]);
+                        user.Password = Convert.ToString(item["Password"]);
+                        user.UserName = Convert.ToString(item["UserName"]);
+                        user.DOB = Convert.ToDateTime(item["DOB"]);
                     }
                 }
 
@@ -131,6 +133,7 @@ namespace iTrainee.Data
                         user.UserName = Convert.ToString(item["UserName"]);
                         user.RoleName = Convert.ToString(item["RoleName"]);
                         user.Password = Convert.ToString(item["Password"]);
+                        
                     }
                 } 
             }
@@ -222,16 +225,6 @@ namespace iTrainee.Data
                 });
                 parameters.Add(new SqlParameter
                 {
-                    ParameterName = "InsertedBy",
-                    Value = "Admin"
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "InsertedOn",
-                    Value = DateTime.Now.Date
-                });
-                parameters.Add(new SqlParameter
-                {
                     ParameterName = "UpdatedBy",
                     Value = "Mentor"
                 });
@@ -262,7 +255,7 @@ namespace iTrainee.Data
 
         }
 
-        public bool UpdatetUser(User user)
+        public bool UpdateUser(User user)
         {
             var isSuccess = false;
 
@@ -287,7 +280,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "DOB",
-                    Value = user.DOB
+                    Value = DateTime.Now.Date
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -297,27 +290,12 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "Password",
-                    Value = EncryptAndDecrypt.ConvertToEncrypt(user.Password)
+                    Value = user.Password
                 });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "Qualification",
                     Value = user.Qualification
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "IsAdmin",
-                    Value = user.IsAdmin
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "IsMentor",
-                    Value = user.IsMentor
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "IsTrainee",
-                    Value = user.IsTrainee
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -327,8 +305,8 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "InsertedOn",
-                    Value = DateTime.Now
-                });
+                    Value = DateTime.Now.Date
+                }); ;
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedBy",
@@ -337,7 +315,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedOn",
-                    Value = DateTime.Now
+                    Value = DateTime.Now.Date
                 });
                 parameters.Add(new SqlParameter
                 {

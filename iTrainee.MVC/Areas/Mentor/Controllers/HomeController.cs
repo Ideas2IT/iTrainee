@@ -60,6 +60,7 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
 
             return View(subTopicsList);
         }
+
         public IActionResult CreateTopic()
         {
             return View();
