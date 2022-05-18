@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Web.Mvc;
 using System.Collections.Generic;
@@ -52,9 +53,11 @@ namespace iTrainee.Controllers
         [Microsoft.AspNetCore.Mvc.HttpPost]
         public IActionResult Login(string UserName, string Password)
         {
+            UserAudit userAudit = new UserAudit();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + UserName + "&Password=" + Password);
-            if(user.UserName == null)
+           
+            if (user.UserName == null)
             {
                 TempData["IsValidUserName"] = "false";
                 user.UserName = UserName;
@@ -71,6 +74,16 @@ namespace iTrainee.Controllers
             TempData["UserFirstName"] = user.FirstName;
             TempData["UserId"] = user.Id;
             TempData["UserToken"] = user.Token;
+            var token = Convert.ToString(TempData["UserToken"]);
+            userAudit.UserId = user.Id;
+            userAudit.Date = DateTime.Now.Date;
+            userAudit.SignIn = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
+            userAudit.SignOut = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
+            int userAuditId = HttpClientHelper.ExecuteInsertPostApiMethod<UserAudit>(baseUrl, "/UserAudit/InsertUserAudit", userAudit, token);
+            userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + userAuditId);
+            TempData["UserDate"] = JsonConvert.SerializeObject(userAudit);
+           
+            return RedirectToAction("Index", "Home", new { Area = user.RoleName });
             return RedirectToAction("Index", "Home", new {Area = TempData.Peek("HeaderRole")});
         }
 
