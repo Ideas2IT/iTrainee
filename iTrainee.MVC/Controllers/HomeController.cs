@@ -4,10 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Web.Mvc;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace iTrainee.Controllers
 {
-    public class HomeController : Controller
+    [Authorize]
+    public class HomeController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ILogger<HomeController> _logger;
         IConfiguration _configuration;
@@ -43,7 +49,8 @@ namespace iTrainee.Controllers
             return View(user);
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        [AllowAnonymous]
         public IActionResult Login(string UserName, string Password)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
