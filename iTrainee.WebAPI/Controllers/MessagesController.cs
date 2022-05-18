@@ -17,9 +17,21 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Messages> GetUserMessages()
+        public IEnumerable<Messages> GetMessagesByUserId(int Id)
         {
-            return _messagesService.GetAllMessages();
+            return _messagesService.GetMessagesByUserId(Id);
+        }
+
+        [HttpGet]
+        public IEnumerable<UserMessages> GetUserMessagesByMessageId(int Id)
+        {
+            return _messagesService.GetUserMessagesByMessageId(Id);
+        }
+
+        [HttpDelete]
+        public bool DeleteMessage(int Id)
+        {
+            return _messagesService.DeleteMessage(Id);
         }
     }
 }

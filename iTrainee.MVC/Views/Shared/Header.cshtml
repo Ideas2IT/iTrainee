@@ -1,9 +1,5 @@
 ﻿
-@*
-
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
+   
 <header>
     <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light bg-custom-light">
         <div>
@@ -22,7 +18,7 @@
                 </li>
                 <li class="nav-item dropdown px-2">
                     <a class="text-dark nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="\css\logo.jpg" width="40" height="40" class="rounded-circle"> <span class="px-2">@TempData["HeaderUserName"]</span>
+                        <img src="\css\logo.jpg" width="40" height="40" class="rounded-circle"> <span class="px-2">@TempData.Peek("CurrentUserName")</span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="#">Profile</a>
@@ -43,7 +39,6 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav">
@@ -76,7 +71,7 @@
                             <a class="nav-link text-white" href="#">Daily Progress</a>
                         </li>
                         <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="/Shared/Messages/ManageMessages?id=@TempData["UserId"]">Alert Trainee</a>
+                            <a class="nav-link text-white" href="/Shared/Messages/ManageMessages">Alert Trainee</a>
                         </li>
                     }
                     @if (TempData["HeaderRole"].Equals("Mentor"))

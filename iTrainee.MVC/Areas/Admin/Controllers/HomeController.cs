@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using iTrainee.MVC.Helpers;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Http;
 
 namespace iTrainee.MVC.Areas.Admin.Controllers
 {
@@ -24,15 +25,14 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            TempData["HeaderRole"] = "Admin";
             TempData.Peek("UserToken");
-
+            TempData.Keep("HeaderRole");
             return View();
         }
 
         public IActionResult ManageUser(string role)
         {
-            TempData["HeaderRole"] = "Admin";
+            TempData.Keep("HeaderRole");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
 
