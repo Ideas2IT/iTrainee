@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using iTrainee.Models;
-using System.Collections.Generic;
 using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;

@@ -22,7 +22,9 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="#">Profile</a>
-                        <a class="dropdown-item" href="#">Change Password</a>
+                      
+	                   <a href="/Home/ChangePassword?userId=@TempData["UserId"]" class="dropdown-item btn btn-primary"> Change Password</a>
+
                         <a class="dropdown-item" href="#">Sign Out</a>
                     </div>
                 </li>
@@ -61,6 +63,9 @@
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Mentor/Home/ManageSubTopics">Sub Topics</a>
                         </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="/Shared/UserTopics/AddEditUserTopics">Assign Topics</a>
+                        </li>
 
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="#">Daily Progress</a>
@@ -81,7 +86,10 @@
                             <a class="nav-link text-white" href="/Mentor/Home/ManageSubTopics">Sub Topics</a>
                         </li>
                         <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="/Shared/Messages/ManageMessages">Alert Trainee</a>
+                            <a class="nav-link text-white" href="/Shared/UserTopics/AddEditUserTopics">Assign Topics</a>
+                        </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="#">Alert Trainee</a>
                         </li>
                     }
                     @if (TempData["HeaderRole"].Equals("Trainee"))
@@ -95,3 +103,34 @@
         </div>
     </nav>
 </header>
+
+<div class="modal" fade" id="changePassword">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Change Password</h3>
+            </div>
+            <div class="modal-body" id="changePasswordBody">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+     debugger
+    function ChangePassword() {
+        debugger
+        var UserPath = "/Home/ChangePassword";
+        $("#changePasswordBody").load(UserPath, function () {
+            $("#changePassword").modal("show");
+        });
+    };
+
+     var GetUser = function (id) {
+        var UserPath = "/Admin/Home/SaveUser?Id=" + id;
+        $("#myModalBodyDiv1").load(UserPath, function () {
+            $("#myModal1").modal("show");
+        });
+    };
+</script>
