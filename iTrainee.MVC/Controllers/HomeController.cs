@@ -53,7 +53,7 @@ namespace iTrainee.Controllers
         [Microsoft.AspNetCore.Mvc.HttpPost]
         public IActionResult Login(string UserName, string Password)
         {
-            UserAudit userAudit = new UserAudit();
+            
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + UserName + "&Password=" + Password);
            
@@ -75,15 +75,19 @@ namespace iTrainee.Controllers
             TempData["UserId"] = user.Id;
             TempData["UserToken"] = user.Token;
             var token = Convert.ToString(TempData["UserToken"]);
-            userAudit.UserId = user.Id;
-            userAudit.Date = DateTime.Now.Date;
-            userAudit.SignIn = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
-            userAudit.SignOut = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
-            int userAuditId = HttpClientHelper.ExecuteInsertPostApiMethod<UserAudit>(baseUrl, "/UserAudit/InsertUserAudit", userAudit, token);
-            userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + userAuditId);
-            TempData["UserDate"] = JsonConvert.SerializeObject(userAudit);
-           
-            return RedirectToAction("Index", "Home", new { Area = user.RoleName });
+
+            if (user.RoleName.Equals("Trainee"))
+            {
+                UserAudit userAudit = new UserAudit();
+                userAudit.UserId = user.Id;
+                userAudit.Date = DateTime.Now;
+                userAudit.SignIn = DateTime.Now;
+                userAudit.SignOut = DateTime.Now;
+                int userAuditId = HttpClientHelper.ExecuteInsertPostApiMethod<UserAudit>(baseUrl, "/UserAudit/InsertUserAudit", userAudit, token);
+
+                return RedirectToAction("Index", "Home", new { Area = "Trainee", id = userAuditId });
+            }
+
             return RedirectToAction("Index", "Home", new {Area = TempData.Peek("HeaderRole")});
         }
 
