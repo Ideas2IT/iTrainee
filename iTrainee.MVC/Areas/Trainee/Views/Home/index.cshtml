@@ -9,14 +9,15 @@
         
     <div class="col">
        
-<p>Date : @Model.Date</p>
+<p>Date : @Model.Date.ToShortDateString()</p>
 </div>
-<div class="col">
+<div class="row">
+
    
-<p>Sign-In : @Model.SignIn</p>
-</div>
-<p>Sign-Out : @Model.SignOut</p>
- 
+<p style="margin-left:30px;">Sign-In : @Model.SignIn.ToShortTimeString()</p>
+
+<p>Sign-Out : @Model.SignOut.ToShortTimeString()</p>
+ </div>
 </div>
        
 

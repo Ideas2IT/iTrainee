@@ -82,7 +82,6 @@ namespace iTrainee.Controllers
             userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + userAuditId);
             TempData["UserDate"] = JsonConvert.SerializeObject(userAudit);
            
-            return RedirectToAction("Index", "Home", new { Area = user.RoleName });
             return RedirectToAction("Index", "Home", new {Area = TempData.Peek("HeaderRole")});
         }
 
