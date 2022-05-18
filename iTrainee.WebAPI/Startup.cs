@@ -65,7 +65,7 @@ namespace iTrainee.WebAPI
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IBatchUserRepository, BatchUserRepository>();
             services.AddSingleton<IBatchStreamRepository, BatchStreamRepository>();
-
+            services.AddSingleton<IUserAuditRepository, UserAuditRepository>();
             services.AddSingleton<ISubTopicsRepository, SubTopicsRepository>();
 
             services.AddSingleton<IStreamService, StreamService>();
@@ -74,9 +74,9 @@ namespace iTrainee.WebAPI
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<IBatchUserService, BatchUserService>();
             services.AddSingleton<IBatchStreamService, BatchStreamService>();
+            services.AddSingleton<IUserAuditService, UserAuditService>();
             services.AddSingleton<ISubTopicsService, SubTopicsService>();
             services.AddSingleton<IJWTManagerRepository, JWTManagerRepository>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

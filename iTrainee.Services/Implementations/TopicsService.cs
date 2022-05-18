@@ -19,6 +19,7 @@ namespace iTrainee.Services.Implementations
         {
             _topicsRepository = topicsRepository;
         }
+
         public bool DeleteTopic(int id)
         {
             return _topicsRepository.DeleteTopic(id);
