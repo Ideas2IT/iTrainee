@@ -17,7 +17,7 @@ namespace iTrainee.Models
         public string StreamName { get; set; }
 
         [NotMapped]
-        public IEnumerable<SubTopics> SubTopicsList { get; set; }
+        public List<SubTopics> SubTopicsList { get; set; }
 
     }
 }

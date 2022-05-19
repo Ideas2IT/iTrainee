@@ -34,8 +34,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             userTopics.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Trainee", "");
             userTopics.TopicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "");
-            userTopics.SubTopicsList = (List<SubTopics>)HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics", "");
-
             return View(userTopics);
         }
     }

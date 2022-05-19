@@ -1,4 +1,5 @@
 ﻿using iTrainee.Data;
+using iTrainee.Data.Interfaces;
 using iTrainee.Models;
 using iTrainee.Services.Interfaces;
 using System;
@@ -10,6 +11,7 @@ namespace iTrainee.Services.Implementations
     public class TopicsService : ITopicsService
     {
         private ITopicsRepository _topicsRepository;
+        private ISubTopicsRepository _subTopicsRepository;
 
         public TopicsService()
         {
@@ -33,7 +35,19 @@ namespace iTrainee.Services.Implementations
 
         public IEnumerable<Topics> GetAllTopics()
         {
-            return _topicsRepository.GetAllTopics();
+            IEnumerable<Topics> topicList = _topicsRepository.GetAllTopics();
+            IEnumerable<SubTopics> subTopicList =  _subTopicsRepository.GetAllSubTopics();
+            foreach (Topics topic in topicList)
+            {
+                foreach (SubTopics subTopic in subTopicList)
+                {
+                    if (topic.Id == subTopic.TopicId)
+                    {
+                        topic.SubTopicsList.Add(subTopic);
+                    }
+                }
+            }
+            return topicList;
         }
 
         public bool InsertTopic(Topics topic)
