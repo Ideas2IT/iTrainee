@@ -2,147 +2,80 @@
 @using Microsoft.AspNetCore.Mvc.Rendering;
 
 <head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 @{
-	ViewData["Title"] = "AddEditUSerTopics";
+    ViewData["Title"] = "AddEditUSerTopics";
 }
 <h3 class="mt-5 mb-4">Assign Topics & SubTopics</h3>
 
-    @*<div class="panel panel-primary">  
-        <div class="panel-heading panel-head">Author Book Tree View</div>  
-        <div id="frm-author" class="panel-body">  
-@using (Html.BeginForm())  
-{  
-  
-            <div class="tree">  
-                @foreach (var topic in Model)
-                {
-                    <p>Topic : </p>
-                    <tr>
-                    <td>@Html.CheckBoxFor(m => topic.IsActive)</td>   
-                    <label>@Html.DisplayFor(m => topic.Name)</label>  
-                    </tr><br />                    <p>SubTopic : </p>
+<div class="panel panel-primary">
+    <div class="panel-heading panel-head">Author Book Tree View</div>
+    <div id="frm-author" class="panel-body">
+        @using (Html.BeginForm())
+        {
 
-                    @foreach (var subTopics in topic.SubTopicsList)
-                    {
-                                            <tr>
-                    <td>@Html.CheckBoxFor(m => subTopics.IsActive)</td>   
-                    <label>@Html.DisplayFor(m => subTopics.Name)</label>  
-                    </tr>
-                    }          
-                }
-  
-            </div>  
-            <div class="form-group">  
-                <div class="col-lg-9"></div>  
-                <div class="col-lg-3">  
-                    <button class="btn btn-success" id="btnSubmit" type="submit">  
-Submit  
-</button>  
-                </div>  
-            </div>  
-}  
-  
-        </div>  
-    </div>  *@
 
-    <ul class="treeview">
-    <li id="li_1" class="contains-items">
-        <div class="checkbox">
-            <input id="1" type="checkbox" value="1" name="categories[]">
-            <label for="1">
-                Floor
-            </label>
-        </div>
-        <ul >
-            <li class="li_1">
-                <div class="checkbox">
-                    <input id="4" type="checkbox" value="4" name="categories[]">
-                    <label for="4">
-                        1st Floor
-                    </label>
+                <ul class="treeview">
+            @foreach (var topic in Model)
+            {
+                                    <li id="li_1" class="contains-items">
+
+                        <div class="checkbox">
+                            <input id="1" type="checkbox" value="1" name="categories[]">
+                            <label for="1">
+                                @topic.Name
+                            </label>
+                        </div>
+                        <ul>
+                            @foreach (var subTopics in topic.SubTopicsList)
+                            {
+                                <li class="li_1">
+                                    <div class="checkbox">
+                                        <input id="4" type="checkbox" value="4" name="categories[]">
+                                        <label for="4">
+                                            @subTopics.Name
+                                        </label>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                                                        </li>
+
+            }
+                </ul>
+
+            <div class="form-group">
+                <div class="col-lg-9"></div>
+                <div class="col-lg-3">
+                    <button class="btn btn-success" id="btnSubmit" type="submit">
+                        Submit
+                    </button>
                 </div>
-            </li>
-            <li class="li_1">
-                <div class="checkbox">
-                    <input id="5" type="checkbox" value="5" name="categories[]">
-                    <label for="5">
-                        2nd Floor
-                    </label>
-                </div>
-            </li>
-            <li class="li_1">
-                <div class="checkbox">
-                    <input id="6" type="checkbox" value="6" name="categories[]">
-                    <label for="6">
-                        3rd Floor
-                    </label>
-                </div>
-            </li>
-        </ul>
-    </li>
-    <li id="li_2">
-        <div class="checkbox">
-            <input id="2" type="checkbox" value="2" name="categories[]">
-            <label for="2">
-                Rent
-            </label>
-        </div>
-    </li>
-    <li id="li_3" class="contains-items">
-        <div class="checkbox">
-            <input id="3" type="checkbox" value="3" name="categories[]">
-            <label for="3">
-                View
-            </label>
-        </div>
-        <ul>
-            <li class="li_3">
-                <div class="checkbox">
-                    <input id="7" type="checkbox" value="7" name="categories[]">
-                    <label for="7">
-                        Pool View
-                    </label>
-                </div>
-            </li>
-            <li class="li_3">
-                <div class="checkbox">
-                    <input id="8" type="checkbox" value="8" name="categories[]">
-                    <label for="8">
-                        Mountain View
-                    </label>
-                </div>
-            </li>
-            <li class="li_3">
-                <div class="checkbox">
-                    <input id="9" type="checkbox" value="9" name="categories[]">
-                    <label for="9">
-                        Courtyard
-                    </label>
-                </div>
-            </li>
-        </ul>
-    </li>
+            </div>
+        }
+
+    </div>
+</div>
 
     <script>
-        $('input[type=checkbox]').change(function(){
-    // if is checked
-    if(this.checked){
-        // check all children
-        var lenchk = $(this).closest('ul').find(':checkbox');
-        var lenchkChecked = $(this).closest('ul').find(':checkbox:checked');
+                $('input[type=checkbox]').change(function(){
+            // if is checked
+            if(this.checked){
+                // check all children
+                var lenchk = $(this).closest('ul').find(':checkbox');
+                var lenchkChecked = $(this).closest('ul').find(':checkbox:checked');
 
-        //if all siblings are checked, check its parent checkbox
-        if (lenchk.length == lenchkChecked.length) {
-            $(this).closest('ul').siblings().find(':checkbox').prop('checked', true);
-        }else{
-            $(this).closest('.checkbox').siblings().find(':checkbox').prop('checked', true);
-        }
-    } else {
-        // uncheck all children
-        $(this).closest('.checkbox').siblings().find(':checkbox').prop('checked', false);
-        $(this).closest('ul').siblings().find(':checkbox').prop('checked', false);
-    }
-});
+                //if all siblings are checked, check its parent checkbox
+                if (lenchk.length == lenchkChecked.length) {
+                    $(this).closest('ul').siblings().find(':checkbox').prop('checked', true);
+                }else{
+                    $(this).closest('.checkbox').siblings().find(':checkbox').prop('checked', true);
+                }
+            } else {
+                // uncheck all children
+                $(this).closest('.checkbox').siblings().find(':checkbox').prop('checked', false);
+                $(this).closest('ul').siblings().find(':checkbox').prop('checked', false);
+            }
+        });
     </script>
