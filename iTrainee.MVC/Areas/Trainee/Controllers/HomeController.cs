@@ -13,13 +13,20 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
     [Route("Trainee/[controller]/[action]/{id?}")]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        IConfiguration _configuration;
+
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
-            UserAudit user = JsonConvert.DeserializeObject<UserAudit>(TempData["UserDate"].ToString());
+            _configuration = configuration;
+        }
+        public IActionResult Index(int id)
+        {
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            UserAudit userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + id);
             TempData["HeaderRole"] = "Trainee";
             TempData.Keep("HeaderRole");
             TempData.Peek("UserToken");
-            return View(user);
+            return View(userAudit);
         }
     }
 }
