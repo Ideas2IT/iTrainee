@@ -1,65 +1,81 @@
-﻿@model iTrainee.Models.UserTopics;
+﻿@model List<iTrainee.Models.Topics>;
 @using Microsoft.AspNetCore.Mvc.Rendering;
 
-
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
 @{
-	ViewData["Title"] = "AddEditUSerTopics";
+    ViewData["Title"] = "AddEditUSerTopics";
 }
-<h3 class="mt-5 mb-4">Save Batch</h3>
+<h3 class="mt-5 mb-4">Assign Topics & SubTopics</h3>
 
-@using (Html.BeginForm())
-{
-	    @Html.AntiForgeryToken()
-	<div class="form-group">
-		<label class="col-form-label">Trainees</label><br />
-		@Html.ListBoxFor(model=>model.SelectedTraineeList, new MultiSelectList(Model.TraineeList, "Id", "UserName"),  htmlAttributes: new { id="multiSelectTrainee", @class = "form-control", multiple="multiple" })
-	</div>
-
-	<div class="form-group">
-		<label class="col-form-label">Topics</label><br />
-		@Html.ListBoxFor(model=>model.SelectedTopicsList ,new MultiSelectList(Model.TopicsList, "Id", "Name"),  htmlAttributes: new { id="multiSelectTopics", @class = "form-control", multiple="multiple" })
-	</div>
-
-	<div class="form-group">
-		<label class="col-form-label">SubTopicss</label><br />
-		@Html.ListBoxFor(model=>model.SelectedSubTopicsList ,new SelectList(Model.SubTopicsList, "Id", "Name"),  htmlAttributes: new { id="multiSelectSubTopics", @class = "form-control", multiple="multiple" })
-	</div>
-	<input type="submit" class="mt-3 btn btn-primary" value="Save" />
-}
+<div class="panel panel-primary">
+    <div class="panel-heading panel-head">Author Book Tree View</div>
+    <div id="frm-author" class="panel-body">
+        @using (Html.BeginForm())
+        {
 
 
+                <ul class="treeview">
+            @foreach (var topic in Model)
+            {
+                                    <li id="li_1" class="contains-items">
 
-<div class="container-fluid">
-        <div class="row">
-            <button id="btnSave" class="btn btn-default">Save Checked Nodes</button>
-        </div>
-        <div class="row">
-            <div id="tree"></div>
-        </div>
+                        <div class="checkbox">
+                            <input id="1" type="checkbox" value="1" name="categories[]">
+                            <label for="1">
+                                @topic.Name
+                            </label>
+                        </div>
+                        <ul>
+                            @foreach (var subTopics in topic.SubTopicsList)
+                            {
+                                <li class="li_1">
+                                    <div class="checkbox">
+                                        <input id="4" type="checkbox" value="4" name="categories[]">
+                                        <label for="4">
+                                            @subTopics.Name
+                                        </label>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                                                        </li>
+
+            }
+                </ul>
+
+            <div class="form-group">
+                <div class="col-lg-9"></div>
+                <div class="col-lg-3">
+                    <button class="btn btn-success" id="btnSubmit" type="submit">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        }
+
     </div>
+</div>
 
-@section scripts{
-    <script type="text/javascript">
+    <script>
+                $('input[type=checkbox]').change(function(){
+            // if is checked
+            if(this.checked){
+                // check all children
+                var lenchk = $(this).closest('ul').find(':checkbox');
+                var lenchkChecked = $(this).closest('ul').find(':checkbox:checked');
 
-        $(function(){
-		$("#multiSelectTrainee").chosen();
-		$("#multiSelectTopics").chosen();
-		$("#multiSelectSubTopics").chosen();
-	});
-            $(document).ready(function () {
-                var tree = $('#tree').tree({
-                    primaryKey: 'id',
-                    uiLibrary: 'bootstrap4',
-                    dataSource: '/Locations/Get',
-                    checkboxes: true
-                });
-                $('#btnSave').on('click', function () {
-                    var checkedIds = tree.getCheckedNodes();
-                    $.ajax({ url: '/Locations/SaveCheckedNodes', data: { checkedIds: checkedIds }, method: 'POST' })
-                        .fail(function () {
-                            alert('Failed to save.');
-                        });
-                });
-            });
+                //if all siblings are checked, check its parent checkbox
+                if (lenchk.length == lenchkChecked.length) {
+                    $(this).closest('ul').siblings().find(':checkbox').prop('checked', true);
+                }else{
+                    $(this).closest('.checkbox').siblings().find(':checkbox').prop('checked', true);
+                }
+            } else {
+                // uncheck all children
+                $(this).closest('.checkbox').siblings().find(':checkbox').prop('checked', false);
+                $(this).closest('ul').siblings().find(':checkbox').prop('checked', false);
+            }
+        });
     </script>
-}
