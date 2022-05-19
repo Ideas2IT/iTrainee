@@ -48,5 +48,10 @@ namespace iTrainee.Services.Implementations
         {
             return _userRepository.DeleteUser(id);
         }
+
+        public bool UpdateUser(User user)
+        {
+            return _userRepository.UpdateUser(user);
+        }
     }
 }
