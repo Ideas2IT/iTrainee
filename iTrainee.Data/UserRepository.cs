@@ -45,6 +45,7 @@ namespace iTrainee.Data
                         user.LastName = Convert.ToString(item["LastName"]);
                         user.Password = Convert.ToString(item["Password"]);
                         user.UserName = Convert.ToString(item["UserName"]);
+                        user.Qualification = Convert.ToString(item["Qualification"]);
                         user.DOB = Convert.ToDateTime(item["DOB"]);
                     }
                 }
@@ -222,6 +223,16 @@ namespace iTrainee.Data
                 {
                     ParameterName = "IsTrainee",
                     Value = user.IsTrainee
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedBy",
+                    Value = "Admin"
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedOn",
+                    Value = DateTime.Now.Date
                 });
                 parameters.Add(new SqlParameter
                 {

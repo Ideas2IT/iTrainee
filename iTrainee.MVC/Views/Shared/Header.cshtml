@@ -1,4 +1,6 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Header";
+}
    
 <header>
     <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light bg-custom-light">
@@ -91,6 +93,9 @@
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="#">Alert Trainee</a>
                         </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="/Admin/Home/ManageUser?role=Trainee">Trainee Progress</a>
+                        </li>
                     }
                     @if (TempData["HeaderRole"].Equals("Trainee"))
                     {
@@ -118,9 +123,9 @@
 
 
 <script type="text/javascript">
-     debugger
+  
     function ChangePassword() {
-        debugger
+        
         var UserPath = "/Home/ChangePassword";
         $("#changePasswordBody").load(UserPath, function () {
             $("#changePassword").modal("show");
@@ -133,4 +138,5 @@
             $("#myModal1").modal("show");
         });
     };
+    
 </script>

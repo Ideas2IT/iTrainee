@@ -65,7 +65,15 @@
 
             <div class="form-group">
                 <label class="col-form-label">Qualification</label>
-                <input type="text" class="form-control" name="Qualification" value="@Model.Qualification" required />
+                @*<input type="text" class="form-control" name="Qualification" value="@Model.Qualification" required />*@
+                @Html.DropDownListFor(model => model.Qualification, new List<SelectListItem>
+                        { new SelectListItem{Text="B.E/B.Tech"},
+                         new SelectListItem{Text="Bsc"},
+                         new SelectListItem{Text="BCA"},
+                         new SelectListItem{Text="M.E/M.Tech"},
+                         new SelectListItem{Text="Msc"},
+                         new SelectListItem{Text="MCA"},
+                         new SelectListItem{Text="PHD"}}, new { @class = "form-control" })
             </div>
 
 
@@ -100,8 +108,7 @@
 
         $("#btnSubmit").click(function () {
             var a = $("#myForm").serialize();
-                                debugger;
-
+                               
             $.ajax({
                 type: "POST",
                 url: "/Admin/Home/SaveUser",
