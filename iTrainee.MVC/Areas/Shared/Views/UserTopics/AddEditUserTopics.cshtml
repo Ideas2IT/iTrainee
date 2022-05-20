@@ -1,22 +1,21 @@
-﻿@model List<iTrainee.Models.Topics>;
+﻿@model iTrainee.Models.UserTopics;
 @using Microsoft.AspNetCore.Mvc.Rendering;
 
-<head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-</head>
 @{
     ViewData["Title"] = "AddEditUSerTopics";
 }
-<h3 class="mt-5 mb-4">Assign Topics & SubTopics</h3>
 
 <div class="panel panel-primary">
     <div id="frm-author" class="panel-body">
         @using (Html.BeginForm())
         {
-
+            <div class="form-group">
+		<label class="col-form-label">Trainees</label><br />
+		@Html.ListBoxFor(model=>model.TraineeList, new MultiSelectList(Model.TraineeList, "Id", "UserName"),  htmlAttributes: new { id="multiSelectMentor", @class = "form-control", multiple="multiple" })
+	    </div>
 
                 <ul class="treeview">
-            @foreach (var topic in Model)
+            @foreach (var topic in Model.TopicsList)
             {
                 <li id="li_1" class="contains-items">
 
@@ -39,7 +38,7 @@
                                 </li>
                             }
                         </ul>
-                 </li>
+                     </li>
 
             }
                 </ul>
@@ -64,6 +63,8 @@
                 // check all children
                 var lenchk = $(this).closest('ul').find(':checkbox');
                 var lenchkChecked = $(this).closest('ul').find(':checkbox:checked');
+                debugger
+                console.log(lenchkChecked);
 
                 //if all siblings are checked, check its parent checkbox
                 if (lenchk.length == lenchkChecked.length) {

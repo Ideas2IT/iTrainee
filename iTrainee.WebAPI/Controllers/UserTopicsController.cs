@@ -15,6 +15,8 @@ namespace iTrainee.APIs.Controllers
 		{
 			_userTopicsService = subTopicsService;
 		}
+
+		[HttpGet]
 		public IEnumerable<UserTopics> GetAllUserTopics()
 		{
 			return _userTopicsService.GetAllUserTopics();

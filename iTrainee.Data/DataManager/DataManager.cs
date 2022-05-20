@@ -147,7 +147,7 @@ namespace iTrainee.Data.DataManager
                         connection.Close();
                     throw ex;
                 }
-                finally
+                finally                
                 {
                     if (connection.State == ConnectionState.Open)
                         connection.Close();
