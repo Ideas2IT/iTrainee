@@ -43,6 +43,7 @@ namespace iTrainee.Data
                         user.Id = Convert.ToInt32(item["Id"]);
                         user.FirstName = Convert.ToString(item["FirstName"]);
                         user.LastName = Convert.ToString(item["LastName"]);
+                        user.Qualification = Convert.ToString(item["Qualification"]);
                         user.Password = Convert.ToString(item["Password"]);
                         user.UserName = Convert.ToString(item["UserName"]);
                         user.DOB = Convert.ToDateTime(item["DOB"]);
