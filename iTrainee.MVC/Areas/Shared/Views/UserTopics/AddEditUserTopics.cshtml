@@ -10,7 +10,6 @@
 <h3 class="mt-5 mb-4">Assign Topics & SubTopics</h3>
 
 <div class="panel panel-primary">
-    <div class="panel-heading panel-head">Author Book Tree View</div>
     <div id="frm-author" class="panel-body">
         @using (Html.BeginForm())
         {
@@ -19,7 +18,7 @@
                 <ul class="treeview">
             @foreach (var topic in Model)
             {
-                                    <li id="li_1" class="contains-items">
+                <li id="li_1" class="contains-items">
 
                         <div class="checkbox">
                             <input id="1" type="checkbox" value="1" name="categories[]">
@@ -40,7 +39,7 @@
                                 </li>
                             }
                         </ul>
-                                                        </li>
+                 </li>
 
             }
                 </ul>

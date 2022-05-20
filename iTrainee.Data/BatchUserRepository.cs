@@ -21,7 +21,7 @@ namespace iTrainee.Data
         {
             DataSet result = null;
             var isSuccess = false;
-            
+
             try
             {
                 var parameters = new List<SqlParameter>();
@@ -29,6 +29,11 @@ namespace iTrainee.Data
                 {
                     ParameterName = "BatchId",
                     Value = batch.Id
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UserId",
+                    Value = batch.StringUserIds
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -51,16 +56,7 @@ namespace iTrainee.Data
                     Value = DateTime.Now.Date
                 });
 
-                int[] intUserIds = Array.ConvertAll(batch.StringUserIds.Split(','), int.Parse);
-                foreach(int UserId in intUserIds)
-                {
-                    SqlParameter UserIdParam = new SqlParameter();
-                    UserIdParam.ParameterName = "UserId";
-                    UserIdParam.Value = UserId;
-                    parameters.Add(UserIdParam);
-                    result = _dataManager.ExecuteStoredProcedure("spInsertBatchUser", parameters);
-                    parameters.Remove(UserIdParam);
-                }
+                result = _dataManager.ExecuteStoredProcedure("spInsertBatchUser", parameters);
 
                 if (result.Tables.Count != 0)
                 {
@@ -154,6 +150,11 @@ namespace iTrainee.Data
                 });
                 parameters.Add(new SqlParameter
                 {
+                    ParameterName = "UserId",
+                    Value = batch.StringUserIds
+                });
+                parameters.Add(new SqlParameter
+                {
                     ParameterName = "InsertedBy",
                     Value = "Admin"
                 });
@@ -173,16 +174,7 @@ namespace iTrainee.Data
                     Value = DateTime.Now.Date
                 });
 
-                int[] intUserIds = Array.ConvertAll(batch.StringUserIds.Split(','), int.Parse);
-                foreach (int UserId in intUserIds)
-                {
-                    SqlParameter UserIdParam = new SqlParameter();
-                    UserIdParam.ParameterName = "UserId";
-                    UserIdParam.Value = UserId;
-                    parameters.Add(UserIdParam);
-                    result = _dataManager.ExecuteStoredProcedure("spUpdateBatchUser", parameters);
-                    parameters.Remove(UserIdParam);
-                }
+                result = _dataManager.ExecuteStoredProcedure("spUpdateBatchUser", parameters);
 
                 if (result.Tables.Count != 0)
                 {
@@ -210,17 +202,13 @@ namespace iTrainee.Data
                     ParameterName = "BatchId",
                     Value = batch.Id
                 });
-
-                int[] intUserIds = Array.ConvertAll(batch.StringUserIds.Split(','), int.Parse);
-                foreach (int UserId in intUserIds)
+                parameters.Add(new SqlParameter
                 {
-                    SqlParameter UserIdParam = new SqlParameter();
-                    UserIdParam.ParameterName = "UserId";
-                    UserIdParam.Value = UserId;
-                    parameters.Add(UserIdParam);
-                    result = _dataManager.ExecuteStoredProcedure("spRemoveUserIdInBatchUser", parameters);
-                    parameters.Remove(UserIdParam);
-                }
+                    ParameterName = "UserId",
+                    Value = batch.StringUserIds
+                });
+
+                result = _dataManager.ExecuteStoredProcedure("spRemoveUserIdInBatchUser", parameters);
 
                 if (result.Tables.Count != 0)
                 {
@@ -233,6 +221,31 @@ namespace iTrainee.Data
             }
 
             return isSuccess;
+        }
+
+        public IEnumerable<User> GetUnassignedTrainees()
+        {
+            var unassignedTrainees = new List<User>();
+            try
+            {
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUnassignedTrainees");
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
+                    {
+                        unassignedTrainees.Add(new User
+                        {
+                            Id = Convert.ToInt32(item["Id"]),
+                            UserName = Convert.ToString(item["UserName"])
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return unassignedTrainees;
         }
     }
 }
