@@ -3,24 +3,21 @@
 @{
     ViewData["Title"] = "Trainee";
 }
-
 <div class="row mt-3">
-    
-        
     <div class="col">
-       
-<p>Date : @Model.Date</p>
-</div>
-<div class="col">
+        
+    <p>Date : @Model.Date.ToShortDateString()</p>
+    </div>
+    <div class="col">
    
-<p>Sign-In : @Model.SignIn</p>
-</div>
-<p>Sign-Out : @Model.SignOut</p>
+    <p>Sign-In : @Model.SignIn.ToShortTimeString()</p>
+    </div>
+    <p>Sign-Out : @Model.SignOut.ToShortTimeString()</p>
  
 </div>
        
 
-<p>Hello Kaviya R,</p>
+<h3 class="font-weight-bold mt-3 mb-5">Hello @TempData.Peek("UserFirstName"),</h3>
 <div class="col">
     <div class="row">
     <p>C# Basics</p>
