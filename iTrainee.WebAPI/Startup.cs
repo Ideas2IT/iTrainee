@@ -68,6 +68,7 @@ namespace iTrainee.WebAPI
             services.AddSingleton<IBatchStreamRepository, BatchStreamRepository>();
             services.AddSingleton<IUserAuditRepository, UserAuditRepository>();
             services.AddSingleton<ISubTopicsRepository, SubTopicsRepository>();
+            services.AddSingleton<IUserTopicsRepository, UserTopicsRepository>();
 
             services.AddSingleton<IStreamService, StreamService>();
             services.AddSingleton<IBatchService, BatchService>();
@@ -78,6 +79,7 @@ namespace iTrainee.WebAPI
             services.AddSingleton<IBatchStreamService, BatchStreamService>();
             services.AddSingleton<IUserAuditService, UserAuditService>();
             services.AddSingleton<ISubTopicsService, SubTopicsService>();
+            services.AddSingleton<IUserTopicsService, UserTopicsService>();
             services.AddSingleton<IJWTManagerRepository, JWTManagerRepository>();
         }
 

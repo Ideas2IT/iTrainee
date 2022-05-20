@@ -13,10 +13,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
     {
         ILogger<BatchController> _logger;
         IConfiguration _configuration;
-        private List<string> getUserIds;
-        private List<string> postUserIds;
-        private List<string> getStreamIds;
-        private List<string> postStreamIds;
 
         public UserTopicsController(ILogger<BatchController> logger, IConfiguration configuration)
         {
@@ -24,6 +20,14 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             _configuration = configuration;
         }
 
+        [HttpGet]
+        public IActionResult ManageUserTopics()
+        {
+            TempData["HeaderRole"] = "Admin";
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            var userTopicsList = (List<UserTopics>)HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics", "");
+            return View(userTopicsList);
+        }
 
 
         [HttpGet]

@@ -56,6 +56,7 @@ namespace iTrainee.MVC.Helpers
             return null;
         }
 
+
         public static bool ExecutePostApiMethod<T>(string baseUrl, string method, T model, string token)
         {
             using (var client = new HttpClient())
