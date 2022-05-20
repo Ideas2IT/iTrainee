@@ -13,10 +13,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
     {
         ILogger<BatchController> _logger;
         IConfiguration _configuration;
-        private List<string> getUserIds;
-        private List<string> postUserIds;
-        private List<string> getStreamIds;
-        private List<string> postStreamIds;
 
         public UserTopicsController(ILogger<BatchController> logger, IConfiguration configuration)
         {
@@ -24,18 +20,24 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             _configuration = configuration;
         }
 
+        [HttpGet]
+        public IActionResult ManageUserTopics()
+        {
+            TempData["HeaderRole"] = "Admin";
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            var userTopicsList = (List<UserTopics>)HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics", "");
+            return View(userTopicsList);
+        }
 
 
         [HttpGet]
         public IActionResult AddEditUserTopics()
         {
-            TempData["HeaderRole"] = "Admin";
+            TempData.Keep("HeaderRole");
             UserTopics userTopics = new UserTopics();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             userTopics.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Trainee", "");
             userTopics.TopicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "");
-            userTopics.SubTopicsList = (List<SubTopics>)HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics", "");
-
             return View(userTopics);
         }
     }

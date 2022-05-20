@@ -8,6 +8,9 @@ namespace iTrainee.Models
         public int Id { get; set; }
 
         [NotMapped]
+        public string Username { get; set; }
+
+        [NotMapped]
         public IEnumerable<User> TraineeList { get; set; }
 
         [NotMapped]
@@ -17,7 +20,10 @@ namespace iTrainee.Models
         public IEnumerable<SubTopics> SubTopicsList { get; set; }
 
         [NotMapped]
-        public string[] SelectedTraineeList { get; set; }
+        public string TopicName { get; set; }
+
+        [NotMapped]
+        public string SubTopicName { get; set; }
 
         [NotMapped]
         public string[] SelectedTopicsList { get; set; }
