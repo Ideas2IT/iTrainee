@@ -1,6 +1,4 @@
-﻿
-   
-<header>
+﻿<header>
     <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light bg-custom-light">
         <div>
             <img src="\css\logo.jpg" width="50" height="50" class="d-inline-block align-top" alt="">
@@ -15,6 +13,7 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item  px-2">
                     <i class="header-notification fa-lg fa fa-bell-o"></i>
+                    <span class="counter counter-lg">7</span>
                 </li>
                 <li class="nav-item dropdown px-2">
                     <a class="text-dark nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -41,7 +40,7 @@
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav">
-                    @if (TempData.Peek("HeaderRole").Equals("Admin"))
+                    @if (TempData["HeaderRole"].Equals("Admin"))
                     {
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Admin/Home/ManageUser?role=Mentor">Mentor</a>
