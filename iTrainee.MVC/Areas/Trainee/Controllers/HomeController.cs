@@ -1,4 +1,11 @@
+using iTrainee.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using iTrainee.MVC.Helpers;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+
 
 namespace iTrainee.MVC.Areas.Trainee.Controllers
 {
@@ -6,11 +13,31 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
     [Route("Trainee/[controller]/[action]/{id?}")]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        IConfiguration _configuration;
+
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
-            TempData["HeaderRole"] = "Trainee";
+            _configuration = configuration;
+        }
+
+       
+        public IActionResult Index(int auditId, int userId)
+        {
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            UserAudit userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + userId);
+            if (auditId == 0)
+            {
+                TempData["HeaderRole"] = "Mentor";
+                TempData["FirstName"] = "MentorName";
+            }
+            else
+            {
+                TempData["HeaderRole"] = "Trainee";
+                TempData["FirstName"] = "TraineeName";
+            }
+            TempData.Keep("HeaderRole");
             TempData.Peek("UserToken");
-            return View();
+            return View(userAudit);
         }
     }
 }

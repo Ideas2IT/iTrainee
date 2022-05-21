@@ -27,6 +27,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult Index()
         {
+            TempData.Keep("HeaderRole");
             return View();
         }
 

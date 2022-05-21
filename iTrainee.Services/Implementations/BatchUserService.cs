@@ -39,5 +39,10 @@ namespace iTrainee.Services.Implementations
         {
             return _batchUserRepository.UnassignUserId(batch);
         }
+
+        public IEnumerable<User> GetUnassignedTrainees()
+        {
+            return _batchUserRepository.GetUnassignedTrainees();
+        }
     }
 }

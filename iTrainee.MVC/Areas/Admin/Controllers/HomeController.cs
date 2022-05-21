@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using iTrainee.Models;
-using System.Collections.Generic;
 using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using iTrainee.MVC.Helpers;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Http;
 
 namespace iTrainee.MVC.Areas.Admin.Controllers
 {
@@ -25,9 +25,8 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            TempData.Keep("HeaderRole");
             TempData.Peek("UserToken");
-
+            TempData.Keep("HeaderRole");
             return View();
         }
 

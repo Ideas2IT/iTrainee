@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace iTrainee.Models
 {
@@ -14,6 +15,9 @@ namespace iTrainee.Models
 
         [NotMapped]
         public string StreamName { get; set; }
+
+        [NotMapped]
+        public List<SubTopics> SubTopicsList { get; set; }
 
     }
 }

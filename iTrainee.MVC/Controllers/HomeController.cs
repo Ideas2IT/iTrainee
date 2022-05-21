@@ -1,19 +1,15 @@
 ﻿using iTrainee.Models;
 using iTrainee.MVC.Helpers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Web.Mvc;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace iTrainee.Controllers
 {
-    [Authorize]
+	[Authorize]
     public class HomeController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -51,12 +47,13 @@ namespace iTrainee.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.HttpPost]
-        [AllowAnonymous]
         public IActionResult Login(string UserName, string Password)
         {
+            
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + UserName + "&Password=" + Password);
-            if(user.UserName == null)
+           
+            if (user.UserName == null)
             {
                 TempData["IsValidUserName"] = "false";
                 user.UserName = UserName;
@@ -70,14 +67,50 @@ namespace iTrainee.Controllers
 
             TempData["HeaderRole"] = user.RoleName;
             TempData["CurrentUserName"] = user.FirstName + " " + user.LastName;
+            TempData["UserFirstName"] = user.FirstName;
             TempData["UserId"] = user.Id;
             TempData["UserToken"] = user.Token;
+            var token = Convert.ToString(TempData["UserToken"]);
+
+            if (user.RoleName.Equals("Trainee"))
+            {
+                UserAudit userAudit = new UserAudit();
+                userAudit.UserId = user.Id;
+                userAudit.Date = DateTime.Now;
+                userAudit.SignIn = DateTime.Now;
+                userAudit.SignOut = DateTime.Now;
+                int userAuditId = HttpClientHelper.ExecuteInsertPostApiMethod<UserAudit>(baseUrl, "/UserAudit/InsertUserAudit", userAudit, token);
+
+                return RedirectToAction("Index", "Home", new { Area = "Trainee", auditId = userAuditId, userId = user.Id });
+            }
+
             return RedirectToAction("Index", "Home", new {Area = TempData.Peek("HeaderRole")});
         }
 
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult ChangePassword(int userId)
+        {
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + userId);
+            TempData["CurrentPassword"] = user.Password;
+            TempData["UserId"] = user.Id;
+            TempData["HeaderRole"] = "Admin";
+            
+            return View();
+        }
+
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public IActionResult ChangePassword(string updatedPassword , int userId)
+        {
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + userId);
+            user.Password = updatedPassword;
+            HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/UpdateUser" , user, Convert.ToString(TempData.Peek("UserToken")));
+            return RedirectToAction("Login");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -87,3 +120,5 @@ namespace iTrainee.Controllers
         }
     }
 }
+
+

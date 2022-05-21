@@ -10,5 +10,6 @@ namespace iTrainee.Services.Interfaces
         bool SaveUser(User user);
         bool DeleteUser(int id);
         User GetUserByUserName(string userName, string password);
+        bool UpdateUser(User user);
     }
 }

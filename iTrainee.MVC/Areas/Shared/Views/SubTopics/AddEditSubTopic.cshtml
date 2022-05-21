@@ -36,9 +36,7 @@
 }
 <script>
 		$(document).ready(function () {
-			debugger
 		$("#btnSubTopicSave").click(function () {
-			debugger
 			var updatedSubTopicData = $("#subTopicForm").serialize();
 			$.ajax({
 				type: "POST",
@@ -46,7 +44,7 @@
 				data: updatedSubTopicData,
 				success: function () {
 					$("#subTopicModal").modal("hide");
-					//window.location.replace("/Mentor/Home/ManageSubTopics")
+					window.location.replace("/Mentor/Home/ManageSubTopics")
 				},
 				error: function () {
 					alert("Unable to save data");
