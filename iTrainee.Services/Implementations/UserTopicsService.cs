@@ -8,16 +8,22 @@ namespace iTrainee.Services.Implementations
 {
 	public class UserTopicsService : IUserTopicsService
 	{
-		private IUserTopicsRepository userTopicsRepository;
+		private IUserTopicsRepository _userTopicsRepository;
 
-		public UserTopicsService(IUserTopicsRepository _userTopicsRepository)
+		public UserTopicsService(IUserTopicsRepository userTopicsRepository)
 		{
-			userTopicsRepository = _userTopicsRepository;
+			_userTopicsRepository = userTopicsRepository;
 		}
 
 		public IEnumerable<UserTopics> GetAllUserTopics()
 		{
-			return userTopicsRepository.GetAllUserTopics();
+			return _userTopicsRepository.GetAllUserTopics();
+		}
+
+		public IEnumerable<Topics> GetUserTopicsByUserId(int id)
+        {
+			return _userTopicsRepository.GetUserTopicsByUserId(id);
+
 		}
 
 	}

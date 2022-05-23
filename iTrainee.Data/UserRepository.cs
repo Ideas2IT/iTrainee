@@ -45,6 +45,7 @@ namespace iTrainee.Data
                         user.LastName = Convert.ToString(item["LastName"]);
                         user.Password = Convert.ToString(item["Password"]);
                         user.UserName = Convert.ToString(item["UserName"]);
+                        user.Qualification = Convert.ToString(item["Qualification"]);
                         user.DOB = Convert.ToDateTime(item["DOB"]);
                     }
                 }

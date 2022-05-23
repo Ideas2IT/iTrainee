@@ -48,5 +48,37 @@ namespace iTrainee.Data
             }
             return userTopicsList;
         }
+
+        public IEnumerable<Topics> GetUserTopicsByUserId(int id)
+        {
+            List<Topics> userTopics = new List<Topics>();
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UserId",
+                    Value = id
+                });
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserTopicsByUserId", parameters);
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
+                    {
+                        userTopics.Add(new Topics
+                        {
+                            Id = Convert.ToInt32(item["TopicId"]),
+                            Name = Convert.ToString(item["TopicName"])
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return userTopics;
+        }
     }
 }

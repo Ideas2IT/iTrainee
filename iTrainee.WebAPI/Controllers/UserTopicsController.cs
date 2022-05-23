@@ -21,5 +21,11 @@ namespace iTrainee.APIs.Controllers
 		{
 			return _userTopicsService.GetAllUserTopics();
 		}
+
+		public IEnumerable<Topics> GetUserTopicsByUserId(int id)
+        {
+			return _userTopicsService.GetUserTopicsByUserId(id);
+
+		}
 	}
 }
