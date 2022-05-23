@@ -1,0 +1,53 @@
+﻿@model IEnumerable<iTrainee.Models.UserTopics>
+
+@{
+    ViewData["Title"] = "ManageUserTopics";
+}
+
+<h1>Manage User Topics</h1>
+
+<div class="d-flex justify-content-between mt-4">
+<a href="/Shared/UserTopics/AddEditUserTopics" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Topic</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TopicName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubTopicName)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TopicName)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.SubTopicName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

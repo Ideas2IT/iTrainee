@@ -1,25 +1,24 @@
-﻿@model List<iTrainee.Models.Topics>;
+﻿@model iTrainee.Models.UserTopics;
 @using Microsoft.AspNetCore.Mvc.Rendering;
-<head>
-    <style>
-        ul {
-            list-style-type: none;
-        }
-    </style>
-</head>
+
 @{
     ViewData["Title"] = "AddEditUSerTopics";
 }
-<h3 class="mt-5 mb-4">Assign Topics & SubTopics</h3>
 
 <div class="panel panel-primary">
     <div id="frm-author" class="panel-body">
         @using (Html.BeginForm())
         {
-            <ul>
-                @foreach (var topic in Model)
-                {
-                    <li>
+            <div class="form-group">
+		<label class="col-form-label">Trainees</label><br />
+		@Html.ListBoxFor(model=>model.TraineeList, new MultiSelectList(Model.TraineeList, "Id", "UserName"),  htmlAttributes: new { id="multiSelectMentor", @class = "form-control", multiple="multiple" })
+	    </div>
+
+                <ul class="treeview">
+            @foreach (var topic in Model.TopicsList)
+            {
+                                    <li id="li_1" class="contains-items">
+
                         <div class="checkbox">
                             <input type="checkbox">
                             <label> @topic.Name</label>
@@ -35,9 +34,10 @@
                                 </li>
                             }
                         </ul>
-                    </li>
-                }
-            </ul>
+                     </li>
+
+            }
+                </ul>
 
             <div class="form-group">
                 <div class="col-lg-9"></div>
@@ -50,13 +50,15 @@
     </div>
 </div>
 
-<script>
-            $('input[type=checkbox]').change(function(){
-        // if is checked
-        if(this.checked){
-            // check all children
-            var lenchk = $(this).closest('ul').find(':checkbox');
-            var lenchkChecked = $(this).closest('ul').find(':checkbox:checked');
+    <script>
+                $('input[type=checkbox]').change(function(){
+            // if is checked
+            if(this.checked){
+                // check all children
+                var lenchk = $(this).closest('ul').find(':checkbox');
+                var lenchkChecked = $(this).closest('ul').find(':checkbox:checked');
+                debugger
+                console.log(lenchkChecked);
 
             //if all siblings are checked, check its parent checkbox
             if (lenchk.length == lenchkChecked.length) {
