@@ -7,5 +7,7 @@ namespace iTrainee.Services.Interfaces
     {
         IEnumerable<UserTopics> GetAllUserTopics();
         IEnumerable<Topics> GetUserTopicsByUserId(int id);
+
+        IEnumerable<SubTopics> GetSubTopicsByUserId(int id);
     }
 }

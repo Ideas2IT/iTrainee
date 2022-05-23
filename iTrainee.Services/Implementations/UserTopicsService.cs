@@ -26,5 +26,9 @@ namespace iTrainee.Services.Implementations
 
 		}
 
+		public IEnumerable<SubTopics> GetSubTopicsByUserId(int id)
+        {
+			return _userTopicsRepository.GetSubTopicsByUserId(id);
+		}
 	}
 }
