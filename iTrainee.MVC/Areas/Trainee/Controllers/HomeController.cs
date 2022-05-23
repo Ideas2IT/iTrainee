@@ -5,7 +5,7 @@ using iTrainee.MVC.Helpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-
+using System.Collections.Generic;
 
 namespace iTrainee.MVC.Areas.Trainee.Controllers
 {
@@ -35,6 +35,9 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
                 TempData["HeaderRole"] = "Trainee";
                 TempData["FirstName"] = "TraineeName";
             }
+            UserAudit userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + id);
+            userAudit.AssignedTopicsList = (List<Topics>)HttpClientHelper.ExecuteGetApiMethod<Topics>(baseUrl, "/UserTopics/GetUserTopicsByUserId?", "Id=" + id);
+            TempData["HeaderRole"] = "Trainee";
             TempData.Keep("HeaderRole");
             TempData.Peek("UserToken");
             return View(userAudit);
