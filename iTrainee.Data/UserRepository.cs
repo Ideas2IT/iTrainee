@@ -226,6 +226,16 @@ namespace iTrainee.Data
                 });
                 parameters.Add(new SqlParameter
                 {
+                    ParameterName = "InsertedBy",
+                    Value = "Mentor"
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedOn",
+                    Value = DateTime.Now.Date
+                });
+                parameters.Add(new SqlParameter
+                {
                     ParameterName = "UpdatedBy",
                     Value = "Mentor"
                 });
