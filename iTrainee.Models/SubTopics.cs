@@ -14,5 +14,8 @@ namespace iTrainee.Models
 
         [NotMapped]
         public string TopicName { get; set; }
+
+        [NotMapped]
+        public int Percentage { get; set; }
     }
 }

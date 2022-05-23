@@ -120,10 +120,7 @@
 	@foreach (var topic in Model.AssignedTopicsList)
 	{
 		<div class="row">
-			<p>@topic.Name</p>
-			<div class="progress" style="width: 100%">
-				<div class="progress-bar" style="width: 75%; background-color:blue" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">75%</div>
-			</div>
+			<h4 class="font-weight-bold">@topic.Name</h4>
 		</div>
 
 		<br />
@@ -131,7 +128,10 @@
 		{
 			@if (topic.Id == subTopic.TopicId)
 			{
-				<p>@subTopic.Name</p>
+				<p>@subTopic.Name</p>		
+				<div class="progress" style="width: 100%">
+					<div class="progress-bar" style="width: @subTopic.Percentage%; background-color:blue" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">@subTopic.Percentage%</div>
+				</div>
 
 				<br />
 			}
