@@ -90,6 +90,18 @@ body {
     color: #00239B;
 }
 
+.counter {
+    background-color: #00239B;
+    position: relative;
+    border-radius: 25%;
+    font-size: smaller;
+    padding: 3px;
+    right: 15px;
+    bottom: 15px;
+    color: white;
+    font-weight: bold;
+}
+
 .actions-nav {
     background-color: #00239B;
     font-size: 16px;

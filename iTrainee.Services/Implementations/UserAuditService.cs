@@ -24,11 +24,6 @@ namespace iTrainee.Services.Implementations
             return _userAuditRepository.GetUserAudit(id);
         }
 
-        public IEnumerable<UserAudit> GetAllUserAudit()
-        {
-            return _userAuditRepository.GetAllUserAudit();
-        }
-
         public int InsertUserAudit(UserAudit userAudit)
         {
             return _userAuditRepository.InsertUserAudit(userAudit);

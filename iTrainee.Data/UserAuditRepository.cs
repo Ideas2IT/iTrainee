@@ -17,33 +17,6 @@ namespace iTrainee.Data
             _dataManager = dataManager;
         }
 
-        public List<UserAudit> GetAllUserAudit()
-        {
-            var userAuditList = new List<UserAudit>();
-            try
-            {
-                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserAudit");
-                if (result?.Tables?.Count != 0)
-                {
-                    foreach (DataRow item in result.Tables[0].Rows)
-                    {
-                        userAuditList.Add(new UserAudit
-                        {
-                            Id = Convert.ToInt32(item["Id"]),
-                            Date = Convert.ToDateTime(item["Date"]),
-                            SignIn = Convert.ToDateTime(item["SignIn"]),
-                            SignOut = Convert.ToDateTime(item["SignOut"])
-                        });
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return userAuditList;
-        }
-
         public UserAudit GetUserAudit(int id)
         {
             var userAudit = new UserAudit();
