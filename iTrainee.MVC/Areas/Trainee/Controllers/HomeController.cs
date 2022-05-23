@@ -19,11 +19,22 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
         {
             _configuration = configuration;
         }
-        public IActionResult Index(int id)
+
+       
+        public IActionResult Index(int auditId, int userId)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            UserAudit userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + id);
-            TempData["HeaderRole"] = "Trainee";
+            UserAudit userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + userId);
+            if (auditId == 0)
+            {
+                TempData["HeaderRole"] = "Mentor";
+                TempData["FirstName"] = "MentorName";
+            }
+            else
+            {
+                TempData["HeaderRole"] = "Trainee";
+                TempData["FirstName"] = "TraineeName";
+            }
             TempData.Keep("HeaderRole");
             TempData.Peek("UserToken");
             return View(userAudit);

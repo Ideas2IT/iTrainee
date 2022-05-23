@@ -16,5 +16,6 @@ namespace iTrainee.Services.Interfaces
         bool UpdateBatchUser(Batch batch);
 
         bool UnassignUserId(Batch batch);
+        IEnumerable<User> GetUnassignedTrainees();
     }
 }

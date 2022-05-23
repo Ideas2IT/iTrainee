@@ -13,7 +13,7 @@ namespace iTrainee.Models
         public IEnumerable<User> MentorList { get; set; }
 
         [NotMapped]
-        public IEnumerable<User> TraineeList { get; set; }
+        public List<User> TraineeList { get; set; }
 
         [NotMapped]
         public IEnumerable<Stream> StreamList { get; set; }

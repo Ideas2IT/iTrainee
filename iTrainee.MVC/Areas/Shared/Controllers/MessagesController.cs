@@ -33,7 +33,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult ManageMessages()
         {
-            TempData["HeaderRole"] = "Admin";
+            TempData.Keep("HeaderRole");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var messages = HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "/Messages/GetMessagesByUserId?", "Id=" + TempData.Peek("UserId"));
 
@@ -42,13 +42,22 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult ViewAlertDetails(int Id)
         {
-            TempData["HeaderRole"] = "Admin";
+            TempData.Keep("HeaderRole");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var userMessages = HttpClientHelper.ExecuteGetAllApiMethod<UserMessages>(baseUrl, "/Messages/GetUserMessagesByMessageId?", "Id=" + Id);
 
             return PartialView("ViewAlertDetails", userMessages);
         }
-        
+
+        public IActionResult AddEditAlert(int Id)
+        {
+            TempData.Keep("HeaderRole");
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            var message = HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "/Messages/AddEditMessage?", "Id=" + Id);
+
+            return PartialView("AddEditAlert", message);
+        }
+
         public IActionResult DeleteMessage(int Id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();

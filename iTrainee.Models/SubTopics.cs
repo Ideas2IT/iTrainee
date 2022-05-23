@@ -1,4 +1,6 @@
-﻿namespace iTrainee.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace iTrainee.Models
 {
     public class SubTopics : Base
     {
@@ -9,5 +11,8 @@
         public string Name { get; set; }
 
         public string ReferenceURL { get; set; }
+
+        [NotMapped]
+        public string TopicName { get; set; }
     }
 }

@@ -14,10 +14,10 @@
                 @Html.ListBoxFor(model=>model.TraineeList, new MultiSelectList(Model.TraineeList, "Id", "UserName"),  htmlAttributes: new { id="multiSelectMentor", @class = "form-control", multiple="multiple" })
             </div>
 
-            <ul class="treeview">
-                @foreach (var topic in Model.TopicsList)
-                {
-                    <li id="li_1" class="contains-items">
+                <ul class="treeview">
+            @foreach (var topic in Model.TopicsList)
+            {
+                <li id="li_1" class="contains-items">
 
                         <div class="checkbox">
                             <input type="checkbox">
