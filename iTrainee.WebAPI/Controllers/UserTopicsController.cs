@@ -31,5 +31,10 @@ namespace iTrainee.APIs.Controllers
         {
 			return _userTopicsService.GetSubTopicsByUserId(id);
 		}
+
+		public DailyProgress GetSubTopicOfUser(int userId, int subTopicId)
+        {
+			return _userTopicsService.GetSubTopicOfUser(userId, subTopicId);
+		}
 	}
 }

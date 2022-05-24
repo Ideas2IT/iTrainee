@@ -44,10 +44,12 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
             return View(userAudit);
         }
 
-        public IActionResult GetDailyProgress(int userId, int subTopicId)
+        public IActionResult UpdateDailyProgress(int userId, int subTopicId)
         {
-
-            return View();
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            DailyProgress dailyProgress = (DailyProgress)HttpClientHelper.ExecuteGetApiMethod<DailyProgress>(baseUrl, "/UserTopics/GetSubTopicOfUser?", "userId=" + userId + "&subTopicId=" + subTopicId);
+            
+            return PartialView(dailyProgress);
         }
     }
 }

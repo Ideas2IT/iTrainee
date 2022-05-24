@@ -15,7 +15,9 @@ namespace iTrainee.Services.Implementations
         }
         public User GetUser(int id)
         {
-            return _userRepository.GetUser(id);
+            User user = _userRepository.GetUser(id);
+            user.Password = EncryptAndDecrypt.ConvertToDecrypt(user.Password);
+            return user;
         }
 
         public IEnumerable<User> GetUsers(string role)
