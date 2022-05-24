@@ -150,13 +150,11 @@
     {
         <div class="row">
             <p>@topic.Name</p>
-            <div class="progress" style="width: 100%">
-                <div class="progress-bar" style="width: 75%; background-color:blue" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">75%</div>
-            </div>
+
 
         </div>
         <br />
-
+@*
         @foreach (var subTopic in Model.AssignedSubTopicsList)
         {
             @if (topic.Id == subTopic.TopicId)
@@ -164,8 +162,11 @@
                 <p>@subTopic.Name</p>
                 <button data-toggle="modal" class="btn btn-add-gradient btn-primary mb-3" onclick="GetDailyProgress(@subTopic.Id, @Model.UserId)" data-target="#myModal2">Add status</button>
                 <br />
+                <div class="progress" style="width: 100%">
+                    <div class="progress-bar" style="width: @subTopic.Percentage%; background-color:blue" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">@subTopic.Percentage %</div>
+                </div>
             }
-        }
+        }*@
     }
 
 </div>
