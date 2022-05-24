@@ -5,7 +5,7 @@ using iTrainee.MVC.Helpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-
+using System.Collections.Generic;
 
 namespace iTrainee.MVC.Areas.Trainee.Controllers
 {
@@ -20,11 +20,13 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
             _configuration = configuration;
         }
 
-       
+
         public IActionResult Index(int auditId, int userId)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             UserAudit userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + userId);
+            userAudit.AssignedTopicsList = HttpClientHelper.ExecuteGetListApiMethod<Topics>(baseUrl, "/UserTopics/GetUserTopicsByUserId?", "Id=" + userId);
+            userAudit.AssignedSubTopicsList = HttpClientHelper.ExecuteGetListApiMethod<SubTopics>(baseUrl, "/UserTopics/GetSubTopicsByUserId?", "Id=" + userId);
             if (auditId == 0)
             {
                 TempData["HeaderRole"] = "Mentor";
@@ -35,9 +37,17 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
                 TempData["HeaderRole"] = "Trainee";
                 TempData["FirstName"] = "TraineeName";
             }
+
             TempData.Keep("HeaderRole");
             TempData.Peek("UserToken");
+
             return View(userAudit);
+        }
+
+        public IActionResult GetDailyProgress(int userId, int subTopicId)
+        {
+
+            return View();
         }
     }
 }
