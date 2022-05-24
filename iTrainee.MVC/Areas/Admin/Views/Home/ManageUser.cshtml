@@ -91,42 +91,13 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">@ViewBag.Role Details</h3>
+                <h3 class="modal-title">Status</h3>
             </div>
             <div class="modal-body" id="myModalBodyDiv1">
+
             </div>
         </div>
     </div>
 </div>
 
-
-@section scripts {
-<script type="text/javascript">
-
-    var GetUser = function (id) {
-        var UserPath = "/Admin/Home/SaveUser?Id=" + id;
-        $("#myModalBodyDiv1").load(UserPath, function () {
-            $("#myModal1").modal("show");
-        });
-    };
-
-    $('#delete').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget)
-            var id = button.data('id-to-delete')
-
-                    $('#delete-yes-button').on('click', function () {
-                        $.ajax({
-                            url: "/Admin/Home/DeleteUser/" + id,
-                            type: "DELETE",
-                            success: function () {
-                                $("#myModal1").modal("hide");
-                                alert("Data saved successfully");
-                            },
-                            error: function () {
-                                alert("Unable to delete data");
-                            },
-                        })
-                    })
-        })
-</script>
-}
+<script src="/js/user.js"></script>
