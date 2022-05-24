@@ -51,5 +51,13 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
             
             return PartialView(dailyProgress);
         }
+
+        [HttpPost]
+        public IActionResult UpdateDailyProgress(DailyProgress dailyProgress)
+        {
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            HttpClientHelper.ExecutePostApiMethod<DailyProgress>(baseUrl, "/UserTopics/UpdateDailyProgress", dailyProgress, Convert.ToString(TempData["UserToken"]));
+            return PartialView();
+        }
     }
 }
