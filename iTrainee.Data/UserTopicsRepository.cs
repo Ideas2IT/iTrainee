@@ -102,7 +102,8 @@ namespace iTrainee.Data
                         {
                             Id = Convert.ToInt32(item["SubTopicId"]),
                             TopicId = Convert.ToInt32(item["TopicId"]),
-                            Name = Convert.ToString(item["SubTopicName"])
+                            Name = Convert.ToString(item["SubTopicName"]),
+                            Percentage = Convert.ToInt32(item["Percentage"])
                         });
                     }
                 }
