@@ -12,33 +12,31 @@
 
         .calendar .calendar-body{
           display: flex;
-          margin-top: 3px;
           align-items: center;
           flex-direction: column;
-          width: 60%;
-          border-bottom: 6px solid #0366d6;
-          border-right: 3px solid #0366d6;
-          border-left: 3px solid #0366d6;
+          width: 40%;
+          border-bottom: 2px solid #0366d6;
+          border-right: 2px solid #0366d6;
+          border-left: 2px solid #0366d6;
           border-radius: 8px;
           background: #fff;
+          margin-left: 5em;
         }
 
         .calendar .calendar-body .month-name{
           color: #fff;
           background: #0366d6;
           width: 100%;
-          font-size: 1.0em;
+          font-size: 0.8em;
           text-align: center;
-          font-weight: 400;
           border-top-left-radius: 6px;
           border-top-right-radius: 6px;
         }
 
         .calendar .calendar-body .day-name{
           color: #051320;
-          font-size: 0.9em;
-          font-weight: 400;
-          margin-top: 5px;
+          font-size: 0.7em;
+          margin-top: 3px;
         }
 
         .calendar .calendar-body .date-number{
@@ -50,31 +48,51 @@
 
         .calendar .calendar-body .year{
           color: #051320;
-          font-size: 0.9em;
-          font-weight: 400;
+          font-size: 0.7em;
           margin-bottom: 2px;
         }
 
         .time {
-          font-size: 1.1em;
-          border-bottom: 6px solid #0366d6;
-          border-top: 6px solid #0366d6;
-          border-right: 3px solid #0366d6;
-          border-left: 3px solid #0366d6;
-          border-radius: 8px;
-          margin-top: 8px;
-          padding: 5px;
+          font-size: 0.9em;
+          border-bottom: 3px solid #0366d6;
+          border-top: 3px solid #0366d6;
+          border-right: 1px solid #0366d6;
+          border-left: 1px solid #0366d6;
+          border-radius: 5px; 
+          padding: 3px;
+          margin-left: 50em;
+        }
+
+         .time1 {
+          font-size: 0.9em;
+          border-bottom: 3px solid #0366d6;
+          border-top: 3px solid #0366d6;
+          border-right: 1px solid #0366d6;
+          border-left: 1px solid #0366d6;
+          border-radius: 5px; 
+          padding: 3px;
+          margin-left: 2em;
+        }
+
+        .dates {
+          font-size: 0.9em;
+          border-bottom: 3px solid #0366d6;
+          border-top: 3px solid #0366d6;
+          border-right: 1px solid #0366d6;
+          border-left: 1px solid #0366d6;
+          border-radius: 5px; 
+          padding: 3px;
+         
         }
 
         .date {
-          font-size: 1.1em;
+          font-size: 0.9em;
           border-bottom: 6px solid #0366d6;
           border-top: 6px solid #0366d6;
           border-right: 3px solid #0366d6;
           border-left: 3px solid #0366d6;
           border-radius: 8px;
           padding: 5px;
-          margin-top: 20px;
           margin-right:44em;
         }
     </style>
@@ -88,30 +106,33 @@
 
     @if (Convert.ToString(TempData["FirstName"]) == "MentorName")
     {
-        <div class="col">
-            <p class="date">Date : @Model.Date.ToShortDateString()</p>
+        <div class="">
+            <p class="dates">Date : @Model.Date.ToShortDateString()</p>
         </div>
         <div class="">
             <p class="time">Sign-In : @Model.SignIn.ToShortTimeString()</p>
-            <p class="time">Sign-Out : @Model.SignOut.ToShortTimeString()</p>
+            </div>
+        <div class="">
+            <p class="time1">Sign-Out : @Model.SignOut.ToShortTimeString()</p>
         </div>
     }
     else
     {
-        <div class="col">
+        @*<div class="col">
             <div class="calendar float-right">
                 <div class="calendar-body">
                     <span class="month-name">Month</span>
                     <span class="day-name">Day</span>
                     <span class="date-number">00</span>
-                    <span class="year">0000</span>
                 </div>
             </div>
-        </div>
-        <div class="">
+        </div>*@
+      @* <div class="">
             <p class="time">Sign-In : @Model.SignIn.ToShortTimeString()</p>
+             </div>
+       <div class="">
             <p class="time">Sign-Out : @Model.SignOut.ToShortTimeString()</p>
-        </div>
+      </div> *@
     }
 </div>
 
@@ -140,7 +161,7 @@
     <p>Web Api Application</p>
 </div>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     const dayNumber = new Date().getDate();
     const year = new Date().getFullYear();
     const dayName = new Date().toLocaleString("default", { weekday: "long" });
@@ -150,6 +171,6 @@
     document.querySelector(".day-name").innerHTML = dayName;
     document.querySelector(".date-number").innerHTML = dayNumber;
     document.querySelector(".year").innerHTML = year;
-</script>
+</script>*@
 
 
