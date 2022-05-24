@@ -114,5 +114,42 @@ namespace iTrainee.Data
             }
             return userSubTopics;
         }
+
+        public DailyProgress GetSubTopicOfUser(int userId, int subTopicId)
+        {
+            DailyProgress dailyProgress = new DailyProgress();
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UserId",
+                    Value = userId
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "SubTopicId",
+                    Value = subTopicId
+                });
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetSubTopicOfUser", parameters);
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
+                    {
+                        dailyProgress.StartDate = Convert.ToDateTime(item["StartDate"]);
+                        dailyProgress.EndDate = Convert.ToDateTime(item["EndDate"]);
+                        dailyProgress.MentorComments = Convert.ToString(item["MentorComments"]);
+                        dailyProgress.TraineeComments = Convert.ToString(item["TraineeComments"]);
+                        dailyProgress.Percentage = Convert.ToInt32(item["Percentage"]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dailyProgress;
+        }
     }
 }
