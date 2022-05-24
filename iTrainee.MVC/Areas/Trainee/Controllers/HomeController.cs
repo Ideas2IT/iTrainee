@@ -20,7 +20,7 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
             _configuration = configuration;
         }
 
-       
+
         public IActionResult Index(int auditId, int userId)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
@@ -42,6 +42,12 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
             TempData.Peek("UserToken");
 
             return View(userAudit);
+        }
+
+        public IActionResult GetDailyProgress(int userId, int subTopicId)
+        {
+
+            return View();
         }
     }
 }
