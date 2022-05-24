@@ -248,7 +248,7 @@
 </div>
 
 <div class="topic-subtopic">
-    <div class="topic-list nav flex-column">
+    <div class="topic-list nav flex-column" id="Topic">
         @foreach (var topic in Model.AssignedTopicsList)
         {
             <div class="topic-name nav-item">@topic.Name</div>
@@ -382,6 +382,10 @@
     $("#myModal2").modal("show");
     });
     };
+
+      $("#Topic").click(function () {
+      }
+
 </script>
 
 
