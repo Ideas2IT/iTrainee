@@ -12,5 +12,6 @@ namespace iTrainee.Data.Interfaces
         bool UpdateUser(User user);
         bool DeleteUser(int id);
         User GetUserByUserName(string userName);
+        IEnumerable<User> GetAssignedTrainees(int batchId);
     }
 }

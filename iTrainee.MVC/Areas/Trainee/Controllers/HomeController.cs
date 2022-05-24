@@ -23,12 +23,15 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
 
         public IActionResult Index(int auditId, int userId)
         {
+            UserAudit userAudit = new UserAudit();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            UserAudit userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + userId);
-            userAudit.AssignedTopicsList = HttpClientHelper.ExecuteGetListApiMethod<Topics>(baseUrl, "/UserTopics/GetUserTopicsByUserId?", "Id=" + userId);
-            userAudit.AssignedSubTopicsList = HttpClientHelper.ExecuteGetListApiMethod<SubTopics>(baseUrl, "/UserTopics/GetSubTopicsByUserId?", "Id=" + userId);
+            userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + userId);
+
+            //    userAudit.AssignedTopicsList = HttpClientHelper.ExecuteGetListApiMethod<Topics>(baseUrl, "/UserTopics/GetUserTopicsByUserId?", "Id=" + userId);
+            //  userAudit.AssignedSubTopicsList = HttpClientHelper.ExecuteGetListApiMethod<SubTopics>(baseUrl, "/UserTopics/GetSubTopicsByUserId?", "Id=" + userId);
             if (auditId == 0)
             {
+
                 TempData["HeaderRole"] = "Mentor";
                 TempData["FirstName"] = "MentorName";
             }

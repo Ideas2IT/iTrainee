@@ -22,6 +22,12 @@ namespace iTrainee.Services.Implementations
         {
             return _userRepository.GetUsers(role);
         }
+
+        public IEnumerable<User> GetAssignedTrainees(int batchId)
+        {
+            return _userRepository.GetAssignedTrainees(batchId);
+        }
+
         public User GetUserByUserName(string userName, string password)
         {
             User user = _userRepository.GetUserByUserName(userName);

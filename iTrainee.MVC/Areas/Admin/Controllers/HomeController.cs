@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using iTrainee.MVC.Helpers;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace iTrainee.MVC.Areas.Admin.Controllers
 {
@@ -30,15 +31,22 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult ManageUser(string role)
+        public IActionResult ManageUser(string role, int batchId)
         {
             TempData.Keep("HeaderRole");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
-
-            ViewBag.Role = role;
+             List<User> user = new List<User>();
+            if (Convert.ToString(TempData["HeaderRole"]) == "Admin")
+            {
+                user = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
+            }
+           else
+            {
+                user = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetAssignedTrainees?", "batchId=" + batchId);
+            }
+                ViewBag.Role = role;
             TempData["Role"] = role;
-            return View(result);
+            return View(user);
         }
 
         public IActionResult SaveUser(int id)

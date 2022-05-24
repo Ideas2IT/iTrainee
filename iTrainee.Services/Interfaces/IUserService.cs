@@ -7,6 +7,8 @@ namespace iTrainee.Services.Interfaces
     {
         User GetUser(int id);
         IEnumerable<User> GetUsers(string role);
+
+        IEnumerable<User> GetAssignedTrainees(int batchId);
         bool SaveUser(User user);
         bool DeleteUser(int id);
         User GetUserByUserName(string userName, string password);

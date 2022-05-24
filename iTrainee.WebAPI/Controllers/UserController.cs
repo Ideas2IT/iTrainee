@@ -31,6 +31,13 @@ namespace iTrainee.APIs.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        public IEnumerable<User> GetAssignedTrainees(int batchId)
+        {
+            return _userService.GetAssignedTrainees(batchId);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
         public User GetUser(int id)
         {
             return _userService.GetUser(id);

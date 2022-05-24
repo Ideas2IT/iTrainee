@@ -112,6 +112,42 @@ namespace iTrainee.Data
             }
             return users;
         }
+
+        public IEnumerable<User> GetAssignedTrainees(int batchId)
+        {
+            var users = new List<User>();
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "BatchId",
+                    Value = batchId
+                });
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetAssignedTrainees", parameters);
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
+                    {
+                        users.Add(new User
+                        {
+                            Id = Convert.ToInt32(item["Id"]),
+                            FirstName = Convert.ToString(item["FirstName"]),
+                            LastName = Convert.ToString(item["LastName"]),
+                            DOB = Convert.ToDateTime(item["DOB"]),
+                            Qualification = Convert.ToString(item["Qualification"]),
+                            UserName = Convert.ToString(item["UserName"])
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return users;
+        }
         public User GetUserByUserName(string userName)
         {
             var user = new User();
