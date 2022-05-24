@@ -43,5 +43,11 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
 
             return View(userAudit);
         }
+
+        public IActionResult GetDailyProgress(int userId, int subTopicId)
+        {
+
+            return View();
+        }
     }
 }
