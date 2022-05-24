@@ -80,5 +80,38 @@ namespace iTrainee.Data
             }
             return userTopics;
         }
+
+        public IEnumerable<SubTopics> GetSubTopicsByUserId(int id)
+        {
+            List<SubTopics> userSubTopics = new List<SubTopics>();
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UserId",
+                    Value = id
+                });
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetSubTopicsByUserId", parameters);
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
+                    {
+                        userSubTopics.Add(new SubTopics
+                        {
+                            Id = Convert.ToInt32(item["SubTopicId"]),
+                            TopicId = Convert.ToInt32(item["TopicId"]),
+                            Name = Convert.ToString(item["SubTopicName"])
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return userSubTopics;
+        }
     }
 }

@@ -10,5 +10,7 @@ namespace iTrainee.Data.Interfaces
 		IEnumerable<UserTopics> GetAllUserTopics();
 
 		IEnumerable<Topics> GetUserTopicsByUserId(int id);
+
+		IEnumerable<SubTopics> GetSubTopicsByUserId(int id);
 	}
 }

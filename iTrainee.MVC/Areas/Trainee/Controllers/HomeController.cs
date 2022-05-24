@@ -24,7 +24,9 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
         public IActionResult Index(int auditId, int userId)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            UserAudit userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + auditId);
+            UserAudit userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + userId);
+            userAudit.AssignedTopicsList = HttpClientHelper.ExecuteGetListApiMethod<Topics>(baseUrl, "/UserTopics/GetUserTopicsByUserId?", "Id=" + userId);
+            userAudit.AssignedSubTopicsList = HttpClientHelper.ExecuteGetListApiMethod<SubTopics>(baseUrl, "/UserTopics/GetSubTopicsByUserId?", "Id=" + userId);
             if (auditId == 0)
             {
                 TempData["HeaderRole"] = "Mentor";
@@ -35,10 +37,10 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
                 TempData["HeaderRole"] = "Trainee";
                 TempData["FirstName"] = "TraineeName";
             }
-            userAudit.AssignedTopicsList = (List<Topics>)HttpClientHelper.ExecuteGetApiMethod<Topics>(baseUrl, "/UserTopics/GetUserTopicsByUserId?", "Id=" + auditId);
-            TempData["HeaderRole"] = "Trainee";
+
             TempData.Keep("HeaderRole");
             TempData.Peek("UserToken");
+
             return View(userAudit);
         }
     }
