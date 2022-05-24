@@ -11,6 +11,18 @@
 
         <div id="navbarCollapse" class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
+                @if (TempData["HeaderRole"].Equals("Trainee"))
+                {
+                    <li class="nav-item px-3 signInSignOut">
+                        <span>Date: @DateTime.Now.ToShortDateString()</span>
+                    </li>
+                      <li class="nav-item px-3 signInSignOut">
+                            <span>Sign-In : @Model.SignIn.ToShortTimeString()</span>
+                        </li>
+                        <li class="nav-item px-3 signInSignOut">
+                            <span>Sign-Out : @Model.SignOut.ToShortTimeString()</span>
+                        </li>
+                }
                 <li class="nav-item  px-2">
                     <i class="header-notification fa-lg fa fa-bell-o"></i>
                     <span class="counter counter-lg">7</span>
@@ -99,6 +111,7 @@
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="#">Daily Progress</a>
                         </li>
+                       
                     }
                 </ul>
             </div>
