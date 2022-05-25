@@ -24,6 +24,17 @@ namespace iTrainee.Services.Implementations
         {
             return _userRepository.GetUsers(role);
         }
+
+        public IEnumerable<User> GetAssignedTrainees(int userId)
+        {
+            return _userRepository.GetAssignedTrainees(userId);
+        }
+
+        public IEnumerable<User> GetAssignedMentors(int batchId)
+        {
+            return _userRepository.GetAssignedMentors(batchId);
+        }
+
         public User GetUserByUserName(string userName, string password)
         {
             User user = _userRepository.GetUserByUserName(userName);

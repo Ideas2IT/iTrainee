@@ -24,9 +24,9 @@ namespace iTrainee.Services.Implementations
             return _batchRepository.GetBatch(id);
         }
 
-        public IEnumerable<Batch> GetAllBatches()
+        public IEnumerable<Batch> GetAllBatches(int userId)
         {
-            return _batchRepository.GetAllBatches();
+            return _batchRepository.GetAllBatches(userId);
         }
 
         public int InsertBatch(Batch batch)
