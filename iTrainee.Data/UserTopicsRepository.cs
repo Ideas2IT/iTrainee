@@ -81,7 +81,7 @@ namespace iTrainee.Data
             return userTopics;
         }
 
-        public IEnumerable<SubTopics> GetSubTopicsByUserId(int id)
+        public IEnumerable<SubTopics> GetSubTopicsByUserIdAndTopicId(int userid, int topicId)
         {
             List<SubTopics> userSubTopics = new List<SubTopics>();
             try
@@ -90,7 +90,12 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UserId",
-                    Value = id
+                    Value = userid
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "TopicId",
+                    Value = topicId
                 });
 
                 DataSet result = _dataManager.ExecuteStoredProcedure("spGetSubTopicsByUserId", parameters);
@@ -137,6 +142,8 @@ namespace iTrainee.Data
                 {
                     foreach (DataRow item in result.Tables[0].Rows)
                     {
+                        dailyProgress.UserId = Convert.ToInt32(item["UserId"]);
+                        dailyProgress.SubTopicId = Convert.ToInt32(item["SubTopicId"]);
                         dailyProgress.StartDate = Convert.ToDateTime(item["StartDate"]);
                         dailyProgress.EndDate = Convert.ToDateTime(item["EndDate"]);
                         dailyProgress.MentorComments = Convert.ToString(item["MentorComments"]);
@@ -150,6 +157,51 @@ namespace iTrainee.Data
                 throw ex;
             }
             return dailyProgress;
+        }
+
+        public bool UpdateDailyProgress(DailyProgress dailyProgress)
+		{
+            bool isSuccess = false;
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UserId",
+                    Value = dailyProgress.UserId
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "SubTopicId",
+                    Value = dailyProgress.SubTopicId
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Status",
+                    Value = dailyProgress.Status
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "TraineeComments",
+                    Value = dailyProgress.TraineeComments
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Percentage",
+                    Value = dailyProgress.Percentage
+                });
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spUpdateDailyProgress", parameters);
+                if (result.Tables.Count != 0)
+                {
+                    isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return isSuccess;
         }
     }
 }

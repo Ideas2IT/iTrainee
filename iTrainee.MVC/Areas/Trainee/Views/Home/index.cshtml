@@ -196,7 +196,7 @@
     </style>
 </head>
 
-<div class="row">
+<div class="row"  onload="GetSubTopicList(@Model.UserId, @Model.AssignedTopicsList.First().Id)">
     @if (Convert.ToString(TempData["FirstName"]) == "TraineeName")
     {
         <h2 class="font-weight-bold mt-4 mb-5">Hello @TempData["UserFirstName"],</h2>
@@ -216,26 +216,11 @@
     }
     else
     {
-        @*<div class="col">
-            <div class="calendar float-right">
-            <div class="calendar-body">
-            <span class="month-name">Month</span>
-            <span class="day-name">Day</span>
-            <span class="date-number">00</span>
-            </div>
-            </div>
-            </div>*@
-        @* <div class="">
-            <p class="time">Sign-In : @Model.SignIn.ToShortTimeString()</p>
-            </div>
-            <div class="">
-            <p class="time">Sign-Out : @Model.SignOut.ToShortTimeString()</p>
-            </div> *@
     }
 </div>
 
 <div class="topic-subtopic">
-    <div class="topic-list nav flex-column">
+    <div class="topic-list nav flex-column" id="Topic">
         @foreach (var topic in Model.AssignedTopicsList)
         {
             <div class="topic-name nav-item">@topic.Name</div>
@@ -253,32 +238,12 @@
                 }
                 }
         }
+            <div class="topic-name nav-item" onclick="GetSubTopicList(@Model.UserId, @topic.Id)">@topic.Name</div>
+        }
     </div>
 
 
-    <div class="subtopic-list">
-        @foreach (var topic in Model.AssignedTopicsList)
-        {
-            @foreach (var subTopic in Model.AssignedSubTopicsList)
-            {
-                @if (topic.Id == subTopic.TopicId)
-                {
-                    <div class="row mt-3">
-                        <div class="col-8">
-
-                            <div class="d-inline">@subTopic.Name</div>
-                            <br />
-                            <div class="progress">
-                                <div class="progress-bar" style="width: @subTopic.Percentage%; background-color:blue" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">@subTopic.Percentage %</div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <button data-toggle="modal" class="btn btn-add-gradient btn-primary mb-3" onclick="GetDailyProgress(@subTopic.Id, @Model.UserId)" data-target="#myModal2">Update Progress</button>
-                        </div>
-                    </div>
-                }
-            }
-        }
+    <div class="subtopic-list" id="SubTopic">
     </div>
 </div>
 
@@ -297,12 +262,22 @@
 
 <script type="text/javascript">
 
-    function GetDailyProgress(SubTopicId, UserId) {
+    var GetDailyProgress = function (SubTopicId, UserId) {
         var UserPath = "/Trainee/Home/UpdateDailyProgress?userId=" + UserId + "&subTopicId=" + SubTopicId;
         $("#myModalBodyDiv1").load(UserPath, function () {
             $("#myModal2").modal("show");
         });
     };
+
+
+        var GetSubTopicList = function (UserId, TopicId) {
+            debugger;
+        var UserPath = "/Trainee/Home/SubTopicList?topicId=" + TopicId + "&userId=" + UserId;
+                $("#SubTopic").load(UserPath, function () {
+                });
+
+    };
+
 </script>
 
 

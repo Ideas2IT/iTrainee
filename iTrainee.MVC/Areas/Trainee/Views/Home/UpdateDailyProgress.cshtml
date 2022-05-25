@@ -4,7 +4,11 @@
                     
                     <div class="row">
                         <div class="col-lg-12">
-
+			<div class="form-group">
+                <input type="hidden" class="form-control" name="UserId" value="@Model.UserId"  />
+                <input type="hidden" class="form-control" name="SubTopicId" value="@Model.SubTopicId"  />
+				<input type="hidden" class="form-control" name="UserAuditId" value="@Model.UserAuditId"  />
+            </div>
 			<div class="form-group">
 				<label asp-for="StartDate" class="control-label">Start Date</label>
 				<input type="text" class="form-control" name="StartDate" value=@Model.StartDate disabled/>

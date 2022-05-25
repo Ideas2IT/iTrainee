@@ -20,20 +20,25 @@ namespace iTrainee.Services.Implementations
 			return _userTopicsRepository.GetAllUserTopics();
 		}
 
-		public IEnumerable<Topics> GetUserTopicsByUserId(int id)
+		public IEnumerable<SubTopics> GetSubTopicsByUserIdAndTopicId(int userId, int topicId)
         {
-			return _userTopicsRepository.GetUserTopicsByUserId(id);
+			return _userTopicsRepository.GetSubTopicsByUserIdAndTopicId(userId, topicId);
 
-		}
-
-		public IEnumerable<SubTopics> GetSubTopicsByUserId(int id)
-        {
-			return _userTopicsRepository.GetSubTopicsByUserId(id);
 		}
 
 		public DailyProgress GetSubTopicOfUser(int userId, int subTopicId)
         {
 			return _userTopicsRepository.GetSubTopicOfUser(userId, subTopicId);
+		}
+
+		public IEnumerable<Topics> GetUserTopicsByUserId(int id)
+		{
+			return _userTopicsRepository.GetUserTopicsByUserId(id);
+		}
+
+		public bool UpdateDailyProgress(DailyProgress dailyProgress)
+		{
+			return _userTopicsRepository.UpdateDailyProgress(dailyProgress);
 		}
 	}
 }

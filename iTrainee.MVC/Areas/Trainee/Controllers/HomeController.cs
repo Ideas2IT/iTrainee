@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace iTrainee.MVC.Areas.Trainee.Controllers
 {
@@ -23,12 +24,13 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
 
         public IActionResult Index(int auditId, int userId)
         {
-            UserAudit userAudit = new UserAudit();
+            int topicId;
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + userId);
-
-               userAudit.AssignedTopicsList = HttpClientHelper.ExecuteGetListApiMethod<Topics>(baseUrl, "/UserTopics/GetUserTopicsByUserId?", "Id=" + userId);
-              userAudit.AssignedSubTopicsList = HttpClientHelper.ExecuteGetListApiMethod<SubTopics>(baseUrl, "/UserTopics/GetSubTopicsByUserId?", "Id=" + userId);
+            UserAudit userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + userId);
+            userAudit.AssignedTopicsList = HttpClientHelper.ExecuteGetListApiMethod<Topics>(baseUrl, "/UserTopics/GetUserTopicsByUserId?", "Id=" + userId);
+            //topicId = userAudit.AssignedTopicsList.First().Id;
+            //userAudit.AssignedSubTopicsList = HttpClientHelper.ExecuteGetListApiMethod<SubTopics>(baseUrl, "/UserTopics/GetSubTopicsByUserIdAndTopicId?", "userId=" + userId + "&topicId=" + topicId);
+           
             if (auditId == 0)
             {
 
@@ -47,11 +49,11 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
             return View(userAudit);
         }
 
-        public IActionResult UpdateDailyProgress(int userId, int subTopicId)
+        public IActionResult UpdateDailyProgress(int userId, int subTopicId, int userAuditId)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             DailyProgress dailyProgress = (DailyProgress)HttpClientHelper.ExecuteGetApiMethod<DailyProgress>(baseUrl, "/UserTopics/GetSubTopicOfUser?", "userId=" + userId + "&subTopicId=" + subTopicId);
-            
+            dailyProgress.UserAuditId = userAuditId;
             return PartialView(dailyProgress);
         }
 
@@ -60,7 +62,18 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             HttpClientHelper.ExecutePostApiMethod<DailyProgress>(baseUrl, "/UserTopics/UpdateDailyProgress", dailyProgress, Convert.ToString(TempData["UserToken"]));
-            return PartialView();
+
+            return RedirectToAction("Index", new { auditId = dailyProgress.UserAuditId, userId = dailyProgress.UserId });
         }
+
+        public PartialViewResult SubTopicList(int topicId, int userId)
+        {
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+
+            var SubTopics = HttpClientHelper.ExecuteGetListApiMethod<SubTopics>(baseUrl, "/UserTopics/GetSubTopicsByUserIdAndTopicId?", "userId=" + userId + "&topicId=" + topicId);
+
+            return PartialView(SubTopics);
+        }
+
     }
 }
