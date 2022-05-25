@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace iTrainee.MVC.Areas.Trainee.Controllers
 {
@@ -23,10 +24,13 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
 
         public IActionResult Index(int auditId, int userId)
         {
+            int topicId;
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             UserAudit userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + userId);
             userAudit.AssignedTopicsList = HttpClientHelper.ExecuteGetListApiMethod<Topics>(baseUrl, "/UserTopics/GetUserTopicsByUserId?", "Id=" + userId);
-            userAudit.AssignedSubTopicsList = HttpClientHelper.ExecuteGetListApiMethod<SubTopics>(baseUrl, "/UserTopics/GetSubTopicsByUserId?", "Id=" + userId);
+            //topicId = userAudit.AssignedTopicsList.First().Id;
+            //userAudit.AssignedSubTopicsList = HttpClientHelper.ExecuteGetListApiMethod<SubTopics>(baseUrl, "/UserTopics/GetSubTopicsByUserIdAndTopicId?", "userId=" + userId + "&topicId=" + topicId);
+           
             if (auditId == 0)
             {
                 TempData["HeaderRole"] = "Mentor";
@@ -51,5 +55,15 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
             
             return PartialView(dailyProgress);
         }
+
+        public PartialViewResult SubTopicList(int topicId, int userId)
+        {
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+
+            var SubTopics = HttpClientHelper.ExecuteGetListApiMethod<SubTopics>(baseUrl, "/UserTopics/GetSubTopicsByUserIdAndTopicId?", "userId=" + userId + "&topicId=" + topicId);
+
+            return PartialView(SubTopics);
+        }
+
     }
 }

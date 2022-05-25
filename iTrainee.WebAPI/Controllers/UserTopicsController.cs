@@ -22,14 +22,14 @@ namespace iTrainee.APIs.Controllers
 			return _userTopicsService.GetAllUserTopics();
 		}
 
-		public IEnumerable<Topics> GetUserTopicsByUserId(int id)
+		public IEnumerable<SubTopics> GetSubTopicsByUserIdAndTopicId(int userId, int topicId)
         {
-			return _userTopicsService.GetUserTopicsByUserId(id);
+			return _userTopicsService.GetSubTopicsByUserIdAndTopicId(userId, topicId);
 		}
 
-		public IEnumerable<SubTopics> GetSubTopicsByUserId(int id)
-        {
-			return _userTopicsService.GetSubTopicsByUserId(id);
+		public IEnumerable<Topics> GetUserTopicsByUserId(int id)
+		{
+			return _userTopicsService.GetUserTopicsByUserId(id);
 		}
 
 		public DailyProgress GetSubTopicOfUser(int userId, int subTopicId)

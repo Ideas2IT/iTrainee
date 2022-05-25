@@ -81,7 +81,7 @@ namespace iTrainee.Data
             return userTopics;
         }
 
-        public IEnumerable<SubTopics> GetSubTopicsByUserId(int id)
+        public IEnumerable<SubTopics> GetSubTopicsByUserIdAndTopicId(int userid, int topicId)
         {
             List<SubTopics> userSubTopics = new List<SubTopics>();
             try
@@ -90,7 +90,12 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UserId",
-                    Value = id
+                    Value = userid
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "TopicId",
+                    Value = topicId
                 });
 
                 DataSet result = _dataManager.ExecuteStoredProcedure("spGetSubTopicsByUserId", parameters);
