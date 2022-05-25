@@ -27,7 +27,9 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpGet]
         public IActionResult AddEditStream(int id)
         {
+            TempData.Keep("UserId");
             TempData.Remove("StreamId");
+            TempData.Keep("UserFirstName");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var stream = HttpClientHelper.ExecuteGetApiMethod<Stream>(baseUrl, "/Stream/Get?", "Id="+id);
             TempData.Add("StreamId", id);
@@ -37,6 +39,8 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpPost]
         public IActionResult AddEditStream(Stream stream)
         {
+            TempData.Keep("UserId");
+            TempData.Keep("UserFirstName");
             var token = Convert.ToString(TempData["UserToken"]);
             stream.Id = Convert.ToInt32(TempData["StreamId"]);
 
@@ -55,6 +59,8 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult DeleteStream(int id)
         {
+            TempData.Keep("UserId");
+            TempData.Keep("UserFirstName");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteDeleteApiMethod<Stream>(baseUrl, "/Stream/DeleteStream?", "Id="+id, Convert.ToString(TempData["UserToken"]));
             return RedirectToAction("ManageStreams", "Home", new { Area = "Mentor" });

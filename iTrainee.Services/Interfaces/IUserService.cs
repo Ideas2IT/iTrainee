@@ -9,7 +9,7 @@ namespace iTrainee.Services.Interfaces
 
         IEnumerable<User> GetUsers(string role);
 
-        IEnumerable<User> GetAssignedTrainees(int userId);
+        IEnumerable<User> GetAssignedTrainees(int batchId);
 
         IEnumerable<User> GetAssignedMentors(int batchId);
 
@@ -20,5 +20,6 @@ namespace iTrainee.Services.Interfaces
         User GetUserByUserName(string userName, string password);
 
         bool UpdateUser(User user);
+        string[] GetAssignedBatchIds(int userId);
     }
 }

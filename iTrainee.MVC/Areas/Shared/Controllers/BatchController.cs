@@ -30,6 +30,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult ManageBatch(int userId)
         {
             TempData.Keep("HeaderRole");
+            TempData.Keep("UserId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var batchList = HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + userId, "");
 
@@ -40,16 +41,15 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult AddEditBatch(int id)
         {
             TempData.Keep("HeaderRole");
+            TempData.Keep("UserId");
+            TempData.Keep("UserFirstName");
             Batch batch = new Batch();
             User user = new User();
-            List<User> assignedUsers = new List<User>();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            batch.MentorList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Mentor", "");
-            batch.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/BatchUser/GetUnassignedTrainees", "");
-            batch.StreamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "");
+            
             if (id > 0)
             {
-                batch = (Batch)HttpClientHelper.ExecuteGetApiMethod<Batch>(baseUrl, "/Batch/Get?", "Id=" + id);
+                batch = (Batch)HttpClientHelper.ExecuteGetApiMethod<Batch>(baseUrl, "/Batch/GetBatch?", "Id=" + id);
                 batch.MentorList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Mentor", "");
                 batch.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/BatchUser/GetUnassignedTrainees", "");
                 batch.StreamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "");
@@ -63,7 +63,12 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
                     user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + traineeId);
                     batch.TraineeList.Add(user);
                 }
-            } 
+            } else
+            {
+                batch.MentorList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Mentor", "");
+                batch.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/BatchUser/GetUnassignedTrainees", "");
+                batch.StreamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "");
+            }
 
             return View(batch);
         }
@@ -73,6 +78,8 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult AddEditBatch(Batch batch)
         {
             TempData.Keep("HeaderRole");
+            TempData.Keep("UserId");
+            TempData.Keep("UserFirstName");
             var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             
@@ -188,6 +195,9 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult DeleteBatch(int id)
         {
+            TempData.Keep("HeaderRole");
+            TempData.Keep("UserId");
+            TempData.Keep("UserFirstName");
             var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             HttpClientHelper.ExecuteDeleteApiMethod<Batch>(baseUrl, "/Batch/DeleteBatch?", "Id=" + id, token);
