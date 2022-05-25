@@ -5,53 +5,6 @@
 
 <head>
     <style>
-        .time {
-            font-size: 0.9em;
-            border-bottom: 3px solid #0366d6;
-            border-top: 3px solid #0366d6;
-            border-right: 1px solid #0366d6;
-            border-left: 1px solid #0366d6;
-            border-radius: 5px;
-            padding: 3px;
-            margin-left: 50em;
-            margin-top: 20px;
-        }
-
-        .time1 {
-            font-size: 0.9em;
-            border-bottom: 3px solid #0366d6;
-            border-top: 3px solid #0366d6;
-            border-right: 1px solid #0366d6;
-            border-left: 1px solid #0366d6;
-            border-radius: 5px;
-            padding: 3px;
-            margin-left: 2em;
-            margin-top: 20px;
-        }
-
-        .dates {
-            font-size: 0.9em;
-            border-bottom: 3px solid #0366d6;
-            border-top: 3px solid #0366d6;
-            border-right: 1px solid #0366d6;
-            border-left: 1px solid #0366d6;
-            border-radius: 5px;
-            padding: 3px;
-            margin-top: 20px;
-        }
-
-        /*.date {
-            font-size: 0.9em;
-            border-bottom: 6px solid #0366d6;
-            border-top: 6px solid #0366d6;
-            border-right: 3px solid #0366d6;
-            border-left: 3px solid #0366d6;
-            border-radius: 8px;
-            padding: 5px;
-            margin-right: 44em;
-            
-        }*/
-
         .range-width {
             width: 460px;
         }
@@ -81,6 +34,13 @@
         }
 
         .topic-name:hover {
+            cursor: pointer;
+            padding: 15px 5px;
+            background-color: #F1F3F4;
+            border-radius: 5px;
+        }
+
+        .topic-name-on-select {
             font-size: 1.1rem;
             transition: transform .2s;
             cursor: pointer;
@@ -104,16 +64,20 @@
         .subtopic-list {
             flex: 4;
         }
+
         .btn-status, .btn-status:hover {
             background: linear-gradient(144deg,#009ffd, rgb(0,35,155) 50%);
             color: white;
         }
+        .hello-name {
+            margin-left: 16px;
+        }
     </style>
 </head>
-<div class="row"  onload="GetSubTopicList(@Model.UserId, @Model.AssignedTopicsList.First().Id)">
+<div class="row" onload="GetSubTopicList(@Model.UserId, @Model.AssignedTopicsList.First().Id)">
     @if (Convert.ToString(TempData["FirstName"]) == "TraineeName")
     {
-        <h2 class="font-weight-bold mt-4 mb-5">Hello @TempData["UserFirstName"],</h2>
+        <h5 class="font-weight-bold mt-4 mb-3 hello-name">Hello @TempData["UserFirstName"],</h5>
     }
 
     @if (Convert.ToString(TempData["FirstName"]) == "MentorName")
@@ -135,15 +99,20 @@
 
 <div class="topic-subtopic">
     <div class="topic-list nav flex-column" id="Topic">
+        @{
+            int Count = 1;
+        }
         @foreach (var topic in Model.AssignedTopicsList)
         {
-            <div class="topic-name nav-item" onclick="GetSubTopicList(@Model.UserId, @topic.Id)">@topic.Name</div>
+            <div class="topic-name nav-item" onclick="GetSubTopicList(@Model.UserId, @topic.Id, this.id)" id=@Count>@topic.Name</div>
+            Count += 1;
+
         }
     </div>
 
 
     <div class="subtopic-list px-3" id="SubTopic">
-       @await Html.PartialAsync("SubTopicList", @Model.AssignedSubTopicsList)
+        @await Html.PartialAsync("SubTopicList", @Model.AssignedSubTopicsList)
     </div>
 </div>
 
@@ -154,19 +123,25 @@
                 <h3 class="modal-title">Status</h3>
             </div>
             <div class="modal-body" id="myModalBodyDiv1">
-
             </div>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
+    var firstTopic = $('.topic-name').first();
+    $(firstTopic).addClass("topic-name-on-select");
 
-        var GetSubTopicList = function (UserId, TopicId) {
-            debugger;
+        var GetSubTopicList = function (UserId, TopicId, id) {
         var UserPath = "/Trainee/Home/SubTopicList?topicId=" + TopicId + "&userId=" + UserId;
+
                 $("#SubTopic").load(UserPath, function () {
+
                 });
+                var someElements = document.querySelectorAll('.topic-name-on-select');
+
+                                              $(someElements).removeClass("topic-name-on-select");
+                      $('#'+ id).addClass('topic-name-on-select');
 
     };
 
