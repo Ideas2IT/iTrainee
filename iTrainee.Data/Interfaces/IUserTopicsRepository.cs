@@ -13,5 +13,6 @@ namespace iTrainee.Data.Interfaces
 
 		IEnumerable<SubTopics> GetSubTopicsByUserIdAndTopicId(int userId, int topicId);
         DailyProgress GetSubTopicOfUser(int userId, int subTopicId);
-    }
+		bool UpdateDailyProgress(DailyProgress dailyProgress);
+	}
 }
