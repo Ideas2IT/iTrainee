@@ -24,12 +24,11 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
 
         public IActionResult Index(int auditId, int userId)
         {
-            int topicId;
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             UserAudit userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + userId);
             userAudit.AssignedTopicsList = HttpClientHelper.ExecuteGetListApiMethod<Topics>(baseUrl, "/UserTopics/GetUserTopicsByUserId?", "Id=" + userId);
-            //topicId = userAudit.AssignedTopicsList.First().Id;
-            //userAudit.AssignedSubTopicsList = HttpClientHelper.ExecuteGetListApiMethod<SubTopics>(baseUrl, "/UserTopics/GetSubTopicsByUserIdAndTopicId?", "userId=" + userId + "&topicId=" + topicId);
+            var topicId = userAudit.AssignedTopicsList.First().Id;
+            userAudit.AssignedSubTopicsList = HttpClientHelper.ExecuteGetListApiMethod<SubTopics>(baseUrl, "/UserTopics/GetSubTopicsByUserIdAndTopicId?", "userId=" + userId + "&topicId=" + topicId);
            
             if (auditId == 0)
             {
