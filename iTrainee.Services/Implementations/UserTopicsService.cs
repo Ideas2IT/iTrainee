@@ -35,5 +35,10 @@ namespace iTrainee.Services.Implementations
         {
 			return _userTopicsRepository.GetSubTopicOfUser(userId, subTopicId);
 		}
+
+		public bool UpdateDailyProgress(DailyProgress dailyProgress)
+		{
+			return _userTopicsRepository.UpdateDailyProgress(dailyProgress);
+		}
 	}
 }

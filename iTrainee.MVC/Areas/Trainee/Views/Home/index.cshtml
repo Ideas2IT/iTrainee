@@ -311,7 +311,7 @@
 <script type="text/javascript">
 
     function GetDailyProgress(SubTopicId, UserId) {
-        var UserPath = "/Trainee/Home/UpdateDailyProgress?userId=" + UserId + "&subTopicId=" + SubTopicId;
+        var UserPath = "/Trainee/Home/UpdateDailyProgress?userId=" + UserId + "&subTopicId=" + SubTopicId + "&userAuditId=" + @Model.Id;
         $("#myModalBodyDiv1").load(UserPath, function () {
             $("#myModal2").modal("show");
         });

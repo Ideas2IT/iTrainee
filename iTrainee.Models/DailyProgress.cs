@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace iTrainee.Models
 {
@@ -23,5 +24,8 @@ namespace iTrainee.Models
         public string MentorComments { get; set; }
 
         public int Percentage { get; set; }
+
+        [NotMapped]
+        public int UserAuditId { get; set; }
     }
 }
