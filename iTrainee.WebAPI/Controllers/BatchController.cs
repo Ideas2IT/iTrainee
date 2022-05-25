@@ -20,14 +20,14 @@ namespace iTrainee.APIs.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IEnumerable<Batch> GetAllBatches()
+        public IEnumerable<Batch> GetAllBatches(int userId)
         {
-            return _batchService.GetAllBatches();
+            return _batchService.GetAllBatches(userId);
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public Batch Get(int id)
+        public Batch GetBatch(int id)
         {
             return _batchService.GetBatch(id);
         }

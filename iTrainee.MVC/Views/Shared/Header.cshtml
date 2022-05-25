@@ -62,7 +62,7 @@
                             <a class="nav-link text-white" href="/Admin/Home/ManageUser?role=Trainee">Trainee</a>
                         </li>
                         <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="/Shared/Batch/ManageBatch">Batch</a>
+                            <a class="nav-link text-white" href="/Shared/Batch/ManageBatch?userId=0">Batch</a>
                         </li>
 
                         <li class="nav-item px-3">
@@ -103,7 +103,7 @@
                             <a class="nav-link text-white" href="#">Alert Trainee</a>
                         </li>
                         <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="/Admin/Home/ManageUser?role=Trainee">Trainee Progress</a>
+                            <a class="nav-link text-white" href="/Admin/Home/ManageUser?role=Trainee&userId=@TempData["UserId"]">Trainee Progress</a>
                         </li>
                     }
                     @if (TempData["HeaderRole"].Equals("Trainee"))

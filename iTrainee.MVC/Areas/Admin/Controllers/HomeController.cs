@@ -32,7 +32,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult ManageUser(string role, int batchId)
+        public IActionResult ManageUser(string role, int userId)
         {
             TempData.Keep("HeaderRole");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
@@ -43,7 +43,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             }
            else
             {
-                user = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetAssignedTrainees?", "batchId=" + batchId);
+                user = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetAssignedTrainees?", "userId=" + userId);
             }
                 ViewBag.Role = role;
             TempData["Role"] = role;
