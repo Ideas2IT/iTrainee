@@ -106,9 +106,11 @@ namespace iTrainee.Data
                         userSubTopics.Add(new SubTopics
                         {
                             Id = Convert.ToInt32(item["SubTopicId"]),
+                            UserId = Convert.ToInt32(item["UserId"]),
                             TopicId = Convert.ToInt32(item["TopicId"]),
                             Name = Convert.ToString(item["SubTopicName"]),
-                            Percentage = Convert.ToInt32(item["Percentage"])
+                            Percentage = Convert.ToInt32(item["Percentage"]),
+                            UserId = Convert.ToInt32(item["UserId"]),
                         });
                     }
                 }

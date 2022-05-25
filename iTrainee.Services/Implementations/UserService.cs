@@ -25,9 +25,9 @@ namespace iTrainee.Services.Implementations
             return _userRepository.GetUsers(role);
         }
 
-        public IEnumerable<User> GetAssignedTrainees(int userId)
+        public IEnumerable<User> GetAssignedTrainees(int batchId)
         {
-            return _userRepository.GetAssignedTrainees(userId);
+            return _userRepository.GetAssignedTrainees(batchId);
         }
 
         public IEnumerable<User> GetAssignedMentors(int batchId)
@@ -65,6 +65,11 @@ namespace iTrainee.Services.Implementations
         public bool UpdateUser(User user)
         {
             return _userRepository.UpdateUser(user);
+        }
+
+        public string[] GetAssignedBatchIds(int userId)
+        {
+            return _userRepository.GetAssignedBatchIds(userId);
         }
     }
 }

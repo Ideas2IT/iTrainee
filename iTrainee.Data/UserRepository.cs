@@ -113,34 +113,36 @@ namespace iTrainee.Data
             return users;
         }
 
-        public IEnumerable<User> GetAssignedTrainees(int userId)
+        public IEnumerable<User> GetAssignedTrainees(int batchId)
         {
             var users = new List<User>();
             try
             {
-                var parameters = new List<SqlParameter>();
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "UserId",
-                    Value = userId
-                });
-
-                DataSet result = _dataManager.ExecuteStoredProcedure("spGetAssignedTrainees", parameters);
-                if (result?.Tables?.Count != 0)
-                {
-                    foreach (DataRow item in result.Tables[0].Rows)
+                    var parameters = new List<SqlParameter>();
+                    parameters.Add(new SqlParameter
                     {
-                        users.Add(new User
+                        ParameterName = "BatchId",
+                        Value = batchId
+                    });
+
+                    DataSet result = _dataManager.ExecuteStoredProcedure("spGetAssignedTrainees", parameters);
+                    if (result?.Tables?.Count != 0)
+                    {
+                        foreach (DataRow item in result.Tables[0].Rows)
                         {
-                            Id = Convert.ToInt32(item["Id"]),
-                            FirstName = Convert.ToString(item["FirstName"]),
-                            LastName = Convert.ToString(item["LastName"]),
-                            DOB = Convert.ToDateTime(item["DOB"]),
-                            Qualification = Convert.ToString(item["Qualification"]),
-                            UserName = Convert.ToString(item["UserName"])
-                        });
+                            users.Add(new User
+                            {
+                                Id = Convert.ToInt32(item["Id"]),
+                                FirstName = Convert.ToString(item["FirstName"]),
+                                LastName = Convert.ToString(item["LastName"]),
+                                DOB = Convert.ToDateTime(item["DOB"]),
+                                Qualification = Convert.ToString(item["Qualification"]),
+                                UserName = Convert.ToString(item["UserName"])
+                            });
+                        }
                     }
-                }
+              
+
             }
             catch (Exception ex)
             {
@@ -421,6 +423,38 @@ namespace iTrainee.Data
             }
 
             return isSuccess;
+        }
+
+        public string[] GetAssignedBatchIds(int userId)
+        {
+            string[] assignedBatchIds = null;
+            List<string> idList = new List<string>();
+
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UserId",
+                    Value = userId
+                });
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetBatchIdOfMentor", parameters);
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
+                    {
+                        idList.Add(Convert.ToString(item["BatchId"]));
+                    }
+                }
+                assignedBatchIds = idList.ToArray();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return assignedBatchIds;
         }
     }
 }

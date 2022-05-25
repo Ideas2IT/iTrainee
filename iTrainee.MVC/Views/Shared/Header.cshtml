@@ -56,6 +56,9 @@
                     @if (TempData["HeaderRole"].Equals("Admin"))
                     {
                         <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="/Admin/Home/Index"><i class="fa fa-home fa-lg"></i></a>
+                        </li>
+                        <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Admin/Home/ManageUser?role=Mentor">Mentor</a>
                         </li>
                         <li class="nav-item px-3">
@@ -77,16 +80,15 @@
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Shared/UserTopics/ManageUserTopics">Assign Topics</a>
                         </li>
-
-                        <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="#">Daily Progress</a>
-                        </li>
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Shared/Messages/ManageMessages">Alert Trainee</a>
                         </li>
                     }
                     @if (TempData["HeaderRole"].Equals("Mentor"))
                     {
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="/Mentor/Home/Index/@TempData["UserId"]"><i class="fa fa-home" aria-hidden="true"></i></a>
+                        </li>
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Mentor/Home/ManageStreams">Stream</a>
                         </li>

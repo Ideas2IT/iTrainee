@@ -28,6 +28,8 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpGet]
         public IActionResult AddEditTopic(int id)
         {
+            TempData.Keep("UserId");
+            TempData.Keep("UserFirstName");
             TempData.Remove("TopicId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var topic = HttpClientHelper.ExecuteGetApiMethod<Topics>(baseUrl, "/Topics/Get?", "Id=" + id);
@@ -42,6 +44,8 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddEditTopic(Topics topic)
         {
+            TempData.Keep("UserId");
+            TempData.Keep("UserFirstName");
             topic.Id = Convert.ToInt32(TempData["TopicId"]);
             var token = Convert.ToString(TempData["UserToken"]);
 
@@ -61,6 +65,8 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult DeleteTopic(int id)
         {
+            TempData.Keep("UserFirstName");
+            TempData.Keep("UserId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             HttpClientHelper.ExecuteDeleteApiMethod<Topics>(baseUrl, "/Topics/DeleteTopic?", "Id=" + id, Convert.ToString(TempData["UserToken"]));
             return RedirectToAction("ManageTopics", "Home", new { Area = "Mentor" });

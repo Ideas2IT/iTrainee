@@ -17,8 +17,9 @@ namespace iTrainee.Data.Interfaces
 
         User GetUserByUserName(string userName);
 
-        IEnumerable<User> GetAssignedTrainees(int userId);
+        IEnumerable<User> GetAssignedTrainees(int batchId);
 
         IEnumerable<User> GetAssignedMentors(int batchId);
+        string[] GetAssignedBatchIds(int userId);
     }
 }
