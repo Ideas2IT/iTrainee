@@ -27,6 +27,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         {
             TempData.Peek("UserToken");
             TempData.Keep("HeaderRole");
+            TempData.Keep("UserId");
             return View();
         }
 

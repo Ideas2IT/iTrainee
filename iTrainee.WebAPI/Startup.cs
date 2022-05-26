@@ -64,6 +64,7 @@ namespace iTrainee.WebAPI
             services.AddSingleton<ITopicsRepository, TopicsRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IMessagesRepository, MessagesRepository>();
+            services.AddSingleton<IUserMessagesRepository, UserMessagesRepository>();
             services.AddSingleton<IBatchUserRepository, BatchUserRepository>();
             services.AddSingleton<IBatchStreamRepository, BatchStreamRepository>();
             services.AddSingleton<IUserAuditRepository, UserAuditRepository>();
@@ -75,6 +76,7 @@ namespace iTrainee.WebAPI
             services.AddSingleton<ITopicsService, TopicsService>();
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<IMessagesService, MessagesService>();
+            services.AddSingleton<IUserMessagesService, UserMessagesService>();
             services.AddSingleton<IBatchUserService, BatchUserService>();
             services.AddSingleton<IBatchStreamService, BatchStreamService>();
             services.AddSingleton<IUserAuditService, UserAuditService>();

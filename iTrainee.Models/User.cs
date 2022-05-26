@@ -33,5 +33,7 @@ namespace iTrainee.Models
         public string RoleName { get; set; } 
 
         public string Token { get; set; }
+
+        public int UnreadMessagesCount { get; set; }
     }
 }

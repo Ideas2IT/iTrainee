@@ -102,5 +102,56 @@ namespace iTrainee.Data
             }
             return isDeleted;
         }
+
+        public int AddMessage(Messages message)
+        {
+            int id = 0;
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                SqlParameter OutputParam = new SqlParameter("Id", SqlDbType.Int);
+                OutputParam.Direction = ParameterDirection.Output;
+                parameters.Add(OutputParam);
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "FromId",
+                    Value = message.FromId
+                }) ;
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Message",
+                    Value = message.Message
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedBy",
+                    Value = "Admin"
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedOn",
+                    Value = DateTime.Now.Date
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UpdatedBy",
+                    Value = "Admin"
+                });
+
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UpdatedOn",
+                    Value = DateTime.Now.Date
+                });
+
+                id = _dataManager.ExecuteReturnId("spInsertMessage", parameters);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return id;
+        }
     }
 }

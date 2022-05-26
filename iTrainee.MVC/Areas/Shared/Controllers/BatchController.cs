@@ -42,7 +42,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             TempData.Keep("HeaderRole");
             Batch batch = new Batch();
             User user = new User();
-            List<User> assignedUsers = new List<User>();
+            //List<User> assignedUsers = new List<User>();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             batch.MentorList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Mentor", "");
             batch.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/BatchUser/GetUnassignedTrainees", "");
