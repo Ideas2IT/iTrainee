@@ -29,8 +29,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
         public IActionResult ManageBatch(int userId)
         {
-            TempData.Keep("HeaderRole");
-            TempData.Keep("UserId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var batchList = HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + userId, "");
 
@@ -40,9 +38,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpGet]
         public IActionResult AddEditBatch(int id)
         {
-            TempData.Keep("HeaderRole");
-            TempData.Keep("UserId");
-            TempData.Keep("UserFirstName");
             Batch batch = new Batch();
             User user = new User();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
@@ -77,9 +72,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddEditBatch(Batch batch)
         {
-            TempData.Keep("HeaderRole");
-            TempData.Keep("UserId");
-            TempData.Keep("UserFirstName");
             var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             
@@ -195,9 +187,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult DeleteBatch(int id)
         {
-            TempData.Keep("HeaderRole");
-            TempData.Keep("UserId");
-            TempData.Keep("UserFirstName");
             var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             HttpClientHelper.ExecuteDeleteApiMethod<Batch>(baseUrl, "/Batch/DeleteBatch?", "Id=" + id, token);
