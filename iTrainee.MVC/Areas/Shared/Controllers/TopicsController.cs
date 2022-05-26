@@ -28,11 +28,10 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpGet]
         public IActionResult AddEditTopic(int id)
         {
-            TempData.Remove("TopicId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var topic = HttpClientHelper.ExecuteGetApiMethod<Topics>(baseUrl, "/Topics/Get?", "Id=" + id);
             List<Stream> streamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "");
-            TempData.Add("TopicId", id);
+            TempData["TopicId"] = id;
             ViewBag.StreamList = new SelectList(streamList, "Id", "Name");
 
             return PartialView(topic);
@@ -43,17 +42,16 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult AddEditTopic(Topics topic)
         {
             topic.Id = Convert.ToInt32(TempData["TopicId"]);
-            var token = Convert.ToString(TempData["UserToken"]);
 
             if (topic.Id > 0)
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<Topics>(baseUrl, "/Topics/UpdateTopic", topic, token);
+                HttpClientHelper.ExecutePostApiMethod<Topics>(baseUrl, "/Topics/UpdateTopic", topic, TempData["UserToken"].ToString());
             }
             else
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<Topics>(baseUrl, "/Topics/AddTopic", topic, token);
+                HttpClientHelper.ExecutePostApiMethod<Topics>(baseUrl, "/Topics/AddTopic", topic, TempData["UserToken"].ToString());
             }
 
             return RedirectToAction("ManageTopics", "Home", new { Area = "Mentor" });
@@ -62,7 +60,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult DeleteTopic(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            HttpClientHelper.ExecuteDeleteApiMethod<Topics>(baseUrl, "/Topics/DeleteTopic?", "Id=" + id, Convert.ToString(TempData["UserToken"]));
+            HttpClientHelper.ExecuteDeleteApiMethod<Topics>(baseUrl, "/Topics/DeleteTopic?", "Id=" + id, TempData["UserToken"].ToString());
             return RedirectToAction("ManageTopics", "Home", new { Area = "Mentor" });
         }
     }

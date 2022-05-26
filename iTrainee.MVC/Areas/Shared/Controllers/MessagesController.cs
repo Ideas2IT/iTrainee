@@ -45,7 +45,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult ViewAlertDetails(int Id)
         {
-            TempData.Keep("HeaderRole");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var userMessages = HttpClientHelper.ExecuteGetAllApiMethod<UserMessages>(baseUrl, "/Messages/GetUserMessagesByMessageId?", "Id=" + Id);
 

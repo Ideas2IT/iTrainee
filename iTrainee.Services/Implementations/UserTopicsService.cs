@@ -8,17 +8,37 @@ namespace iTrainee.Services.Implementations
 {
 	public class UserTopicsService : IUserTopicsService
 	{
-		private IUserTopicsRepository userTopicsRepository;
+		private IUserTopicsRepository _userTopicsRepository;
 
-		public UserTopicsService(IUserTopicsRepository _userTopicsRepository)
+		public UserTopicsService(IUserTopicsRepository userTopicsRepository)
 		{
-			userTopicsRepository = _userTopicsRepository;
+			_userTopicsRepository = userTopicsRepository;
 		}
 
 		public IEnumerable<UserTopics> GetAllUserTopics()
 		{
-			return userTopicsRepository.GetAllUserTopics();
+			return _userTopicsRepository.GetAllUserTopics();
 		}
 
+		public IEnumerable<SubTopics> GetSubTopicsByUserIdAndTopicId(int userId, int topicId)
+        {
+			return _userTopicsRepository.GetSubTopicsByUserIdAndTopicId(userId, topicId);
+
+		}
+
+		public DailyProgress GetSubTopicOfUser(int userId, int subTopicId)
+        {
+			return _userTopicsRepository.GetSubTopicOfUser(userId, subTopicId);
+		}
+
+		public IEnumerable<Topics> GetUserTopicsByUserId(int id)
+		{
+			return _userTopicsRepository.GetUserTopicsByUserId(id);
+		}
+
+		public bool UpdateDailyProgress(DailyProgress dailyProgress)
+		{
+			return _userTopicsRepository.UpdateDailyProgress(dailyProgress);
+		}
 	}
 }

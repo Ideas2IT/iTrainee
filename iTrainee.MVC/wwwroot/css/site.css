@@ -126,3 +126,8 @@ body {
     transform: translateY(-6px);
     transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
 }
+
+.signInSignOut {
+    margin-top: 15px;
+    color: black;
+}

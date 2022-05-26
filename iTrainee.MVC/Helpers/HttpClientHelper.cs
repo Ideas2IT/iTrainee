@@ -24,6 +24,21 @@ namespace iTrainee.MVC.Helpers
             return null;
         }
 
+        public static List<T> ExecuteGetListApiMethod<T>(string baseUrl, string method, string parameters)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + method + parameters).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string data = response.Content.ReadAsStringAsync().Result;
+                    return JsonConvert.DeserializeObject<List<T>>(data);
+                }
+            }
+            return null;
+        }
+
         public static string[] ExecuteGetIdsApiMethod<T>(string baseUrl, string method)
         {
             using (var client = new HttpClient())

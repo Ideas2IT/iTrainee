@@ -84,8 +84,15 @@ namespace iTrainee.Controllers
 
                 return RedirectToAction("Index", "Home", new { Area = "Trainee", auditId = userAuditId, userId = user.Id });
             }
+            else if (user.RoleName.Equals("Mentor"))
+            {
+                return RedirectToAction("Index", "Home", new { Area = "Mentor", userId = user.Id });
+            }
+            else
+            {
 
-            return RedirectToAction("Index", "Home", new {Area = TempData.Peek("HeaderRole")});
+                return RedirectToAction("Index", "Home", new { Area = "Admin", userId = 0 });
+            }
         }
 
         public IActionResult Privacy()
