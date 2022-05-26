@@ -27,7 +27,7 @@
 			
 			<div class="form-group">
 				<label asp-for="TraineeComments" class="control-label">Trainee Comments</label>
-				<textarea name="TraineeComments" value="@Model.TraineeComments" class="form-control" ></textarea>
+				<textarea name="TraineeComments" value="@Model.TraineeComments" class="form-control" >@Model.TraineeComments</textarea>
 			</div>
 			</div>
 			 <div class="col-md-6">
@@ -47,7 +47,7 @@
 			
 			 <div class="form-group" style="margin-top:30px;">
 				<label asp-for="MentorComments" class="control-label">Mentor Comments</label>
-				<textarea name="MentorComments" type="text" value="@Model.MentorComments" class="form-control" disabled></textarea>
+				<textarea name="MentorComments" type="text" value="@Model.MentorComments" class="form-control" disabled>@Model.MentorComments</textarea>
 			 </div>
 			</div>
 			</div>
