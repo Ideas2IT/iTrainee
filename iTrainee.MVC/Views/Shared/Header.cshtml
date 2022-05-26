@@ -1,6 +1,7 @@
 ﻿@{
     TempData.Keep("UserId");
     TempData.Keep("UserFirstName");
+    TempData.Keep("FirstName");
     TempData.Keep("HeaderRole");
     TempData.Keep("UserToken");
     TempData.Keep("StreamId");
@@ -47,7 +48,7 @@
                       
 	                   <a href="/Home/ChangePassword?userId=@TempData["UserId"]" class="dropdown-item"> Change Password</a>
 
-                        <a class="dropdown-item" href="#">Sign Out</a>
+                        <a class="dropdown-item" href="/Home/Login">Sign Out</a>
                     </div>
                 </li>
             </ul>
