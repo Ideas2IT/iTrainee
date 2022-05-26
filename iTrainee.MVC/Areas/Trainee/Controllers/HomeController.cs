@@ -34,7 +34,6 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
 
             if (auditId == 0)
             {
-
                 TempData["HeaderRole"] = "Mentor";
                 TempData["FirstName"] = "MentorName";
             }

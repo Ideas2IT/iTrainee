@@ -14,20 +14,35 @@
             </div>
         </div>
         <div class="col-1">
-            <button data-toggle="modal" class="btn btn-sm mt-2 btn-outline-primary " onclick="GetDailyProgress(@subTopic.Id, @subTopic.UserId)" data-target="#myModal2">
-                <span class="material-symbols-outlined">
-                    edit_note
-                </span>
+            <button data-toggle="modal" class="btn btn-sm mt-2 btn-outline-primary " onclick="GetDailyProgress(@subTopic.Id, @subTopic.UserId, '@Convert.ToString(TempData["HeaderRole"])')" data-target="#myModal2">
+                @if (Convert.ToString(TempData["HeaderRole"]) == "Mentor")
+                {
+                    <i class="fa fa-info-circle"></i>
+                }
+                else
+                {
+                    <span class="material-symbols-outlined">edit_note</span>
+                }
+
             </button>
         </div>
     </div>
 
 }
 <script type="text/javascript">
-    var GetDailyProgress = function (SubTopicId, UserId) {
+    function GetDailyProgress(SubTopicId, UserId, Role) {
         var UserPath = "/Trainee/Home/UpdateDailyProgress?userId=" + UserId + "&subTopicId=" + SubTopicId;
         $("#myModalBodyDiv1").load(UserPath, function () {
             $("#myModal2").modal("show");
+
+            if(Role == "Mentor") {
+                 $("#TraineeComments").prop( "disabled", true );
+                 $("#MentorComments").prop( "disabled", false );
+                 $(".Percentage").prop( "disabled", true );
+                 $("#Status").prop( "disabled", true );
+            }
         });
+
+
     };
 </script>
