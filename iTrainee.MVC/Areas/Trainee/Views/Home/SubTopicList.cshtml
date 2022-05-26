@@ -1,33 +1,36 @@
 ﻿@model IEnumerable<iTrainee.Models.SubTopics>
 
 <head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
-@foreach (var subTopic in Model)
+@if (Model != null)
 {
-    <div class="row mt-3">
-        <div class="col-9">
-            <div class="d-inline">@subTopic.Name</div>
-            <br />
-            <div class="progress mt-2">
-                <div class="progress-bar" style="width: @subTopic.Percentage%; background-color:blue" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">@subTopic.Percentage %</div>
-            </div>
-        </div>
-        <div class="col-1">
-            <button data-toggle="modal" class="btn btn-sm mt-2 btn-outline-primary " onclick="GetDailyProgress(@subTopic.Id, @subTopic.UserId)" data-target="#myModal2">
-                <span class="material-symbols-outlined">
-                    edit_note
-                </span>
-            </button>
-        </div>
-    </div>
+	@foreach (var subTopic in Model)
+	{
+		<div class="row mt-3">
+			<div class="col-9">
+				<div class="d-inline">@subTopic.Name</div>
+				<br />
+				<div class="progress mt-2">
+					<div class="progress-bar" style="width: @subTopic.Percentage%; background-color:blue" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">@subTopic.Percentage %</div>
+				</div>
+			</div>
+			<div class="col-1">
+				<button data-toggle="modal" class="btn btn-sm mt-2 btn-outline-primary " onclick="GetDailyProgress(@subTopic.Id, @subTopic.UserId)" data-target="#myModal2">
+					<span class="material-symbols-outlined">
+						edit_note
+					</span>
+				</button>
+			</div>
+		</div>
+	}
+} 
 
-}
 <script type="text/javascript">
-    var GetDailyProgress = function (SubTopicId, UserId) {
-        var UserPath = "/Trainee/Home/UpdateDailyProgress?userId=" + UserId + "&subTopicId=" + SubTopicId;
-        $("#myModalBodyDiv1").load(UserPath, function () {
-            $("#myModal2").modal("show");
-        });
-    };
+	var GetDailyProgress = function (SubTopicId, UserId) {
+		var UserPath = "/Trainee/Home/UpdateDailyProgress?userId=" + UserId + "&subTopicId=" + SubTopicId;
+		$("#myModalBodyDiv1").load(UserPath, function () {
+			$("#myModal2").modal("show");
+		});
+	};
 </script>

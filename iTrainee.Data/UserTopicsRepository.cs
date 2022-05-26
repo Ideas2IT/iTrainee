@@ -110,6 +110,9 @@ namespace iTrainee.Data
                             TopicId = Convert.ToInt32(item["TopicId"]),
                             Name = Convert.ToString(item["SubTopicName"]),
                             Percentage = Convert.ToInt32(item["Percentage"]),
+                            Status = Convert.ToString(item["Status"]),
+                            TraineeComments = Convert.ToString(item["TraineeComments"]),
+                            MentorComments = Convert.ToString(item["MentorComments"])
                         });
                     }
                 }

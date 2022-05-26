@@ -24,20 +24,16 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult Index()
         {
-            TempData.Keep("UserId");
             return View();
         }
 
         [HttpGet]
         public IActionResult AddEditSubTopic(int id)
         {
-            TempData.Keep("UserId");
-            TempData.Remove("SubTopicId");
-            TempData.Keep("UserFirstName");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var subTopic = HttpClientHelper.ExecuteGetApiMethod<SubTopics>(baseUrl, "/SubTopics/Get?", "Id=" + id);
             List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "");
-            TempData.Add("SubTopicId", id);
+            TempData["SubTopicId"] = id;
             ViewBag.TopicsList = new SelectList(topicsList, "Id", "Name");
 
             return PartialView(subTopic);
@@ -47,8 +43,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddEditSubTopic(SubTopics subTopic)
         {
-            TempData.Keep("UserId");
-            TempData.Keep("UserFirstName");
             subTopic.Id = Convert.ToInt32(TempData["SubTopicId"]);
             if (subTopic.Id > 0)
             {
@@ -66,8 +60,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpPost]
         public IActionResult DeleteSubTopic(int id)
         {
-            TempData.Keep("UserFirstName");
-            TempData.Keep("UserId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteDeleteApiMethod<SubTopics>(baseUrl, "/SubTopics/DeleteSubTopic?", "Id=" + id, "");
             return new JsonResult("");
