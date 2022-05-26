@@ -115,6 +115,30 @@
         .hello-name {
             margin-left: 16px;
         }
+
+        .time {
+            font-size: 0.9em;
+            border-bottom: 3px solid #0366d6;
+            border-top: 3px solid #0366d6;
+            border-right: 1px solid #0366d6;
+            border-left: 1px solid #0366d6;
+            border-radius: 5px;
+            padding: 3px;
+            margin-left: 50em;
+            margin-top: 10px;
+        }
+
+        .date {
+            font-size: 0.9em;
+            border-bottom: 3px solid #0366d6;
+            border-top: 3px solid #0366d6;
+            border-right: 1px solid #0366d6;
+            border-left: 1px solid #0366d6;
+            border-radius: 5px;
+            padding: 3px;
+            margin-top: 10px;
+            margin-left: 1em;
+        }
     </style>
 </head>
 <div class="row" onload="GetSubTopicList(@Model.UserId, @Model.AssignedTopicsList.First().Id)">
@@ -126,13 +150,13 @@
     @if (Convert.ToString(TempData["FirstName"]) == "MentorName")
     {
         <div class="">
-            <p class="dates">Date : @Model.Date.ToShortDateString()</p>
+            <p class="date">Date : @Model.Date.ToShortDateString()</p>
         </div>
         <div class="">
             <p class="time">Sign-In : @Model.SignIn.ToShortTimeString()</p>
         </div>
         <div class="">
-            <p class="time1">Sign-Out : @Model.SignOut.ToShortTimeString()</p>
+            <p class="date">Sign-Out : @Model.SignOut.ToShortTimeString()</p>
         </div>
     }
     else
@@ -160,7 +184,7 @@
 </div>
 
 <div class="modal" fade" id="myModal2">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Status</h3>
@@ -177,17 +201,14 @@
 
         var GetSubTopicList = function (UserId, TopicId, id) {
         var UserPath = "/Trainee/Home/SubTopicList?topicId=" + TopicId + "&userId=" + UserId;
+            $("#SubTopic").load(UserPath, function () {
 
-                $("#SubTopic").load(UserPath, function () {
+            });
 
-                });
-                var someElements = document.querySelectorAll('.topic-name-on-select');
-
-                                              $(someElements).removeClass("topic-name-on-select");
-                      $('#'+ id).addClass('topic-name-on-select');
-
-    };
-
+            var someElements = document.querySelectorAll('.topic-name-on-select');
+                $(someElements).removeClass("topic-name-on-select");
+                $('#'+ id).addClass('topic-name-on-select');
+        };
 </script>
 
 
