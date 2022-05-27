@@ -1,82 +1,66 @@
 ﻿@model iTrainee.Models.UserTopics;
 @using Microsoft.AspNetCore.Mvc.Rendering;
 
+
 @{
-    ViewData["Title"] = "AddEditUSerTopics";
+	ViewData["Title"] = "AddEditBatch";
 }
 
-<div class="panel panel-primary">
-    <div class="panel-heading panel-head">Author Book Tree View</div>
-    <div id="frm-author" class="panel-body">
-        @using (Html.BeginForm())
-        {
-            <div class="form-group">
-		<label class="col-form-label">Trainees</label><br />
-		@Html.ListBoxFor(model=>model.TraineeList, new MultiSelectList(Model.TraineeList, "Id", "UserName"),  htmlAttributes: new { id="multiSelectMentor", @class = "form-control", multiple="multiple" })
-	    </div>
-
-                <ul class="treeview">
-            @foreach (var topic in Model.TopicsList)
-            {
-                                    <li id="li_1" class="contains-items">
-
-                        <div class="checkbox">
-                            <input id="1" type="checkbox" value="1" name="categories[]">
-                            <label for="1">
-                                @topic.Name
-                            </label>
-                        </div>
-                        <ul>
-                            @foreach (var subTopics in topic.SubTopicsList)
-                            {
-                                <li class="li_1">
-                                    <div class="checkbox">
-                                        <input id="4" type="checkbox" value="4" name="categories[]">
-                                        <label for="4">
-                                            @subTopics.Name
-                                        </label>
-                                    </div>
-                                </li>
-                            }
-                        </ul>
-                     </li>
-
-            }
-                </ul>
-
-            <div class="form-group">
-                <div class="col-lg-9"></div>
-                <div class="col-lg-3">
-                    <button class="btn btn-success" id="btnSubmit" type="submit">
-                        Submit
-                    </button>
-                </div>
-            </div>
-        }
-
-    </div>
+<div id="jstree">
 </div>
+@using (Html.BeginForm("AddEditUserTopics", "UserTopics", FormMethod.Post))
+{
+    <div class="form-group">
+		<label class="col-form-label">Mentors</label><br />
+		@Html.ListBoxFor(model=>model.SelectedTraineeList, new MultiSelectList(Model.TraineeList, "Id", "FirstName"),  htmlAttributes: new { id="multiSelectTrainee", @class = "form-control", multiple="multiple" })
+	</div>
 
-    <script>
-                $('input[type=checkbox]').change(function(){
-            // if is checked
-            if(this.checked){
-                // check all children
-                var lenchk = $(this).closest('ul').find(':checkbox');
-                var lenchkChecked = $(this).closest('ul').find(':checkbox:checked');
-                debugger
-                console.log(lenchkChecked);
+    <input type="hidden" name="selectedItems" id="selectedItems" />
+    <input type="submit" value="Submit" />
+}
+@section scripts{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            
+            $('#jstree').on('changed.jstree', function (e, data) {
+                var i, j;
+                var postedItems = [];
+                for(i = 0, j = data.selected.length; i < j; i++) {
 
-                //if all siblings are checked, check its parent checkbox
-                if (lenchk.length == lenchkChecked.length) {
-                    $(this).closest('ul').siblings().find(':checkbox').prop('checked', true);
-                }else{
-                    $(this).closest('.checkbox').siblings().find(':checkbox').prop('checked', true);
+                    //Fetch the Id.
+                    var id = data.selected[i];
+
+                    //Remove the ParentId.
+                    if(id.indexOf('-') != -1){
+                        id = id.split("-")[1];
+                    }
+
+                    //Add the Node to the JSON Array.
+                    postedItems.push({
+                        text: data.instance.get_node(data.selected[i]).text,
+                        id: id,
+                        parent: data.node.parents[0]
+                    });
                 }
-            } else {
-                // uncheck all children
-                $(this).closest('.checkbox').siblings().find(':checkbox').prop('checked', false);
-                $(this).closest('ul').siblings().find(':checkbox').prop('checked', false);
-            }
+
+                //Serialize the JSON Array and save in HiddenField.
+                $('#selectedItems').val(JSON.stringify(postedItems));
+            }).jstree({
+                "core": {
+                    "themes": {
+                        "variant": "large"
+                    },
+                    "data": @Html.Raw(ViewBag.Json)
+                    },
+                "checkbox": {
+                    "keep_selected_style": false
+                },
+                "plugins": ["wholerow", "checkbox"],
+            });
+            $("#multiSelectTrainee").chosen();
         });
     </script>
+}

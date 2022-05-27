@@ -11,5 +11,7 @@ namespace iTrainee.Services.Interfaces
         bool DeleteUser(int id);
         User GetUserByUserName(string userName, string password);
         bool UpdateUser(User user);
+
+        IEnumerable<User> GetUsersByBatch(string role, string id);
     }
 }

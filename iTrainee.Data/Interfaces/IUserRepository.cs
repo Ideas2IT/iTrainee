@@ -8,6 +8,8 @@ namespace iTrainee.Data.Interfaces
         User GetUser(int id);
         IEnumerable<User> GetUsers(string role);
 
+        IEnumerable<User> GetUsersByBatch(string role, string id);
+
         bool InsertUser(User user);
         bool UpdateUser(User user);
         bool DeleteUser(int id);

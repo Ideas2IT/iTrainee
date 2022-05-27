@@ -15,13 +15,21 @@ namespace iTrainee.Services.Implementations
         }
         public User GetUser(int id)
         {
-            return _userRepository.GetUser(id);
+            User user = _userRepository.GetUser(id);
+            user.Password = EncryptAndDecrypt.ConvertToDecrypt(user.Password);
+            return user;
         }
 
         public IEnumerable<User> GetUsers(string role)
         {
             return _userRepository.GetUsers(role);
         }
+
+        public IEnumerable<User> GetUsersByBatch(string role, string id)
+        {
+            return _userRepository.GetUsersByBatch(role, id);
+        }
+       
         public User GetUserByUserName(string userName, string password)
         {
             User user = _userRepository.GetUserByUserName(userName);
@@ -35,7 +43,7 @@ namespace iTrainee.Services.Implementations
 
         public IEnumerable<User> GetMentors(string role)
         {
-            return _userRepository.GetUsers(role);
+            return _userRepository.GetUsers(role, "");
         }
 
         public bool SaveUser(User user)
@@ -51,6 +59,7 @@ namespace iTrainee.Services.Implementations
 
         public bool UpdateUser(User user)
         {
+            user.Password = EncryptAndDecrypt.ConvertToEncrypt(user.Password);
             return _userRepository.UpdateUser(user);
         }
     }

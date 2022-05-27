@@ -21,5 +21,12 @@ namespace iTrainee.APIs.Controllers
 		{
 			return _userTopicsService.GetAllUserTopics();
 		}
+
+		[HttpPost]
+		public bool AddUserTopic(UserTopics userTopic)
+		{
+			return _userTopicsService.AddUserTopic(userTopic);
+		}
+		
 	}
 }

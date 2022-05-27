@@ -19,6 +19,11 @@ namespace iTrainee.Services.Implementations
 		{
 			return userTopicsRepository.GetAllUserTopics();
 		}
+	
+		public bool AddUserTopic(UserTopics userTopic)
+		{
+			return userTopicsRepository.InsertUserTopic(userTopic);
+		}
 
 	}
 }

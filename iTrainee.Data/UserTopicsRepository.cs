@@ -31,10 +31,10 @@ namespace iTrainee.Data
                     {
                         userTopicsList.Add(new UserTopics
                         {
-                            Id = Convert.ToInt32(item["Id"]),
-                            Username = Convert.ToString(item["UserName"]),
-                            TopicName = Convert.ToString(item["Name"]),
-                            SubTopicName = Convert.ToString(item["SubTopicName"])
+                         //   Id = Convert.ToInt32(item["Id"]),
+                           // Username = Convert.ToString(item["UserName"]),
+                           // TopicName = Convert.ToString(item["Name"]),
+                            //SubTopicName = Convert.ToString(item["SubTopicName"])
 
                             //TopicName = (string[])item["TopicsName"],
                             //SubTopicName = (string[])item["SubTopicName"]
@@ -47,6 +47,13 @@ namespace iTrainee.Data
                 throw ex;
             }
             return userTopicsList;
+        }
+
+        public bool InsertUserTopic(UserTopics userTopic)
+        {
+           
+
+            return true;
         }
     }
 }

@@ -6,5 +6,8 @@ namespace iTrainee.Services.Interfaces
     public interface IUserTopicsService
     {
         IEnumerable<UserTopics> GetAllUserTopics();
+
+        bool AddUserTopic(UserTopics userTopic);
+        
     }
 }
