@@ -27,17 +27,11 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult Index()
         {
-            TempData.Keep("HeaderRole");
-            TempData.Keep("UserFirstName");
-            TempData.Keep("UserId");
             return View();
         }
 
         public IActionResult ManageMessages()
         {
-            TempData.Keep("HeaderRole");
-            TempData.Keep("UserFirstName");
-            TempData.Keep("UserId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var messages = HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "/Messages/GetMessagesByUserId?", "Id=" + TempData.Peek("UserId"));
 
@@ -46,9 +40,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult ViewAlertDetails(int Id)
         {
-            TempData.Keep("HeaderRole");
-            TempData.Keep("UserFirstName");
-            TempData.Keep("UserId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var userMessages = HttpClientHelper.ExecuteGetAllApiMethod<UserMessages>(baseUrl, "/Messages/GetUserMessagesByMessageId?", "Id=" + Id);
 
@@ -57,9 +48,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult AddEditAlert(int Id)
         {
-            TempData.Keep("HeaderRole");
-            TempData.Keep("UserFirstName");
-            TempData.Keep("UserId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var message = HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "/Messages/AddEditMessage?", "Id=" + Id);
 
@@ -68,9 +56,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult DeleteMessage(int Id)
         {
-            TempData.Keep("HeaderRole");
-            TempData.Keep("UserFirstName");
-            TempData.Keep("UserId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteDeleteApiMethod<Messages>(baseUrl, "/Messages/DeleteMessage?", "Id=" + Id, Convert.ToString(TempData["UserToken"]));
             return RedirectToAction("ManageMessages");

@@ -29,9 +29,11 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             UserAudit userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + userId);
             userAudit.AssignedTopicsList = HttpClientHelper.ExecuteGetListApiMethod<Topics>(baseUrl, "/UserTopics/GetUserTopicsByUserId?", "Id=" + userId);
-            var topicId = userAudit.AssignedTopicsList.First().Id;
-            userAudit.AssignedSubTopicsList = HttpClientHelper.ExecuteGetListApiMethod<SubTopics>(baseUrl, "/UserTopics/GetSubTopicsByUserIdAndTopicId?", "userId=" + userId + "&topicId=" + topicId);
-
+            if (userAudit.AssignedTopicsList.Count() != 0)
+            {
+                var topicId = userAudit.AssignedTopicsList.First().Id;
+                userAudit.AssignedSubTopicsList = HttpClientHelper.ExecuteGetListApiMethod<SubTopics>(baseUrl, "/UserTopics/GetSubTopicsByUserIdAndTopicId?", "userId=" + userId + "&topicId=" + topicId);
+            }
             if (auditId == 0)
             {
                 TempData["HeaderRole"] = "Mentor";

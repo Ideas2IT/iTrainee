@@ -141,7 +141,9 @@
         }
     </style>
 </head>
-<div class="row" onload="GetSubTopicList(@Model.UserId, @Model.AssignedTopicsList.First().Id)">
+@if(Model.AssignedTopicsList.Count() != 0)
+{
+    <div class="row" onload="GetSubTopicList(@Model.UserId, @Model.AssignedTopicsList.First().Id)">
     @if (Convert.ToString(TempData["FirstName"]) == "TraineeName")
     {
         <h5 class="font-weight-bold mt-4 mb-3 hello-name">Hello @TempData["UserFirstName"],</h5>
@@ -163,18 +165,26 @@
     {
     }
 </div>
+}
+
 
 <div class="topic-subtopic">
     <div class="topic-list nav flex-column" id="Topic">
         @{
             int Count = 1;
         }
-        @foreach (var topic in Model.AssignedTopicsList)
+        @if(Model.AssignedTopicsList.Count() != 0)
         {
-            <div class="topic-name nav-item" onclick="GetSubTopicList(@Model.UserId, @topic.Id, this.id)" id=@Count>@topic.Name</div>
-            Count += 1;
-
+            @foreach (var topic in Model.AssignedTopicsList)
+            {
+                <div class="topic-name nav-item" onclick="GetSubTopicList(@Model.UserId, @topic.Id, this.id)" id=@Count>@topic.Name</div>
+                Count += 1;
+            }
+        } else
+        {
+            <h4 class="mt-lg-5">No topics were assigned</h4>
         }
+
     </div>
 
 

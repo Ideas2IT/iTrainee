@@ -27,31 +27,25 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpGet]
         public IActionResult AddEditStream(int id)
         {
-            TempData.Keep("UserId");
-            TempData.Remove("StreamId");
-            TempData.Keep("UserFirstName");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var stream = HttpClientHelper.ExecuteGetApiMethod<Stream>(baseUrl, "/Stream/Get?", "Id="+id);
-            TempData.Add("StreamId", id);
+            TempData["StreamId"] = id;
             return PartialView(stream);
         }
 
         [HttpPost]
         public IActionResult AddEditStream(Stream stream)
         {
-            TempData.Keep("UserId");
-            TempData.Keep("UserFirstName");
-            var token = Convert.ToString(TempData["UserToken"]);
             stream.Id = Convert.ToInt32(TempData["StreamId"]);
 
             if (stream.Id > 0)
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/UpdateStream", stream, token);
+                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/UpdateStream", stream, TempData["UserToken"].ToString());
             } else
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/AddStream", stream, token);
+                HttpClientHelper.ExecutePostApiMethod<Stream>(baseUrl, "/Stream/AddStream", stream, TempData["UserToken"].ToString());
             }
 
             return RedirectToAction("ManageStreams", "Home", new { Area = "Mentor" });
@@ -59,10 +53,8 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult DeleteStream(int id)
         {
-            TempData.Keep("UserId");
-            TempData.Keep("UserFirstName");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteDeleteApiMethod<Stream>(baseUrl, "/Stream/DeleteStream?", "Id="+id, Convert.ToString(TempData["UserToken"]));
+            var result = HttpClientHelper.ExecuteDeleteApiMethod<Stream>(baseUrl, "/Stream/DeleteStream?", "Id="+id, TempData["UserToken"].ToString());
             return RedirectToAction("ManageStreams", "Home", new { Area = "Mentor" });
         }
     }
