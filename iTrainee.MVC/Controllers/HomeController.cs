@@ -66,11 +66,12 @@ namespace iTrainee.Controllers
                 return RedirectToAction("Login", user);
             }
 
+            TempData["UserId"] = user.Id;
             TempData["HeaderRole"] = user.RoleName;
             TempData["CurrentUserName"] = user.FirstName + " " + user.LastName;
-            TempData["UserFirstName"] = user.FirstName;
-            TempData["UserId"] = user.Id;
+            TempData["UserFirstName"] = user.FirstName;           
             TempData["UserToken"] = user.Token;
+            TempData["UnreadMessagesCount"] = user.UnreadMessagesCount;
             var token = Convert.ToString(TempData["UserToken"]);
 
             if (user.RoleName.Equals("Trainee"))

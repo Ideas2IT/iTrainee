@@ -27,5 +27,10 @@ namespace iTrainee.Services.Implementations
         {
             return _messagesRepository.DeleteMessage(Id);
         }
+
+        public int AddMessage(Messages message)
+        {
+            return _messagesRepository.AddMessage(message);
+        }
     }
 }

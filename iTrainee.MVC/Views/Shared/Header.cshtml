@@ -37,7 +37,7 @@
                 }
                 <li class="nav-item  px-2">
                     <i class="header-notification fa-lg fa fa-bell-o"></i>
-                    <span class="counter counter-lg">7</span>
+                    <span class="counter counter-lg">@TempData["UnreadMessagesCount"]</span>
                 </li>
                 <li class="nav-item dropdown px-2">
                     <a class="text-dark nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -64,7 +64,7 @@
             </button>
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav align-text-center">
                     @if (TempData["HeaderRole"].Equals("Admin"))
                     {
                         <li class="nav-item px-3">
