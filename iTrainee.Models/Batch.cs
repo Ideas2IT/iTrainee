@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace iTrainee.Models
@@ -7,6 +8,7 @@ namespace iTrainee.Models
     {
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Please enter batch name")]
         public string Name { get; set; }
 
         [NotMapped]
@@ -18,13 +20,13 @@ namespace iTrainee.Models
         [NotMapped]
         public IEnumerable<Stream> StreamList { get; set; }
 
-        [NotMapped]
+        [Required(ErrorMessage = "Please select minimum one mentor")]
         public string[] SelectedMentorIds { get; set; }
 
-        [NotMapped]
+        [Required(ErrorMessage = "Please select minimum one trainee")]
         public string[] SelectedTraineeIds { get; set; }
 
-        [NotMapped]
+        [Required(ErrorMessage = "Please select minimum one stream")]
         public string[] SelectedStreamIds { get; set; }
 
         [NotMapped]
