@@ -4,8 +4,6 @@ using System;
 using iTrainee.MVC.Helpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace iTrainee.MVC.Areas.Trainee.Controllers
@@ -62,6 +60,7 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken()]
         public IActionResult UpdateDailyProgress(DailyProgress dailyProgress)
         {
             TempData.Keep("UserFirstName");

@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using iTrainee.MVC.Helpers;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 
 namespace iTrainee.MVC.Areas.Admin.Controllers
@@ -79,6 +78,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken()]
         public IActionResult SaveUser(User user)
         {
             if (0 < user.Id)
