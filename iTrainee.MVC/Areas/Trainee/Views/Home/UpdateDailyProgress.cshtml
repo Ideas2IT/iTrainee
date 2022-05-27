@@ -1,92 +1,93 @@
 ﻿@model iTrainee.Models.DailyProgress
 
-			<form id="ProgressForm" method="post">
-                    
-                   
-                        <div class="col-lg-12">
-			<div class="form-group">
-                <input type="hidden" class="form-control" name="UserId" value="@Model.UserId"  />
-                <input type="hidden" class="form-control" name="SubTopicId" value="@Model.SubTopicId"  />
-				<input type="hidden" class="form-control" name="UserAuditId" value="@Model.UserAuditId"  />
-            </div>
-			 <div class="row">
-			  <div class="col-md-6">
-			<div class="form-group">
-				<label asp-for="StartDate" class="control-label">Start Date</label>
-				<input type="text" class="form-control" name="StartDate" value=@Model.StartDate disabled/>
+<form id="ProgressForm" method="post">
+
+
+	<div class="col-lg-12">
+		<div class="form-group">
+			<input type="hidden" class="form-control" name="UserId" value="@Model.UserId" />
+			<input type="hidden" class="form-control" name="SubTopicId" value="@Model.SubTopicId" />
+			<input type="hidden" class="form-control" name="UserAuditId" value="@Model.UserAuditId" />
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label asp-for="StartDate" class="control-label">Start Date</label>
+					<input type="text" class="form-control" name="StartDate" value=@Model.StartDate disabled />
+				</div>
+
+				<div class="form-group">
+					<label asp-for="Status" class="control-label">Status</label>
+					<select name="Status" class="form-control">
+							<option>@Model.Status</option>
+							<option>Completed</option>
+							<option>In Progress</option>
+
+					</select>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="TraineeComments" class="control-label">Trainee Comments</label>
+					<textarea name="TraineeComments" value="@Model.TraineeComments" class="form-control">@Model.TraineeComments</textarea>
+				</div>
 			</div>
-			
-			<div class="form-group">
-				<label asp-for="Status" class="control-label">Status</label>
-		        <select name="Status" class="form-control">
-				    <option></option>
-                    <option>In Progress</option>
-                    <option>Completed</option>
-                </select>
-			</div>
-			
-			<div class="form-group">
-				<label asp-for="TraineeComments" class="control-label">Trainee Comments</label>
-				<textarea name="TraineeComments" value="@Model.TraineeComments" class="form-control" >@Model.TraineeComments</textarea>
-			</div>
-			</div>
-			 <div class="col-md-6">
-				 <div class="form-group">
-				 <label asp-for="EndDate" class="control-label">End Date</label>
-				  <input type="text" class="form-control" name="EndDate" value=@Model.EndDate disabled/>
-			 </div>
-			  <div id="slider-cntnr">
-				<label for="customRange1" class="form-label">Percentage</label>
-				<input type="range" id="frame-slider" class="range-width" name="Percentage" oninput="updateFollowerValue(this.value)" value=@Model.Percentage />
-				<div id="slider-follow">
-					<div id="slider-val-cntnr">
-						<span id="slider-val"></span>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label asp-for="EndDate" class="control-label">End Date</label>
+					<input type="text" class="form-control" name="EndDate" value=@Model.EndDate disabled />
+				</div>
+				<div id="slider-cntnr">
+					<label for="customRange1" class="form-label">Percentage</label>
+					<input type="range" id="frame-slider" class="range-width" name="Percentage" oninput="updateFollowerValue(this.value)" value=@Model.Percentage />
+					<div id="slider-follow">
+						<div id="slider-val-cntnr">
+							<span id="slider-val"></span>
+						</div>
 					</div>
 				</div>
-			 </div>
-			
-			 <div class="form-group" style="margin-top:30px;">
-				<label asp-for="MentorComments" class="control-label">Mentor Comments</label>
-				<textarea name="MentorComments" type="text" value="@Model.MentorComments" class="form-control" disabled>@Model.MentorComments</textarea>
-			 </div>
+
+				<div class="form-group" style="margin-top:30px;">
+					<label asp-for="MentorComments" class="control-label">Mentor Comments</label>
+					<textarea name="MentorComments" type="text" value="@Model.MentorComments" class="form-control" disabled>@Model.MentorComments</textarea>
+				</div>
 			</div>
-			</div>
-			 <div class="form-group mt-4 float-right">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<input type="submit" id="SaveProgress" value="Save" class="btn btn-primary" />
-			</div>
-			
-			</div>
-		</form>
+		</div>
+		<div class="form-group mt-4 float-right">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<input type="submit" id="SaveProgress" value="Save" class="btn btn-primary" />
+		</div>
+
+	</div>
+</form>
 
 
 
 <script type="text/javascript">
 	var follower = document.getElementById('slider-follow');
-    var follower_val = document.getElementById('slider-val');
-    var slider = document.getElementById('frame-slider');
+	var follower_val = document.getElementById('slider-val');
+	var slider = document.getElementById('frame-slider');
 
-    var updateFollowerValue = function(val) {
-      follower_val.innerHTML = val;
-      follower.style.left = val + '%';
-    };
+	var updateFollowerValue = function(val) {
+	  follower_val.innerHTML = val;
+	  follower.style.left = val + '%';
+	};
 
-    updateFollowerValue(slider.value);
+	updateFollowerValue(slider.value);
 
 	$("#SaveProgress").click(function () {
-      var a = $("#ProgressForm").serialize();
-      debugger;
+	  var a = $("#ProgressForm").serialize();
+	  debugger;
 
-      $.ajax({
-         type: "POST",
-            url: "/Trainee/Home/UpdateDailyprogress",
-            data: a,
-            success: function () {
-                $("#myModal1").modal("hide");
-            },
-            error: function () {
-                alert("Unable to save/update data");
-            },
-        });
-    });
+	  $.ajax({
+		 type: "POST",
+			url: "/Trainee/Home/UpdateDailyprogress",
+			data: a,
+			success: function () {
+				$("#myModal1").modal("hide");
+			},
+			error: function () {
+				alert("Unable to save/update data");
+			},
+		});
+	});
 </script>
