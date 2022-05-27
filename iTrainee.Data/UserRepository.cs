@@ -210,7 +210,7 @@ namespace iTrainee.Data
                         user.UserName = Convert.ToString(item["UserName"]);
                         user.RoleName = Convert.ToString(item["RoleName"]);
                         user.Password = Convert.ToString(item["Password"]);
-                        
+                        user.UnreadMessagesCount = Convert.ToInt32(item["UnreadMessagesCount"]);
                     }
                 } 
             }

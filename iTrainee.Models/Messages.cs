@@ -16,5 +16,8 @@ namespace iTrainee.Models
 
         [NotMapped]
         public string[] SelectedTraineeIds { get; set; }
+
+        [NotMapped]
+        public string TraineesIdsString { get; set; }
     }
 }

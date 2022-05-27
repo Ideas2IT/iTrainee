@@ -35,6 +35,8 @@ namespace iTrainee.Models
 
         public string Token { get; set; }
 
+        public int UnreadMessagesCount { get; set; }
+
         [NotMapped]
         public string[] SelectedTraineeIds { get; set; }
 

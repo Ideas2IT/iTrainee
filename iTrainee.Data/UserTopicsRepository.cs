@@ -154,6 +154,7 @@ namespace iTrainee.Data
                         dailyProgress.MentorComments = Convert.ToString(item["MentorComments"]);
                         dailyProgress.TraineeComments = Convert.ToString(item["TraineeComments"]);
                         dailyProgress.Percentage = Convert.ToInt32(item["Percentage"]);
+                        dailyProgress.Status = Convert.ToString(item["Status"]);
                     }
                 }
             }
