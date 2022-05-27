@@ -22,10 +22,11 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
         }
 
 
-        public IActionResult Index(int auditId, int userId)
+        public IActionResult Index(int auditId, int userId, string traineeName)
         {
             TempData.Keep("UserFirstName");
             TempData.Keep("UserId");
+            TempData["TraineeName"] = traineeName;
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             UserAudit userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + userId);
             userAudit.AssignedTopicsList = HttpClientHelper.ExecuteGetListApiMethod<Topics>(baseUrl, "/UserTopics/GetUserTopicsByUserId?", "Id=" + userId);

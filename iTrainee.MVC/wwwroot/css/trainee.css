@@ -1,0 +1,96 @@
+﻿.time {
+    font-size: 1.1em;
+    font-size: 0.9em;
+    flex: 1.5;
+}
+
+.range-width {
+    width: 460px;
+}
+
+#slider-cntnr {
+    position: relative;
+}
+
+#frame-slider {
+    width: 100%;
+    margin: 0;
+}
+
+#slider-follow {
+    margin-left: -14px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+
+#slider-val-cntnr {
+    background-color: white;
+    width: 25px;
+    height: 20px;
+}
+
+.topic-name:hover {
+    cursor: pointer;
+    padding: 15px 5px;
+    background-color: #F1F3F4;
+    border-radius: 5px;
+}
+
+.topic-name-on-select {
+    font-size: 1.1rem;
+    transition: transform .2s;
+    cursor: pointer;
+    padding: 15px 5px;
+    background-color: #F1F3F4;
+    border-radius: 5px;
+}
+
+.topic-name {
+    padding: 15px 5px;
+}
+
+.topic-subtopic {
+    display: flex;
+}
+
+.topic-list {
+    flex: 1.5;
+}
+
+.subtopic-list {
+    flex: 4;
+    margin-left: 25px;
+    box-shadow: inset 14px 0 5px -12px #002eca;
+}
+
+.btn-status, .btn-status:hover {
+    background: linear-gradient(144deg,#009ffd, rgb(0,35,155) 50%);
+    color: white;
+}
+
+.trainee-heading {
+    margin-left: 16px;
+    display : flex;
+    width: 90%;
+}
+
+.trainee-heading > div {
+    display: inline-block;
+}
+
+.date {
+    font-size: 0.9em;
+    flex: 1.5;
+}
+
+.trainee-name {
+    font-size: large;
+    flex : 6;
+}
+
+.hello-name {
+    margin-left: 15px;
+}

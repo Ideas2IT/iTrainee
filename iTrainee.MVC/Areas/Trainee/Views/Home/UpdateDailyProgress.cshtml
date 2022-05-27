@@ -19,6 +19,11 @@
                 <div class="form-group">
                     <label asp-for="Status" class="control-label">Status</label>
                     <select name="Status" class="form-control" id="Status">
+                        @if (Convert.ToString(TempData["HeaderRole"]) == "Mentor")
+                        {
+                            <option selected>@Model.Status</option>
+
+                        }
                         <option></option>
                         <option>In Progress</option>
                         <option>Completed</option>
@@ -27,7 +32,12 @@
 
                 <div class="form-group">
                     <label asp-for="TraineeComments" class="control-label">Trainee Comments</label>
-                    <textarea name="TraineeComments" id="TraineeComments" value="@Model.TraineeComments" class="form-control"></textarea>
+                    <textarea name="TraineeComments" id="TraineeComments" value="" class="form-control">                    
+                        @if (Convert.ToString(TempData["HeaderRole"]) == "Mentor")
+                        {
+                            @Model.TraineeComments
+                        }
+                        </textarea>
                 </div>
             </div>
             <div class="col-md-6">
@@ -47,7 +57,12 @@
 
                 <div class="form-group" style="margin-top:30px;">
                     <label asp-for="MentorComments" class="control-label">Mentor Comments</label>
-                    <textarea name="MentorComments" type="text" value="@Model.MentorComments" id="MentorComments" class="form-control" disabled="disabled"></textarea>
+                    <textarea name="MentorComments" type="text" value="@Model.MentorComments" id="MentorComments" class="form-control" disabled="disabled">
+                        @if (Convert.ToString(TempData["HeaderRole"]) == "Trainee")
+                        {
+                            @Model.MentorComments
+                        }
+                    </textarea>
                 </div>
             </div>
         </div>
@@ -58,35 +73,4 @@
 
     </div>
 </form>
-
-
-
-<script type="text/javascript">
-    var follower = document.getElementById('slider-follow');
-    var follower_val = document.getElementById('slider-val');
-    var slider = document.getElementById('frame-slider');
-
-    var updateFollowerValue = function(val) {
-      follower_val.innerHTML = val;
-      follower.style.left = val + '%';
-    };
-
-    updateFollowerValue(slider.value);
-
-    $("#SaveProgress").click(function () {
-      var a = $("#ProgressForm").serialize();
-      debugger;
-
-      $.ajax({
-         type: "POST",
-            url: "/Trainee/Home/UpdateDailyprogress",
-            data: a,
-            success: function () {
-                $("#myModal1").modal("hide");
-            },
-            error: function () {
-                alert("Unable to save/update data");
-            },
-        });
-    });
-</script>
+<script src="/js/trainee.js"></script>

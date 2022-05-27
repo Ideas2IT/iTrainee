@@ -81,7 +81,7 @@ namespace iTrainee.Controllers
                 userAudit.SignOut = DateTime.Now;
                 int userAuditId = HttpClientHelper.ExecuteInsertPostApiMethod<UserAudit>(baseUrl, "/UserAudit/InsertUserAudit", userAudit, token);
 
-                return RedirectToAction("Index", "Home", new { Area = "Trainee", auditId = userAuditId, userId = user.Id });
+                return RedirectToAction("Index", "Home", new { Area = "Trainee", auditId = userAuditId, userId = user.Id, traineeName = user.FirstName });
             }
             else if (user.RoleName.Equals("Mentor"))
             {
