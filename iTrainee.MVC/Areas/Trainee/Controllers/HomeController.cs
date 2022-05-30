@@ -4,8 +4,6 @@ using System;
 using iTrainee.MVC.Helpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace iTrainee.MVC.Areas.Trainee.Controllers
@@ -22,10 +20,11 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
         }
 
 
-        public IActionResult Index(int auditId, int userId)
+        public IActionResult Index(int auditId, int userId, string traineeName)
         {
             TempData.Keep("UserFirstName");
             TempData.Keep("UserId");
+            TempData["TraineeName"] = traineeName;
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             UserAudit userAudit = (UserAudit)HttpClientHelper.ExecuteGetApiMethod<UserAudit>(baseUrl, "/UserAudit/GetUserAudit?", "Id=" + userId);
             userAudit.AssignedTopicsList = HttpClientHelper.ExecuteGetListApiMethod<Topics>(baseUrl, "/UserTopics/GetUserTopicsByUserId?", "Id=" + userId);
@@ -36,7 +35,6 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
             }
             if (auditId == 0)
             {
-
                 TempData["HeaderRole"] = "Mentor";
                 TempData["FirstName"] = "MentorName";
             }
@@ -62,6 +60,7 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken()]
         public IActionResult UpdateDailyProgress(DailyProgress dailyProgress)
         {
             TempData.Keep("UserFirstName");

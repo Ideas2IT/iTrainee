@@ -34,6 +34,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken()]
         public IActionResult AddEditStream(Stream stream)
         {
             stream.Id = Convert.ToInt32(TempData["StreamId"]);

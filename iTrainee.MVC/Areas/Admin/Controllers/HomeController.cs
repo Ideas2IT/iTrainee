@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using iTrainee.MVC.Helpers;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 
 namespace iTrainee.MVC.Areas.Admin.Controllers
@@ -79,17 +78,24 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [System.Web.Mvc.HandleError]
+        [ValidateAntiForgeryToken()]
         public IActionResult SaveUser(User user)
         {
-            if (0 < user.Id)
+            if (ModelState.IsValid)
             {
-                user.Id = Convert.ToInt32(TempData["UserId"]);
+                if (0 < user.Id)
+                {
+                    user.Id = Convert.ToInt32(TempData["UserId"]);
+                }
+
+                var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+                HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user, TempData["UserToken"].ToString());
+
+                return RedirectToAction("ManageUser", "Home", new { role = Convert.ToString(TempData["Role"]) });
             }
 
-            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user, TempData["UserToken"].ToString());
-
-            return RedirectToAction("ManageUser", "Home", new { role = Convert.ToString(TempData["Role"]) });
+            return PartialView(user);
         }
 
         [HttpDelete]
