@@ -153,6 +153,7 @@ namespace iTrainee.Data
                         dailyProgress.SubTopicId = Convert.ToInt32(item["SubTopicId"]);
                         dailyProgress.StartDate = Convert.ToDateTime(item["StartDate"]);
                         dailyProgress.EndDate = Convert.ToDateTime(item["EndDate"]);
+                        dailyProgress.Status = Convert.ToString(item["Status"]);
                         dailyProgress.MentorComments = Convert.ToString(item["MentorComments"]);
                         dailyProgress.TraineeComments = Convert.ToString(item["TraineeComments"]);
                         dailyProgress.Percentage = Convert.ToInt32(item["Percentage"]);

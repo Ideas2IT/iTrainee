@@ -92,10 +92,10 @@ body {
 .counter {
     background-color: #00239B;
     position: relative;
-    border-radius: 25%;
-    font-size: smaller;
-    padding: 3px;
-    right: 15px;
+    border-radius: 100%;
+    font-size: x-small;
+    padding: 2px 3px;
+    right: 17px;
     bottom: 15px;
     color: white;
     font-weight: bold;

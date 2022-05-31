@@ -19,6 +19,11 @@ namespace iTrainee.Services.Implementations
             return _userMessagesRepository.AddUserMessage(message);
         }
 
+        public string[] GetSelectedTrainees(int Id)
+        {
+            return _userMessagesRepository.GetSelectedTrainees(Id);
+        }
+
         public IEnumerable<User> GetTrainees()
         {
             return _userMessagesRepository.GetTrainees();

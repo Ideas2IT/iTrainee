@@ -8,6 +8,8 @@
     TempData.Keep("SubTopicId");
     TempData.Keep("TopicId");
     TempData.Keep("Role");
+    TempData.Keep("UnreadMessagesCount");
+    TempData.Keep("UserId");
 }
 
 <header>
@@ -37,7 +39,10 @@
                 }
                 <li class="nav-item  px-2">
                     <i class="header-notification fa-lg fa fa-bell-o"></i>
-                    <span class="counter counter-lg">@TempData["UnreadMessagesCount"]</span>
+                    @if((int)@TempData["UnreadMessagesCount"] > 0) {
+                        <span class="counter counter-lg">@TempData["UnreadMessagesCount"]</span>
+                    }
+                    
                 </li>
                 <li class="nav-item dropdown px-2">
                     <a class="text-dark nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

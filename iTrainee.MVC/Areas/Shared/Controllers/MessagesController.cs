@@ -5,11 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace iTrainee.MVC.Areas.Shared.Controllers
 {
@@ -54,21 +51,19 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpGet]
         public IActionResult AddEditMessages(int Id)
         {
-            TempData.Keep("HeaderRole");
-            TempData.Keep("UserId");
             Messages message = new Messages();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            message.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/UserMessages/GetTrainees?", "");
-            message.FromId = (int)TempData["UserId"];
-
+            
             if (Id > 0)
             {
-                message = (Messages)HttpClientHelper.ExecuteGetApiMethod<Messages>(baseUrl, "/Messages/Get?", "Id=" + Id);
-                message.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/UserMessages/GetUnassignedTrainees", "");
+                message = (Messages)HttpClientHelper.ExecuteGetApiMethod<Messages>(baseUrl, "/Messages/GetMessageById?", "Id=" + Id);
+                message.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/UserMessages/GetTrainees?", "");
                 message.SelectedTraineeIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/UserMessages/GetSelectedTrainees?Id=" + Id);
-                
-                TempData["getUserIds"] = (message.SelectedTraineeIds).ToList();
-                
+            }
+            else
+            {
+                message.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/UserMessages/GetTrainees?", "");
+                message.FromId = (int)TempData["UserId"];
             }
 
             return View(message);
