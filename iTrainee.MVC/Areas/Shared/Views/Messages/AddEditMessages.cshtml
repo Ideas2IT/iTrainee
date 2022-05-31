@@ -13,7 +13,7 @@
 
         <div class="form-group">
             <label class="col-form-label">Trainees</label><br />
-            @Html.ListBoxFor(model=>model.SelectedTraineeIds ,
+            @Html.ListBoxFor(model=>model.SelectedTraineeIds,
             new MultiSelectList(Model.TraineeList, "Id", "UserName"),
             htmlAttributes: new { id="multiSelectTrainee", @class = "form-control", multiple="multiple" })
         </div>
