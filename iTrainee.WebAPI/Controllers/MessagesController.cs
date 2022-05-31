@@ -28,6 +28,12 @@ namespace iTrainee.APIs.Controllers
             return _messagesService.GetUserMessagesByMessageId(Id);
         }
 
+        [HttpPost]
+        public int AddMessage(Messages message)
+        {
+            return _messagesService.AddMessage(message);
+        }
+
         [HttpDelete]
         public bool DeleteMessage(int Id)
         {

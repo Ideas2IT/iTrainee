@@ -22,10 +22,8 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
 
         public IActionResult Index()
         {
-            TempData.Peek("UserToken");
-            TempData.Keep("HeaderRole");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            List<Batch> batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches", "");
+            List<Batch> batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + TempData["UserId"], "");
             foreach (var batch in batchList)
             {
                 batch.SelectedTraineeIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/BatchUser/GetSelectedTrainees?Id=" + batch.Id);
@@ -35,7 +33,6 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
 
         public IActionResult ManageTopics()
         {
-            TempData.Keep("HeaderRole");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var topicsList = HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "");
 
@@ -44,7 +41,6 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
 
         public IActionResult ManageStreams()
         {
-            TempData.Keep("HeaderRole");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var streamList = HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllStreams", "");
             
@@ -53,7 +49,6 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
 
         public IActionResult ManageSubTopics()
         {
-            TempData.Keep("HeaderRole");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var subTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics", "");
 

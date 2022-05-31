@@ -1,5 +1,15 @@
-﻿
-   
+﻿@{
+    TempData.Keep("UserId");
+    TempData.Keep("UserFirstName");
+    TempData.Keep("FirstName");
+    TempData.Keep("HeaderRole");
+    TempData.Keep("UserToken");
+    TempData.Keep("StreamId");
+    TempData.Keep("SubTopicId");
+    TempData.Keep("TopicId");
+    TempData.Keep("Role");
+}
+
 <header>
     <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light bg-custom-light">
         <div>
@@ -13,8 +23,21 @@
 
         <div id="navbarCollapse" class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
+                @if (TempData["HeaderRole"].Equals("Trainee"))
+                {
+                    <li class="nav-item px-3 signInSignOut">
+                        <span>Date: @DateTime.Now.ToShortDateString()</span>
+                    </li>
+                      <li class="nav-item px-3 signInSignOut">
+                            <span>Sign-In : @Model.SignIn.ToShortTimeString()</span>
+                        </li>
+                        <li class="nav-item px-3 signInSignOut">
+                            <span>Sign-Out : @Model.SignOut.ToShortTimeString()</span>
+                        </li>
+                }
                 <li class="nav-item  px-2">
                     <i class="header-notification fa-lg fa fa-bell-o"></i>
+                    <span class="counter counter-lg">@TempData["UnreadMessagesCount"]</span>
                 </li>
                 <li class="nav-item dropdown px-2">
                     <a class="text-dark nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -23,9 +46,9 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="#">Profile</a>
                       
-	                   <a href="/Home/ChangePassword?userId=@TempData["UserId"]" class="dropdown-item btn btn-primary"> Change Password</a>
+	                   <a href="/Home/ChangePassword?userId=@TempData["UserId"]" class="dropdown-item"> Change Password</a>
 
-                        <a class="dropdown-item" href="#">Sign Out</a>
+                        <a class="dropdown-item" href="/Home/Login">Sign Out</a>
                     </div>
                 </li>
             </ul>
@@ -41,9 +64,12 @@
             </button>
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav align-text-center">
                     @if (TempData["HeaderRole"].Equals("Admin"))
                     {
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="/Admin/Home/Index"><i class="fa fa-home fa-lg"></i></a>
+                        </li>
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Admin/Home/ManageUser?role=Mentor">Mentor</a>
                         </li>
@@ -51,7 +77,7 @@
                             <a class="nav-link text-white" href="/Admin/Home/ManageUser?role=Trainee">Trainee</a>
                         </li>
                         <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="/Shared/Batch/ManageBatch">Batch</a>
+                            <a class="nav-link text-white" href="/Shared/Batch/ManageBatch?userId=0">Batch</a>
                         </li>
 
                         <li class="nav-item px-3">
@@ -66,16 +92,15 @@
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Shared/UserTopics/ManageUserTopics">Assign Topics</a>
                         </li>
-
-                        <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="#">Daily Progress</a>
-                        </li>
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Shared/Messages/ManageMessages">Alert Trainee</a>
                         </li>
                     }
                     @if (TempData["HeaderRole"].Equals("Mentor"))
                     {
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="/Mentor/Home/Index"><i class="fa fa-home fa-lg" aria-hidden="true"></i></a>
+                        </li>
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Mentor/Home/ManageStreams">Stream</a>
                         </li>
@@ -91,12 +116,16 @@
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="#">Alert Trainee</a>
                         </li>
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="/Admin/Home/ManageUser?role=Trainee&userId=@TempData["UserId"]">Trainee Progress</a>
+                        </li>
                     }
                     @if (TempData["HeaderRole"].Equals("Trainee"))
                     {
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="#">Daily Progress</a>
                         </li>
+                       
                     }
                 </ul>
             </div>
@@ -118,9 +147,9 @@
 
 
 <script type="text/javascript">
-     debugger
+  
     function ChangePassword() {
-        debugger
+        
         var UserPath = "/Home/ChangePassword";
         $("#changePasswordBody").load(UserPath, function () {
             $("#changePassword").modal("show");
@@ -133,4 +162,5 @@
             $("#myModal1").modal("show");
         });
     };
+    
 </script>

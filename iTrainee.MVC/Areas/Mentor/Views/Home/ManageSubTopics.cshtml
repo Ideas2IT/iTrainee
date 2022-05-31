@@ -4,6 +4,15 @@
     ViewData["Title"] = "Sub Topics";
 }
 <style>
+    .delete-icon {
+        color: red;
+        font-size: x-large;
+    }
+
+    .edit-icon {
+        color: #00239B;
+        font-size: x-large;
+    }
 	.btn-add-gradient {
     background-image: linear-gradient(144deg,#009ffd, rgb(0,35,155) 50%);
     border-radius: 4px;
@@ -22,7 +31,7 @@
 
 <table class="table table-hover table-bordered">
     <thead>
-        <tr>
+        <tr class="text-center">
             <th>S.No</th>
             <th>Topic Name</th>
             <th>Sub Topic</th>
@@ -37,7 +46,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Count;
+                @Count
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TopicName)
@@ -48,12 +57,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ReferenceURL)
             </td>
-            <td class="text-center">
-					<a href="#" class="btn btn-primary" onclick="AddEditSubTopic(@item.Id)"><i class="fa fa-pencil"></i></a> 
-					
-					<a data-id-to-delete="@item.Id" class="btn btn-primary ml-4" data-toggle="modal" data-target="#delete"><i class="fa fa-trash delete-icon"></i></a>
-				
-				   </td>
+
+                <td class="text-center">
+					<a href="#" onclick="AddEditSubTopic(@item.Id)" ><i class="fa fa-pencil edit-icon"></i></a> 
+					</td>
+					<td class="text-center">
+					<a data-id-to-delete="@item.Id" data-toggle="modal" data-target="#delete"><i class="fa fa-trash delete-icon"></i></a>
+				</td>
             </tr>
             Count += 1;
         }

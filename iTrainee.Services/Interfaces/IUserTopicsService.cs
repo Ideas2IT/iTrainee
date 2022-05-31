@@ -9,5 +9,11 @@ namespace iTrainee.Services.Interfaces
 
         bool AddUserTopic(UserTopics userTopic);
         
+
+        IEnumerable<SubTopics> GetSubTopicsByUserIdAndTopicId(int userId, int topicId);
+        DailyProgress GetSubTopicOfUser(int userId, int subTopicId);
+
+        IEnumerable<Topics> GetUserTopicsByUserId(int id);
+        bool UpdateDailyProgress(DailyProgress dailyProgress);
     }
 }

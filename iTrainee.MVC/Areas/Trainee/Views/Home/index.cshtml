@@ -1,45 +1,181 @@
-
 @model iTrainee.Models.UserAudit;
 @{
     ViewData["Title"] = "Trainee";
 }
-<div class="row mt-3">
-    <div class="col">
-        
-    <p>Date : @Model.Date.ToShortDateString()</p>
-    </div>
-    <div class="col">
-   
-    <p>Sign-In : @Model.SignIn.ToShortTimeString()</p>
-    </div>
-    <p>Sign-Out : @Model.SignOut.ToShortTimeString()</p>
- 
-</div>
-       
 
-<h3 class="font-weight-bold mt-3 mb-5">Hello @TempData.Peek("UserFirstName"),</h3>
-<div class="col">
-    <div class="row">
-    <p>C# Basics</p>
-    <div class="progress" style="width: 75%">
-  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+<head>
+    <style>
+        .range-width {
+            width: 460px;
+        }
+
+        #slider-cntnr {
+            position: relative;
+        }
+
+        #frame-slider {
+            width: 100%;
+            margin: 0;
+        }
+
+        #slider-follow {
+            margin-left: -14px;
+            width: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+        }
+
+        #slider-val-cntnr {
+            background-color: white;
+            width: 25px;
+            height: 20px;
+        }
+
+        .topic-name:hover {
+            cursor: pointer;
+            padding: 15px 5px;
+            background-color: #F1F3F4;
+            border-radius: 5px;
+        }
+
+        .topic-name-on-select {
+            font-size: 1.1rem;
+            transition: transform .2s;
+            cursor: pointer;
+            padding: 15px 5px;
+            background-color: #F1F3F4;
+            border-radius: 5px;
+        }
+
+        .topic-name {
+            padding: 15px 5px;
+        }
+
+        .topic-subtopic {
+            display: flex;
+        }
+
+        .topic-list {
+            flex: 2;
+        }
+
+        .subtopic-list {
+            flex: 4;
+        }
+
+        .btn-status, .btn-status:hover {
+            background: linear-gradient(144deg,#009ffd, rgb(0,35,155) 50%);
+            color: white;
+        }
+        .hello-name {
+            margin-left: 16px;
+        }
+
+        .time {
+            font-size: 0.9em;
+            border-bottom: 3px solid #0366d6;
+            border-top: 3px solid #0366d6;
+            border-right: 1px solid #0366d6;
+            border-left: 1px solid #0366d6;
+            border-radius: 5px;
+            padding: 3px;
+            margin-left: 50em;
+            margin-top: 10px;
+        }
+
+        .date {
+            font-size: 0.9em;
+            border-bottom: 3px solid #0366d6;
+            border-top: 3px solid #0366d6;
+            border-right: 1px solid #0366d6;
+            border-left: 1px solid #0366d6;
+            border-radius: 5px;
+            padding: 3px;
+            margin-top: 10px;
+            margin-left: 1em;
+        }
+    </style>
+</head>
+@if(Model.AssignedTopicsList.Count() != 0)
+{
+    <div class="row" onload="GetSubTopicList(@Model.UserId, @Model.AssignedTopicsList.First().Id)">
+    @if (Convert.ToString(TempData["FirstName"]) == "TraineeName")
+    {
+        <h5 class="font-weight-bold mt-4 mb-3 hello-name">Hello @TempData["UserFirstName"],</h5>
+    }
+
+    @if (Convert.ToString(TempData["FirstName"]) == "MentorName")
+    {
+        <div class="">
+            <p class="date">Date : @Model.Date.ToShortDateString()</p>
+        </div>
+        <div class="">
+            <p class="time">Sign-In : @Model.SignIn.ToShortTimeString()</p>
+        </div>
+        <div class="">
+            <p class="date">Sign-Out : @Model.SignOut.ToShortTimeString()</p>
+        </div>
+    }
+    else
+    {
+    }
 </div>
-</div>
-          <div class="row">
-    <p>C# Advanced</p>
-    <div class="progress" style="width: 75%">
-  <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
-</div>
-</div>
-<div class="row">
-    <p>Console Application</p>
-    <div class="progress" style="width: 75%">
-  <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
-</div>
-</div>
-    <p>Windows Application</p>
-    <p>MVC Application</p>
-    <p>Web Api Application</p>
+}
+
+
+<div class="topic-subtopic">
+    <div class="topic-list nav flex-column" id="Topic">
+        @{
+            int Count = 1;
+        }
+        @if(Model.AssignedTopicsList.Count() != 0)
+        {
+            @foreach (var topic in Model.AssignedTopicsList)
+            {
+                <div class="topic-name nav-item" onclick="GetSubTopicList(@Model.UserId, @topic.Id, this.id)" id=@Count>@topic.Name</div>
+                Count += 1;
+            }
+        } else
+        {
+            <h4 class="mt-lg-5">No topics were assigned</h4>
+        }
+
+    </div>
+
+
+    <div class="subtopic-list px-3" id="SubTopic">
+        @await Html.PartialAsync("SubTopicList", @Model.AssignedSubTopicsList)
+    </div>
 </div>
 
-      
+<div class="modal" fade" id="myModal2">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Status</h3>
+            </div>
+            <div class="modal-body" id="myModalBodyDiv1">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var firstTopic = $('.topic-name').first();
+    $(firstTopic).addClass("topic-name-on-select");
+
+        var GetSubTopicList = function (UserId, TopicId, id) {
+        var UserPath = "/Trainee/Home/SubTopicList?topicId=" + TopicId + "&userId=" + UserId;
+            $("#SubTopic").load(UserPath, function () {
+
+            });
+
+            var someElements = document.querySelectorAll('.topic-name-on-select');
+                $(someElements).removeClass("topic-name-on-select");
+                $('#'+ id).addClass('topic-name-on-select');
+        };
+</script>
+
+

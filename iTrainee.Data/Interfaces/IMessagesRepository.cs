@@ -10,5 +10,6 @@ namespace iTrainee.Data.Interfaces
         IEnumerable<Messages> GetMessagesByUserId(int Id);
         IEnumerable<UserMessages> GetUserMessagesByMessageId(int id);
         bool DeleteMessage(int id);
+        int AddMessage(Messages message);
     }
 }

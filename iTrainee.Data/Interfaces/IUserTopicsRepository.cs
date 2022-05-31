@@ -9,6 +9,12 @@ namespace iTrainee.Data.Interfaces
 	{
 		IEnumerable<UserTopics> GetAllUserTopics();
 
+		IEnumerable<Topics> GetUserTopicsByUserId(int id);
+
+		IEnumerable<SubTopics> GetSubTopicsByUserIdAndTopicId(int userId, int topicId);
+        DailyProgress GetSubTopicOfUser(int userId, int subTopicId);
+		bool UpdateDailyProgress(DailyProgress dailyProgress);
+
 		bool InsertUserTopic(UserTopics userTopic);
 	}
 }

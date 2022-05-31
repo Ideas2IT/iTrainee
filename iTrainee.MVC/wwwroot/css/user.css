@@ -32,7 +32,7 @@
 }
 
 .admin-dashboard-row {
-    padding-top: 50px;
+    padding-top: 25px;
 }
 
 .card:hover {
@@ -46,6 +46,10 @@
 
 a {
     text-decoration: none !important;
+}
+
+.dashboard-heading{
+    margin-left: 55px;
 }
 
 /*Save User*/

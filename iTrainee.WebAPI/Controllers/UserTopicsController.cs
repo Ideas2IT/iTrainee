@@ -28,5 +28,25 @@ namespace iTrainee.APIs.Controllers
 			return _userTopicsService.AddUserTopic(userTopic);
 		}
 		
+
+		public IEnumerable<SubTopics> GetSubTopicsByUserIdAndTopicId(int userId, int topicId)
+        {
+			return _userTopicsService.GetSubTopicsByUserIdAndTopicId(userId, topicId);
+		}
+
+		public IEnumerable<Topics> GetUserTopicsByUserId(int id)
+		{
+			return _userTopicsService.GetUserTopicsByUserId(id);
+		}
+
+		public DailyProgress GetSubTopicOfUser(int userId, int subTopicId)
+        {
+			return _userTopicsService.GetSubTopicOfUser(userId, subTopicId);
+		}
+
+		public bool UpdateDailyProgress(DailyProgress dailyProgress)
+		{
+			return _userTopicsService.UpdateDailyProgress(dailyProgress);
+		}
 	}
 }

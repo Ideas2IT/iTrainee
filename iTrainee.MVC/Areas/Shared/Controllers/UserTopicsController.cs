@@ -24,7 +24,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpGet]
         public IActionResult ManageUserTopics()
         {
-            TempData["HeaderRole"] = "Admin";
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var userTopicsList = (List<UserTopics>)HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics", "");
             return View(userTopicsList);
@@ -34,7 +33,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpGet]
         public IActionResult AddEditUserTopics(string id)
         {
-            TempData["HeaderRole"] = "Admin";
             UserTopics userTopics = new UserTopics();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             userTopics.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Trainee&id=" + id, "");

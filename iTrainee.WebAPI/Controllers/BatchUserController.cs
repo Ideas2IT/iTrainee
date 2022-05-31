@@ -2,6 +2,7 @@
 using iTrainee.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace iTrainee.APIs.Controllers
 {
@@ -13,6 +14,12 @@ namespace iTrainee.APIs.Controllers
         public BatchUserController(IBatchUserService batchUserService)
         {
             _batchUserService = batchUserService;
+        }
+
+        [HttpGet]
+        public IEnumerable<User> GetUnassignedTrainees()
+        {
+            return _batchUserService.GetUnassignedTrainees();
         }
 
         [HttpPost]

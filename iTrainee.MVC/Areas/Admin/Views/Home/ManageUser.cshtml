@@ -4,13 +4,25 @@
     ViewData["Title"] = "ManageUser";
 }
 <link rel="stylesheet" href="/css/user.css">
-
+<div id="viewPlaceHolder"></div>
 <div class="d-flex justify-content-between mt-4">
+     @if (TempData["HeaderRole"].Equals("Mentor") || (TempData["HeaderRole"].Equals("Trainee")) )
+    {
+        <h3>Trainee Details</h3>
+    } else
+    {
     <h3>Manage @ViewBag.Role</h3>
-    <button data-toggle="modal" class="btn btn-add-gradient btn-primary mb-3" onclick="GetUser(0)" data-target="#myModal1">Add New</button>
+    }
+
+     @if (TempData["HeaderRole"].Equals("Mentor") || (TempData["HeaderRole"].Equals("Trainee")) ){
+    } else
+    {
+        <button data-toggle="modal" class="btn btn-add-gradient btn-primary mb-3" onclick="GetUser(0)" data-target="#myModal1">Add New</button>
+    }
 </div>
+
 <table class="table table-hover table-bordered">
-    <tr>
+    <tr class="text-center">
         <th>S.No</th>
         <th>First Name</th>
         <th>Last Name</th>
@@ -40,8 +52,14 @@
                 @Html.DisplayFor(modelItem => item.Qualification)
             </td>
             <td>
-                <a onclick="GetUser(@item.Id)"><i class="fa fa-pencil edit-icon"></i></a>
-                <a data-id-to-delete="@item.Id" class="ml-4" data-toggle="modal" data-target="#delete"><i class="fa fa-trash delete-icon"></i></a>
+                @if (TempData["HeaderRole"].Equals("Mentor") || (TempData["HeaderRole"].Equals("Trainee")) ){
+                    @Html.ActionLink("View Progress", "Index","Home",new {Area = "Trainee" ,userId = item.Id, auditId = 0})
+                }
+                else
+                {
+                    <a id="ediit" onclick="GetUser(@item.Id)"><i class="fa fa-pencil edit-icon"></i></a>
+                    <a data-id-to-delete="@item.Id" class="ml-4" data-toggle="modal" data-target="#delete"><i class="fa fa-trash delete-icon"></i></a>
+                }
             </td>
         </tr>
         Count += 1;
@@ -73,42 +91,13 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">@ViewBag.Role Details</h3>
+                <h3 class="modal-title">Status</h3>
             </div>
             <div class="modal-body" id="myModalBodyDiv1">
+
             </div>
         </div>
     </div>
 </div>
 
-
-@section scripts {
-<script type="text/javascript">
-
-    var GetUser = function (id) {
-        var UserPath = "/Admin/Home/SaveUser?Id=" + id;
-        $("#myModalBodyDiv1").load(UserPath, function () {
-            $("#myModal1").modal("show");
-        });
-    };
-
-    $('#delete').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget)
-            var id = button.data('id-to-delete')
-
-                    $('#delete-yes-button').on('click', function () {
-                        $.ajax({
-                            url: "/Admin/Home/DeleteUser/" + id,
-                            type: "DELETE",
-                            success: function () {
-                                $("#myModal1").modal("hide");
-                                alert("Data saved successfully");
-                            },
-                            error: function () {
-                                alert("Unable to delete data");
-                            },
-                        })
-                    })
-        })
-</script>
-}
+<script src="/js/user.js"></script>

@@ -25,6 +25,17 @@ namespace iTrainee.Services.Implementations
             return _userRepository.GetUsers(role);
         }
 
+        public IEnumerable<User> GetAssignedTrainees(int batchId)
+        {
+            return _userRepository.GetAssignedTrainees(batchId);
+        }
+
+        public IEnumerable<User> GetAssignedMentors(int batchId)
+        {
+            return _userRepository.GetAssignedMentors(batchId);
+        }
+
+
         public IEnumerable<User> GetUsersByBatch(string role, string id)
         {
             return _userRepository.GetUsersByBatch(role, id);
@@ -61,6 +72,11 @@ namespace iTrainee.Services.Implementations
         {
             user.Password = EncryptAndDecrypt.ConvertToEncrypt(user.Password);
             return _userRepository.UpdateUser(user);
+        }
+
+        public string[] GetAssignedBatchIds(int userId)
+        {
+            return _userRepository.GetAssignedBatchIds(userId);
         }
     }
 }

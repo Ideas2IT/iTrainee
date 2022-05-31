@@ -31,6 +31,11 @@ namespace iTrainee.Data
                 });
                 parameters.Add(new SqlParameter
                 {
+                    ParameterName = "StreamId",
+                    Value = batch.StringStreamIds
+                });
+                parameters.Add(new SqlParameter
+                {
                     ParameterName = "InsertedBy",
                     Value = "Admin"
                 });
@@ -50,16 +55,7 @@ namespace iTrainee.Data
                     Value = DateTime.Now.Date
                 });
 
-                int[] intStreamIds = Array.ConvertAll(batch.StringStreamIds.Split(','), int.Parse);
-                foreach (int StreamId in intStreamIds)
-                {
-                    SqlParameter StreamIdParam = new SqlParameter();
-                    StreamIdParam.ParameterName = "StreamId";
-                    StreamIdParam.Value = StreamId;
-                    parameters.Add(StreamIdParam);
-                    result = _dataManager.ExecuteStoredProcedure("spInsertBatchStream", parameters);
-                    parameters.Remove(StreamIdParam);
-                }
+                result = _dataManager.ExecuteStoredProcedure("spInsertBatchStream", parameters);
             }
             catch (Exception ex)
             {
@@ -116,6 +112,11 @@ namespace iTrainee.Data
                 });
                 parameters.Add(new SqlParameter
                 {
+                    ParameterName = "StreamId",
+                    Value = batch.StringStreamIds
+                });
+                parameters.Add(new SqlParameter
+                {
                     ParameterName = "InsertedBy",
                     Value = "Admin"
                 });
@@ -135,16 +136,7 @@ namespace iTrainee.Data
                     Value = DateTime.Now.Date
                 });
 
-                int[] intStreamIds = Array.ConvertAll(batch.StringStreamIds.Split(','), int.Parse);
-                foreach (int StreamId in intStreamIds)
-                {
-                    SqlParameter StreamIdParam = new SqlParameter();
-                    StreamIdParam.ParameterName = "StreamId";
-                    StreamIdParam.Value = StreamId;
-                    parameters.Add(StreamIdParam);
-                    result = _dataManager.ExecuteStoredProcedure("spUpdateBatchStream", parameters);
-                    parameters.Remove(StreamIdParam);
-                }
+                result = _dataManager.ExecuteStoredProcedure("spUpdateBatchStream", parameters);
 
                 if (result.Tables.Count != 0)
                 {
@@ -172,17 +164,13 @@ namespace iTrainee.Data
                     ParameterName = "BatchId",
                     Value = batch.Id
                 });
-
-                int[] intStreamIds = Array.ConvertAll(batch.StringStreamIds.Split(','), int.Parse);
-                foreach (int StreamId in intStreamIds)
+                parameters.Add(new SqlParameter
                 {
-                    SqlParameter StreamIdParam = new SqlParameter();
-                    StreamIdParam.ParameterName = "StreamId";
-                    StreamIdParam.Value = StreamId;
-                    parameters.Add(StreamIdParam);
-                    result = _dataManager.ExecuteStoredProcedure("spRemoveStreamIdInBatchStream", parameters);
-                    parameters.Remove(StreamIdParam);
-                }
+                    ParameterName = "StreamId",
+                    Value = batch.StringStreamIds
+                });
+
+                result = _dataManager.ExecuteStoredProcedure("spRemoveStreamIdInBatchStream", parameters);
 
                 if (result.Tables.Count != 0)
                 {

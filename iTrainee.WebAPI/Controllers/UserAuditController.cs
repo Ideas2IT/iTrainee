@@ -21,13 +21,6 @@ namespace iTrainee.APIs.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IEnumerable<UserAudit> GetAllUserAudit()
-        {
-            return _userAuditService.GetAllUserAudit();
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
         public UserAudit GetUserAudit(int id)
         {
             return _userAuditService.GetUserAudit(id);

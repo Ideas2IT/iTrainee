@@ -67,12 +67,18 @@ namespace iTrainee.Data
             return batch;
         }
 
-        public IEnumerable<Batch> GetAllBatches()
+        public IEnumerable<Batch> GetAllBatches(int userId)
         {
             var batches = new List<Batch>();
             try
             {
-                DataSet result = _dataManager.ExecuteStoredProcedure("spGetBatch");
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UserId",
+                    Value = userId
+                });
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetBatch", parameters);
                 if (result?.Tables?.Count != 0)
                 {
                     foreach (DataRow item in result.Tables[0].Rows)

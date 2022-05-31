@@ -22,29 +22,18 @@
     .actions-column {
         width: 100px;
     }
-
-    /*    #chat2 .form-control {
-                                        border-color: transparent;
-                                    }
-
-                                        #chat2 .form-control:focus {
-                                            border-color: transparent;
-                                            box-shadow: inset 0px 0px 0px 1px transparent;
-                                        }
-
-                                    .divider:after,
-                                    .divider:before {
-                                        content: "";
-                                        flex: 1;
-                                        height: 1px;
-                                        background: #eee;
-                                    }*/
 </style>
 
 <div class="d-flex justify-content-between mt-4">
-    <h3>Messages</h3>
-    <a href="/Shared/Batch/AddEditBatch?Id=0" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Alert</a>
+
+<h3>Messages</h3>
+<a href="/Shared/Messages/AddEditMessages?Id=0" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Alert</a>
 </div>
+@*<div class="d-flex justify-content-between mt-4">
+    <h3>Messages</h3>
+    <a href="#" onclick="AddEditAlert(0)" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Alert</a>
+    <a href="/Shared/Messages/AddEditMessages?Id=0" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Alert</a>
+</div>*@
 
 <table class="table table-hover table-bordered">
     <thead>
@@ -106,10 +95,12 @@
 </div>
 
 <script type="text/javascript">
-        var ViewAlertDetails = function (id) {
+
+    function ViewAlertDetails(id) {
         var url = "/Shared/Messages/ViewAlertDetails?Id=" + id;
         $("#alertModalBodyDiv").load(url, function () {
             $("#alertModal").modal("show");
         });
     };
+
 </script>
