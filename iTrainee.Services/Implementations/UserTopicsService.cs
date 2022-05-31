@@ -15,14 +15,17 @@ namespace iTrainee.Services.Implementations
 			_userTopicsRepository = userTopicsRepository;
 		}
 
-		public IEnumerable<UserTopics> GetAllUserTopics()
+		public IEnumerable<UserTopics> GetAllUserTopics(int batchId)
 		{
-			return _userTopicsRepository.GetAllUserTopics();
+			List<UserTopics> users = new List<UserTopics>();
+			
+				users = (List<UserTopics>)_userTopicsRepository.GetAllUserTopics(batchId);
+			return users;
 		}
 	
 		public bool AddUserTopic(UserTopics userTopic)
 		{
-			return userTopicsRepository.InsertUserTopic(userTopic);
+			return _userTopicsRepository.InsertUserTopic(userTopic);
 		}
 
 		public IEnumerable<SubTopics> GetSubTopicsByUserIdAndTopicId(int userId, int topicId)

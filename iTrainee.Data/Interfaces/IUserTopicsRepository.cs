@@ -7,7 +7,7 @@ namespace iTrainee.Data.Interfaces
 {
 	public interface IUserTopicsRepository
 	{
-		IEnumerable<UserTopics> GetAllUserTopics();
+		IEnumerable<UserTopics> GetAllUserTopics(int batchId);
 
 		IEnumerable<Topics> GetUserTopicsByUserId(int id);
 

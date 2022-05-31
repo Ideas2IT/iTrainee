@@ -3,28 +3,30 @@
 
 
 @{
-	ViewData["Title"] = "AddEditBatch";
+    ViewData["Title"] = "AssignTopics";
 }
+<h3 class="mt-5 mb-4">Assign Topics</h3>
 
 <div id="jstree">
 </div>
+
 @using (Html.BeginForm("AddEditUserTopics", "UserTopics", FormMethod.Post))
 {
     <div class="form-group">
-		<label class="col-form-label">Mentors</label><br />
-		@Html.ListBoxFor(model=>model.SelectedTraineeList, new MultiSelectList(Model.TraineeList, "Id", "FirstName"),  htmlAttributes: new { id="multiSelectTrainee", @class = "form-control", multiple="multiple" })
-	</div>
+        <label class="col-form-label">Select Trainees</label><br />
+        @Html.ListBoxFor(model=>model.SelectedTrainees, new MultiSelectList(Model.TraineeList, "Id", "FirstName"),  htmlAttributes: new { id="multiSelectTrainee", @class = "form-control", multiple="multiple" })
+    </div>
+
 
     <input type="hidden" name="selectedItems" id="selectedItems" />
     <input type="submit" value="Submit" />
 }
+
 @section scripts{
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            
+<script type="text/javascript">
+
+     $(document).ready(function () {
+
             $('#jstree').on('changed.jstree', function (e, data) {
                 var i, j;
                 var postedItems = [];
@@ -60,7 +62,12 @@
                 },
                 "plugins": ["wholerow", "checkbox"],
             });
-            $("#multiSelectTrainee").chosen();
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        debugger
+            $("#multiSelectTrainee").chosen()
         });
-    </script>
+</script>
 }

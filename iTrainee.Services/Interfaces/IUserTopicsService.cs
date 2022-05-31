@@ -5,7 +5,7 @@ namespace iTrainee.Services.Interfaces
 {
     public interface IUserTopicsService
     {
-        IEnumerable<UserTopics> GetAllUserTopics();
+        IEnumerable<UserTopics> GetAllUserTopics(int batchId);
 
         bool AddUserTopic(UserTopics userTopic);
         

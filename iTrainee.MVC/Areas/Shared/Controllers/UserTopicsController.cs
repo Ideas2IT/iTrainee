@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Text;
 
 namespace iTrainee.MVC.Areas.Shared.Controllers
 {
@@ -14,6 +15,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
     {
         ILogger<BatchController> _logger;
         IConfiguration _configuration;
+        private int i;
 
         public UserTopicsController(ILogger<BatchController> logger, IConfiguration configuration)
         {
@@ -25,7 +27,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult ManageUserTopics()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var userTopicsList = (List<UserTopics>)HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics", "");
+            var userTopicsList = (List<UserTopics>)HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics?batchId=" + TempData["BatchId"], "");
             return View(userTopicsList);
         }
 
@@ -34,27 +36,20 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult AddEditUserTopics(string id)
         {
             UserTopics userTopics = new UserTopics();
+            TempData["BatchId"] = id;
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            userTopics.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Trainee&id=" + id, "");
+            userTopics.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsersByBatch?role=Trainee&id=" + id, "");
             List<Topics> topics = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "");
             List<SubTopics> subTopics = (List<SubTopics>)HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics", "");
-
-
-            //Loop and add the Parent Nodes.
             List<UserTopics> nodes = new List<UserTopics>();
-
-            //Loop and add the Parent Nodes.
             foreach (Topics topic in topics)
             {
                 nodes.Add(new UserTopics { id = topic.Id.ToString(), parent = "#", text = topic.Name });
             }
-
-            //Loop and add the Child Nodes.
             foreach (SubTopics subTopic in subTopics)
             {
                 nodes.Add(new UserTopics { id = subTopic.TopicId.ToString() + "-" + subTopic.Id.ToString(), parent = subTopic.TopicId.ToString(), text = subTopic.Name });
             }
-
             ViewBag.Json = JsonConvert.SerializeObject(nodes);
             return View(userTopics);
         }
@@ -62,37 +57,37 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpPost]
         public ActionResult AddEditUserTopics(UserTopics userTopics,string selectedItems)
         {
+            StringBuilder subTopicList = new StringBuilder();
+            StringBuilder traineeList = new StringBuilder();
             UserTopics newUserTopics = new UserTopics();
-            newUserTopics.SelectedTraineeList = userTopics.SelectedTraineeList;
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             List<Topics> topics = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "");
             List<UserTopics> items = JsonConvert.DeserializeObject<List<UserTopics>>(selectedItems);
-            Topics newTopic = new Topics();
-            List<SubTopics> newSubTopicList = new List<SubTopics>();
-            List<Topics> newTopicList = new List<Topics>();
             foreach (UserTopics userTopic in items)
             {
-                newTopic = new Topics();
                 foreach (Topics topic in topics)
                 {
                     if (topic.Id.ToString() == userTopic.parent)
                     {
-                        newTopic.Id = topic.Id;
+                        newUserTopics.TopicId = topic.Id;
                         foreach (SubTopics subTopic in topic.SubTopics)
                         {
                             if (userTopic.id == subTopic.Id.ToString())
                             {
-                                newSubTopicList.Add(subTopic);
-                                newTopic.SubTopics = newSubTopicList;
+                                subTopicList.Append(subTopic.Id.ToString()).Append(",");
                             }
                         }
                     }
                 }
-                newTopicList.Add(newTopic);
-                newUserTopics.TopicsList = newTopicList;
             }
+            foreach (string traineeId in userTopics.SelectedTrainees)
+            {
+                traineeList.Append(traineeId).Append(",");
+            }
+            newUserTopics.SelectedSubTopicList = subTopicList.ToString();
+            newUserTopics.SelectedTraineeList = traineeList.ToString();
             HttpClientHelper.ExecutePostApiMethod<UserTopics>(baseUrl, "/UserTopics/AddUserTopic", newUserTopics, "");
-            return null;
+            return RedirectToAction("ManageUserTopics");
         }
     }
 }

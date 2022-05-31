@@ -130,6 +130,11 @@ namespace iTrainee.Data
                     ParameterName = "Role",
                     Value = role
                 });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = 0
+                });
                 DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserByRole", parameters);
                 if (result?.Tables?.Count != 0)
                 {
@@ -295,74 +300,6 @@ namespace iTrainee.Data
 
             try
             {
-                var parameters = new List<SqlParameter>
-                {
-                    new SqlParameter
-                    {
-                        ParameterName = "Id",
-                        Value = user.Id
-                    },
-                    new SqlParameter
-                    {
-                        ParameterName = "FirstName",
-                        Value = user.FirstName
-                    },
-                    new SqlParameter
-                    {
-                        ParameterName = "LastName",
-                        Value = user.LastName
-                    },
-                    new SqlParameter
-                    {
-                        ParameterName = "DOB",
-                        Value = user.DOB
-                    },
-                    new SqlParameter
-                    {
-                        ParameterName = "UserName",
-                        Value = user.UserName
-                    },
-                    new SqlParameter
-                    {
-                        ParameterName = "Password",
-                        Value = user.Password
-                    },
-                    new SqlParameter
-                    {
-                        ParameterName = "Qualification",
-                        Value = user.Qualification
-                    },
-                    new SqlParameter
-                    {
-                        ParameterName = "IsAdmin",
-                        Value = user.IsAdmin
-                    },
-                    new SqlParameter
-                    {
-                        ParameterName = "IsMentor",
-                        Value = user.IsMentor
-                    },
-                    new SqlParameter
-                    {
-                        ParameterName = "IsTrainee",
-                        Value = user.IsTrainee
-                    },
-                    new SqlParameter
-                    {
-                        ParameterName = "UpdatedBy",
-                        Value = "Mentor"
-                    },
-                    new SqlParameter
-                    {
-                        ParameterName = "UpdatedOn",
-                        Value = DateTime.Now.Date
-                    },
-                    new SqlParameter
-                    {
-                        ParameterName = "AutoIncrementedId",
-                        Value = 0
-                    }
-                };
                 var parameters = new List<SqlParameter>();
                 parameters.Add(new SqlParameter
                 {

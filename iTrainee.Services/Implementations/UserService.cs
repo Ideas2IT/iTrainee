@@ -54,7 +54,7 @@ namespace iTrainee.Services.Implementations
 
         public IEnumerable<User> GetMentors(string role)
         {
-            return _userRepository.GetUsers(role, "");
+            return _userRepository.GetUsers(role);
         }
 
         public bool SaveUser(User user)
