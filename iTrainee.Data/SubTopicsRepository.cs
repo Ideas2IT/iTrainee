@@ -32,6 +32,7 @@ namespace iTrainee.Data
                             Id = Convert.ToInt32(item["SubTopicId"]),
                             TopicName = Convert.ToString(item["TopicName"]),
                             Name = Convert.ToString(item["SubTopicName"]),
+                            TopicId = Convert.ToInt32(item["TopicId"]),
                             ReferenceURL = Convert.ToString(item["ReferenceURL"])
                         });
                     }

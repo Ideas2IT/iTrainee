@@ -1,130 +1,73 @@
 ﻿@model iTrainee.Models.UserTopics;
 @using Microsoft.AspNetCore.Mvc.Rendering;
 
+
 @{
-    ViewData["Title"] = "AddEditUSerTopics";
+    ViewData["Title"] = "AssignTopics";
 }
+<h3 class="mt-5 mb-4">Assign Topics</h3>
 
-<div class="panel panel-primary">
-    <div id="frm-author" class="panel-body">
-        @using (Html.BeginForm())
-        {
-            <div class="form-group">
-                <label class="col-form-label">Trainees</label><br />
-                @Html.ListBoxFor(model=>model.TraineeList, new MultiSelectList(Model.TraineeList, "Id", "UserName"),  htmlAttributes: new { id="multiSelectMentor", @class = "form-control", multiple="multiple" })
-            </div>
-
-                <ul class="treeview">
-            @foreach (var topic in Model.TopicsList)
-            {
-                <li id="li_1" class="contains-items">
-
-                        <div class="checkbox">
-                            <input type="checkbox">
-                            <label> @topic.Name</label>
-                        </div>
-                        <ul>
-                            @foreach (var subTopics in topic.SubTopicsList)
-                            {
-                                <li>
-                                    <div class="checkbox">
-                                        <input id="4" type="checkbox">
-                                        <label for="4">@subTopics.Name</label>
-                                    </div>
-                                </li>
-                            }
-                        </ul>
-                    </li>
-
-                }
-            </ul>
-
-            <div class="form-group">
-                <div class="col-lg-9"></div>
-                <div class="col-lg-3">
-                    <button class="btn btn-success" id="btnSubmit" type="submit">Submit</button>
-                </div>
-            </div>
-        }
-
-    </div>
+<div id="jstree">
 </div>
 
-<script>
-                $('input[type=checkbox]').change(function(){
-            // if is checked
-            if(this.checked){
-                // check all children
-                var lenchk = $(this).closest('ul').find(':checkbox');
-                var lenchkChecked = $(this).closest('ul').find(':checkbox:checked');
-                debugger
-                console.log(lenchkChecked);
+@using (Html.BeginForm("AddEditUserTopics", "UserTopics", FormMethod.Post))
+{
+    <div class="form-group">
+        <label class="col-form-label">Select Trainees</label><br />
+        @Html.ListBoxFor(model=>model.SelectedTrainees, new MultiSelectList(Model.TraineeList, "Id", "FirstName"),  htmlAttributes: new { id="multiSelectTrainee", @class = "form-control", multiple="multiple" })
+    </div>
 
-            //if all siblings are checked, check its parent checkbox
-            if (lenchk.length == lenchkChecked.length) {
-                $(this).closest('ul').siblings().find(':checkbox').prop('checked', true);
-            }else{
-                $(this).closest('.checkbox').siblings().find(':checkbox').prop('checked', true);
-            }
-        } else {
-            // uncheck all children
-            $(this).closest('.checkbox').siblings().find(':checkbox').prop('checked', false);
-            $(this).closest('ul').siblings().find(':checkbox').prop('checked', false);
-        }
+
+    <input type="hidden" name="selectedItems" id="selectedItems" />
+    <input type="submit" value="Submit" />
+}
+
+@section scripts{
+<script type="text/javascript">
+
+     $(document).ready(function () {
+
+            $('#jstree').on('changed.jstree', function (e, data) {
+                var i, j;
+                var postedItems = [];
+                for(i = 0, j = data.selected.length; i < j; i++) {
+
+                    //Fetch the Id.
+                    var id = data.selected[i];
+
+                    //Remove the ParentId.
+                    if(id.indexOf('-') != -1){
+                        id = id.split("-")[1];
+                    }
+
+                    //Add the Node to the JSON Array.
+                    postedItems.push({
+                        text: data.instance.get_node(data.selected[i]).text,
+                        id: id,
+                        parent: data.node.parents[0]
+                    });
+                }
+
+                //Serialize the JSON Array and save in HiddenField.
+                $('#selectedItems').val(JSON.stringify(postedItems));
+            }).jstree({
+                "core": {
+                    "themes": {
+                        "variant": "large"
+                    },
+                    "data": @Html.Raw(ViewBag.Json)
+                    },
+                "checkbox": {
+                    "keep_selected_style": false
+                },
+                "plugins": ["wholerow", "checkbox"],
+            });
     });
-          void Check_Clicked(Object sender, EventArgs e) 
-      {
-
-         Message.Text = "Selected Item(s):<br /><br />";
-
-         // Iterate through the Items collection of the CheckBoxList 
-         // control and display the selected items.
-         for (int i=0; i<checkboxlist1.Items.Count; i++)
-         {
-
-            if (checkboxlist1.Items[i].Selected)
-            {
-
-               Message.Text += checkboxlist1.Items[i].Text + "<br />";
-
-            }
-
-         }
-
-      }
 </script>
-
-
- <form id="form1" runat="server">
- 
-      <h3> CheckBoxList Example </h3>
-
-      Select items from the CheckBoxList.
-
-      <br /><br />
-
-      <asp:CheckBoxList id="checkboxlist1" 
-           AutoPostBack="True"
-           CellPadding="5"
-           CellSpacing="5"
-           RepeatColumns="2"
-           RepeatDirection="Vertical"
-           RepeatLayout="Flow"
-           TextAlign="Right"
-           OnSelectedIndexChanged="Check_Clicked"
-           runat="server">
- 
-         <asp:ListItem>Item 1</asp:ListItem>
-         <asp:ListItem>Item 2</asp:ListItem>
-         <asp:ListItem>Item 3</asp:ListItem>
-         <asp:ListItem>Item 4</asp:ListItem>
-         <asp:ListItem>Item 5</asp:ListItem>
-         <asp:ListItem>Item 6</asp:ListItem>
- 
-      </asp:CheckBoxList>
- 
-      <br /><br />
-
-      <asp:label id="Message" runat="server" AssociatedControlID="checkboxlist1"/>
-             
-   </form>
+<script type="text/javascript">
+    $(document).ready(function(){
+        debugger
+            $("#multiSelectTrainee").chosen()
+        });
+</script>
+}

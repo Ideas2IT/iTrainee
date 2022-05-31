@@ -10,10 +10,13 @@ namespace iTrainee.Models
 
         public string Name { get; set; }
 
-        public string ReferenceURL { get; set; }
-
         [NotMapped]
         public string TopicName { get; set; }
+
+        [NotMapped]
+        public virtual Topics Topic { get; set; }
+
+        public string ReferenceURL { get; set; }
 
         [NotMapped]
         public int Percentage { get; set; }
