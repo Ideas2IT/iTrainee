@@ -31,12 +31,12 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         public IActionResult ManageUser(string role, int userId)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-             List<User> user = new List<User>();
+            List<User> user = new List<User>();
             if (Convert.ToString(TempData["HeaderRole"]) == "Admin")
             {
                 user = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role, Convert.ToString(TempData["UserToken"]));
             }
-           else
+            else
             {
                 string[] batchIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/User/GetAssignedBatchIds?userId=" + userId, Convert.ToString(TempData["UserToken"]));
                 foreach (string id in batchIds)
@@ -44,7 +44,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
                     user.AddRange((List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetAssignedTrainees?batchId=" + Convert.ToInt32(id), "", Convert.ToString(TempData["UserToken"])));
                 }
             }
-                ViewBag.Role = role;
+            ViewBag.Role = role;
             TempData["Role"] = role;
 
             return View(user);

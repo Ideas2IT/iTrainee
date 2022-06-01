@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace iTrainee.Models
@@ -9,15 +10,18 @@ namespace iTrainee.Models
 
         public int StreamId { get; set; }
 
+        [Required(ErrorMessage = "Please enter topic name")]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "Please enter reference URL")]
+        [DataType(DataType.Url)]
         public string ReferenceURL { get; set; }
 
         [NotMapped]
         public string StreamName { get; set; }
 
         [NotMapped]
-        public List<SubTopics> SubTopicsList { get; set; }
+        public virtual List<SubTopics> SubTopics { get; set; }
 
     }
 }

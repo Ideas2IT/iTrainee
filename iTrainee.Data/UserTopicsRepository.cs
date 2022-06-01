@@ -18,27 +18,30 @@ namespace iTrainee.Data
             _dataManager = dataManager;
         }
 
-        public IEnumerable<UserTopics> GetAllUserTopics()
+        public IEnumerable<UserTopics> GetAllUserTopics(int batchId)
         {
-            User user = new User();
-            var userTopicsList = new List<UserTopics>();
+            List<UserTopics> userTopics = new List<UserTopics>();
             try
             {
-                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserTopics");
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "BatchId",
+                    Value = batchId
+                });
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserTopics", parameters);
                 if (result?.Tables?.Count != 0)
                 {
                     foreach (DataRow item in result.Tables[0].Rows)
                     {
-                        userTopicsList.Add(new UserTopics
+                        userTopics.Add(new UserTopics
                         {
                             Id = Convert.ToInt32(item["Id"]),
-                            Username = Convert.ToString(item["UserName"]),
+                            Name = Convert.ToString(item["UserName"]),
                             TopicName = Convert.ToString(item["Name"]),
                             SubTopicName = Convert.ToString(item["SubTopicName"])
-
-                            //TopicName = (string[])item["TopicsName"],
-                            //SubTopicName = (string[])item["SubTopicName"]
-                        }); 
+                        });
                     }
                 }
             }
@@ -46,7 +49,7 @@ namespace iTrainee.Data
             {
                 throw ex;
             }
-            return userTopicsList;
+            return userTopics;
         }
 
         public IEnumerable<Topics> GetUserTopicsByUserId(int id)
@@ -208,6 +211,80 @@ namespace iTrainee.Data
                 throw ex;
             }
             return isSuccess;
+        }
+
+        public bool InsertUserTopic(UserTopics userTopic)
+        {
+            DataSet result = null;
+            var isSuccess = false;
+
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "TopicId",
+                    Value = userTopic.TopicId
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "SubTopicsId",
+                    Value = userTopic.SelectedSubTopicList
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UserId",
+                    Value = userTopic.SelectedTraineeList
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "StartDate",
+                    Value = DateTime.Now.Date
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "EndDate",
+                    Value = DateTime.Now.Date
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedBy",
+                    Value = "Mentor"
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedOn",
+                    Value = DateTime.Now.Date
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UpdatedBy",
+                    Value = "Mentor"
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UpdatedOn",
+                    Value = DateTime.Now.Date
+                });
+
+                result = _dataManager.ExecuteStoredProcedure("spInsertAssignedTopics", parameters);
+
+                if (result.Tables.Count != 0)
+                {
+                    isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return isSuccess;
+        }
+
+        public IEnumerable<UserTopics> GetAllUserTopics()
+        {
+            throw new NotImplementedException();
         }
     }
 }

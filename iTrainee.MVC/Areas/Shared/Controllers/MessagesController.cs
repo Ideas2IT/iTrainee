@@ -51,21 +51,20 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpGet]
         public IActionResult AddEditMessages(int Id)
         {
-            TempData.Keep("HeaderRole");
-            TempData.Keep("UserId");
             Messages message = new Messages();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            message.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/UserMessages/GetTrainees?", "", Convert.ToString(TempData["UserToken"]));
-            message.FromId = (int)TempData["UserId"];
 
             if (Id > 0)
             {
-                message = (Messages)HttpClientHelper.ExecuteGetApiMethod<Messages>(baseUrl, "/Messages/Get?", "Id=" + Id, Convert.ToString(TempData["UserToken"]));
-                message.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/UserMessages/GetUnassignedTrainees", "", Convert.ToString(TempData["UserToken"]));
-                message.SelectedTraineeIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/UserMessages/GetSelectedTrainees?Id=" + Id, Convert.ToString(TempData["UserToken"]));
-                
-                TempData["getUserIds"] = (message.SelectedTraineeIds).ToList();
-                
+                message = (Messages)HttpClientHelper.ExecuteGetApiMethod<Messages>(baseUrl, "/Messages/GetMessageById?", "Id=" + Id);
+                message.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/UserMessages/GetTrainees?", "");
+                message.SelectedTraineeIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/UserMessages/GetSelectedTrainees?Id=" + Id);
+                TempData["SelectedTrainees"] = message.SelectedTraineeIds;
+            }
+            else
+            {
+                message.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/UserMessages/GetTrainees?", "");
+                message.FromId = (int)TempData["UserId"];
             }
 
             return View(message);
@@ -78,26 +77,31 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             TempData.Keep("HeaderRole");
             var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-
-            if (alert.Id > 0)
+            if (ModelState.IsValid)
             {
-
-            }
-            else
-            {
-                int batchId = HttpClientHelper.ExecuteInsertPostApiMethod<Messages>(baseUrl, "/Messages/AddMessage", alert, token);
-                alert.Id = batchId;
-
-                StringBuilder sbUserIds = new StringBuilder();
-                foreach (string i in alert.SelectedTraineeIds)
+                if (alert.Id > 0)
                 {
-                    sbUserIds.Append(i + ",");
+                    string[] TraineeIdsArrayOld = (string[])TempData["SelectedTrainees"];
+                    string[] TraineeIdsArrayNew = alert.SelectedTraineeIds.ToArray();
+                    
                 }
-                alert.TraineesIdsString = sbUserIds.ToString();
+                else
+                {
+                    int batchId = HttpClientHelper.ExecuteInsertPostApiMethod<Messages>(baseUrl, "/Messages/AddMessage", alert, token);
+                    alert.Id = batchId;
 
-                HttpClientHelper.ExecutePostApiMethod<Messages>(baseUrl, "/UserMessages/AddUserMessage", alert, token);
+                    StringBuilder sbUserIds = new StringBuilder();
+                    foreach (string i in alert.SelectedTraineeIds)
+                    {
+                        sbUserIds.Append(i + ",");
+                    }
+                    alert.TraineesIdsString = sbUserIds.ToString();
+
+                    HttpClientHelper.ExecutePostApiMethod<Messages>(baseUrl, "/UserMessages/AddUserMessage", alert, token);
+                }
+                return RedirectToAction("ManageMessages", new { Area = "Shared" });
             }
-            return RedirectToAction("ManageMessages", new { Area = "Shared" });
+            return View(alert);
         }
 
         public IActionResult DeleteMessage(int Id)

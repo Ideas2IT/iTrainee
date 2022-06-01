@@ -70,6 +70,38 @@ namespace iTrainee.Data
             return isSuccess;
         }
 
+        public string[] GetSelectedTrainees(int Id)
+        {
+            string[] selectedTraineeIds = null;
+            List<string> idList = new List<string>();
+
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "MessageId",
+                    Value = Id
+                });
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetSelectedUsers", parameters);
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
+                    {
+                        idList.Add(Convert.ToString(item["ToId"]));
+                    }
+                }
+                selectedTraineeIds = idList.ToArray();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return selectedTraineeIds;
+        }
+
         public IEnumerable<User> GetTrainees()
         {
             var unassignedTrainees = new List<User>();

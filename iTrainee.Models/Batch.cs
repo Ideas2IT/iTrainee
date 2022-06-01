@@ -11,22 +11,19 @@ namespace iTrainee.Models
         [Required(ErrorMessage = "Please enter batch name")]
         public string Name { get; set; }
 
-        [NotMapped]
         public IEnumerable<User> MentorList { get; set; }
 
-        [NotMapped]
         public List<User> TraineeList { get; set; }
 
-        [NotMapped]
         public IEnumerable<Stream> StreamList { get; set; }
 
         [Required(ErrorMessage = "Please select minimum one mentor")]
         public string[] SelectedMentorIds { get; set; }
 
-        [Required(ErrorMessage = "Please select minimum one trainee")]
+        [Required, MinLength(1, ErrorMessage = "At least one item required")]
         public string[] SelectedTraineeIds { get; set; }
 
-        [Required(ErrorMessage = "Please select minimum one stream")]
+        [Required, MinLength(1, ErrorMessage = "At least one item required")]
         public string[] SelectedStreamIds { get; set; }
 
         [NotMapped]

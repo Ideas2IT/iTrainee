@@ -5,30 +5,29 @@ namespace iTrainee.Models
 {
     public class UserTopics : Base
     {
-        public int Id { get; set; }
-
-        [NotMapped]
-        public string Username { get; set; }
-
-        [NotMapped]
-        public IEnumerable<User> TraineeList { get; set; }
-
-        [NotMapped]
-        public IEnumerable<Topics> TopicsList { get; set; }
-
-        [NotMapped]
-        public IEnumerable<SubTopics> SubTopicsList { get; set; }
-
-        [NotMapped]
+       public int Id { get; set; }
+        public string Name { get; set; }
         public string TopicName { get; set; }
-
-        [NotMapped]
         public string SubTopicName { get; set; }
+        public string id { get; set; }
+        public string parent { get; set; }
+        public string text { get; set; }
+
+        public int TopicId { get; set; }
 
         [NotMapped]
-        public string[] SelectedTopicsList { get; set; }
+        public List<Topics> TopicsList { get; set; }
 
         [NotMapped]
-        public string[] SelectedSubTopicsList { get; set; }
+        public List<User> TraineeList { get; set; }
+       
+
+        public string SelectedTraineeList { get; set; }
+
+        [NotMapped]
+        public string SelectedSubTopicList { get; set; }
+
+        [NotMapped]
+        public string[] SelectedTrainees { get; set; }
     }
 }

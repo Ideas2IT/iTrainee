@@ -10,5 +10,6 @@ namespace iTrainee.Data
         bool InsertTopic(Topics topic);
         bool UpdateTopic(Topics topic);
         bool DeleteTopic(int id);
+        IEnumerable<Topics> GetTopicsByStreamId(int streamId);
     }
 }

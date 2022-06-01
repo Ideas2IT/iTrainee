@@ -26,7 +26,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             _logger = logger;
             _configuration = configuration;
         }
-        public IActionResult ManageBatch(int userId)
+        public IActionResult ManageBatch()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var batchList = HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + userId, "", Convert.ToString(TempData["UserToken"]));
@@ -70,7 +70,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [System.Web.Mvc.HandleError]
         public IActionResult AddEditBatch(Batch batch)
         {
             Batch newBatch = new Batch();
@@ -186,15 +185,11 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
                     HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchStream/AddBatchStream", batch, token);
                 }
 
-                return RedirectToAction("ManageBatch", new { Area = "Shared" });
-            } else
-            {
-                newBatch.MentorList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Mentor", "", Convert.ToString(TempData["UserToken"]));
-                newBatch.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/BatchUser/GetUnassignedTrainees", "", Convert.ToString(TempData["UserToken"]));
-                newBatch.StreamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "", Convert.ToString(TempData["UserToken"]));
+                return new JsonResult("success");
+
             }
 
-            return View(newBatch);
+            return new JsonResult("failed");
         }
 
         public IActionResult DeleteBatch(int id)

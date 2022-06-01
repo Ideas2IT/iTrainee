@@ -32,5 +32,10 @@ namespace iTrainee.Services.Implementations
         {
             return _messagesRepository.AddMessage(message);
         }
+
+        public Messages GetMessageById(int Id)
+        {
+            return _messagesRepository.GetMessageById(Id);
+        }
     }
 }

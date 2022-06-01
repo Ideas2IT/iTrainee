@@ -28,6 +28,14 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
+        public IEnumerable<Topics> GetTopicsByStreamId(int streamId)
+        {
+            return _topicsService.GetTopicsByStreamId(streamId);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
         public Topics Get(int id)
         {
             return _topicsService.GetTopic(id);

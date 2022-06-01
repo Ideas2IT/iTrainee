@@ -5,7 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 
 namespace iTrainee.Controllers
 {
@@ -101,7 +104,7 @@ namespace iTrainee.Controllers
             return View();
         }
 
-        public IActionResult ChangePassword(int userId)
+		public IActionResult ChangePassword(int userId)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + userId, Convert.ToString(TempData["UserToken"]));

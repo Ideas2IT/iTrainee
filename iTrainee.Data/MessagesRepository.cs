@@ -23,12 +23,14 @@ namespace iTrainee.Data
             List<Messages> messages = new List<Messages>();
             try
             {
-                var parameters = new List<SqlParameter>();
-                parameters.Add(new SqlParameter
+                var parameters = new List<SqlParameter>
                 {
-                    ParameterName = "FromId",
-                    Value = Id
-                });
+                    new SqlParameter
+                    {
+                        ParameterName = "FromId",
+                        Value = Id
+                    }
+                };
                 DataSet result = _dataManager.ExecuteStoredProcedure("spGetMessagesByUserId", parameters);
                 if (result?.Tables?.Count != 0)
                 {
@@ -54,12 +56,14 @@ namespace iTrainee.Data
             List<UserMessages> userMessages = new List<UserMessages>();
             try
             {
-                var parameters = new List<SqlParameter>();
-                parameters.Add(new SqlParameter
+                var parameters = new List<SqlParameter>
                 {
-                    ParameterName = "Id",
-                    Value = Id
-                });
+                    new SqlParameter
+                    {
+                        ParameterName = "Id",
+                        Value = Id
+                    }
+                };
                 DataSet result = _dataManager.ExecuteStoredProcedure("[spGetUserMessages]", parameters);
                 if (result?.Tables?.Count != 0)
                 {
@@ -152,6 +156,35 @@ namespace iTrainee.Data
             }
 
             return id;
+        }
+
+        public Messages GetMessageById(int Id)
+        {
+            var message = new Messages();
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = Id
+                });
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetMessageById", parameters);
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
+                    {
+                        message.Id = Convert.ToInt32(item["Id"]);
+                        message.Message = Convert.ToString(item["Message"]);
+                        message.FromId = Convert.ToInt32(item["FromId"]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return message;
         }
     }
 }

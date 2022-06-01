@@ -9,10 +9,11 @@ namespace iTrainee.Services.Implementations
     public class SubTopicsService : ISubTopicsService
     {
         ISubTopicsRepository _subTopicsRepository = null;
+        ITopicsService _topicsService = null;
 
         public SubTopicsService(ISubTopicsRepository subTopicsRepository)
         {
-            this._subTopicsRepository = subTopicsRepository;
+            _subTopicsRepository = subTopicsRepository;
         }
 
         public bool AddSubTopic(SubTopics topic)
@@ -27,7 +28,21 @@ namespace iTrainee.Services.Implementations
 
         public IEnumerable<SubTopics> GetAllSubTopics()
         {
-          return _subTopicsRepository.GetAllSubTopics();
+            //IEnumerable<Topics> topics = _topicsService.GetAllTopics();
+            //IEnumerable<SubTopics> subTopics = 
+            //Topics newTopic = null;
+            //foreach ( SubTopics subtopic in subTopics)
+            //{
+            //    foreach ( Topics topic in topics)
+            //    {
+            //        if ( subtopic.TopicId == topic.Id)
+            //        {
+            //            subtopic.Topic = topic;
+            //        }
+            //    }
+                
+            //}
+            return _subTopicsRepository.GetAllSubTopics(); ;
         }
 
         public SubTopics GetSubTopic(int id)

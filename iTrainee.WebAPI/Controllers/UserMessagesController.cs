@@ -28,5 +28,11 @@ namespace iTrainee.APIs.Controllers
         {
             return _userMessagesService.AddUserMessage(message);
         }
+
+        [HttpGet]
+        public string[] GetSelectedTrainees(int Id)
+        {
+            return _userMessagesService.GetSelectedTrainees(Id);
+        }
     }
 }
