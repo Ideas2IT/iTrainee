@@ -21,7 +21,11 @@ namespace iTrainee.Models
         [NotMapped]
         public virtual Topics Topic { get; set; }
 
-        public string ReferenceURL { get; set; }
+        [NotMapped]
+        public string TopicName { get; set; }
+
+        [NotMapped]
+        public string StreamName { get; set; }
 
         [NotMapped]
         public int Percentage { get; set; }
