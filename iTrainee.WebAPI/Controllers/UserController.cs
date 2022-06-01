@@ -46,13 +46,6 @@ namespace iTrainee.APIs.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IEnumerable<User> GetAssignedMentors(int batchId)
-        {
-            return _userService.GetAssignedMentors(batchId);
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
         public User GetUser(int id)
         {
             return _userService.GetUser(id);

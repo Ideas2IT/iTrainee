@@ -35,6 +35,11 @@ namespace iTrainee.Services.Implementations
             return _topicsRepository.GetTopic(id);
         }
 
+        public IEnumerable<Topics> GetTopicsByStreamId(int streamId)
+        {
+            return _topicsRepository.GetTopicsByStreamId(streamId);
+        }
+
         public IEnumerable<Topics> GetAllTopics()
         {
             IEnumerable<Topics> topicList = _topicsRepository.GetAllTopics();

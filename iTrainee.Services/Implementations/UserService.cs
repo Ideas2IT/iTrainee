@@ -30,11 +30,6 @@ namespace iTrainee.Services.Implementations
             return _userRepository.GetAssignedTrainees(batchId);
         }
 
-        public IEnumerable<User> GetAssignedMentors(int batchId)
-        {
-            return _userRepository.GetAssignedMentors(batchId);
-        }
-
         public User GetUserByUserName(string userName, string password)
         {
             User user = _userRepository.GetUserByUserName(userName);

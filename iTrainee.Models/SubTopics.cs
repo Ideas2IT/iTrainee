@@ -6,11 +6,15 @@ namespace iTrainee.Models
     {
         public int Id { get; set; }
 
+        public int StreamId { get; set; }
+
         public int TopicId { get; set; }
 
         public string Name { get; set; }
 
         public string ReferenceURL { get; set; }
+
+        public string StreamName { get; set; }
 
         [NotMapped]
         public string TopicName { get; set; }

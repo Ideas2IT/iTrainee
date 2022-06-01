@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Web.Mvc;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 
 namespace iTrainee.Controllers
 {

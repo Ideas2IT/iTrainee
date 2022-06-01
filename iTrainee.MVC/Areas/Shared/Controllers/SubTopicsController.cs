@@ -28,15 +28,24 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddEditSubTopic(int id)
+        public IActionResult AddEditSubTopic(int id, int streamId)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var subTopic = HttpClientHelper.ExecuteGetApiMethod<SubTopics>(baseUrl, "/SubTopics/Get?", "Id=" + id);
+            List<Stream> streamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "");
             List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "");
             TempData["SubTopicId"] = id;
+            ViewBag.StreamList = new SelectList(streamList, "Id", "Name");
             ViewBag.TopicsList = new SelectList(topicsList, "Id", "Name");
 
             return PartialView(subTopic);
+        }
+
+        public IActionResult GetTopicList(int streamId)
+        {
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetTopicsByStreamId?", "streamId=" + streamId);
+            return new JsonResult(new { data = topicsList });
         }
 
         [HttpPost]
@@ -56,7 +65,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             }
             return PartialView(subTopic);
         }
-
         [HttpPost]
         public IActionResult DeleteSubTopic(int id)
         {

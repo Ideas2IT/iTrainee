@@ -33,6 +33,7 @@
     <thead>
         <tr>
             <th>S.No</th>
+            <th>Stream</th>
             <th>Topic</th>
             <th>Sub Topic</th>
             <th>Reference URL</th>
@@ -47,6 +48,9 @@
         <tr>
             <td>
                 @Count
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StreamName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TopicName)

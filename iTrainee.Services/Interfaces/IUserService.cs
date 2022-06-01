@@ -11,8 +11,6 @@ namespace iTrainee.Services.Interfaces
 
         IEnumerable<User> GetAssignedTrainees(int batchId);
 
-        IEnumerable<User> GetAssignedMentors(int batchId);
-
         bool SaveUser(User user);
 
         bool DeleteUser(int id);
