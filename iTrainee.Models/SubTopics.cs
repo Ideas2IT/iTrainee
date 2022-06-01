@@ -7,6 +7,7 @@ namespace iTrainee.Models
     {
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Please select any stream")]
         public int StreamId { get; set; }
 
         public int TopicId { get; set; }
