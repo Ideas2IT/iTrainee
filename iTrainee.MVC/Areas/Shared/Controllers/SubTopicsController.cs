@@ -31,8 +31,8 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult AddEditSubTopic(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var subTopic = HttpClientHelper.ExecuteGetApiMethod<SubTopics>(baseUrl, "/SubTopics/Get?", "Id=" + id);
-            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "");
+            var subTopic = HttpClientHelper.ExecuteGetApiMethod<SubTopics>(baseUrl, "/SubTopics/Get?", "Id=" + id, Convert.ToString(TempData["UserToken"]));
+            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "", Convert.ToString(TempData["UserToken"]));
             TempData["SubTopicId"] = id;
             ViewBag.TopicsList = new SelectList(topicsList, "Id", "Name");
 

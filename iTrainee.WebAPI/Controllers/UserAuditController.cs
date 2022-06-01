@@ -20,7 +20,6 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public UserAudit GetUserAudit(int id)
         {
             return _userAuditService.GetUserAudit(id);

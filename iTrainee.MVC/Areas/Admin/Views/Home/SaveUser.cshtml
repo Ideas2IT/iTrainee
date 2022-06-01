@@ -3,21 +3,23 @@
 <link rel="stylesheet" href="/css/user.css">
 
 
-<form id="myForm" method="Post">
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     <div class="row">
-         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="col-md-6">
             @{
                 TempData.Keep("Role");
+                TempData.Keep("UserToken");
             }
             <div class="form-group">
                 <input type="hidden" class="form-control" name="Id" value="@Model.Id" required />
                 <label class="col-form-label">First Name</label>
                 <input type="text" autocomplete="off" class="form-control" name="FirstName" value="@Model.FirstName" required />
-                <span asp-validation-for="FirstName" class="text-danger"></span> 
+                <span asp-validation-for="FirstName" class="text-danger"></span>
                 <span class="field-validation-valid" data-valmsg-for="FirstName" data-valmsg-replace="true"></span>
- 
+
 
             </div>
 
@@ -73,13 +75,13 @@
             <div class="form-group">
                 <label class="col-form-label">Qualification</label>
                 @Html.DropDownListFor(model => model.Qualification, new List<SelectListItem>
-                        { new SelectListItem{Text="B.E/B.Tech"},
-                         new SelectListItem{Text="Bsc"},
-                         new SelectListItem{Text="BCA"},
-                         new SelectListItem{Text="M.E/M.Tech"},
-                         new SelectListItem{Text="Msc"},
-                         new SelectListItem{Text="MCA"},
-                         new SelectListItem{Text="PHD"}}, new { @class = "form-control" })
+            { new SelectListItem{Text="B.E/B.Tech"},
+            new SelectListItem{Text="Bsc"},
+            new SelectListItem{Text="BCA"},
+            new SelectListItem{Text="M.E/M.Tech"},
+            new SelectListItem{Text="Msc"},
+            new SelectListItem{Text="MCA"},
+            new SelectListItem{Text="PHD"}}, new { @class = "form-control" })
             </div>
 
 
@@ -96,10 +98,14 @@
             }
         </div>
     </div>
-    <div class="form-group mt-4 float-right">        
+    <div class="form-group mt-4 float-right">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" value="Save" name="submit"id="btnSubmit" class="btn btn-primary mr-3" />
+        <input type="submit" value="Save" name="submit" class="btn btn-primary mr-3" />
     </div>
-</form>
-
+}
 <script src="/js/user.js"></script>
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

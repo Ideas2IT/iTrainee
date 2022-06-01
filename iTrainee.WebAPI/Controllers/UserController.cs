@@ -23,14 +23,12 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public IEnumerable<User> GetUsers(string role)
         {
             return _userService.GetUsers(role);
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public IEnumerable<User> GetAssignedTrainees(int batchId)
         {
             return _userService.GetAssignedTrainees(batchId);
@@ -38,21 +36,18 @@ namespace iTrainee.APIs.Controllers
 
         
         [HttpGet]
-        [AllowAnonymous]
         public string[] GetAssignedBatchIds(int userId)
         {
             return _userService.GetAssignedBatchIds(userId);
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public IEnumerable<User> GetAssignedMentors(int batchId)
         {
             return _userService.GetAssignedMentors(batchId);
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public User GetUser(int id)
         {
             return _userService.GetUser(id);
@@ -89,7 +84,6 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public bool UpdateUser(User user)
         {
             return _userService.UpdateUser(user);

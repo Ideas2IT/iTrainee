@@ -35,7 +35,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             TempData.Keep("HeaderRole");
             TempData.Keep("UserId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            List<Messages> messages = (List<Messages>)HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "/Messages/GetMessagesByUserId?", "Id=" + TempData.Peek("UserId"));
+            List<Messages> messages = (List<Messages>)HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "/Messages/GetMessagesByUserId?", "Id=" + TempData.Peek("UserId"), Convert.ToString(TempData["UserToken"]));
 
             return View(messages);
         }
@@ -43,7 +43,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult ViewAlertDetails(int Id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var userMessages = HttpClientHelper.ExecuteGetAllApiMethod<UserMessages>(baseUrl, "/Messages/GetUserMessagesByMessageId?", "Id=" + Id);
+            var userMessages = HttpClientHelper.ExecuteGetAllApiMethod<UserMessages>(baseUrl, "/Messages/GetUserMessagesByMessageId?", "Id=" + Id, Convert.ToString(TempData["UserToken"]));
 
             return PartialView("ViewAlertDetails", userMessages);
         }
@@ -55,14 +55,14 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             TempData.Keep("UserId");
             Messages message = new Messages();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            message.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/UserMessages/GetTrainees?", "");
+            message.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/UserMessages/GetTrainees?", "", Convert.ToString(TempData["UserToken"]));
             message.FromId = (int)TempData["UserId"];
 
             if (Id > 0)
             {
-                message = (Messages)HttpClientHelper.ExecuteGetApiMethod<Messages>(baseUrl, "/Messages/Get?", "Id=" + Id);
-                message.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/UserMessages/GetUnassignedTrainees", "");
-                message.SelectedTraineeIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/UserMessages/GetSelectedTrainees?Id=" + Id);
+                message = (Messages)HttpClientHelper.ExecuteGetApiMethod<Messages>(baseUrl, "/Messages/Get?", "Id=" + Id, Convert.ToString(TempData["UserToken"]));
+                message.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/UserMessages/GetUnassignedTrainees", "", Convert.ToString(TempData["UserToken"]));
+                message.SelectedTraineeIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/UserMessages/GetSelectedTrainees?Id=" + Id, Convert.ToString(TempData["UserToken"]));
                 
                 TempData["getUserIds"] = (message.SelectedTraineeIds).ToList();
                 

@@ -34,14 +34,14 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
              List<User> user = new List<User>();
             if (Convert.ToString(TempData["HeaderRole"]) == "Admin")
             {
-                user = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
+                user = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role, Convert.ToString(TempData["UserToken"]));
             }
            else
             {
-                string[] batchIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/User/GetAssignedBatchIds?userId=" + userId);
+                string[] batchIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/User/GetAssignedBatchIds?userId=" + userId, Convert.ToString(TempData["UserToken"]));
                 foreach (string id in batchIds)
                 {
-                    user.AddRange((List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetAssignedTrainees?batchId=" + Convert.ToInt32(id), ""));
+                    user.AddRange((List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetAssignedTrainees?batchId=" + Convert.ToInt32(id), "", Convert.ToString(TempData["UserToken"])));
                 }
             }
                 ViewBag.Role = role;
@@ -50,7 +50,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             return View(user);
         }
 
-        public IActionResult SaveUser(int id)
+        public PartialViewResult SaveUser(int id)
         {
             var user = new User();
 
@@ -70,7 +70,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             if (0 < id)
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + id);
+                user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + id, Convert.ToString(TempData["UserToken"]));
                 TempData["UserId"] = id;
             }
 
@@ -91,19 +91,18 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
 
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
                 HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user, TempData["UserToken"].ToString());
-
-                return RedirectToAction("ManageUser", "Home", new { role = Convert.ToString(TempData["Role"]) });
             }
 
-            return PartialView(user);
+            return RedirectToAction("ManageUser", "Home", new { role = Convert.ToString(TempData["Role"]) });
         }
 
         [HttpDelete]
-        public IActionResult DeleteUser(int id)
+        public JsonResult DeleteUser(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteDeleteApiMethod<User>(baseUrl, "/User/DeleteUser?", "Id=" + id, TempData["UserToken"].ToString());
-            return RedirectToAction("ManageUser", "Home", new { role = TempData["Role"].ToString() });
+            var result = HttpClientHelper.ExecuteDeleteApiMethod<User>(baseUrl, "/User/DeleteUser?", "Id="+id, TempData["UserToken"].ToString());
+            TempData.Keep("UserToken");
+            return new JsonResult("success");
         }
     }
 }

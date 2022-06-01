@@ -1,5 +1,8 @@
 ﻿@model iTrainee.Models.Topics
 @using Microsoft.AspNetCore.Mvc.Rendering;
+@{
+    TempData.Keep("UserToken");
+}
 
 <div class="row">
 	<div class="col-lg-12">
