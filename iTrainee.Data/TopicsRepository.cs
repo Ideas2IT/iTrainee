@@ -17,6 +17,39 @@ namespace iTrainee.Data
             _dataManager = dataManager;
         }
 
+        public IEnumerable<Topics> GetTopicsByStreamId(int streamId)
+        {
+            var topics = new List<Topics>();
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "StreamId",
+                    Value = streamId
+                });
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetTopicsByStreamId", parameters);
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
+                    {
+                        topics.Add(new Topics
+                        {
+                            Id = Convert.ToInt32(item["Id"]),
+                            StreamId = Convert.ToInt32(item["StreamId"]),
+                            Name = Convert.ToString(item["Name"]),
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return topics;
+        }
+
         public List<Topics> GetAllTopics()
         {
             var topicsList = new List<Topics>();

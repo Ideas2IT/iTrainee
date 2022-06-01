@@ -9,6 +9,8 @@ namespace iTrainee.Data.Interfaces
 
         IEnumerable<User> GetUsers(string role);
 
+        IEnumerable<User> GetUsersByBatch(string role, string id);
+
         bool InsertUser(User user);
 
         bool UpdateUser(User user);
@@ -19,7 +21,6 @@ namespace iTrainee.Data.Interfaces
 
         IEnumerable<User> GetAssignedTrainees(int batchId);
 
-        IEnumerable<User> GetAssignedMentors(int batchId);
         string[] GetAssignedBatchIds(int userId);
     }
 }

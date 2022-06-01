@@ -11,8 +11,6 @@ namespace iTrainee.Services.Interfaces
 
         IEnumerable<User> GetAssignedTrainees(int batchId);
 
-        IEnumerable<User> GetAssignedMentors(int batchId);
-
         bool SaveUser(User user);
 
         bool DeleteUser(int id);
@@ -20,6 +18,8 @@ namespace iTrainee.Services.Interfaces
         User GetUserByUserName(string userName, string password);
 
         bool UpdateUser(User user);
+
+        IEnumerable<User> GetUsersByBatch(string role, string id);
         string[] GetAssignedBatchIds(int userId);
     }
 }

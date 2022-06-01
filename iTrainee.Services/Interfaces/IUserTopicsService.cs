@@ -5,7 +5,10 @@ namespace iTrainee.Services.Interfaces
 {
     public interface IUserTopicsService
     {
-        IEnumerable<UserTopics> GetAllUserTopics();
+        IEnumerable<UserTopics> GetAllUserTopics(int batchId);
+
+        bool AddUserTopic(UserTopics userTopic);
+        
 
         IEnumerable<SubTopics> GetSubTopicsByUserIdAndTopicId(int userId, int topicId);
         DailyProgress GetSubTopicOfUser(int userId, int subTopicId);

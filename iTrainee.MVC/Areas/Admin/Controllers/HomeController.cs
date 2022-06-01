@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using iTrainee.MVC.Helpers;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 
 namespace iTrainee.MVC.Areas.Admin.Controllers
@@ -32,12 +31,12 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         public IActionResult ManageUser(string role, int userId)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-             List<User> user = new List<User>();
+            List<User> user = new List<User>();
             if (Convert.ToString(TempData["HeaderRole"]) == "Admin")
             {
                 user = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
             }
-           else
+            else
             {
                 string[] batchIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/User/GetAssignedBatchIds?userId=" + userId);
                 foreach (string id in batchIds)
@@ -45,7 +44,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
                     user.AddRange((List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetAssignedTrainees?batchId=" + Convert.ToInt32(id), ""));
                 }
             }
-                ViewBag.Role = role;
+            ViewBag.Role = role;
             TempData["Role"] = role;
 
             return View(user);
@@ -80,6 +79,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
 
         [HttpPost]
         [System.Web.Mvc.HandleError]
+        [ValidateAntiForgeryToken()]
         public IActionResult SaveUser(User user)
         {
             if (ModelState.IsValid)

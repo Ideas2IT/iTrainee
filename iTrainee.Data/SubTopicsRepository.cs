@@ -30,8 +30,10 @@ namespace iTrainee.Data
                         subTopicsList.Add(new SubTopics
                         {
                             Id = Convert.ToInt32(item["SubTopicId"]),
+                            StreamName = Convert.ToString(item["StreamName"]),
                             TopicName = Convert.ToString(item["TopicName"]),
                             Name = Convert.ToString(item["SubTopicName"]),
+                            TopicId = Convert.ToInt32(item["TopicId"]),
                             ReferenceURL = Convert.ToString(item["ReferenceURL"])
                         });
                     }
