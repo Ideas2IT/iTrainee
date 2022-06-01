@@ -9,7 +9,6 @@
     TempData.Keep("TopicId");
     TempData.Keep("Role");
     TempData.Keep("UnreadMessagesCount");
-    TempData.Keep("UserId");
 }
 
 <header>
@@ -52,9 +51,8 @@
                         <a class="dropdown-item" href="#">Profile</a>
                       
 	                   <a href="/Home/ChangePassword?userId=@TempData["UserId"]" class="dropdown-item"> Change Password</a>
-
-                        <a class="dropdown-item" href="/Home/Login">Sign Out</a>
-                    </div>
+                          <a class="dropdown-item" href="/Home/Login">Sign Out</a>
+                        </div>
                 </li>
             </ul>
         </div>
