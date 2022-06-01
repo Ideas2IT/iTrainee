@@ -28,12 +28,14 @@ namespace iTrainee.Data
                     Value = id
                 });
 
-                var parameter = new List<SqlParameter>();
-                parameter.Add(new SqlParameter
+                var parameter = new List<SqlParameter>
                 {
-                    ParameterName = "Id",
-                    Value = id
-                });
+                    new SqlParameter
+                    {
+                        ParameterName = "Id",
+                        Value = id
+                    }
+                };
 
                 DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserById", parameters);
                 if (result?.Tables?.Count != 0)
@@ -48,6 +50,7 @@ namespace iTrainee.Data
                         user.UserName = Convert.ToString(item["UserName"]);
                         user.Qualification = Convert.ToString(item["Qualification"]);
                         user.DOB = Convert.ToDateTime(item["DOB"]);
+                        user.Qualification = Convert.ToString(item["Qualification"]);
                     }
                 }
 
@@ -77,6 +80,45 @@ namespace iTrainee.Data
             return user;
         }
 
+        
+
+        public IEnumerable<User> GetUsersByBatch(string role, string id)
+        {
+            var users = new List<User>();
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Role",
+                    Value = role
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = Convert.ToInt32(id)
+                });
+
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserByRole", parameters);
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
+                    {
+                        users.Add(new User
+                        {
+                            Id = Convert.ToInt32(item["Id"]),
+                            FirstName = Convert.ToString(item["FirstName"])
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return users;
+        }
+
         public IEnumerable<User> GetUsers(string role)
         {
             var users = new List<User>();
@@ -88,7 +130,11 @@ namespace iTrainee.Data
                     ParameterName = "Role",
                     Value = role
                 });
-
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = 0
+                });
                 DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserByRole", parameters);
                 if (result?.Tables?.Count != 0)
                 {
@@ -112,6 +158,7 @@ namespace iTrainee.Data
             }
             return users;
         }
+
 
         public IEnumerable<User> GetAssignedTrainees(int batchId)
         {
@@ -156,12 +203,14 @@ namespace iTrainee.Data
             var user = new User();
             try
             {
-                var parameters = new List<SqlParameter>();
-                parameters.Add(new SqlParameter
+                var parameters = new List<SqlParameter>
                 {
-                    ParameterName = "UserName",
-                    Value = userName
-                });
+                    new SqlParameter
+                    {
+                        ParameterName = "UserName",
+                        Value = userName
+                    }
+                };
 
                 DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserByUserName", parameters);
                 if (result?.Tables?.Count != 0)
@@ -174,7 +223,7 @@ namespace iTrainee.Data
                         user.UserName = Convert.ToString(item["UserName"]);
                         user.RoleName = Convert.ToString(item["RoleName"]);
                         user.Password = Convert.ToString(item["Password"]);
-                        
+                        user.UnreadMessagesCount = Convert.ToInt32(item["UnreadMessagesCount"]);
                     }
                 } 
             }
@@ -191,12 +240,14 @@ namespace iTrainee.Data
             bool isDeleted;
             try
             {
-                var parameters = new List<SqlParameter>();
-                parameters.Add(new SqlParameter
+                var parameters = new List<SqlParameter>
                 {
-                    ParameterName = "Id",
-                    Value = id
-                });
+                    new SqlParameter
+                    {
+                        ParameterName = "Id",
+                        Value = id
+                    }
+                };
                 _dataManager.ExecuteStoredProcedure("spDeleteUser", parameters);
                 isDeleted = true;
             }
@@ -331,7 +382,7 @@ namespace iTrainee.Data
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "DOB",
-                    Value = DateTime.Now.Date
+                    Value = user.DOB
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -350,14 +401,19 @@ namespace iTrainee.Data
                 });
                 parameters.Add(new SqlParameter
                 {
-                    ParameterName = "InsertedBy",
-                    Value = "Admin"
+                    ParameterName = "IsAdmin",
+                    Value = user.IsAdmin
                 });
                 parameters.Add(new SqlParameter
                 {
-                    ParameterName = "InsertedOn",
-                    Value = DateTime.Now.Date
-                }); ;
+                    ParameterName = "IsMentor",
+                    Value = user.IsMentor
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "IsTrainee",
+                    Value = user.IsTrainee
+                });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "UpdatedBy",
@@ -375,7 +431,7 @@ namespace iTrainee.Data
                 });
 
 
-                DataSet result = _dataManager.ExecuteStoredProcedure("spUpdateUser", parameters);
+                DataSet result = _dataManager.ExecuteStoredProcedure("spSaveUser", parameters);
                 if (result.Tables.Count != 0)
                 {
                     isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);

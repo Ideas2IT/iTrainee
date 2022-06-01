@@ -54,11 +54,17 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
 				<td class="text-center">
+                    <td>
 					<a href="/Shared/Batch/AddEditBatch?Id=@item.Id" ><i class="fa fa-pencil edit-icon"></i></a> 
-					</td>
-					<td class="text-center">
-					<a  href="/Shared/Batch/DeleteBatch?Id=@item.Id" ><i class="fa fa-trash delete-icon"></i></a>
+                    </td>
+                    <td>
+                    <a  href="/Shared/Batch/DeleteBatch?Id=@item.Id" ><i class="fa fa-trash delete-icon"></i></a>
+                    </td>
+                    <td>
+                 <button> <a  href="/Shared/UserTopics/AddEditUserTopics?Id=@item.Id" >Assign Topics</a></button>
 				</td>
+                </td>
+               
             </tr>
             Count += 1;
         }

@@ -4,7 +4,6 @@ using iTrainee.MVC.Helpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
 
 namespace iTrainee.MVC.Areas.Mentor.Controllers
 {

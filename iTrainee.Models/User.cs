@@ -8,10 +8,16 @@ namespace iTrainee.Models
     {
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Please enter first name")]
+        [RegularExpression(@"^([a-zA-Z .]*)$", ErrorMessage = "Invalid format")]
         public string FirstName { get; set; }
 
+        [Required(ErrorMessage = "Please enter last name")]
+        [RegularExpression(@"^([a-zA-Z .]*)$", ErrorMessage = "Invalid format")]
         public string LastName { get; set; }
 
+        [Required(ErrorMessage = "Please enter date of birth")]
+        [DataType(DataType.Date)]
         public DateTime DOB { get; set; }
 
         public int RoleId { get; set; }
@@ -34,6 +40,8 @@ namespace iTrainee.Models
         public string RoleName { get; set; } 
 
         public string Token { get; set; }
+
+        public int UnreadMessagesCount { get; set; }
 
         [NotMapped]
         public string[] SelectedTraineeIds { get; set; }

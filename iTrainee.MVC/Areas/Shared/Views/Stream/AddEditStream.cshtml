@@ -25,23 +25,23 @@
 
 <script>
 
-		$(document).ready(function () {
+        $(document).ready(function () {
 
-		$("#btnStreamSave").click(function () {
-			debugger;
-			var updatedStreamData = $("#streamForm").serialize();
-			$.ajax({
-				type: "POST",
-				url: "/Shared/Stream/AddEditStream",
-				data: updatedStreamData,
-				success: function () {
-					$("#streamModal").modal("hide");
-					window.location.replace("/Mentor/Home/ManageStreams")
-				},
-				error: function () {
-					alert("Unable to save data");
-				},
-			});
-		});
-	});
+        $("#btnStreamSave").click(function () {
+            debugger;
+            var updatedStreamData = $("#streamForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Shared/Stream/AddEditStream",
+                data: updatedStreamData,
+                success: function () {
+                    $("#streamModal").modal("hide");
+                    window.location.replace("/Mentor/Home/ManageStreams")
+                },
+                error: function () {
+                    alert("Unable to save data");
+                },
+            });
+        });
+    });
 </script>

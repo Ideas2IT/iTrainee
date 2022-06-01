@@ -4,19 +4,19 @@
     ViewData["Title"] = "ManageUserTopics";
 }
 
-<h1>Manage User Topics</h1>
+<h1>ManageUserTopics</h1>
 
-<div class="d-flex justify-content-between mt-4">
-<a href="/Shared/UserTopics/AddEditUserTopics" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Topic</a>
-</div>
-<table class="table">
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-hover table-bordered">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Username)
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TopicName)
@@ -34,17 +34,17 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Username)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TopicName)
             </td>
-             <td>
+            <td>
                 @Html.DisplayFor(modelItem => item.SubTopicName)
             </td>
+           
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>

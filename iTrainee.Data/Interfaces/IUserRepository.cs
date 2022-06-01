@@ -9,6 +9,8 @@ namespace iTrainee.Data.Interfaces
 
         IEnumerable<User> GetUsers(string role);
 
+        IEnumerable<User> GetUsersByBatch(string role, string id);
+
         bool InsertUser(User user);
 
         bool UpdateUser(User user);

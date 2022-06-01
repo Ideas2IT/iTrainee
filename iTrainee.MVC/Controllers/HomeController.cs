@@ -45,6 +45,7 @@ namespace iTrainee.Controllers
             {
                 TempData["IsValidPassword"] = "true";
             }
+
             return View(user);
         }
 
@@ -67,11 +68,12 @@ namespace iTrainee.Controllers
                 return RedirectToAction("Login", user);
             }
 
+            TempData["UserId"] = user.Id;
             TempData["HeaderRole"] = user.RoleName;
             TempData["CurrentUserName"] = user.FirstName + " " + user.LastName;
-            TempData["UserFirstName"] = user.FirstName;
-            TempData["UserId"] = user.Id;
+            TempData["UserFirstName"] = user.FirstName;           
             TempData["UserToken"] = user.Token;
+            TempData["UnreadMessagesCount"] = user.UnreadMessagesCount;
             var token = Convert.ToString(TempData["UserToken"]);
 
             if (user.RoleName.Equals("Trainee"))
@@ -83,7 +85,7 @@ namespace iTrainee.Controllers
                 userAudit.SignOut = DateTime.Now;
                 int userAuditId = HttpClientHelper.ExecuteInsertPostApiMethod<UserAudit>(baseUrl, "/UserAudit/InsertUserAudit", userAudit, token);
 
-                return RedirectToAction("Index", "Home", new { Area = "Trainee", auditId = userAuditId, userId = user.Id });
+                return RedirectToAction("Index", "Home", new { Area = "Trainee", auditId = userAuditId, userId = user.Id, traineeName = user.FirstName });
             }
             else if (user.RoleName.Equals("Mentor"))
             {

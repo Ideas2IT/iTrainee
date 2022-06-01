@@ -17,10 +17,20 @@ namespace iTrainee.APIs.Controllers
 		}
 
 		[HttpGet]
-		public IEnumerable<UserTopics> GetAllUserTopics()
+		public IEnumerable<UserTopics> GetAllUserTopics(int batchId)
 		{
-			return _userTopicsService.GetAllUserTopics();
+			List<UserTopics> users = new List<UserTopics>();
+
+			users = (List<UserTopics>)_userTopicsService.GetAllUserTopics(batchId);
+			return users;
 		}
+
+		[HttpPost]
+		public bool AddUserTopic(UserTopics userTopic)
+		{
+			return _userTopicsService.AddUserTopic(userTopic);
+		}
+		
 
 		public IEnumerable<SubTopics> GetSubTopicsByUserIdAndTopicId(int userId, int topicId)
         {
