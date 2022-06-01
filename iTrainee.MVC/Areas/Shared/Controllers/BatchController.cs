@@ -71,7 +71,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [System.Web.Mvc.HandleError]
         public IActionResult AddEditBatch(Batch batch)
         {
             Batch newBatch = new Batch();
@@ -188,14 +187,16 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
                 }
 
                 return RedirectToAction("ManageBatch", new { Area = "Shared" });
-            } else
+
+            }
+            else
             {
                 newBatch.MentorList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Mentor", "");
                 newBatch.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/BatchUser/GetUnassignedTrainees", "");
                 newBatch.StreamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "");
             }
-
-            return View(newBatch);
+            return View(batch);
+            //return RedirectToAction("AddEditBatch", new {id=batch.Id});
         }
 
         public IActionResult DeleteBatch(int id)

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace iTrainee.Models
 {
@@ -8,8 +9,11 @@ namespace iTrainee.Models
 
         public int TopicId { get; set; }
 
+        [Required(ErrorMessage = "Please enter subtopic name")]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "Please enter reference URL")]
+        [DataType(DataType.Url)]
         public string ReferenceURL { get; set; }
 
         [NotMapped]

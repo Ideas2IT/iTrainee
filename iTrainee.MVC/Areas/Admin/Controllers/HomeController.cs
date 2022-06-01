@@ -93,9 +93,9 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
                 HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user, TempData["UserToken"].ToString());
 
                 return RedirectToAction("ManageUser", "Home", new { role = Convert.ToString(TempData["Role"]) });
-            }
+            } 
 
-            return PartialView(user);
+            return RedirectToAction("SaveUser", new { id = user.Id });
         }
 
         [HttpDelete]
