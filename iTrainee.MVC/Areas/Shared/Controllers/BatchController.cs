@@ -26,10 +26,18 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             _logger = logger;
             _configuration = configuration;
         }
-        public IActionResult ManageBatch(int userId)
+        public IActionResult ManageBatch()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var batchList = HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + userId, "");
+            List<Batch> batchList = new List<Batch>();
+            if(TempData["HeaderRole"].ToString() == "Mentor")
+            {
+                batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + TempData["UserId"].ToString(), "");
+            } else
+            {
+                batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=0" , "");
+            }
+            
 
             return View(batchList);
         }
@@ -185,17 +193,11 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
                     HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchStream/AddBatchStream", batch, token);
                 }
 
-                return RedirectToAction("ManageBatch", new { Area = "Shared" });
+                return new JsonResult("success");
 
             }
-            else
-            {
-                newBatch.MentorList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?role=Mentor", "");
-                newBatch.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/BatchUser/GetUnassignedTrainees", "");
-                newBatch.StreamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "");
-            }
-            return View(batch);
-            //return RedirectToAction("AddEditBatch", new {id=batch.Id});
+
+            return new JsonResult("failed");
         }
 
         public IActionResult DeleteBatch(int id)

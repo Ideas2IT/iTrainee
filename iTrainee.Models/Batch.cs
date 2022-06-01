@@ -11,13 +11,10 @@ namespace iTrainee.Models
         [Required(ErrorMessage = "Please enter batch name")]
         public string Name { get; set; }
 
-        [Required, MinLength(1, ErrorMessage = "At least one item required")]
         public IEnumerable<User> MentorList { get; set; }
 
-        [Required, MinLength(1, ErrorMessage = "At least one item required")]
         public List<User> TraineeList { get; set; }
 
-        [Required, MinLength(1, ErrorMessage = "At least one item required")]
         public IEnumerable<Stream> StreamList { get; set; }
 
         [Required(ErrorMessage = "Please select minimum one mentor")]
