@@ -89,6 +89,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
                     postUserIds = postUserIdsArray.ToList();
                     getStreamIds = getStreamIdsArray.ToList();
                     postStreamIds = postStreamIdsArray.ToList();
+
                     foreach (string unSelectedId in getUserIds)
                     {
                         foreach (string selectedId in postUserIds)

@@ -18,6 +18,15 @@ namespace iTrainee.Models
         public string[] SelectedTraineeIds { get; set; }
 
         [NotMapped]
+        public string[] UnselectedTraineeIds { get; set; }
+
+        [NotMapped]
         public string TraineesIdsString { get; set; }
+
+        [NotMapped]
+        public string SelectedTraineeIdsString { get; set; }
+
+        [NotMapped]
+        public string UnselectedTraineeIdsString { get; set; }
     }
 }

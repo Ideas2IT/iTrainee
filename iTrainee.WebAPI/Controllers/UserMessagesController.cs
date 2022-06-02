@@ -34,5 +34,11 @@ namespace iTrainee.APIs.Controllers
         {
             return _userMessagesService.GetSelectedTrainees(Id);
         }
+
+        [HttpGet]
+        public IEnumerable<UserMessages> GetTraineeMessagesByUserId(int Id)
+        {
+            return _userMessagesService.GetTraineeMessagesByUserId(Id);
+        }
     }
 }
