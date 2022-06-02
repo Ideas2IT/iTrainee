@@ -9,13 +9,14 @@
     $('#delete').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget)
         var id = button.data('id-to-delete')
-
         $('#delete-yes-button').on('click', function () {
             $.ajax({
                 url: "/Admin/Home/DeleteUser/" + id,
-                type: "DELETE",
+                type: "Delete",
+                dataType: "JSON",
                 success: function () {
                     $("#myModal1").modal("hide");
+                    window.location.reload();
                 },
                 error: function () {
                     alert("Unable to delete data");
@@ -23,23 +24,6 @@
             })
         })
     })
-
-    $("#btnSubmit").click(function () {
-        var a = $("#myForm").serialize();
-        debugger;
-
-        $.ajax({
-            type: "POST",
-            url: "/Admin/Home/SaveUser",
-            data: a,
-            success: function () {
-                $("#myModal1").modal("hide");
-            },
-            error: function () {
-                alert("Unable to save/update data");
-            },
-        });
-    });
 
     $("#Admin").click(function () {
         debugger

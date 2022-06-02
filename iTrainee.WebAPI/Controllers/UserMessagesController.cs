@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using iTrainee.Services.Interfaces;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace iTrainee.APIs.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserMessagesController : Controller
@@ -31,6 +33,12 @@ namespace iTrainee.APIs.Controllers
         public string[] GetSelectedTrainees(int Id)
         {
             return _userMessagesService.GetSelectedTrainees(Id);
+        }
+
+        [HttpGet]
+        public IEnumerable<UserMessages> GetTraineeMessagesByUserId(int Id)
+        {
+            return _userMessagesService.GetTraineeMessagesByUserId(Id);
         }
     }
 }

@@ -30,6 +30,8 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpGet]
         public IActionResult AddEditSubTopic(int id)
         {
+            TempData.Keep("UserToken");
+            var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var subTopic = (SubTopics)HttpClientHelper.ExecuteGetApiMethod<SubTopics>(baseUrl, "/SubTopics/Get?", "Id=" + id);
             List<Stream> streamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "");
@@ -43,8 +45,9 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult GetTopicList(int streamId)
         {
+            TempData.Keep("UserToken");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetTopicsByStreamId?", "streamId=" + streamId);
+            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetTopicsByStreamId?", "streamId=" + streamId, Convert.ToString(TempData["UserToken"]));
             return new JsonResult(new { data = topicsList });
         }
 
@@ -52,16 +55,17 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddEditSubTopic(SubTopics subTopic)
         {
+            TempData.Keep("UserToken");
             subTopic.Id = Convert.ToInt32(TempData["SubTopicId"]);
             if (subTopic.Id > 0)
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<SubTopics>(baseUrl, "/SubTopics/UpdateSubTopic", subTopic, "");
+                HttpClientHelper.ExecutePostApiMethod<SubTopics>(baseUrl, "/SubTopics/UpdateSubTopic", subTopic, TempData["UserToken"].ToString());
             }
             else
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<SubTopics>(baseUrl, "/SubTopics/AddSubTopic", subTopic, "");
+                HttpClientHelper.ExecutePostApiMethod<SubTopics>(baseUrl, "/SubTopics/AddSubTopic", subTopic, TempData["UserToken"].ToString());
             }
             return RedirectToAction("ManageSubTopics", "Home", new { Area = "Mentor" });
         }

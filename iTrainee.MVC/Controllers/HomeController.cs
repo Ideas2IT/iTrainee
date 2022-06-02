@@ -58,7 +58,7 @@ namespace iTrainee.Controllers
         {
             
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + UserName + "&Password=" + Password);
+            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + UserName + "&Password=" + Password,"");
            
             if (user.UserName == null)
             {
@@ -113,7 +113,7 @@ namespace iTrainee.Controllers
 		public IActionResult ChangePassword(int userId)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + userId);
+            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + userId, Convert.ToString(TempData["UserToken"]));
             TempData["CurrentPassword"] = user.Password;
             TempData["UserId"] = user.Id;
             TempData["HeaderRole"] = "Admin";
@@ -125,7 +125,7 @@ namespace iTrainee.Controllers
         public IActionResult ChangePassword(string updatedPassword , int userId)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + userId);
+            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + userId, Convert.ToString(TempData["UserToken"]));
             user.Password = updatedPassword;
             HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/UpdateUser" , user, Convert.ToString(TempData.Peek("UserToken")));
             return RedirectToAction("Login");

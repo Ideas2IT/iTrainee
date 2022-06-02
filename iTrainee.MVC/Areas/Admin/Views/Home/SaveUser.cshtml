@@ -6,111 +6,117 @@
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "myForm" }))
 {
-	@Html.AntiForgeryToken()
-	<div class="row">
-		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-		<div class="col-md-6">
-			@{
-				TempData.Keep("Role");
-			}
-			<div class="form-group">
-				<input type="hidden" class="form-control" name="Id" value="@Model.Id" required />
-				<div class="form-group">
-					<label class="col-form-label">First Name</label>
-					@Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
-					@Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-				</div>
-			</div>
+    @Html.AntiForgeryToken()
+    <div class="row">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="col-md-6">
+            @{
+                TempData.Keep("Role");
+            }
+            <div class="form-group">
+                <input type="hidden" class="form-control" name="Id" value="@Model.Id" />
+                <input type="hidden" class="form-control" name="UserName" value="@Model.UserName" />
 
-			@if (0 == @Model.Id)
-			{
-				<div class="form-group">
-					<label class="col-form-label">Date Of Birth</label>
-					<input type="date" class="form-control" name="DOB" required />
-				</div>
-			}
-			else
-			{
-				<div class="form-group">
-					<label class="col-form-label">Date Of Birth</label>
-					@Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", value=@Model.DOB.ToString("yyyy-MM-dd") } })
-					@Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
-				</div>
-			}
-			<div class="form-group padding-top-15px">
-				<label class="col-form-label d-block">Role</label>
+                <div class="form-group">
+                    <label class="col-form-label">First Name</label>
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" value="true" id="Admin" name="IsAdmin" checked="@Model.IsAdmin">
-					<input type="hidden" value="false" name="IsAdmin" />
-					<label class="form-check-label" for="Admin">Admin</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" value="true" id="Mentor" name="IsMentor" checked="@Model.IsMentor">
-					<input type="hidden" value="false" name="IsMentor" />
-					<label class="form-check-label" for="Mentor">Mentor</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" value="true" id="Trainee" name="IsTrainee" checked="@Model.IsTrainee">
-					<input type="hidden" value="false" name="IsTrainee" />
-					<label class="form-check-label" for="Trainee">Trainee</label>
-				</div>
-			</div>
-			@if (0 == @Model.Id)
-			{
-				<div class="form-group padding-top-15px">
-					<label class="col-form-label">Password</label>
-					@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
-					@Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-				</div>
-			}
+            @if (0 == @Model.Id)
+            {
+                <div class="form-group">
+                    <label class="col-form-label">Date Of Birth</label>
+                    <input type="date" class="form-control" name="DOB" required />
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <label class="col-form-label">Date Of Birth</label>
+                    @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", value=@Model.DOB.ToString("yyyy-MM-dd") } })
+                    @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                </div>
+            }
+            <div class="form-group padding-top-15px">
+                <label class="col-form-label d-block">Role</label>
 
-		</div>
-		<div class="col-md-6">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" value="true" id="Admin" name="IsAdmin" checked="@Model.IsAdmin">
+                    <input type="hidden" value="false" name="IsAdmin" />
+                    <label class="form-check-label" for="Admin">Admin</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" value="true" id="Mentor" name="IsMentor" checked="@Model.IsMentor">
+                    <input type="hidden" value="false" name="IsMentor" />
+                    <label class="form-check-label" for="Mentor">Mentor</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" value="true" id="Trainee" name="IsTrainee" checked="@Model.IsTrainee">
+                    <input type="hidden" value="false" name="IsTrainee" />
+                    <label class="form-check-label" for="Trainee">Trainee</label>
+                </div>
+            </div>
+            @if (0 == @Model.Id)
+            {
+                <div class="form-group padding-top-15px">
+                    <label class="col-form-label">Password</label>
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            }
 
-			<div class="form-group">
-				<label class="col-form-label">Last Name</label>
-				@Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
-				@Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-			</div>
+        </div>
+        <div class="col-md-6">
 
-			<div class="form-group">
-				<label class="col-form-label">Qualification</label>
-				@Html.DropDownListFor(model => model.Qualification, new List<SelectListItem>
-			{ new SelectListItem{Text="B.E/B.Tech"},
-			new SelectListItem{Text="Bsc"},
-			new SelectListItem{Text="BCA"},
-			new SelectListItem{Text="M.E/M.Tech"},
-			new SelectListItem{Text="Msc"},
-			new SelectListItem{Text="MCA"},
-			new SelectListItem{Text="PHD"}}, new { @class = "form-control" })
-			</div>
+            <div class="form-group">
+                <label class="col-form-label">Last Name</label>
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label">Qualification</label>
+                @Html.DropDownListFor(model => model.Qualification, new List<SelectListItem>
+            { new SelectListItem{Text="B.E/B.Tech"},
+            new SelectListItem{Text="Bsc"},
+            new SelectListItem{Text="BCA"},
+            new SelectListItem{Text="M.E/M.Tech"},
+            new SelectListItem{Text="Msc"},
+            new SelectListItem{Text="MCA"},
+            new SelectListItem{Text="PHD"}}, new { @class = "form-control" })
+            </div>
 
 
-			@if (0 == @Model.Id)
-			{
+            @if (0 == @Model.Id)
+            {
 
-				<div class="form-group">
-					<label class="col-form-label">User Name</label>
-					@Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", placeholder="example@org.com"} })
-					@Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-				</div>
+                <div class="form-group">
+                    <label class="col-form-label">User Name</label>
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", placeholder="example@org.com"} })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
 
-				<div class="form-group">
-					<label class="col-form-label">Confirm Password</label>
-					@Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
-					@Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-				</div>
+                <div class="form-group">
+                    <label class="col-form-label">Confirm Password</label>
+                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
 
-			}
-		</div>
-	</div>
-	<div class="form-group mt-4 float-right">
-		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		<input type="submit" value="Save" name="submit" class="btn btn-primary mr-3" />
-	</div>
+            }
+        </div>
+    </div>
+    <div class="form-group mt-4 float-right">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" value="Save" name="submit" class="btn btn-primary mr-3" />
+    </div>
 
 }
 
 <script src="/js/user.js"></script>
-
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

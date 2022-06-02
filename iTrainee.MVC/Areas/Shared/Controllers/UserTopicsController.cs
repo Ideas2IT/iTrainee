@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -27,7 +28,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult ManageUserTopics()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var userTopicsList = (List<UserTopics>)HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics?batchId=" + TempData["BatchId"], "");
+            var userTopicsList = (List<UserTopics>)HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics?batchId=" + TempData["BatchId"], "", Convert.ToString(TempData["UserToken"]));
             return View(userTopicsList);
         }
 
@@ -35,12 +36,13 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpGet]
         public IActionResult AddEditUserTopics(string id)
         {
+            var token = Convert.ToString(TempData["UserToken"]);
             UserTopics userTopics = new UserTopics();
             TempData["BatchId"] = id;
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            userTopics.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsersByBatch?role=Trainee&id=" + id, "");
-            List<Topics> topics = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "");
-            List<SubTopics> subTopics = (List<SubTopics>)HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics", "");
+            userTopics.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsersByBatch?role=Trainee&id=" + id, "", token);
+            List<Topics> topics = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "", token);
+            List<SubTopics> subTopics = (List<SubTopics>)HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics", "", token);
             List<UserTopics> nodes = new List<UserTopics>();
             foreach (Topics topic in topics)
             {
@@ -61,7 +63,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             StringBuilder traineeList = new StringBuilder();
             UserTopics newUserTopics = new UserTopics();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            List<Topics> topics = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "");
+            List<Topics> topics = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "", TempData["UserToken"].ToString());
             List<UserTopics> items = JsonConvert.DeserializeObject<List<UserTopics>>(selectedItems);
             foreach (UserTopics userTopic in items)
             {
@@ -86,7 +88,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             }
             newUserTopics.SelectedSubTopicList = subTopicList.ToString();
             newUserTopics.SelectedTraineeList = traineeList.ToString();
-            HttpClientHelper.ExecutePostApiMethod<UserTopics>(baseUrl, "/UserTopics/AddUserTopic", newUserTopics, "");
+            HttpClientHelper.ExecutePostApiMethod<UserTopics>(baseUrl, "/UserTopics/AddUserTopic", newUserTopics, token);
             return RedirectToAction("ManageUserTopics");
         }
     }

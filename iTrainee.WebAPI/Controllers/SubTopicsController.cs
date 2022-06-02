@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using iTrainee.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace iTrainee.APIs.Controllers
 {
+    [Authorize]
     [Route("api/[Controller]/[action]")]
     [ApiController]
     public class SubTopicsController : Controller

@@ -22,7 +22,6 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public IEnumerable<Topics> GetAllTopics()
         {
             return _topicsService.GetAllTopics();

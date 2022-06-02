@@ -32,19 +32,20 @@
                     <li class="nav-item px-3 signInSignOut">
                         <span>Date: @DateTime.Now.ToShortDateString()</span>
                     </li>
-                      <li class="nav-item px-3 signInSignOut">
-                            <span>Sign-In : @Model.SignIn.ToShortTimeString()</span>
-                        </li>
-                        <li class="nav-item px-3 signInSignOut">
-                            <span>Sign-Out : @Model.SignOut.ToShortTimeString()</span>
-                        </li>
+                    @*<li class="nav-item px-3 signInSignOut">
+                        <span>Sign-In : @Model.SignIn.ToShortTimeString()</span>
+                    </li>
+                    <li class="nav-item px-3 signInSignOut">
+                        <span>Sign-Out : @Model.SignOut.ToShortTimeString()</span>
+                    </li>*@
                 }
                 <li class="nav-item  px-2">
                     <i class="header-notification fa-lg fa fa-bell-o"></i>
-                    @if((int)@TempData["UnreadMessagesCount"] > 0) {
+                    @if ((int)@TempData["UnreadMessagesCount"] > 0)
+                    {
                         <span class="counter counter-lg">@TempData["UnreadMessagesCount"]</span>
                     }
-                    
+
                 </li>
                 <li class="nav-item dropdown px-2">
                     <a class="text-dark nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -52,12 +53,11 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="#">Profile</a>
-                      
-	                   <a href="/Home/ChangePassword?userId=@TempData["UserId"]" class="dropdown-item"> Change Password</a>
-                    
-                         @* <a class="dropdown-item" href="/Home/LogOut">Sign Out</a>*@
-                         <a asp-controller="Home" asp-action="logout">Logout</a>
-                      </div>
+
+                        <a href="/Home/ChangePassword?userId=@TempData["UserId"]" class="dropdown-item"> Change Password</a>
+
+                        <a class="dropdown-item" href="/Home/Login">Sign Out</a>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -113,6 +113,9 @@
                             <a class="nav-link text-white" href="/Mentor/Home/Index"><i class="fa fa-home fa-lg" aria-hidden="true"></i></a>
                         </li>
                         <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="/Shared/Batch/ManageBatch">Batch</a>
+                        </li>
+                        <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Mentor/Home/ManageStreams">Stream</a>
                         </li>
                         <li class="nav-item px-3">
@@ -125,7 +128,7 @@
                             <a class="nav-link text-white" href="/Shared/UserTopics/ManageUserTopics">Assign Topics</a>
                         </li>
                         <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="#">Alert Trainee</a>
+                            <a class="nav-link text-white" href="/Shared/Messages/ManageMessages">Alert Trainee</a>
                         </li>
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Admin/Home/ManageUser?role=Trainee&userId=@TempData["UserId"]">Trainee Progress</a>
@@ -136,7 +139,9 @@
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="#">Daily Progress</a>
                         </li>
-                       
+                        <li class="nav-item px-3">
+                            <a class="nav-link text-white" href="/Shared/Messages/ManageTraineeMessages">Alerts</a>
+                        </li>
                     }
                 </ul>
             </div>
@@ -160,9 +165,9 @@ Welcome @Context.Session.GetString("username")
 
 
 <script type="text/javascript">
-  
+
     function ChangePassword() {
-        
+
         var UserPath = "/Home/ChangePassword";
         $("#changePasswordBody").load(UserPath, function () {
             $("#changePassword").modal("show");
@@ -175,5 +180,5 @@ Welcome @Context.Session.GetString("username")
             $("#myModal1").modal("show");
         });
     };
-    
+
 </script>
