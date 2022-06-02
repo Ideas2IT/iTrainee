@@ -63,7 +63,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
                 HttpClientHelper.ExecutePostApiMethod<SubTopics>(baseUrl, "/SubTopics/AddSubTopic", subTopic, "");
             }
-            return PartialView(subTopic);
+            return RedirectToAction("ManageSubTopics", "Home", new { Area = "Mentor" });
         }
         [HttpPost]
         public IActionResult DeleteSubTopic(int id)

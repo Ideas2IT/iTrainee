@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace iTrainee.Models
 {
@@ -10,17 +11,21 @@ namespace iTrainee.Models
 
         public int TopicId { get; set; }
 
+        [Required(ErrorMessage = "Please enter subtopic name")]
         public string Name { get; set; }
 
-        [NotMapped]
-        public string TopicName { get; set; }
-
-        public string StreamName { get; set; }
+        [Required(ErrorMessage = "Please enter reference URL")]
+        [DataType(DataType.Url)]
+        public string ReferenceURL { get; set; }
 
         [NotMapped]
         public virtual Topics Topic { get; set; }
 
-        public string ReferenceURL { get; set; }
+        [NotMapped]
+        public string TopicName { get; set; }
+
+        [NotMapped]
+        public string StreamName { get; set; }
 
         [NotMapped]
         public int Percentage { get; set; }

@@ -6,7 +6,7 @@ namespace iTrainee.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Name is Required")]
+        [Required(ErrorMessage = "Please enter stream name")]
         public string Name { get; set; }
     }
 }
