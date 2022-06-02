@@ -69,6 +69,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             }
             return RedirectToAction("ManageSubTopics", "Home", new { Area = "Mentor" });
         }
+
         [HttpPost]
         public IActionResult DeleteSubTopic(int id)
         {
