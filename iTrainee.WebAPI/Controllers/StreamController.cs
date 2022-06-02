@@ -18,7 +18,6 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public IEnumerable<Stream> GetAllStreams()
         {
             var result = _streamService.GetStreams();
@@ -26,7 +25,6 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public Stream Get(int id)
         {
             return _streamService.GetStream(id);

@@ -74,17 +74,17 @@
 				@Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
 			</div>
 
-			<div class="form-group">
-				<label class="col-form-label">Qualification</label>
-				@Html.DropDownListFor(model => model.Qualification, new List<SelectListItem>
-			{ new SelectListItem{Text="B.E/B.Tech"},
-			new SelectListItem{Text="Bsc"},
-			new SelectListItem{Text="BCA"},
-			new SelectListItem{Text="M.E/M.Tech"},
-			new SelectListItem{Text="Msc"},
-			new SelectListItem{Text="MCA"},
-			new SelectListItem{Text="PHD"}}, new { @class = "form-control" })
-			</div>
+            <div class="form-group">
+                <label class="col-form-label">Qualification</label>
+                @Html.DropDownListFor(model => model.Qualification, new List<SelectListItem>
+            { new SelectListItem{Text="B.E/B.Tech"},
+            new SelectListItem{Text="Bsc"},
+            new SelectListItem{Text="BCA"},
+            new SelectListItem{Text="M.E/M.Tech"},
+            new SelectListItem{Text="Msc"},
+            new SelectListItem{Text="MCA"},
+            new SelectListItem{Text="PHD"}}, new { @class = "form-control" })
+            </div>
 
 
 			@if (0 == @Model.Id)
@@ -113,4 +113,8 @@
 }
 
 <script src="/js/user.js"></script>
-
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

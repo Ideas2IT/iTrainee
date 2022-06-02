@@ -69,7 +69,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult DeleteSubTopic(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteDeleteApiMethod<SubTopics>(baseUrl, "/SubTopics/DeleteSubTopic?", "Id=" + id, TempData["UserToken"].ToString());
+            var result = HttpClientHelper.ExecuteDeleteApiMethod<SubTopics>(baseUrl, "/SubTopics/DeleteSubTopic?", "Id=" + id, "");
             return new JsonResult("");
         }
     }

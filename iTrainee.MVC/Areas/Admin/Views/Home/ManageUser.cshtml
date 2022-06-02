@@ -6,16 +6,19 @@
 <link rel="stylesheet" href="/css/user.css">
 <div id="viewPlaceHolder"></div>
 <div class="d-flex justify-content-between mt-4">
-     @if (TempData["HeaderRole"].Equals("Mentor") || (TempData["HeaderRole"].Equals("Trainee")) )
+    @if (TempData["HeaderRole"].Equals("Mentor") || (TempData["HeaderRole"].Equals("Trainee")))
     {
         <h3>Trainee Details</h3>
-    } else
+    }
+    else
     {
-    <h3>Manage @ViewBag.Role</h3>
+        <h3>Manage @ViewBag.Role</h3>
     }
 
-     @if (TempData["HeaderRole"].Equals("Mentor") || (TempData["HeaderRole"].Equals("Trainee")) ){
-    } else
+    @if (TempData["HeaderRole"].Equals("Mentor") || (TempData["HeaderRole"].Equals("Trainee")))
+    {
+    }
+    else
     {
         <button data-toggle="modal" class="btn btn-add-gradient btn-primary mb-3" onclick="GetUser(0)" data-target="#myModal1">Add New</button>
     }
@@ -100,7 +103,6 @@
                 <h3 class="modal-title">Save @TempData["Role"]</h3>
             </div>
             <div class="modal-body" id="myModalBodyDiv1">
-
             </div>
         </div>
     </div>

@@ -10,7 +10,7 @@
 if (slider != null) {
     updateFollowerValue(slider.value);
 }
-
+$('#1').addClass('topic-name-on-select');
 var GetSubTopicList = function (UserId, TopicId, id) {
     var UserPath = "/Trainee/Home/SubTopicList?topicId=" + TopicId + "&userId=" + UserId;
     $("#SubTopic").load(UserPath, function () {

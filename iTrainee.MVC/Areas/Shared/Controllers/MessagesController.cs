@@ -35,7 +35,17 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             TempData.Keep("HeaderRole");
             TempData.Keep("UserId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            List<Messages> messages = (List<Messages>)HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "/Messages/GetMessagesByUserId?", "Id=" + TempData.Peek("UserId"));
+            List<Messages> messages = (List<Messages>)HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "/Messages/GetMessagesByUserId?", "Id=" + TempData.Peek("UserId"), Convert.ToString(TempData["UserToken"]));
+
+            return View(messages);
+        }
+
+        public IActionResult ManageTraineeMessages()
+        {
+            TempData.Keep("HeaderRole");
+            TempData.Keep("UserId");
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            List<UserMessages> messages = (List<UserMessages>)HttpClientHelper.ExecuteGetAllApiMethod<UserMessages>(baseUrl, "/UserMessages/GetTraineeMessagesByUserId?", "Id=" + TempData.Peek("UserId"));
 
             return View(messages);
         }
@@ -43,7 +53,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult ViewAlertDetails(int Id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var userMessages = HttpClientHelper.ExecuteGetAllApiMethod<UserMessages>(baseUrl, "/Messages/GetUserMessagesByMessageId?", "Id=" + Id);
+            var userMessages = HttpClientHelper.ExecuteGetAllApiMethod<UserMessages>(baseUrl, "/Messages/GetUserMessagesByMessageId?", "Id=" + Id, Convert.ToString(TempData["UserToken"]));
 
             return PartialView("ViewAlertDetails", userMessages);
         }
@@ -77,25 +87,43 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             TempData.Keep("HeaderRole");
             var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+
             if (ModelState.IsValid)
             {
                 if (alert.Id > 0)
                 {
-                    string[] TraineeIdsArrayOld = (string[])TempData["SelectedTrainees"];
-                    string[] TraineeIdsArrayNew = alert.SelectedTraineeIds.ToArray();
-                    
+                    HttpClientHelper.ExecuteInsertPostApiMethod<Messages>(baseUrl, "/Messages/AddMessage", alert, token);
+                    string[] TraineeIdsBeforeUpdate = (string[])TempData["SelectedTrainees"];
+                    string[] TraineeIdsAfterUpdate = alert.SelectedTraineeIds.ToArray();
+                    StringBuilder sbSelectedIds = new StringBuilder();
+                    StringBuilder sbUnselectedIds = new StringBuilder();
+
+                    foreach (string id in TraineeIdsAfterUpdate.Except(TraineeIdsBeforeUpdate))
+                    {
+                        sbSelectedIds.Append(id + ",");
+                    }
+
+                    foreach (string id in TraineeIdsBeforeUpdate.Except(TraineeIdsAfterUpdate))
+                    {
+                        sbUnselectedIds.Append(id + ",");
+                    }
+
+                    alert.SelectedTraineeIdsString = sbSelectedIds.ToString();
+                    alert.UnselectedTraineeIdsString = sbUnselectedIds.ToString();
+
+                    HttpClientHelper.ExecutePostApiMethod<Messages>(baseUrl, "/UserMessages/AddUserMessage", alert, token);
                 }
                 else
                 {
-                    int batchId = HttpClientHelper.ExecuteInsertPostApiMethod<Messages>(baseUrl, "/Messages/AddMessage", alert, token);
-                    alert.Id = batchId;
+                    int messageId = HttpClientHelper.ExecuteInsertPostApiMethod<Messages>(baseUrl, "/Messages/AddMessage", alert, token);
+                    alert.Id = messageId;
 
                     StringBuilder sbUserIds = new StringBuilder();
                     foreach (string i in alert.SelectedTraineeIds)
                     {
                         sbUserIds.Append(i + ",");
                     }
-                    alert.TraineesIdsString = sbUserIds.ToString();
+                    alert.SelectedTraineeIdsString = sbUserIds.ToString();
 
                     HttpClientHelper.ExecutePostApiMethod<Messages>(baseUrl, "/UserMessages/AddUserMessage", alert, token);
                 }

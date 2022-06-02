@@ -31,8 +31,13 @@ namespace iTrainee.Data
                 });
                 parameters.Add(new SqlParameter
                 {
-                    ParameterName = "ToId",
-                    Value = message.TraineesIdsString
+                    ParameterName = "SelectedTraineeIds",
+                    Value = message.SelectedTraineeIdsString
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UnselectedTraineeIds",
+                    Value = message.UnselectedTraineeIdsString
                 });
                 parameters.Add(new SqlParameter
                 {
@@ -55,7 +60,7 @@ namespace iTrainee.Data
                     Value = DateTime.Now.Date
                 });
 
-                result = _dataManager.ExecuteStoredProcedure("spInsertUserMessages", parameters);
+                result = _dataManager.ExecuteStoredProcedure("spSaveUserMessages", parameters);
 
                 if (result.Tables.Count != 0)
                 {
@@ -125,6 +130,41 @@ namespace iTrainee.Data
                 throw ex;
             }
             return unassignedTrainees;
+        }
+
+        public IEnumerable<UserMessages> GetTraineeMessagesByUserId(int Id)
+        {
+            List<UserMessages> messages = new List<UserMessages>();
+            try
+            {
+                var parameters = new List<SqlParameter>
+                {
+                    new SqlParameter
+                    {
+                        ParameterName = "ToId",
+                        Value = Id
+                    }
+                };
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetTraineeMessagesById", parameters);
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
+                    {
+                        messages.Add(new UserMessages
+                        {
+                            MessageId = Convert.ToInt32(item["MessageId"]),
+                            Message = Convert.ToString(item["Message"]),
+                            Sender = Convert.ToString(item["Sender"]),
+                            IsRead = (bool)item["IsRead"]
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return messages;
         }
     }
 }

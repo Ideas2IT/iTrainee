@@ -2,9 +2,11 @@
 using iTrainee.Models;
 using iTrainee.Services.Interfaces;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace iTrainee.APIs.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class MessagesController : Controller

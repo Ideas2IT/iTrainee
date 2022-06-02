@@ -28,8 +28,8 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult AddEditTopic(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var topic = HttpClientHelper.ExecuteGetApiMethod<Topics>(baseUrl, "/Topics/Get?", "Id=" + id);
-            List<Stream> streamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "");
+            var topic = HttpClientHelper.ExecuteGetApiMethod<Topics>(baseUrl, "/Topics/Get?", "Id=" + id, Convert.ToString(TempData["UserToken"]));
+            List<Stream> streamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "", Convert.ToString(TempData["UserToken"]));
             TempData["TopicId"] = id;
             ViewBag.StreamList = new SelectList(streamList, "Id", "Name");
 

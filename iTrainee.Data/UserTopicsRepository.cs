@@ -37,7 +37,6 @@ namespace iTrainee.Data
                     {
                         userTopics.Add(new UserTopics
                         {
-                            Id = Convert.ToInt32(item["Id"]),
                             Name = Convert.ToString(item["UserName"]),
                             TopicName = Convert.ToString(item["Name"]),
                             SubTopicName = Convert.ToString(item["SubTopicName"])
