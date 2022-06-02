@@ -59,6 +59,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpPost]
         public ActionResult AddEditUserTopics(UserTopics userTopics,string selectedItems)
         {
+            var token = Convert.ToString(TempData["UserToken"]);
             StringBuilder subTopicList = new StringBuilder();
             StringBuilder traineeList = new StringBuilder();
             UserTopics newUserTopics = new UserTopics();
