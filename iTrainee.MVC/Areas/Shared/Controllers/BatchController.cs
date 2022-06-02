@@ -29,7 +29,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult ManageBatch()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var batchList = HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + userId, "", Convert.ToString(TempData["UserToken"]));
+            var batchList = HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + TempData["UserId"], "", Convert.ToString(TempData["UserToken"]));
 
             return View(batchList);
         }
