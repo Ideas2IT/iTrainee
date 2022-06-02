@@ -38,6 +38,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult AddEditBatch(int id)
         {
             var token = Convert.ToString(TempData["UserToken"]);
+            TempData.Keep("UserToken");
             Batch batch = new Batch();
             User user = new User();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
@@ -73,6 +74,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddEditBatch(Batch batch)
         {
+            TempData.Keep("UserToken");
             Batch newBatch = new Batch();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             if (ModelState.IsValid)
