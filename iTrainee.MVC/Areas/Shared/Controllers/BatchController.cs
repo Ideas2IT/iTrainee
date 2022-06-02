@@ -16,10 +16,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
     {
         ILogger<BatchController> _logger;
         IConfiguration _configuration;
-        private List<string> getUserIds;
-        private List<string> postUserIds;
-        private List<string> getStreamIds;
-        private List<string> postStreamIds;
 
         public BatchController(ILogger<BatchController> logger, IConfiguration configuration)
         {
@@ -28,8 +24,18 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
         public IActionResult ManageBatch()
         {
+            List<Batch> batchList = new List<Batch>();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var batchList = HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + userId, "", Convert.ToString(TempData["UserToken"]));
+            var token = TempData["UserToken"].ToString();
+
+            if (TempData["HeaderRole"].ToString() == "Mentor")
+            {
+                batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + TempData["UserId"].ToString(), "", token);
+            }
+            else
+            {
+                batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=0", "", token);
+            }
 
             return View(batchList);
         }
@@ -40,6 +46,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             Batch batch = new Batch();
             User user = new User();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            TempData.Keep("UserToken");
 
             if (id > 0)
             {
@@ -74,6 +81,8 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         {
             Batch newBatch = new Batch();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            TempData.Keep("UserToken");
+
             if (ModelState.IsValid)
             {
                 var token = Convert.ToString(TempData["UserToken"]);
@@ -84,83 +93,40 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
                     string[] postUserIdsArray = batch.SelectedMentorIds.Concat(batch.SelectedTraineeIds).ToArray();
                     string[] getStreamIdsArray = (string[])TempData["getStreamIds"];
                     string[] postStreamIdsArray = batch.SelectedStreamIds.ToArray();
-                    getUserIds = getUserIdsArray.ToList();
-                    postUserIds = postUserIdsArray.ToList();
-                    getStreamIds = getStreamIdsArray.ToList();
-                    postStreamIds = postStreamIdsArray.ToList();
 
-                    foreach (string unSelectedId in getUserIds)
-                    {
-                        foreach (string selectedId in postUserIds)
-                        {
-                            if (selectedId == unSelectedId)
-                            {
-                                postUserIdsArray = postUserIdsArray.Where(val => val != selectedId).ToArray();
-                            }
-                            else
-                            {
-                                getUserIdsArray = getUserIdsArray.Where(val => val != selectedId).ToArray();
-                            }
-                        }
-                    }
-                    foreach (string unSelectedId in getStreamIds)
-                    {
-                        foreach (string selectedId in postStreamIds)
-                        {
-                            if (selectedId == unSelectedId)
-                            {
-                                postStreamIdsArray = postStreamIdsArray.Where(val => val != selectedId).ToArray();
-                                getStreamIdsArray = getStreamIdsArray.Where(val => val != selectedId).ToArray();
-                            }
-                        }
-                    }
+                    StringBuilder sbSelectedUserIds = new StringBuilder();
+                    StringBuilder sbUnselectedUserIds = new StringBuilder();
+                    StringBuilder sbSelectedStreamIds = new StringBuilder();
+                    StringBuilder sbUnselectedStreamIds = new StringBuilder();
+
                     HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/Batch/UpdateBatch", batch, token);
 
-                    if (postUserIdsArray.Length != 0)
+                    foreach (string id in postUserIdsArray.Except(getUserIdsArray))
                     {
-                        StringBuilder sb = new StringBuilder();
-                        foreach (string i in postUserIdsArray)
-                        {
-                            sb.Append(i + ",");
-                        }
-                        batch.StringUserIds = sb.ToString();
+                        sbSelectedUserIds.Append(id + ",");
+                        batch.StringUserIds = sbSelectedUserIds.ToString();
                         HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchUser/UpdateBatchUser", batch, token);
                     }
-                    if (getUserIdsArray.Length != 0)
+
+                    foreach (string id in getUserIdsArray.Except(postUserIdsArray))
                     {
-                        StringBuilder sb = new StringBuilder();
-                        foreach (string i in getUserIdsArray)
-                        {
-                            sb.Append(i + ",");
-                        }
-                        batch.StringUserIds = sb.ToString();
+                        sbUnselectedUserIds.Append(id + ",");
+                        batch.StringUserIds = sbUnselectedUserIds.ToString();
                         HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchUser/UnassignUserId", batch, token);
                     }
-                    if (postStreamIdsArray.Length != 0)
+                    foreach (string id in postStreamIdsArray.Except(getStreamIdsArray))
                     {
-                        StringBuilder sb = new StringBuilder();
-                        foreach (string i in postStreamIdsArray)
-                        {
-                            sb.Append(i + ",");
-                        }
-                        batch.StringStreamIds = sb.ToString();
+                        sbSelectedStreamIds.Append(id + ",");
+                        batch.StringStreamIds = sbSelectedStreamIds.ToString();
                         HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchStream/UpdateBatchStream", batch, token);
                     }
-                    if (getStreamIdsArray.Length != 0)
+
+                    foreach (string id in getStreamIdsArray.Except(postStreamIdsArray))
                     {
-                        StringBuilder sb = new StringBuilder();
-                        foreach (string i in getStreamIdsArray)
-                        {
-                            sb.Append(i + ",");
-                        }
-                        batch.StringStreamIds = sb.ToString();
+                        sbUnselectedStreamIds.Append(id + ",");
+                        batch.StringStreamIds = sbUnselectedStreamIds.ToString();
                         HttpClientHelper.ExecutePostApiMethod<Batch>(baseUrl, "/BatchStream/UnassignStreamId", batch, token);
                     }
-
-                    getUserIds = null;
-                    postUserIds = null;
-                    getStreamIds = null;
-                    postStreamIds = null;
                 }
                 else
                 {
@@ -197,6 +163,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         {
             var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            TempData.Keep("UserToken");
             HttpClientHelper.ExecuteDeleteApiMethod<Batch>(baseUrl, "/Batch/DeleteBatch?", "Id=" + id, token);
             return RedirectToAction("ManageBatch", new { Area = "Shared" });
         }

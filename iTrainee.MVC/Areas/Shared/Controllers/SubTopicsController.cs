@@ -31,9 +31,11 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult AddEditSubTopic(int id, int streamId)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var subTopic = HttpClientHelper.ExecuteGetApiMethod<SubTopics>(baseUrl, "/SubTopics/Get?", "Id=" + id);
-            List<Stream> streamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "");
-            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "");
+            var token = TempData["UserToken"].ToString();
+
+            var subTopic = HttpClientHelper.ExecuteGetApiMethod<SubTopics>(baseUrl, "/SubTopics/Get?", "Id=" + id, token);
+            List<Stream> streamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "", token);
+            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "", token);
             TempData["SubTopicId"] = id;
             ViewBag.StreamList = new SelectList(streamList, "Id", "Name");
             ViewBag.TopicsList = new SelectList(topicsList, "Id", "Name");
@@ -44,7 +46,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult GetTopicList(int streamId)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetTopicsByStreamId?", "streamId=" + streamId);
+            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetTopicsByStreamId?", "streamId=" + streamId, TempData["UserToken"].ToString());
             return new JsonResult(new { data = topicsList });
         }
 
