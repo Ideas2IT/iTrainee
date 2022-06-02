@@ -1,12 +1,12 @@
 ﻿using iTrainee.Models;
 using iTrainee.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace iTrainee.APIs.Controllers
 {
-	[Route("api/[controller]/[action]")]
+    [Route("api/[controller]/[action]")]
 	[ApiController]
 	public class UserTopicsController : Controller
 	{
@@ -20,8 +20,14 @@ namespace iTrainee.APIs.Controllers
 		public IEnumerable<UserTopics> GetAllUserTopics(int batchId)
 		{
 			List<UserTopics> users = new List<UserTopics>();
-
-			users = (List<UserTopics>)_userTopicsService.GetAllUserTopics(batchId);
+			try
+            {
+				users = (List<UserTopics>)_userTopicsService.GetAllUserTopics(batchId);
+			} catch (Exception)
+            {
+				users = new List<UserTopics>();
+            }
+			
 			return users;
 		}
 

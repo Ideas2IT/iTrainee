@@ -8,7 +8,6 @@ namespace iTrainee.MVC.Helpers
 {
     public static class HttpClientHelper
     {
-
         public static object ExecuteGetApiMethod<T>(string baseUrl, string method, string parameters)
         {
             using (var client = new HttpClient())
@@ -56,7 +55,6 @@ namespace iTrainee.MVC.Helpers
 
         public static object ExecuteGetAllApiMethod<T>(string baseUrl, string method, string parameters)
         {
-
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);

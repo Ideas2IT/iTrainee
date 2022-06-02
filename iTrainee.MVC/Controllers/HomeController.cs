@@ -119,7 +119,7 @@ namespace iTrainee.Controllers
             var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + userId);
             user.Password = updatedPassword;
             HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/UpdateUser" , user, Convert.ToString(TempData.Peek("UserToken")));
-            return RedirectToAction("Login");
+            return RedirectToAction("Login", new { user = new User() });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -407,67 +407,10 @@ namespace iTrainee.Data
                 });
                 parameters.Add(new SqlParameter
                 {
-                    ParameterName = "FirstName",
-                    Value = user.FirstName
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "LastName",
-                    Value = user.LastName
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "DOB",
-                    Value = user.DOB
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "UserName",
-                    Value = user.UserName
-                });
-                parameters.Add(new SqlParameter
-                {
                     ParameterName = "Password",
                     Value = user.Password
                 });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "Qualification",
-                    Value = user.Qualification
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "IsAdmin",
-                    Value = user.IsAdmin
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "IsMentor",
-                    Value = user.IsMentor
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "IsTrainee",
-                    Value = user.IsTrainee
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "UpdatedBy",
-                    Value = "Mentor"
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "UpdatedOn",
-                    Value = DateTime.Now.Date
-                });
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "AutoIncrementedId",
-                    Value = 0
-                });
-
-
-                DataSet result = _dataManager.ExecuteStoredProcedure("spSaveUser", parameters);
+                DataSet result = _dataManager.ExecuteStoredProcedure("spUpdatePassword", parameters);
                 if (result.Tables.Count != 0)
                 {
                     isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
