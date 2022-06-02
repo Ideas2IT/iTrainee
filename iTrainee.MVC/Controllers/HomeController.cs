@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace iTrainee.Controllers
 {
@@ -17,6 +19,7 @@ namespace iTrainee.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         IConfiguration _configuration;
+        private object Session;
 
         public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
@@ -77,6 +80,9 @@ namespace iTrainee.Controllers
             TempData["UnreadMessagesCount"] = user.UnreadMessagesCount;
             var token = Convert.ToString(TempData["UserToken"]);
 
+                HttpContext.Session.SetString("username", user.UserName);
+            
+
             if (user.RoleName.Equals("Trainee"))
             {
                 UserAudit userAudit = new UserAudit();
@@ -122,13 +128,21 @@ namespace iTrainee.Controllers
             var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + userId, Convert.ToString(TempData["UserToken"]));
             user.Password = updatedPassword;
             HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/UpdateUser" , user, Convert.ToString(TempData.Peek("UserToken")));
-            return RedirectToAction("Login");
+            return RedirectToAction("Login", new { user = new User() });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View();
+        }
+
+        [System.Web.Mvc.Route("logout")]
+      //  [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("username");
+            return RedirectToAction("Login");
         }
     }
 }

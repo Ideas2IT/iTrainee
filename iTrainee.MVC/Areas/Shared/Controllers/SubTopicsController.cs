@@ -28,13 +28,14 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddEditSubTopic(int id, int streamId)
+        public IActionResult AddEditSubTopic(int id)
         {
+            TempData.Keep("UserToken");
             var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var subTopic = HttpClientHelper.ExecuteGetApiMethod<SubTopics>(baseUrl, "/SubTopics/Get?", "Id=" + id, token);
-            List<Stream> streamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "", token);
-            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "", token);
+            var subTopic = (SubTopics)HttpClientHelper.ExecuteGetApiMethod<SubTopics>(baseUrl, "/SubTopics/Get?", "Id=" + id, token);
+            List<Stream> streamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams","", token);
+            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetTopicsByStreamId?StreamId=" + subTopic.StreamId, "", token);
             TempData["SubTopicId"] = id;
             ViewBag.StreamList = new SelectList(streamList, "Id", "Name");
             ViewBag.TopicsList = new SelectList(topicsList, "Id", "Name");
@@ -44,9 +45,9 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult GetTopicList(int streamId)
         {
-            var token = Convert.ToString(TempData["UserToken"]);
+            TempData.Keep("UserToken");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetTopicsByStreamId?", "streamId=" + streamId, token);
+            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetTopicsByStreamId?", "streamId=" + streamId, Convert.ToString(TempData["UserToken"]));
             return new JsonResult(new { data = topicsList });
         }
 
@@ -54,6 +55,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddEditSubTopic(SubTopics subTopic)
         {
+            TempData.Keep("UserToken");
             subTopic.Id = Convert.ToInt32(TempData["SubTopicId"]);
             if (subTopic.Id > 0)
             {
@@ -67,11 +69,11 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             }
             return RedirectToAction("ManageSubTopics", "Home", new { Area = "Mentor" });
         }
-        [HttpPost]
+
         public IActionResult DeleteSubTopic(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteDeleteApiMethod<SubTopics>(baseUrl, "/SubTopics/DeleteSubTopic?", "Id=" + id, "");
+            var result = HttpClientHelper.ExecuteDeleteApiMethod<SubTopics>(baseUrl, "/SubTopics/DeleteSubTopic?", "Id=" + id, TempData["UserToken"].ToString());
             return new JsonResult("");
         }
     }

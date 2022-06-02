@@ -59,7 +59,6 @@ namespace iTrainee.MVC.Helpers
 
         public static object ExecuteGetAllApiMethod<T>(string baseUrl, string method, string parameters, string token)
         {
-
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);

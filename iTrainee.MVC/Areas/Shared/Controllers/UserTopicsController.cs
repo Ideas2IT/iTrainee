@@ -29,7 +29,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         {
             var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var userTopicsList = (List<UserTopics>)HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics?batchId=" + TempData["BatchId"], "", token);
+            var userTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics?batchId=" + TempData["BatchId"],"");
             return View(userTopicsList);
         }
 
@@ -60,6 +60,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpPost]
         public ActionResult AddEditUserTopics(UserTopics userTopics,string selectedItems)
         {
+            var token = Convert.ToString(TempData["UserToken"]);
             StringBuilder subTopicList = new StringBuilder();
             StringBuilder traineeList = new StringBuilder();
             UserTopics newUserTopics = new UserTopics();
@@ -90,7 +91,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             }
             newUserTopics.SelectedSubTopicList = subTopicList.ToString();
             newUserTopics.SelectedTraineeList = traineeList.ToString();
-            HttpClientHelper.ExecutePostApiMethod<UserTopics>(baseUrl, "/UserTopics/AddUserTopic", newUserTopics, "");
+            HttpClientHelper.ExecutePostApiMethod<UserTopics>(baseUrl, "/UserTopics/AddUserTopic", newUserTopics, token);
             return RedirectToAction("ManageUserTopics");
         }
     }

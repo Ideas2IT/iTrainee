@@ -178,6 +178,7 @@ namespace iTrainee.Data
                     isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
                 }
             }
+
             catch (Exception ex)
             {
                 throw ex;

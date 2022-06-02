@@ -16,6 +16,8 @@ using Microsoft.IdentityModel.Tokens;
 using iTrainee.APIs;
 using iTrainee.APIs.Interfaces;
 using iTrainee.APIs.JWTManagerRepository;
+using System;
+using Microsoft.AspNetCore.Identity;
 
 namespace iTrainee.WebAPI
 {
@@ -51,7 +53,6 @@ namespace iTrainee.WebAPI
                 };
             });
 
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -83,7 +84,10 @@ namespace iTrainee.WebAPI
             services.AddSingleton<ISubTopicsService, SubTopicsService>();
             services.AddSingleton<IUserTopicsService, UserTopicsService>();
             services.AddSingleton<IJWTManagerRepository, JWTManagerRepository>();
+
+           
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

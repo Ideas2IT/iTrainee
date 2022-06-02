@@ -22,11 +22,12 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
 
         public IActionResult Index()
         {
+            var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            List<Batch> batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + TempData["UserId"], "", Convert.ToString(TempData["UserToken"]));
+            List<Batch> batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + TempData["UserId"], "", token);
             foreach (var batch in batchList)
             {
-                batch.SelectedTraineeIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/BatchUser/GetSelectedTrainees?Id=" + batch.Id, Convert.ToString(TempData["UserToken"]));
+                batch.SelectedTraineeIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/BatchUser/GetSelectedTrainees?Id=" + batch.Id, token);
             }
             return View(batchList);
         }
