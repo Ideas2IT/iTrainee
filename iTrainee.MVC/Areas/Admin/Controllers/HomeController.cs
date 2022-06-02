@@ -30,18 +30,19 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
 
         public IActionResult ManageUser(string role, int userId)
         {
+            var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             List<User> user = new List<User>();
             if (Convert.ToString(TempData["HeaderRole"]) == "Admin")
             {
-                user = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role, Convert.ToString(TempData["UserToken"]));
+                user = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role, token);
             }
             else
             {
-                string[] batchIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/User/GetAssignedBatchIds?userId=" + userId, Convert.ToString(TempData["UserToken"]));
+                string[] batchIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/User/GetAssignedBatchIds?userId=" + userId, token);
                 foreach (string id in batchIds)
                 {
-                    user.AddRange((List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetAssignedTrainees?batchId=" + Convert.ToInt32(id), "", Convert.ToString(TempData["UserToken"])));
+                    user.AddRange((List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetAssignedTrainees?batchId=" + Convert.ToInt32(id), "", token));
                 }
             }
             ViewBag.Role = role;
