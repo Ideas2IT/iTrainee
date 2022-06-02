@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 namespace iTrainee.APIs.Controllers
 {
+	[Authorize]
+	[Route("api/[controller]/[action]")]
     [Route("api/[controller]/[action]")]
 	[ApiController]
 	public class UserTopicsController : Controller

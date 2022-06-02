@@ -5,7 +5,7 @@
 }
 
 <style>
-    			    .delete-icon {
+    .delete-icon {
         color: red;
         font-size: x-large;
     }
@@ -14,6 +14,7 @@
         color: #00239B;
         font-size: x-large;
     }
+
     .btn-add-gradient {
         background-image: linear-gradient(144deg,#009ffd, rgb(0,35,155) 50%);
         border-radius: 4px;
@@ -26,8 +27,8 @@
 </style>
 
 <div class="d-flex justify-content-between mt-4">
-<h3>Manage Streams</h3>
-<a href="#" class="btn btn-add-gradient btn-primary float-right mb-3" onclick="AddEditStream(0)"> Add New Stream</a>
+    <h3>Manage Streams</h3>
+    <a href="#" class="btn btn-add-gradient btn-primary float-right mb-3" onclick="AddEditStream(0)"> Add New Stream</a>
 </div>
 
 <table class="table table-hover table-bordered">
@@ -48,13 +49,11 @@
                 <td>@Count</td>
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td class="text-center">
-					<a href="#" onclick="AddEditStream(@item.Id)"><i class="fa fa-pencil edit-icon"></i></a> 
-					</td>
-					<td class="text-center">
-                        <form id="DeleteStreamForm" method="post">
-					<a  href="/Shared/Stream/DeleteStream/@item.Id" ><i class="fa fa-trash delete-icon"></i></a>
-                    </form>
-				</td>
+                    <a href="#" onclick="AddEditStream(@item.Id)"><i class="fa fa-pencil edit-icon"></i></a>
+                </td>
+                <td class="text-center">
+                    <a data-id-to-delete="@item.Id" data-toggle="modal" data-target="#delete-stream"><i class="fa fa-trash delete-icon"></i></a>
+                </td>
             </tr>
             Count += 1;
         }
@@ -74,7 +73,28 @@
 </div>
 
 
+<div class="modal fade" id="delete-stream" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure want to delete <span id="name-to-delete"></span>???</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id="delete-stream-button" data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+@section scripts {
 <script type="text/javascript">
 
     var AddEditStream = function (id) {
@@ -84,4 +104,29 @@
         });
     };
 
+    $('#delete-stream').on('show.bs.modal', function (event) {
+                            debugger;
+
+        var button = $(event.relatedTarget)
+        var id = button.data('id-to-delete')
+
+        $('#delete-stream-button').on('click', function () {
+                    debugger;
+
+            $.ajax({
+                url: "/Shared/Stream/DeleteStream/" + id,
+                type: "Delete",
+                dataType: "JSON",
+                success: function () {
+                    $("#myModal1").modal("hide");
+                    window.location.reload();
+                },
+                error: function () {
+                    alert("Unable to delete data");
+                },
+            })
+        })
+    })
+
 </script>
+}

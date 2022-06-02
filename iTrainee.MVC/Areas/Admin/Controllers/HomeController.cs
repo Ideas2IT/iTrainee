@@ -30,28 +30,30 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
 
         public IActionResult ManageUser(string role, int userId)
         {
+            var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-             List<User> user = new List<User>();
+            List<User> user = new List<User>();
             if (Convert.ToString(TempData["HeaderRole"]) == "Admin")
             {
-                user = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role);
+                user = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role, token);
             }
-           else
+            else
             {
-                string[] batchIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/User/GetAssignedBatchIds?userId=" + userId);
+                string[] batchIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/User/GetAssignedBatchIds?userId=" + userId, token);
                 foreach (string id in batchIds)
                 {
-                    user.AddRange((List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetAssignedTrainees?batchId=" + Convert.ToInt32(id), ""));
+                    user.AddRange((List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetAssignedTrainees?batchId=" + Convert.ToInt32(id), "", token));
                 }
             }
-                ViewBag.Role = role;
+            ViewBag.Role = role;
             TempData["Role"] = role;
 
             return View(user);
         }
 
-        public IActionResult SaveUser(int id)
+        public PartialViewResult SaveUser(int id)
         {
+            TempData.Keep("UserToken");
             var user = new User();
 
             if ((Convert.ToString(TempData["Role"]) == "Admin"))
@@ -70,10 +72,11 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             if (0 < id)
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + id);
+                user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + id, Convert.ToString(TempData["UserToken"]));
                 TempData["UserId"] = id;
+                TempData["UserPassword"] = user.Password;
             }
-
+           
             return PartialView(user);
         }
 
@@ -82,28 +85,29 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         [ValidateAntiForgeryToken()]
         public IActionResult SaveUser(User user)
         {
-            if (ModelState.IsValid)
-            {
-                if (0 < user.Id)
+            user.Password = Convert.ToString(TempData["UserPassword"]);
+            user.ConfirmPassword = user.Password;
+            TempData.Keep("UserToken");
+            //if (ModelState.IsValid)
+            //{
+            if (0 < user.Id)
                 {
                     user.Id = Convert.ToInt32(TempData["UserId"]);
                 }
 
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
                 HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user, TempData["UserToken"].ToString());
+            //}
 
-                return RedirectToAction("ManageUser", "Home", new { role = Convert.ToString(TempData["Role"]) });
-            }
-
-            return PartialView(user);
+            return RedirectToAction("ManageUser", "Home", new { role = Convert.ToString(TempData["Role"]) });
         }
 
         [HttpDelete]
-        public IActionResult DeleteUser(int id)
+        public JsonResult DeleteUser(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteDeleteApiMethod<User>(baseUrl, "/User/DeleteUser?", "Id=" + id, TempData["UserToken"].ToString());
-            return RedirectToAction("ManageUser", "Home", new { role = TempData["Role"].ToString() });
+            var result = HttpClientHelper.ExecuteDeleteApiMethod<User>(baseUrl, "/User/DeleteUser?", "Id="+id, TempData["UserToken"].ToString());
+            return new JsonResult("success");
         }
     }
 }

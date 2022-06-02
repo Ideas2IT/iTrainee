@@ -73,11 +73,10 @@
                        id = item.Id
                    }, FormMethod.Post))
                     {
-                        <button class="btn shadow-none" type="submit" onclick="return confirm('Are you sure want to delete this message @item.Message?')">
+                        <button class="btn shadow-none" type="submit" onclick="return confirm('Are you sure want to delete this message \'@item.Message\'?')">
                             <i class="fa fa-trash delete-icon"></i>
                         </button>
                     }
-                    @*<a href="/Shared/Messages/DeleteMessage?Id=@item.Id"><i class="fa fa-trash delete-icon"></i></a>*@
                 </td>
                 <td class="text-center actions-column">
                     <a href="#" onclick="ViewAlertDetails(@item.Id)"><i class="fa fa-eye view-icon"></i></a>
@@ -91,7 +90,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h3 class="modal-title">Alert Response</h3>
+                <a href="#" class="close" data-dismiss="modal">&times;</a>                
             </div>
             <div class="modal-body alertModalBodyDiv" id="alertModalBodyDiv">
             </div>

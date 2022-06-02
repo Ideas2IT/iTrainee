@@ -48,9 +48,7 @@ namespace iTrainee.Data
                         user.Qualification = Convert.ToString(item["Qualification"]);
                         user.Password = Convert.ToString(item["Password"]);
                         user.UserName = Convert.ToString(item["UserName"]);
-                        user.Qualification = Convert.ToString(item["Qualification"]);
                         user.DOB = Convert.ToDateTime(item["DOB"]);
-                        user.Qualification = Convert.ToString(item["Qualification"]);
                     }
                 }
 
@@ -190,42 +188,6 @@ namespace iTrainee.Data
                     }
               
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return users;
-        }
-
-        public IEnumerable<User> GetAssignedMentors(int batchId)
-        {
-            var users = new List<User>();
-            try
-            {
-                var parameters = new List<SqlParameter>();
-                parameters.Add(new SqlParameter
-                {
-                    ParameterName = "BatchId",
-                    Value = batchId
-                });
-
-                DataSet result = _dataManager.ExecuteStoredProcedure("spGetAssignedMentors", parameters);
-                if (result?.Tables?.Count != 0)
-                {
-                    foreach (DataRow item in result.Tables[0].Rows)
-                    {
-                        users.Add(new User
-                        {
-                            Id = Convert.ToInt32(item["Id"]),
-                            FirstName = Convert.ToString(item["FirstName"]),
-                            LastName = Convert.ToString(item["LastName"]),
-                            DOB = Convert.ToDateTime(item["DOB"]),
-                            Qualification = Convert.ToString(item["Qualification"]),
-                            UserName = Convert.ToString(item["UserName"])
-                        });
-                    }
-                }
             }
             catch (Exception ex)
             {
