@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<iTrainee.Models.SubTopics>
+@{
+    TempData.Keep("HeaderRole");
+    TempData.Keep("UserToken");
+}
 
 <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -15,8 +19,8 @@
                     <div class="progress-bar" style="width: @subTopic.Percentage%; background-color:blue" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">@subTopic.Percentage %</div>
                 </div>
             </div>
-            <div class="col-1">
-                <button data-toggle="modal" class="btn btn-sm mt-2 btn-outline-primary " onclick="GetDailyProgress(@subTopic.Id, @subTopic.UserId, '@Convert.ToString(TempData["HeaderRole"])')" data-target="#myModal2">
+            <div class="col-2" style="    align-items: end; display: inline-flex;">
+                <button data-toggle="modal" class="btn btn-sm btn-outline-primary " onclick="GetDailyProgress(@subTopic.Id, @subTopic.UserId, '@Convert.ToString(TempData["HeaderRole"])')" data-target="#myModal2">
                     @if (Convert.ToString(TempData["HeaderRole"]) == "Mentor")
                     {
                         <i class="fa fa-info-circle"></i>

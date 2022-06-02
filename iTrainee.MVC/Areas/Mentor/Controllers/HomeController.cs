@@ -4,6 +4,7 @@ using iTrainee.MVC.Helpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System;
 
 namespace iTrainee.MVC.Areas.Mentor.Controllers
 {
@@ -22,10 +23,10 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
         public IActionResult Index()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            List<Batch> batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + TempData["UserId"], "");
+            List<Batch> batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + TempData["UserId"], "", Convert.ToString(TempData["UserToken"]));
             foreach (var batch in batchList)
             {
-                batch.SelectedTraineeIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/BatchUser/GetSelectedTrainees?Id=" + batch.Id);
+                batch.SelectedTraineeIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/BatchUser/GetSelectedTrainees?Id=" + batch.Id, Convert.ToString(TempData["UserToken"]));
             }
             return View(batchList);
         }
@@ -33,7 +34,7 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
         public IActionResult ManageTopics()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var topicsList = HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "");
+            var topicsList = HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "", Convert.ToString(TempData["UserToken"]));
 
             return View(topicsList);
         }
@@ -41,7 +42,7 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
         public IActionResult ManageStreams()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var streamList = HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllStreams", "");
+            var streamList = HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllStreams", "", Convert.ToString(TempData["UserToken"]));
             
             return View(streamList);
         }
@@ -49,7 +50,7 @@ namespace iTrainee.MVC.Areas.Mentor.Controllers
         public IActionResult ManageSubTopics()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var subTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics", "");
+            var subTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics", "", Convert.ToString(TempData["UserToken"]));
 
             return View(subTopicsList);
         }

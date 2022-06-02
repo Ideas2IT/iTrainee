@@ -6,29 +6,32 @@
 <link rel="stylesheet" href="/css/user.css">
 <div id="viewPlaceHolder"></div>
 <div class="d-flex justify-content-between mt-4">
-     @if (TempData["HeaderRole"].Equals("Mentor") || (TempData["HeaderRole"].Equals("Trainee")) )
+    @if (TempData["HeaderRole"].Equals("Mentor") || (TempData["HeaderRole"].Equals("Trainee")))
     {
         <h3>Trainee Details</h3>
-    } else
+    }
+    else
     {
-    <h3>Manage @ViewBag.Role</h3>
+        <h3>Manage @ViewBag.Role</h3>
     }
 
-     @if (TempData["HeaderRole"].Equals("Mentor") || (TempData["HeaderRole"].Equals("Trainee")) ){
-    } else
+    @if (TempData["HeaderRole"].Equals("Mentor") || (TempData["HeaderRole"].Equals("Trainee")))
+    {
+    }
+    else
     {
         <button data-toggle="modal" class="btn btn-add-gradient btn-primary mb-3" onclick="GetUser(0)" data-target="#myModal1">Add New</button>
     }
 </div>
 
 <table class="table table-hover table-bordered">
-    <tr class="text-center">
+    <tr>
         <th>S.No</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>DOB</th>
         <th>Qualification</th>
-        <th colspan="2">Actions</th>
+        <th class="text-center" colspan="2">Actions</th>
     </tr>
     @{
         int Count = 1;
@@ -51,16 +54,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Qualification)
             </td>
-            <td>
                 @if (TempData["HeaderRole"].Equals("Mentor") || (TempData["HeaderRole"].Equals("Trainee")) ){
-                    @Html.ActionLink("View Progress", "Index","Home",new {Area = "Trainee" ,userId = item.Id, auditId = 0, traineeName= item.FirstName})
+                    <td class="text-center">
+                     <a href="@Url.Action("Index","Home",new {Area = "Trainee" ,userId = item.Id, auditId = 0})">
+                     <i class="fa fa-eye fa-lg"></i>
+                     </a>
+                     </td>
                 }
                 else
                 {
+                    <td class="text-center">
                     <a id="ediit" onclick="GetUser(@item.Id)"><i class="fa fa-pencil edit-icon"></i></a>
+                    </td>
+                    <td class="text-center">
                     <a data-id-to-delete="@item.Id" class="ml-4" data-toggle="modal" data-target="#delete"><i class="fa fa-trash delete-icon"></i></a>
+                    </td>
                 }
-            </td>
         </tr>
         Count += 1;
     }
@@ -91,10 +100,9 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Status</h3>
+                <h3 class="modal-title">Save @TempData["Role"]</h3>
             </div>
             <div class="modal-body" id="myModalBodyDiv1">
-
             </div>
         </div>
     </div>

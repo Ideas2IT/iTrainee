@@ -61,6 +61,9 @@
 }
 
 .subtopic-list {
+    min-height: 360px;
+    height: 360px;
+    overflow-y: auto;
     flex: 4;
     margin-left: 25px;
     box-shadow: inset 14px 0 5px -12px #002eca;

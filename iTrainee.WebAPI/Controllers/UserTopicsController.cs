@@ -1,11 +1,12 @@
 ﻿using iTrainee.Models;
 using iTrainee.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace iTrainee.APIs.Controllers
 {
+	[Authorize]
 	[Route("api/[controller]/[action]")]
 	[ApiController]
 	public class UserTopicsController : Controller

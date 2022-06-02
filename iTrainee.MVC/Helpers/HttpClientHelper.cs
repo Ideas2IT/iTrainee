@@ -8,10 +8,12 @@ namespace iTrainee.MVC.Helpers
 {
     public static class HttpClientHelper
     {
-        public static object ExecuteGetApiMethod<T>(string baseUrl, string method, string parameters)
+
+        public static object ExecuteGetApiMethod<T>(string baseUrl, string method, string parameters, string token)
         {
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.BaseAddress = new Uri(baseUrl);
                 HttpResponseMessage response = client.GetAsync(client.BaseAddress + method + parameters).Result;
                 if (response.IsSuccessStatusCode)
@@ -23,10 +25,11 @@ namespace iTrainee.MVC.Helpers
             return null;
         }
 
-        public static List<T> ExecuteGetListApiMethod<T>(string baseUrl, string method, string parameters)
+        public static List<T> ExecuteGetListApiMethod<T>(string baseUrl, string method, string parameters, string token)
         {
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.BaseAddress = new Uri(baseUrl);
                 HttpResponseMessage response = client.GetAsync(client.BaseAddress + method + parameters).Result;
                 if (response.IsSuccessStatusCode)
@@ -38,10 +41,11 @@ namespace iTrainee.MVC.Helpers
             return null;
         }
 
-        public static string[] ExecuteGetIdsApiMethod<T>(string baseUrl, string method)
+        public static string[] ExecuteGetIdsApiMethod<T>(string baseUrl, string method, string token)
         {
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.BaseAddress = new Uri(baseUrl);
                 HttpResponseMessage response = client.GetAsync(client.BaseAddress + method).Result;
                 if (response.IsSuccessStatusCode)
@@ -53,11 +57,12 @@ namespace iTrainee.MVC.Helpers
             return null;
         }
 
-        public static object ExecuteGetAllApiMethod<T>(string baseUrl, string method, string parameters)
+        public static object ExecuteGetAllApiMethod<T>(string baseUrl, string method, string parameters, string token)
         {
 
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.BaseAddress = new Uri(baseUrl);
                 HttpResponseMessage response = client.GetAsync(client.BaseAddress + method + parameters).Result;
                 if (response.IsSuccessStatusCode)
