@@ -76,7 +76,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
                 TempData["UserId"] = id;
                 TempData["UserPassword"] = user.Password;
             }
-           
+
             return PartialView(user);
         }
 
@@ -85,19 +85,18 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         [ValidateAntiForgeryToken()]
         public IActionResult SaveUser(User user)
         {
-            user.Password = Convert.ToString(TempData["UserPassword"]);
-            user.ConfirmPassword = user.Password;
             TempData.Keep("UserToken");
-            //if (ModelState.IsValid)
-            //{
-            if (0 < user.Id)
-                {
-                    user.Id = Convert.ToInt32(TempData["UserId"]);
-                }
 
-                var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-                HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user, TempData["UserToken"].ToString());
-            //}
+            if (0 < user.Id)
+            {
+                user.Id = Convert.ToInt32(TempData["UserId"]);
+                user.Password = Convert.ToString(TempData["UserPassword"]);
+                user.ConfirmPassword = user.Password;
+            }
+
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user, TempData["UserToken"].ToString());
+
 
             return RedirectToAction("ManageUser", "Home", new { role = Convert.ToString(TempData["Role"]) });
         }
@@ -106,7 +105,7 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         public JsonResult DeleteUser(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var result = HttpClientHelper.ExecuteDeleteApiMethod<User>(baseUrl, "/User/DeleteUser?", "Id="+id, TempData["UserToken"].ToString());
+            var result = HttpClientHelper.ExecuteDeleteApiMethod<User>(baseUrl, "/User/DeleteUser?", "Id=" + id, TempData["UserToken"].ToString());
             return new JsonResult("success");
         }
     }

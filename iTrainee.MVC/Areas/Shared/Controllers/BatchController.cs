@@ -81,7 +81,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public JsonResult AddEditBatch(Batch batch)
         {
             TempData.Keep("UserToken");
-            Batch newBatch = new Batch();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             if (ModelState.IsValid)
             {
@@ -161,7 +160,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult DeleteBatch(int id)
         {
-            var token = Convert.ToString(TempData["UserToken"]);
+            TempData.Keep("UserToken");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             HttpClientHelper.ExecuteDeleteApiMethod<Batch>(baseUrl, "/Batch/DeleteBatch?", "Id=" + id, Convert.ToString(TempData["UserToken"]));
             return RedirectToAction("ManageBatch", new { Area = "Shared" });

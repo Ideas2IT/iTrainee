@@ -17,7 +17,6 @@
         @Html.ListBoxFor(model=>model.SelectedTrainees, new MultiSelectList(Model.TraineeList, "Id", "FirstName"),  htmlAttributes: new { id="multiSelectTrainee", @class = "form-control", multiple="multiple" })
     </div>
 
-
     <input type="hidden" name="selectedItems" id="selectedItems" />
     <input type="submit" value="Submit" />
 }
@@ -26,7 +25,7 @@
 <script type="text/javascript">
 
      $(document).ready(function () {
-
+          $("#multiSelectTrainee").chosen()
             $('#jstree').on('changed.jstree', function (e, data) {
                 var i, j;
                 var postedItems = [];
@@ -63,11 +62,5 @@
                 "plugins": ["wholerow", "checkbox"],
             });
     });
-</script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        debugger
-            $("#multiSelectTrainee").chosen()
-        });
 </script>
 }

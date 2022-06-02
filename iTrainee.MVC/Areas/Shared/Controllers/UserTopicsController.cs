@@ -28,7 +28,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult ManageUserTopics()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var userTopicsList = (List<UserTopics>)HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics?batchId=" + TempData["BatchId"], "", Convert.ToString(TempData["UserToken"]));
+            var userTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics?batchId=" + TempData["BatchId"],"");
             return View(userTopicsList);
         }
 
@@ -64,7 +64,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             StringBuilder traineeList = new StringBuilder();
             UserTopics newUserTopics = new UserTopics();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            List<Topics> topics = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "", TempData["UserToken"].ToString());
+            List<Topics> topics = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "", token);
             List<UserTopics> items = JsonConvert.DeserializeObject<List<UserTopics>>(selectedItems);
             foreach (UserTopics userTopic in items)
             {

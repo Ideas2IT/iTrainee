@@ -15,7 +15,7 @@
             }
             <div class="form-group">
                 <input type="hidden" class="form-control" name="Id" value="@Model.Id" />
-                <input type="hidden" class="form-control" name="UserName" value="@Model.UserName" />
+                
 
                 <div class="form-group">
                     <label class="col-form-label">First Name</label>
@@ -104,6 +104,11 @@
                     @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
                 </div>
 
+            } else {
+                
+                <div class="form-group">
+                    <input type="hidden" class="form-control" name="UserName" value="@Model.UserName" />
+                </div>
             }
         </div>
     </div>
