@@ -109,13 +109,24 @@ namespace iTrainee.Data
 
         public int AddMessage(Messages message)
         {
-            int id = 0;
+            int messageId = 0;
             try
             {
                 var parameters = new List<SqlParameter>();
-                SqlParameter OutputParam = new SqlParameter("Id", SqlDbType.Int);
-                OutputParam.Direction = ParameterDirection.Output;
-                parameters.Add(OutputParam);
+                if(message.Id > 0)
+                {
+                    parameters.Add(new SqlParameter
+                    {
+                        ParameterName = "Id",
+                        Value = message.Id
+                    });
+                }
+                else
+                {
+                    SqlParameter OutputParam = new SqlParameter("Id", SqlDbType.Int);
+                    OutputParam.Direction = ParameterDirection.Output;
+                    parameters.Add(OutputParam);
+                }                
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "FromId",
@@ -148,14 +159,14 @@ namespace iTrainee.Data
                     Value = DateTime.Now.Date
                 });
 
-                id = _dataManager.ExecuteReturnId("spInsertMessage", parameters);
+                messageId = _dataManager.ExecuteReturnId("spSaveMessage", parameters);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
 
-            return id;
+            return messageId;
         }
 
         public Messages GetMessageById(int Id)
