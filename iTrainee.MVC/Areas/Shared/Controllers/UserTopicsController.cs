@@ -59,11 +59,12 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpPost]
         public ActionResult AddEditUserTopics(UserTopics userTopics,string selectedItems)
         {
+            var token = Convert.ToString(TempData["UserToken"]);
             StringBuilder subTopicList = new StringBuilder();
             StringBuilder traineeList = new StringBuilder();
             UserTopics newUserTopics = new UserTopics();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            List<Topics> topics = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "", TempData["UserToken"].ToString());
+            List<Topics> topics = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "", token);
             List<UserTopics> items = JsonConvert.DeserializeObject<List<UserTopics>>(selectedItems);
             foreach (UserTopics userTopic in items)
             {
