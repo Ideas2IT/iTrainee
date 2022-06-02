@@ -30,9 +30,9 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpGet]
         public IActionResult AddEditSubTopic(int id, int streamId)
         {
+            TempData.Keep("UserToken");
+            var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var token = TempData["UserToken"].ToString();
-
             var subTopic = HttpClientHelper.ExecuteGetApiMethod<SubTopics>(baseUrl, "/SubTopics/Get?", "Id=" + id, token);
             List<Stream> streamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "", token);
             List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "", token);
@@ -45,8 +45,9 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult GetTopicList(int streamId)
         {
+            TempData.Keep("UserToken");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetTopicsByStreamId?", "streamId=" + streamId, TempData["UserToken"].ToString());
+            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetTopicsByStreamId?", "streamId=" + streamId, Convert.ToString(TempData["UserToken"]));
             return new JsonResult(new { data = topicsList });
         }
 
@@ -54,6 +55,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddEditSubTopic(SubTopics subTopic)
         {
+            TempData.Keep("UserToken");
             subTopic.Id = Convert.ToInt32(TempData["SubTopicId"]);
             if (subTopic.Id > 0)
             {
