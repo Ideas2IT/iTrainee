@@ -28,12 +28,12 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddEditSubTopic(int id, int streamId)
+        public IActionResult AddEditSubTopic(int id)
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var subTopic = HttpClientHelper.ExecuteGetApiMethod<SubTopics>(baseUrl, "/SubTopics/Get?", "Id=" + id);
+            var subTopic = (SubTopics)HttpClientHelper.ExecuteGetApiMethod<SubTopics>(baseUrl, "/SubTopics/Get?", "Id=" + id);
             List<Stream> streamList = (List<Stream>)HttpClientHelper.ExecuteGetAllApiMethod<Stream>(baseUrl, "/Stream/GetAllstreams", "");
-            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "");
+            List<Topics> topicsList = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetTopicsByStreamId?StreamId=" + subTopic.StreamId, "");
             TempData["SubTopicId"] = id;
             ViewBag.StreamList = new SelectList(streamList, "Id", "Name");
             ViewBag.TopicsList = new SelectList(topicsList, "Id", "Name");

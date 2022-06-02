@@ -23,6 +23,9 @@ namespace iTrainee
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddMvc();
+            services.AddSession();
+
             //services.AddMvcCore(options =>
             //{
             //    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
@@ -47,6 +50,8 @@ namespace iTrainee
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

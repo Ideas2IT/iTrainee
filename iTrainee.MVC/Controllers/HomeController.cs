@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace iTrainee.Controllers
 {
@@ -17,6 +19,7 @@ namespace iTrainee.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         IConfiguration _configuration;
+        private object Session;
 
         public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
@@ -77,6 +80,9 @@ namespace iTrainee.Controllers
             TempData["UnreadMessagesCount"] = user.UnreadMessagesCount;
             var token = Convert.ToString(TempData["UserToken"]);
 
+                HttpContext.Session.SetString("username", user.UserName);
+            
+
             if (user.RoleName.Equals("Trainee"))
             {
                 UserAudit userAudit = new UserAudit();
@@ -131,11 +137,12 @@ namespace iTrainee.Controllers
             return View();
         }
 
-        [Microsoft.AspNetCore.Mvc.HttpPost]
-        public async Task<IActionResult> Logout()
+        [System.Web.Mvc.Route("logout")]
+      //  [HttpGet]
+        public IActionResult Logout()
         {
-            await HttpContext.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            HttpContext.Session.Remove("username");
+            return RedirectToAction("Login");
         }
     }
 }
