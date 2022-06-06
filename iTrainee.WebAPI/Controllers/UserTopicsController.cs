@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
+
 namespace iTrainee.APIs.Controllers
 {
 	[Authorize]
 	[Route("api/[controller]/[action]")]
-    [Route("api/[controller]/[action]")]
 	[ApiController]
 	public class UserTopicsController : Controller
 	{
@@ -26,7 +26,7 @@ namespace iTrainee.APIs.Controllers
 			try
             {
 				users = (List<UserTopics>)_userTopicsService.GetAllUserTopics(batchId);
-			} catch (Exception)
+			} catch (Exception ex)
             {
 				users = new List<UserTopics>();
             }
