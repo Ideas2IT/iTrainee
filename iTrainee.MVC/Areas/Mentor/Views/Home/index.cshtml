@@ -49,9 +49,8 @@
 	</style>
 </head>
 
-<div class="d-flex justify-content-between mt-4">
+<div class="d-flex justify-content-between mt-4 mb-3">
 	<h4 class="font-weight-bold dashboard-heading">Hello @TempData["UserFirstName"],</h4>
-	<a href="/Shared/Batch/ManageBatch?userId=@TempData["UserId"]" class="btn btn-primary btn-add-gradient float-right mb-3"> Manage Batches</a>
 </div>
 
 
@@ -60,8 +59,8 @@
 
 		@foreach (var item in Model)
 		{
-			<div class="col-2.5">
-				<div class="card mt-1">
+			<div class="col-2.5 mr-5 mt-2 mb-4">
+				<div class="card">
 					<div class="card-body">
 						<h3 class="card-title mb-5">@item.Name</h3>
 						<div class="d-flex mt-1 mb-1">

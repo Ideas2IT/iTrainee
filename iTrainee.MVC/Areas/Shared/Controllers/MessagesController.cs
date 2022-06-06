@@ -35,7 +35,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             TempData.Keep("HeaderRole");
             TempData.Keep("UserId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            List<Messages> messages = (List<Messages>)HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "/Messages/GetMessagesByUserId?", "Id=" + TempData.Peek("UserId"), Convert.ToString(TempData["UserToken"]));
+            List<Messages> messages = (List<Messages>)HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "/Messages/GetMessagesByUserId?", "Id=" + TempData.Peek("UserId"), TempData["UserToken"].ToString());
 
             return View(messages);
         }

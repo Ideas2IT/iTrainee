@@ -20,7 +20,7 @@ namespace iTrainee.Data
 
         public IEnumerable<UserTopics> GetAllUserTopics(int batchId)
         {
-            List<UserTopics> userTopics = new List<UserTopics>();
+            List<UserTopics> userTopicList = new List<UserTopics>();
             try
             {
                 var parameters = new List<SqlParameter>();
@@ -35,7 +35,7 @@ namespace iTrainee.Data
                 {
                     foreach (DataRow item in result.Tables[0].Rows)
                     {
-                        userTopics.Add(new UserTopics
+                        userTopicList.Add(new UserTopics
                         {
                             Name = Convert.ToString(item["UserName"]),
                             TopicName = Convert.ToString(item["Name"]),
@@ -48,7 +48,7 @@ namespace iTrainee.Data
             {
                 throw ex;
             }
-            return userTopics;
+            return userTopicList;
         }
 
         public IEnumerable<Topics> GetUserTopicsByUserId(int id)
@@ -227,12 +227,12 @@ namespace iTrainee.Data
                 });
                 parameters.Add(new SqlParameter
                 {
-                    ParameterName = "SubTopicsId",
+                    ParameterName = "SubTopicsIds",
                     Value = userTopic.SelectedSubTopicList
                 });
                 parameters.Add(new SqlParameter
                 {
-                    ParameterName = "UserId",
+                    ParameterName = "UserIds",
                     Value = userTopic.SelectedTraineeList
                 });
                 parameters.Add(new SqlParameter

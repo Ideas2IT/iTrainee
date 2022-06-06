@@ -27,6 +27,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         [HttpGet]
         public IActionResult AddEditStream(int id)
         {
+            TempData.Keep("UserToken");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var stream = HttpClientHelper.ExecuteGetApiMethod<Stream>(baseUrl, "/Stream/Get?", "Id="+id, Convert.ToString(TempData["UserToken"]));
             TempData["StreamId"] = id;
@@ -38,7 +39,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult AddEditStream(Stream stream)
         {
             stream.Id = Convert.ToInt32(TempData["StreamId"]);
-
+            TempData.Keep("UserToken");
             if (stream.Id > 0)
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();

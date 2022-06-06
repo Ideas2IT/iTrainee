@@ -141,7 +141,9 @@ namespace iTrainee.Data
                     foreach (DataRow item in result.Tables[0].Rows)
                     {
                         subTopic.Id = Convert.ToInt32(item["Id"]);
+                        subTopic.StreamId = Convert.ToInt32(item["StreamId"]);
                         subTopic.TopicId = Convert.ToInt32(item["TopicId"]);
+                        subTopic.TopicName = Convert.ToString(item["TopicName"]);
                         subTopic.Name = Convert.ToString(item["Name"]);
                         subTopic.ReferenceURL = Convert.ToString(item["ReferenceURL"]);
                     }
