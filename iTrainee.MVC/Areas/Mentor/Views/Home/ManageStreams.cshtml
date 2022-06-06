@@ -111,8 +111,6 @@
         var id = button.data('id-to-delete')
 
         $('#delete-stream-button').on('click', function () {
-                    debugger;
-
             $.ajax({
                 url: "/Shared/Stream/DeleteStream/" + id,
                 type: "Delete",

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iTrainee.Models.common;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,6 +19,7 @@ namespace iTrainee.Models
 
         [Required(ErrorMessage = "Please enter date of birth")]
         [DataType(DataType.Date)]
+        [DateValidation]
         public DateTime DOB { get; set; }
 
         public int RoleId { get; set; }

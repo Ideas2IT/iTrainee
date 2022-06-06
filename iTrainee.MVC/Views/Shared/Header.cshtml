@@ -34,10 +34,10 @@
                     </li>
                     @*<li class="nav-item px-3 signInSignOut">
                         <span>Sign-In : @Model.SignIn.ToShortTimeString()</span>
-                    </li>
-                    <li class="nav-item px-3 signInSignOut">
+                        </li>
+                        <li class="nav-item px-3 signInSignOut">
                         <span>Sign-Out : @Model.SignOut.ToShortTimeString()</span>
-                    </li>*@
+                        </li>*@
                 }
                 <li class="nav-item  px-2">
                     <i class="header-notification fa-lg fa fa-bell-o"></i>
@@ -149,8 +149,6 @@
     </nav>
 </header>
 
-Welcome @Context.Session.GetString("username")
-
 <div class="modal" fade" id="changePassword">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -166,19 +164,19 @@ Welcome @Context.Session.GetString("username")
 
 <script type="text/javascript">
 
-    function ChangePassword() {
+        function ChangePassword() {
 
-        var UserPath = "/Home/ChangePassword";
-        $("#changePasswordBody").load(UserPath, function () {
-            $("#changePassword").modal("show");
-        });
-    };
+            var UserPath = "/Home/ChangePassword";
+            $("#changePasswordBody").load(UserPath, function () {
+                $("#changePassword").modal("show");
+            });
+        };
 
-     var GetUser = function (id) {
-        var UserPath = "/Admin/Home/SaveUser?Id=" + id;
-        $("#myModalBodyDiv1").load(UserPath, function () {
-            $("#myModal1").modal("show");
-        });
-    };
+         var GetUser = function (id) {
+            var UserPath = "/Admin/Home/SaveUser?Id=" + id;
+            $("#myModalBodyDiv1").load(UserPath, function () {
+                $("#myModal1").modal("show");
+            });
+        };
 
 </script>
