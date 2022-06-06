@@ -29,7 +29,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         {
             var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var userTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics?batchId=" + TempData["BatchId"],"");
+            var userTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics?batchId=" + TempData["BatchId"],"", token);
             return View(userTopicsList);
         }
 
@@ -64,7 +64,6 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             StringBuilder subTopicList = new StringBuilder();
             StringBuilder traineeList = new StringBuilder();
             UserTopics newUserTopics = new UserTopics();
-            var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             List<Topics> topics = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "", token);
             List<UserTopics> items = JsonConvert.DeserializeObject<List<UserTopics>>(selectedItems);
