@@ -24,16 +24,44 @@
 
     .send-message-bar {
         display: flex;
-        align-items: center;
+        align-items: end;
         justify-content: flex-end;
         border-bottom-right-radius: 0.3rem;
         border-bottom-left-radius: 0.3rem;
+        width: 98%;
     }
 
     .chat2 {
         min-height: 385px;
         height: 385px;
         overflow-y: auto;
+    }
+
+    .fa-send:before, .fa-paper-plane:before {
+        padding: 0.5rem;
+        font-size: 20px;
+    }
+
+    .border-radius-10px {
+        border-radius: 5px;
+    }
+
+    [placeholder]:focus::-webkit-input-placeholder {
+        transition: text-indent 0.2s 0.2s ease;
+        text-indent: -100%;
+        opacity: 1;
+    }
+
+    .placeholder {
+        bottom: 10px;
+        color: #ccc;
+        font-family: arial;
+        position: absolute;
+        width: 100%;
+        z-index: 1;
+        -webkit-transition: all ease-out 0.5s;
+        transition: all ease-out 0.5s;
+        pointer-events: none;
     }
 
 </style>
@@ -45,7 +73,7 @@
             {
                 <div class="d-flex flex-row justify-content-start">
                     <div>
-                        <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">@Html.DisplayFor(modelItem => item.Message)</p>
+                        <p class="small p-2 ms-3 mb-1 rounded-3 mt-2 border-radius-10px" style="background-color: #f5f6f7;">@Html.DisplayFor(modelItem => item.Message)</p>
                         <p class="small ms-3 mb-3 rounded-3 text-muted">@Html.DisplayFor(modelItem => item.Sender)</p>
                     </div>
                 </div>
@@ -56,8 +84,8 @@
             {
                 <div class="d-flex flex-row justify-content-end">
                     <div>
-                        <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">@Html.DisplayFor(modelItem => item.Comments)</p>
-                        <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">@Html.DisplayFor(modelItem => item.Receiver)</p>
+                        <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary border-radius-10px">@Html.DisplayFor(modelItem => item.Comments)</p>
+                        <p class="small rounded-3 text-muted d-flex justify-content-end">@Html.DisplayFor(modelItem => item.Receiver)</p>
                     </div>
                 </div>
             }
@@ -65,7 +93,8 @@
     </div>
 </div>
 <div class="send-message-bar">
-    <textarea type="text" placeholder="Send Message" class="form-control send-message"></textarea>
+    <label class="placeholder">Send Message</label>
+    <textarea type="text" class="form-control send-message"></textarea>
     <span class="fa fa-paper-plane send-icon"></span>
 </div>
 
