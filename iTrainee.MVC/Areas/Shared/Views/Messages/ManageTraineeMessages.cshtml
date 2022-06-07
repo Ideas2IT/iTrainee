@@ -68,7 +68,7 @@
                     @Html.DisplayFor(modelItem => item.Message)
                 </td>
                 <td class="text-center actions-column">
-                    <a href="#" onclick="ViewAlertDetails(@item.MessageId)"><i class="fa fa-reply edit-icon"></i></a>
+                    <a href="#" onclick="ViewAlertDetails(@item.MessageId)"><i class="fa fa-reply view-icon"></i></a>
                 </td>
             </tr>
         }
@@ -80,7 +80,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Alert Response</h3>
-                <a href="#" class="close" data-dismiss="modal">&times;</a>                
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
             </div>
             <div class="modal-body alertModalBodyDiv" id="alertModalBodyDiv">
             </div>
@@ -91,7 +91,7 @@
 <script type="text/javascript">
 
     function ViewAlertDetails(id) {
-        var url = "/Shared/Messages/AddEditMessagesResponse?Id=" + id;
+        var url = "/Shared/Messages/ViewAlertDetails?Id=" + id;
         $("#alertModalBodyDiv").load(url, function () {
             $("#alertModal").modal("show");
         });

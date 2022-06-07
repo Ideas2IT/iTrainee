@@ -92,9 +92,11 @@
         }
     </div>
 </div>
-<div class="send-message-bar">
-    <label class="placeholder">Send Message</label>
-    <textarea type="text" class="form-control send-message"></textarea>
-    <span class="fa fa-paper-plane send-icon"></span>
-</div>
-
+@if (TempData["HeaderRole"].Equals("Trainee"))
+{
+    <div class="send-message-bar">
+        <label class="placeholder">Send Message</label>
+        <textarea type="text" class="form-control send-message"></textarea>
+        <span class="fa fa-paper-plane send-icon"></span>
+    </div>
+}
