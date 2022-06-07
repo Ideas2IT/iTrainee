@@ -22,17 +22,22 @@
         width: 100px;
     }
 
-    .send-bar {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 50%;
-        background-color: red;
-        color: white;
-        text-align: center;
+    .send-message-bar {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        border-bottom-right-radius: 0.3rem;
+        border-bottom-left-radius: 0.3rem;
     }
+
+    .chat2 {
+        min-height: 385px;
+        height: 385px;
+        overflow-y: auto;
+    }
+
 </style>
-<div class="container">
+<div class="container chat2">
     <div id="chat2">
         @foreach (var item in Model)
         {
@@ -58,5 +63,9 @@
             }
         }
     </div>
+</div>
+<div class="send-message-bar">
+    <textarea type="text" placeholder="Send Message" class="form-control send-message"></textarea>
+    <span class="fa fa-paper-plane send-icon"></span>
 </div>
 
