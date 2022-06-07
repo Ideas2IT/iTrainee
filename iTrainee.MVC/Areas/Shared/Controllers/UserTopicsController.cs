@@ -28,7 +28,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult ManageUserTopics()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var userTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics?batchId=" + TempData["BatchId"],"");
+            var userTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics?batchId=" + TempData["BatchId"],"","");
             return View(userTopicsList);
         }
 
@@ -40,7 +40,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             UserTopics userTopics = new UserTopics();
             TempData["BatchId"] = id;
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            userTopics.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsersByBatch?role=Trainee&id=" + id, "", token);
+           // userTopics.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsersByBatch?role=Trainee&id=" + id, "", token);
             List<Topics> topics = (List<Topics>)HttpClientHelper.ExecuteGetAllApiMethod<Topics>(baseUrl, "/Topics/GetAllTopics", "", token);
             List<SubTopics> subTopics = (List<SubTopics>)HttpClientHelper.ExecuteGetAllApiMethod<SubTopics>(baseUrl, "/SubTopics/GetAllSubTopics", "", token);
             List<UserTopics> nodes = new List<UserTopics>();
@@ -73,7 +73,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
                     if (topic.Id.ToString() == userTopic.parent)
                     {
                         newUserTopics.TopicId = topic.Id;
-                        foreach (SubTopics subTopic in topic.SubTopics)
+                        foreach (SubTopics subTopic in topic.SubTopic)
                         {
                             if (userTopic.id == subTopic.Id.ToString())
                             {

@@ -1,31 +1,26 @@
-﻿@model iTrainee.Models.UserTopics;
-@using Microsoft.AspNetCore.Mvc.Rendering;
-
+﻿@model iTrainee.Models.UserTopics
 
 @{
-    ViewData["Title"] = "AssignTopics";
+    ViewData["Title"] = "AddEditUserTopics";
 }
-<h3 class="mt-5 mb-4">Assign Topics</h3>
 
+<h1>AddEditUserTopics</h1>
+
+<h4>UserTopics</h4>
+<hr />
 <div id="jstree">
 </div>
-
-@using (Html.BeginForm("AddEditUserTopics", "UserTopics", FormMethod.Post))
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
 {
-    <div class="form-group">
-        <label class="col-form-label">Select Trainees</label><br />
-        @Html.ListBoxFor(model=>model.SelectedTrainees, new MultiSelectList(Model.TraineeList, "Id", "FirstName"),  htmlAttributes: new { id="multiSelectTrainee", @class = "form-control", multiple="multiple" })
-    </div>
-
     <input type="hidden" name="selectedItems" id="selectedItems" />
     <input type="submit" value="Submit" />
 }
-
 @section scripts{
-<script type="text/javascript">
-
-     $(document).ready(function () {
-          $("#multiSelectTrainee").chosen()
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
             $('#jstree').on('changed.jstree', function (e, data) {
                 var i, j;
                 var postedItems = [];
@@ -61,6 +56,8 @@
                 },
                 "plugins": ["wholerow", "checkbox"],
             });
-    });
-</script>
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+    

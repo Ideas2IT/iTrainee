@@ -55,7 +55,7 @@ namespace iTrainee.Services.Implementations
                         newList.Add(subTopic);
                     }
                 }
-                topic.SubTopics= newList;
+                topic.SubTopic= newList;
             }
             return topicList;
         }
