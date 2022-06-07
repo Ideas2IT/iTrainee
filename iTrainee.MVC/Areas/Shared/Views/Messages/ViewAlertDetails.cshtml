@@ -24,11 +24,13 @@
 
     .send-message-bar {
         display: flex;
-        align-items: end;
+        align-items: center;
         justify-content: flex-end;
         border-bottom-right-radius: 0.3rem;
         border-bottom-left-radius: 0.3rem;
-        width: 98%;
+        width: 100%;
+        padding: 1rem 0.2rem 1rem 1rem;
+        border: 1px #CCC solid;
     }
 
     .chat2 {
@@ -43,14 +45,19 @@
         font-size: 20px;
     }
 
-    .border-radius-10px {
+    .comments {
         border-radius: 5px;
+        background-color: #2360a1;
     }
 
     .send-message {
         border: none;
         border-bottom: 1.3px solid blue !important;
-        border-radius: 0px !important;
+        border-radius: 5px !important;
+    }
+
+    .shadow {
+        box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.2);
     }
 </style>
 <div class="container p-0">
@@ -61,7 +68,7 @@
             {
                 <div class="d-flex flex-row justify-content-start">
                     <div>
-                        <p class="small p-2 ms-3 mb-1 rounded-3 mt-2 border-radius-10px" style="background-color: #f5f6f7;">@Html.DisplayFor(modelItem => item.Message)</p>
+                        <p class="small p-2 ms-3 mb-1 rounded-3 mt-2 border-radius-10px" style="background-color: #f5f6f7;border-radius: 5px;">@Html.DisplayFor(modelItem => item.Message)</p>
                         <p class="small ms-3 mb-3 rounded-3 text-muted">@Html.DisplayFor(modelItem => item.Sender)</p>
                     </div>
                 </div>
@@ -72,7 +79,7 @@
             {
                 <div class="d-flex flex-row justify-content-end">
                     <div>
-                        <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary border-radius-10px">@Html.DisplayFor(modelItem => item.Comments)</p>
+                        <p class="small p-2 me-3 mb-1 text-white rounded-3 comments">@Html.DisplayFor(modelItem => item.Comments)</p>
                         <p class="small rounded-3 text-muted d-flex justify-content-end">@Html.DisplayFor(modelItem => item.Receiver)</p>
                     </div>
                 </div>
@@ -82,7 +89,7 @@
 </div>
 
 <div class="send-message-bar">
-    <textarea type="text" class="form-control send-message" id="floatingTextarea" placeholder="Send Message"></textarea>
+    <textarea type="text" class="form-control send-message shadow" id="floatingTextarea" placeholder="Send Message"></textarea>
     <span class="fa fa-paper-plane send-icon"></span>
 </div>
 
