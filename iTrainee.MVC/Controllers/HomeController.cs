@@ -34,6 +34,8 @@ namespace iTrainee.Controllers
 
         public IActionResult Login(User user)
         {
+            TempData.Keep("UserToken");
+
             if (Convert.ToString(TempData["IsValidUserName"]) == "false")
             {
                 TempData["IsValidUserName"] = "false";
@@ -56,9 +58,8 @@ namespace iTrainee.Controllers
         [Microsoft.AspNetCore.Mvc.HttpPost]
         public IActionResult Login(string UserName, string Password)
         {
-            
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + UserName + "&Password=" + Password,"");
+            var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + UserName + "&Password=" + Password, "");
            
             if (user.UserName == null)
             {
@@ -78,7 +79,7 @@ namespace iTrainee.Controllers
             TempData["UserFirstName"] = user.FirstName;           
             TempData["UserToken"] = user.Token;
             TempData["UnreadMessagesCount"] = user.UnreadMessagesCount;
-            var token = Convert.ToString(TempData["UserToken"]);
+            
 
                 HttpContext.Session.SetString("username", user.UserName);
             
@@ -90,7 +91,7 @@ namespace iTrainee.Controllers
                 userAudit.Date = DateTime.Now;
                 userAudit.SignIn = DateTime.Now;
                 userAudit.SignOut = DateTime.Now;
-                int userAuditId = HttpClientHelper.ExecuteInsertPostApiMethod<UserAudit>(baseUrl, "/UserAudit/InsertUserAudit", userAudit, token);
+                int userAuditId = HttpClientHelper.ExecuteInsertPostApiMethod<UserAudit>(baseUrl, "/UserAudit/InsertUserAudit", userAudit, Convert.ToString(TempData["UserToken"]));
 
                 return RedirectToAction("Index", "Home", new { Area = "Trainee", auditId = userAuditId, userId = user.Id, traineeName = user.FirstName });
             }

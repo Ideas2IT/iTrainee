@@ -1,10 +1,21 @@
 ﻿$(function () {
-    var GetUser = function (id) {
-        var UserPath = "/Admin/Home/SaveUser?Id=" + id;
-        $("#myModalBodyDiv1").load(UserPath, function () {
-            $("#myModal1").modal("show");
-        });
-    };
+    //var GetUser = function (id) {
+    //    var UserPath = "/Admin/Home/SaveUser?Id=" + id;
+    //    $("#myModalBodyDiv1").load(UserPath, function () {
+    //        $("#myModal1").modal("show");
+    //    });
+    //};
+
+    $(document).on('click', '.addDatePicker', function () {
+        setTimeout(function () {
+            $('#ui-datepicker-div').remove();
+            $("#datepicker").datepicker({ minDate: "-60Y", maxDate: "-18Y", changeMonth: true, changeYear: true });
+        }, 1000)
+    })
+
+    $(document).on('click', '.calendar-icon', function () {
+        $(this).prev('input').focus();
+    })
 
     $('#delete').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget)
@@ -26,7 +37,6 @@
     })
 
     $("#Admin").click(function () {
-        debugger
         if ($("#Admin").is(':checked') || $("#Mentor").is(':checked')) {
             $('#Trainee').attr('disabled', true);
         } else {

@@ -42,6 +42,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult ManageTraineeMessages()
         {
+            var token = Convert.ToString(TempData["UserToken"]);
             TempData.Keep("HeaderRole");
             TempData.Keep("UserId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
@@ -52,6 +53,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
 
         public IActionResult ViewAlertDetails(int Id)
         {
+            TempData.Keep("UserToken");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var userMessages = HttpClientHelper.ExecuteGetAllApiMethod<UserMessages>(baseUrl, "/Messages/GetUserMessagesByMessageId?", "Id=" + Id, Convert.ToString(TempData["UserToken"]));
 
@@ -79,6 +81,29 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             }
 
             return View(message);
+        }
+
+        [HttpGet]
+        public IActionResult AddEditMessagesResponse(int Id)
+        {
+            var token = Convert.ToString(TempData["UserToken"]);
+            Messages message = new Messages();
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+
+            //if (Id > 0)
+            //{
+            //    message = (Messages)HttpClientHelper.ExecuteGetApiMethod<Messages>(baseUrl, "/Messages/GetMessageById?", "Id=" + Id, token);
+            //    message.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/UserMessages/GetTrainees?", "", token);
+            //    message.SelectedTraineeIds = HttpClientHelper.ExecuteGetIdsApiMethod<string[]>(baseUrl, "/UserMessages/GetSelectedTrainees?Id=" + Id, token);
+            //    TempData["SelectedTrainees"] = message.SelectedTraineeIds;
+            //}
+            //else
+            //{
+            //    message.TraineeList = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/UserMessages/GetTrainees?", "", token);
+            //    message.FromId = (int)TempData["UserId"];
+            //}
+
+            return View();
         }
 
         [HttpPost]

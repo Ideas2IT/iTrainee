@@ -3,11 +3,13 @@
 .delete-icon {
     color: red;
     font-size: x-large;
+    cursor: pointer;
 }
 
 .edit-icon {
     color: #00239B;
     font-size: x-large;
+    cursor: pointer;
 }
 
 .btn-add-gradient {
@@ -40,19 +42,43 @@
     border-radius: 8px;
     box-shadow: rgba(0, 79, 255, 0.3) 0 15px 30px -5px;
     cursor: pointer;
-    transform: translateY(-6px);
-    transition: transform 700ms cubic-bezier(.3, .7, .4, 1.5);
 }
 
 a {
     text-decoration: none !important;
 }
 
-.dashboard-heading{
+.dashboard-heading {
     margin-left: 55px;
 }
 
 /*Save User*/
 .padding-top-15px {
     padding-top: 6.3px;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    border: none !important;
+    background: white !important;
+    font-weight: normal;
+    color: #454545 !important;
+    text-align: center;
+}
+
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+        color: #454545 !important;
+}
+
+.ui-widget-header {
+    border: none !important;
+    border-bottom: 1px solid #dddddd !important;
+}
+
+.calendar-icon {
+    float: right;
+    margin-right: 16px;
+    margin-top: -26px;
+    position: relative;
+    cursor: pointer !important;
 }
