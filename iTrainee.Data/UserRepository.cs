@@ -78,8 +78,6 @@ namespace iTrainee.Data
             return user;
         }
 
-        
-
         public IEnumerable<User> GetUsersByBatch(string role, string id)
         {
             var users = new List<User>();
@@ -157,7 +155,6 @@ namespace iTrainee.Data
             return users;
         }
 
-
         public IEnumerable<User> GetAssignedTrainees(int batchId)
         {
             var users = new List<User>();
@@ -178,6 +175,7 @@ namespace iTrainee.Data
                             users.Add(new User
                             {
                                 Id = Convert.ToInt32(item["Id"]),
+                                BatchName = Convert.ToString(item["BatchName"]),
                                 FirstName = Convert.ToString(item["FirstName"]),
                                 LastName = Convert.ToString(item["LastName"]),
                                 DOB = Convert.ToDateTime(item["DOB"]),
@@ -186,8 +184,6 @@ namespace iTrainee.Data
                             });
                         }
                     }
-              
-
             }
             catch (Exception ex)
             {

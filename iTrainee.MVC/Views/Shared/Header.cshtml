@@ -56,7 +56,9 @@
 
                         <a href="/Home/ChangePassword?userId=@TempData["UserId"]" class="dropdown-item"> Change Password</a>
 
-                        <a class="dropdown-item" href="/Home/Login">Sign Out</a>
+                        @*<a class="dropdown-item" href="/Home/Login">Sign Out</a>
+                          <a onclick="noBack()" href="/Home/Logout">Logout</a>*@
+                        <a asp-controller="Home" asp-action="Logout">Logout</a>
                     </div>
                 </li>
             </ul>
@@ -149,8 +151,8 @@
     </nav>
 </header>
 
-Welcome @Context.Session.GetString("username")
-
+@*Welcome @Context.Session.GetString("username")
+*@
 <div class="modal" fade" id="changePassword">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -180,5 +182,4 @@ Welcome @Context.Session.GetString("username")
             $("#myModal1").modal("show");
         });
     };
-
 </script>

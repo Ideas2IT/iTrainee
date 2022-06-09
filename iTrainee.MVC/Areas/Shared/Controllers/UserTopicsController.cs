@@ -28,7 +28,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public IActionResult ManageUserTopics()
         {
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var userTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics?batchId=" + TempData["BatchId"],"");
+            var userTopicsList = HttpClientHelper.ExecuteGetAllApiMethod<UserTopics>(baseUrl, "/UserTopics/GetAllUserTopics?batchId=" + TempData["BatchId"], "", Convert.ToString(TempData["UserToken"]));
             return View(userTopicsList);
         }
 

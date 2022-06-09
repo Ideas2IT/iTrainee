@@ -11,22 +11,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 
 namespace iTrainee.Controllers
 {
-	[Authorize]
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+    [Authorize]
     public class HomeController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ILogger<HomeController> _logger;
         IConfiguration _configuration;
-        private object Session;
 
         public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             _logger = logger;
             _configuration = configuration;
         }
-
+        
         public IActionResult Index()
         {
             return View();
@@ -56,7 +57,6 @@ namespace iTrainee.Controllers
         [Microsoft.AspNetCore.Mvc.HttpPost]
         public IActionResult Login(string UserName, string Password)
         {
-            
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + UserName + "&Password=" + Password,"");
            
@@ -72,6 +72,10 @@ namespace iTrainee.Controllers
                 return RedirectToAction("Login", user);
             }
 
+            HttpContext.Session.SetString("username", user.UserName);
+
+            HttpContext.Session.SetString("username", user.UserName);
+
             TempData["UserId"] = user.Id;
             TempData["HeaderRole"] = user.RoleName;
             TempData["CurrentUserName"] = user.FirstName + " " + user.LastName;
@@ -79,9 +83,6 @@ namespace iTrainee.Controllers
             TempData["UserToken"] = user.Token;
             TempData["UnreadMessagesCount"] = user.UnreadMessagesCount;
             var token = Convert.ToString(TempData["UserToken"]);
-
-                HttpContext.Session.SetString("username", user.UserName);
-            
 
             if (user.RoleName.Equals("Trainee"))
             {
@@ -100,7 +101,6 @@ namespace iTrainee.Controllers
             }
             else
             {
-
                 return RedirectToAction("Index", "Home", new { Area = "Admin", userId = 0 });
             }
         }
@@ -137,13 +137,22 @@ namespace iTrainee.Controllers
             return View();
         }
 
-        [System.Web.Mvc.Route("logout")]
-      //  [HttpGet]
         public IActionResult Logout()
-        {
-            HttpContext.Session.Remove("username");
+        { 
+            if (HttpContext.Session != null)
+            {
+                 HttpContext.Session.Clear();
+                // HttpContext.Session.Remove("username");
+            }
+
+            if (HttpContext.Session == null)
+            {
+                HttpContext.Session.Remove("username");
+            }
+
             return RedirectToAction("Login");
         }
+
     }
 }
 

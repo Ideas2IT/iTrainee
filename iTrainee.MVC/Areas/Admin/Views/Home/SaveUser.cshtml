@@ -94,9 +94,10 @@
 
                 <div class="form-group">
                     <label class="col-form-label">User Name</label>
-                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", placeholder="example@org.com"} })
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", id="Username", @autocomplete = "off", placeholder="example@org.com", onchange="UserCheck()"} })
                     @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                 </div>
+                <p id="Status" />
 
                 <div class="form-group">
                     <label class="col-form-label">Confirm Password</label>
@@ -114,7 +115,7 @@
     </div>
     <div class="form-group mt-4 float-right">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" value="Save" name="submit" class="btn btn-primary mr-3" />
+        <input type="submit" id="save" value="Save" name="submit" class="btn btn-primary mr-3" />
     </div>
 
 }
@@ -125,3 +126,21 @@
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
 }
+<script>
+    function UserCheck() {
+        $.post("@Url.Action("CheckUsernameAvailability", "Home", new {Area = "Admin"})",
+            {
+                userName: $("#Username").val()
+            },
+        function (data) {
+            if (data == 1) {
+               $("#Status").html('<font color="Red">The Username is already exists.</font>');
+               $('#save').attr('disabled', true);
+            }
+            else {
+                $("#Status").html('');
+                $('#save').attr('disabled', false);
+            }
+        });
+    }
+</script>

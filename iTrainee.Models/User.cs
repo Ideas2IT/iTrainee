@@ -8,6 +8,8 @@ namespace iTrainee.Models
     {
         public int Id { get; set; }
 
+        public string BatchName { get; set; }
+
         [Required(ErrorMessage = "Please enter first name")]
         [RegularExpression(@"^([a-zA-Z .]*)$", ErrorMessage = "Invalid format")]
         public string FirstName { get; set; }
