@@ -103,23 +103,26 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
         {
             TempData.Keep("UserToken");
 
-            if (0 < user.Id)
+            if (ModelState.IsValid)
             {
-                user.Id = Convert.ToInt32(TempData["UserId"]);
-                user.Password = Convert.ToString(TempData["UserPassword"]);
-                user.ConfirmPassword = user.Password;
+
+                if (0 < user.Id)
+                {
+                    user.Id = Convert.ToInt32(TempData["UserId"]);
+                    user.Password = Convert.ToString(TempData["UserPassword"]);
+                    user.ConfirmPassword = user.Password;
+                }
+
+                var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+                HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user, TempData["UserToken"].ToString());
             }
-
-            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user, TempData["UserToken"].ToString());
-
-
             return RedirectToAction("ManageUser", "Home", new { role = Convert.ToString(TempData["Role"]) });
         }
 
         [HttpDelete]
         public JsonResult DeleteUser(int id)
         {
+            TempData.Keep("UserToken");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var result = HttpClientHelper.ExecuteDeleteApiMethod<User>(baseUrl, "/User/DeleteUser?", "Id=" + id, TempData["UserToken"].ToString());
             return new JsonResult("success");

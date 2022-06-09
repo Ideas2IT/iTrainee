@@ -23,10 +23,25 @@
         width: 100px;
     }
 
-    .alertModalBodyDiv {
-        min-height: 480px;
-        height: 480px;
-        overflow-y: scroll;
+    .send-message-bar {
+        float: left;
+        justify-content: left !important;
+    }
+
+    .send-icon {
+        float: right;
+        position: relative;
+        cursor: pointer !important;
+        color: #007bff;
+        font-size: large;
+    }
+
+    .modal-footer {
+        border-top: none !important;
+    }
+
+    .modal-body {
+        padding: 0px !important;
     }
 </style>
 
@@ -35,11 +50,6 @@
     <h3>Messages</h3>
     <a href="/Shared/Messages/AddEditMessages?Id=0" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Alert</a>
 </div>
-@*<div class="d-flex justify-content-between mt-4">
-    <h3>Messages</h3>
-    <a href="#" onclick="AddEditAlert(0)" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Alert</a>
-    <a href="/Shared/Messages/AddEditMessages?Id=0" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Alert</a>
-    </div>*@
 
 <table class="table table-hover table-bordered">
     <thead>
@@ -91,7 +101,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Alert Response</h3>
-                <a href="#" class="close" data-dismiss="modal">&times;</a>                
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
             </div>
             <div class="modal-body alertModalBodyDiv" id="alertModalBodyDiv">
             </div>
