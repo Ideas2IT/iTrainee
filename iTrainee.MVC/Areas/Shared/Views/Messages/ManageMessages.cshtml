@@ -23,23 +23,17 @@
         width: 100px;
     }
 
-    .alertModalBodyDiv {
-        min-height: 350px;
-        height: 410px;
-        overflow-y: auto;
-    }
-
     .send-message-bar {
         float: left;
         justify-content: left !important;
     }
 
-    .send-icon {
-        float: right;
-        position: relative;
-        cursor: pointer !important;
-        color: #007bff;
-        font-size: large;
+    .modal-footer {
+        border-top: none !important;
+    }
+
+    .modal-body {
+        padding: 0px !important;
     }
 </style>
 
@@ -102,10 +96,6 @@
                 <a href="#" class="close" data-dismiss="modal">&times;</a>
             </div>
             <div class="modal-body alertModalBodyDiv" id="alertModalBodyDiv">
-            </div>
-            <div class="modal-footer send-message-bar">
-                <input type="text" placeholder="Send Message" class="form-control" />
-                <span class="fa fa-paper-plane send-icon"></span>
             </div>
         </div>
     </div>
