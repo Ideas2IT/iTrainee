@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "ManageBatch";
 }
-
 <style>
 	.delete-icon {
         color: red;
@@ -28,8 +27,12 @@
 <div class="d-flex justify-content-between mt-4">
 
 <h3>Manage Batches</h3>
+@if(TempData["Title"].ToString() == "ManageBatch")
+                {
 <a href="/Shared/Batch/AddEditBatch?Id=0" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Batch</a>
+}
 </div>
+                
 
 <table class="table table-hover table-bordered">
     <thead>
@@ -53,16 +56,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-				<td class="text-center">
+            @if(TempData["Title"].ToString() == "ManageBatch")
+                {
+                    <td class="text-center">
+					    <a href="/Shared/Batch/AddEditBatch?Id=@item.Id" ><i class="fa fa-pencil edit-icon"></i></a> 
+                    </td>
+                    <td class="text-center">
+                         <a  href="/Shared/Batch/DeleteBatch?Id=@item.Id" ><i class="fa fa-trash delete-icon"></i></a>
+                    </td>
+                } else
+                {
+                 <td class="text-center">	
+                    <a href="/Shared/UserTopics/AddEditUserTopics?Id=@item.Id" >Assign Topics</a>
+                 </td>
                     
-					<a href="/Shared/Batch/AddEditBatch?Id=@item.Id" ><i class="fa fa-pencil edit-icon"></i></a> 
-                    </td>
-                    <td class="text-center">
-                    <a  href="/Shared/Batch/DeleteBatch?Id=@item.Id" ><i class="fa fa-trash delete-icon"></i></a>
-                    </td>
-                    <td class="text-center">
-                 <a href="/Shared/UserTopics/AddEditUserTopics?Id=@item.Id" >Assign Topics</a>
-				</td>
+                }
+                
                
             </tr>
             Count += 1;

@@ -22,12 +22,12 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             _logger = logger;
             _configuration = configuration;
         }
-        public IActionResult ManageBatch()
+        public IActionResult ManageBatch(string title)
         {
             List<Batch> batchList = new List<Batch>();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var token = TempData["UserToken"].ToString();
-
+            TempData["Title"] = title;
             if (TempData["HeaderRole"].ToString() == "Mentor")
             {
                 batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + TempData["UserId"].ToString(), "", token);

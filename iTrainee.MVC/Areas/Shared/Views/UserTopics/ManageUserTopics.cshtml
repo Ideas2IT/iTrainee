@@ -1,4 +1,4 @@
-﻿@*@model IEnumerable<iTrainee.Models.UserTopics>
+﻿@model IEnumerable<iTrainee.Models.UserTopics>
 
 @{
     ViewData["Title"] = "ManageUserTopics";
@@ -7,7 +7,7 @@
 <h1>ManageUserTopics</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+     <a href="/Shared/UserTopics/AddEditUserTopics?Id=@TempData["BatchId"]" >Assign Topics</a>
 </p>
 <table class="table table-hover table-bordered">
     <thead>
@@ -36,7 +36,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.SubTopicName)
             </td>
-           
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
@@ -45,4 +44,3 @@
 }
     </tbody>
 </table>
-*@

@@ -43,7 +43,7 @@ namespace iTrainee.Services.Implementations
         public IEnumerable<Topics> GetAllTopics()
         {
             IEnumerable<Topics> topicList = _topicsRepository.GetAllTopics();
-            List<SubTopics> subTopicList =  _subTopicsRepository.GetAllSubTopics().ToList();
+            List<SubTopics> subTopicList = _subTopicsRepository.GetAllSubTopics().ToList();
             List<SubTopics> newList = null;
             foreach (Topics topic in topicList)
             {
@@ -55,7 +55,7 @@ namespace iTrainee.Services.Implementations
                         newList.Add(subTopic);
                     }
                 }
-                topic.SubTopic= newList;
+                topic.SubTopic = newList;
             }
             return topicList;
         }

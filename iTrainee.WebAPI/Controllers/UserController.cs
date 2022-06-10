@@ -29,6 +29,12 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpGet]
+        public IEnumerable<User> GetUsersByBatch(string role, string id)
+        {
+            return _userService.GetUsersByBatch(role, id);
+        }
+
+        [HttpGet]
         public IEnumerable<User> GetAssignedTrainees(int batchId)
         {
             return _userService.GetAssignedTrainees(batchId);

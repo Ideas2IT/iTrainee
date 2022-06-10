@@ -30,14 +30,14 @@ namespace iTrainee.Models
         [DataType(DataType.EmailAddress)]
         public string UserName { get; set; }
 
-        //[Required(ErrorMessage = "Please enter your Password")]
-        //[DataType(DataType.Password)]
-        //[StringLength(8, ErrorMessage = "The password must be atleast 8 characters long", MinimumLength = 8)]
+        [Required(ErrorMessage = "Please enter your Password")]
+        [DataType(DataType.Password)]
+        [StringLength(8, ErrorMessage = "The password must be atleast 8 characters long", MinimumLength = 8)]
         public string Password { get; set; }
 
-        //[Required(ErrorMessage = "Confirm password is required")]
-        //[DataType(DataType.Password)]
-        //[Compare("Password", ErrorMessage = "Does not match password")]
+        [Required(ErrorMessage = "Confirm password is required")]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Does not match password")]
         public string ConfirmPassword { get; set; }
 
         public Boolean IsAdmin { get; set; }

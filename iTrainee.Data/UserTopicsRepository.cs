@@ -21,33 +21,33 @@ namespace iTrainee.Data
         public IEnumerable<UserTopics> GetAllUserTopics(int batchId)
         {
             List<UserTopics> userTopicList = new List<UserTopics>();
-            //try
-            //{
-            //    var parameters = new List<SqlParameter>();
-            //    parameters.Add(new SqlParameter
-            //    {
-            //        ParameterName = "BatchId",
-            //        Value = batchId
-            //    });
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "BatchId",
+                    Value = batchId
+                });
 
-            //    DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserTopics", parameters);
-            //    if (result?.Tables?.Count != 0)
-            //    {
-            //        foreach (DataRow item in result.Tables[0].Rows)
-            //        {
-            //            userTopicList.Add(new UserTopics
-            //            {
-            //                Name = Convert.ToString(item["UserName"]),
-            //                TopicName = Convert.ToString(item["Name"]),
-            //                SubTopicName = Convert.ToString(item["SubTopicName"])
-            //            });
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //}
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserTopics", parameters);
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
+                    {
+                        userTopicList.Add(new UserTopics
+                        {
+                            Name = Convert.ToString(item["UserName"]),
+                            TopicName = Convert.ToString(item["Name"]),
+                            SubTopicName = Convert.ToString(item["SubTopicName"])
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             return userTopicList;
         }
 
@@ -217,73 +217,68 @@ namespace iTrainee.Data
             DataSet result = null;
             var isSuccess = false;
 
-            //try
-            //{
-            //    var parameters = new List<SqlParameter>();
-            //    parameters.Add(new SqlParameter
-            //    {
-            //        ParameterName = "TopicId",
-            //        Value = userTopic.TopicId
-            //    });
-            //    parameters.Add(new SqlParameter
-            //    {
-            //        ParameterName = "SubTopicsIds",
-            //        Value = userTopic.SelectedSubTopicList
-            //    });
-            //    parameters.Add(new SqlParameter
-            //    {
-            //        ParameterName = "UserIds",
-            //        Value = userTopic.SelectedTraineeList
-            //    });
-            //    parameters.Add(new SqlParameter
-            //    {
-            //        ParameterName = "StartDate",
-            //        Value = DateTime.Now.Date
-            //    });
-            //    parameters.Add(new SqlParameter
-            //    {
-            //        ParameterName = "EndDate",
-            //        Value = DateTime.Now.Date
-            //    });
-            //    parameters.Add(new SqlParameter
-            //    {
-            //        ParameterName = "InsertedBy",
-            //        Value = "Mentor"
-            //    });
-            //    parameters.Add(new SqlParameter
-            //    {
-            //        ParameterName = "InsertedOn",
-            //        Value = DateTime.Now.Date
-            //    });
-            //    parameters.Add(new SqlParameter
-            //    {
-            //        ParameterName = "UpdatedBy",
-            //        Value = "Mentor"
-            //    });
-            //    parameters.Add(new SqlParameter
-            //    {
-            //        ParameterName = "UpdatedOn",
-            //        Value = DateTime.Now.Date
-            //    });
+            try
+            {
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "TopicId",
+                    Value = userTopic.TopicId
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "SubTopicsIds",
+                    Value = userTopic.SelectedSubTopicList
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UserIds",
+                    Value = userTopic.SelectedTraineeList
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "StartDate",
+                    Value = DateTime.Now.Date
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "EndDate",
+                    Value = DateTime.Now.Date
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedBy",
+                    Value = "Mentor"
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "InsertedOn",
+                    Value = DateTime.Now.Date
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UpdatedBy",
+                    Value = "Mentor"
+                });
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UpdatedOn",
+                    Value = DateTime.Now.Date
+                });
 
-            //    result = _dataManager.ExecuteStoredProcedure("spInsertAssignedTopics", parameters);
+                result = _dataManager.ExecuteStoredProcedure("spInsertAssignedTopics", parameters);
 
-            //    if (result.Tables.Count != 0)
-            //    {
-            //        isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //}
+                if (result.Tables.Count != 0)
+                {
+                    isSuccess = Convert.ToBoolean(result?.Tables?[0]?.Rows?[0]?[0]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
             return isSuccess;
-        }
-
-        public IEnumerable<UserTopics> GetAllUserTopics()
-        {
-            throw new NotImplementedException();
         }
     }
 }

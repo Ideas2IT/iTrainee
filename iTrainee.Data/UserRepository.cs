@@ -105,7 +105,7 @@ namespace iTrainee.Data
                         users.Add(new User
                         {
                             Id = Convert.ToInt32(item["Id"]),
-                            FirstName = Convert.ToString(item["FirstName"])
+                            FirstName = Convert.ToString(item["UserName"])
                         });
                     }
                 }
