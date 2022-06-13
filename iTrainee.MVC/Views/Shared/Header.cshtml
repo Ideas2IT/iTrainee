@@ -11,11 +11,24 @@
     TempData.Keep("TopicId");
     TempData.Keep("Role");
     TempData.Keep("UnreadMessagesCount");
+    TempData.Keep("BatchId");
 }
+<style>
+    .iTrainee-header-fixed {
+        position: fixed;
+        width: 100%;
+        z-index: 2;
+        top:0;
+    }
 
-<header>
+    body {
+        margin: 136px 0px;
+    }
+</style>
 
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light bg-custom-light">
+<header class="iTrainee-header-fixed">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light bg-custom-light">
         <div>
             <img src="\css\logo.jpg" width="50" height="50" class="d-inline-block align-top" alt="">
             <span class="font-weight-bolder fs-6 header-app-name px-3">iTrainee</span>
@@ -89,9 +102,8 @@
                             <a class="nav-link text-white" href="/Admin/Home/ManageUser?role=Trainee">Trainee</a>
                         </li>
                         <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="/Shared/Batch/ManageBatch">Batch</a>
+                             <a class="nav-link text-white" href="/Shared/Batch/ManageBatch?title=ManageBatch">Batch</a>
                         </li>
-
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Mentor/Home/ManageStreams">Stream</a>
                         </li>
@@ -102,7 +114,8 @@
                             <a class="nav-link text-white" href="/Mentor/Home/ManageSubTopics">Sub Topics</a>
                         </li>
                         <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="/Shared/UserTopics/ManageUserTopics">Assign Topics</a>
+                             <a class="nav-link text-white" href="/Shared/Batch/ManageBatch?title=AssignTopics">Assign Topics</a>
+                            
                         </li>
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Shared/Messages/ManageMessages">Alert Trainee</a>
@@ -115,6 +128,7 @@
                         </li>
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Shared/Batch/ManageBatch">Batch</a>
+                            @TempData["Title"] = "ManageBatch";
                         </li>
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Mentor/Home/ManageStreams">Stream</a>
@@ -126,7 +140,8 @@
                             <a class="nav-link text-white" href="/Mentor/Home/ManageSubTopics">Sub Topics</a>
                         </li>
                         <li class="nav-item px-3">
-                            <a class="nav-link text-white" href="/Shared/UserTopics/ManageUserTopics">Assign Topics</a>
+                            <a class="nav-link text-white" href="/Shared/Batch/ManageBatch">Assign Topics</a>
+                            @TempData["Title"] = "AssignTopics";
                         </li>
                         <li class="nav-item px-3">
                             <a class="nav-link text-white" href="/Shared/Messages/ManageMessages">Alert Trainee</a>

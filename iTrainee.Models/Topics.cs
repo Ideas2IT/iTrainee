@@ -6,8 +6,10 @@ namespace iTrainee.Models
 {
     public class Topics : Base
     {
+
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Please select stream")]
         public int StreamId { get; set; }
 
         [Required(ErrorMessage = "Please enter topic name")]
@@ -21,7 +23,7 @@ namespace iTrainee.Models
         public string StreamName { get; set; }
 
         [NotMapped]
-        public virtual List<SubTopics> SubTopics { get; set; }
+        public virtual List<SubTopics> SubTopic { get; set; }
 
     }
 }

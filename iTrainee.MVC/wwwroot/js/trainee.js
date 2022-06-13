@@ -22,21 +22,6 @@ var GetSubTopicList = function (UserId, TopicId, id) {
     $('#' + id).addClass('topic-name-on-select');
 };
 
-$("#SaveProgress").click(function () {
-    var a = $("#ProgressForm").serialize();
-    $.ajax({
-        type: "POST",
-        url: "/Trainee/Home/UpdateDailyprogress",
-        data: a,
-        success: function () {
-            $("#myModal1").modal("hide");
-        },
-        error: function () {
-            alert("Unable to save/update data");
-        },
-    });
-});
-
 function GetDailyProgress(SubTopicId, UserId, Role) {
     var UserPath = "/Trainee/Home/UpdateDailyProgress?userId=" + UserId + "&subTopicId=" + SubTopicId;
     $("#myModalBodyDiv1").load(UserPath, function () {

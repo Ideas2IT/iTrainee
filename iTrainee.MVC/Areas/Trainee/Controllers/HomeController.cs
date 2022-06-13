@@ -45,13 +45,14 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
             }
 
             TempData.Keep("HeaderRole");
-            TempData.Peek("UserToken");
+            TempData.Keep("UserToken");
 
             return View(userAudit);
         }
 
         public IActionResult UpdateDailyProgress(int userId, int subTopicId, int userAuditId)
         {
+            TempData.Keep("UserToken");
             TempData.Keep("UserFirstName");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             DailyProgress dailyProgress = (DailyProgress)HttpClientHelper.ExecuteGetApiMethod<DailyProgress>(baseUrl, "/UserTopics/GetSubTopicOfUser?", "userId=" + userId + "&subTopicId=" + subTopicId, Convert.ToString(TempData["UserToken"]));
@@ -63,19 +64,25 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
         [ValidateAntiForgeryToken()]
         public IActionResult UpdateDailyProgress(DailyProgress dailyProgress)
         {
+            TempData.Keep("UserToken");
             TempData.Keep("UserFirstName");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             HttpClientHelper.ExecutePostApiMethod<DailyProgress>(baseUrl, "/UserTopics/UpdateDailyProgress", dailyProgress, Convert.ToString(TempData["UserToken"]));
+            var role = 0;
+            if(Convert.ToString(TempData["HeaderRole"]) == "Trainee")
+            {
+                role = 1;
+            }
 
-            return RedirectToAction("Index", new { auditId = dailyProgress.UserAuditId, userId = dailyProgress.UserId });
+            return RedirectToAction("Index", new { auditId = role, userId = dailyProgress.UserId });
         }
 
         public PartialViewResult SubTopicList(int topicId, int userId)
         {
             TempData.Keep("UserFirstName");
             TempData.Keep("UserId");
+            TempData.Keep("UserToken");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-
             var SubTopics = HttpClientHelper.ExecuteGetListApiMethod<SubTopics>(baseUrl, "/UserTopics/GetSubTopicsByUserIdAndTopicId?", "userId=" + userId + "&topicId=" + topicId, Convert.ToString(TempData["UserToken"]));
 
             return PartialView(SubTopics);

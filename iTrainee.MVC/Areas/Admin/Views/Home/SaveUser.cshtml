@@ -1,10 +1,9 @@
 ﻿@model iTrainee.Models.User
 
 <link rel="stylesheet" href="/css/user.css" />
-
+<script src="/js/user.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
-
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
@@ -28,9 +27,8 @@
 
             <div class="form-group">
                 <label class="col-form-label">Date Of Birth</label>
-                <input type="text" id="datepicker" class="form-control" name="DOB" required autocomplete="off" value="@(Model.Id==0 ? "" : @Model.DOB.ToString("dd/MM/yyyy"))" />
+                <input type="text" id="datepicker" class="form-control" name="DOB" required autocomplete="off" value="@(Model.Id==0 ? "" : @Model.DOB)" />
                 <span class="fa fa-calendar calendar-icon"></span>
-                @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
             </div>
 
             <div class="form-group padding-top-15px">
@@ -60,6 +58,15 @@
                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                 </div>
             }
+            else
+            {
+                <div class="form-group">
+                    <input type="hidden" name="Password" value="@Model.Password">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" name="ConfirmPassword" value="@Model.Password">
+                </div>
+            }
         </div>
         <div class="col-md-6">
             <div class="form-group">
@@ -71,13 +78,16 @@
             <div class="form-group">
                 <label class="col-form-label">Qualification</label>
                 @Html.DropDownListFor(model => model.Qualification, new List<SelectListItem>
-            { new SelectListItem{Text="B.E/B.Tech"},
+            { new SelectListItem{Text=""},
+            new SelectListItem{Text="B.E/B.Tech"},
             new SelectListItem{Text="BSC"},
             new SelectListItem{Text="BCA"},
             new SelectListItem{Text="M.E/M.Tech"},
             new SelectListItem{Text="MSC"},
             new SelectListItem{Text="MCA"},
             new SelectListItem{Text="PHD"}}, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Qualification, "", new { @class = "text-danger" })
+
             </div>
 
             @if (0 == @Model.Id)

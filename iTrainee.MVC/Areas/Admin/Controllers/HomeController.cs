@@ -89,8 +89,6 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
                 user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + id, Convert.ToString(TempData["UserToken"]));
-                TempData["UserId"] = id;
-                TempData["UserPassword"] = user.Password;
             }
 
             return PartialView(user);
@@ -105,14 +103,6 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-
-                if (0 < user.Id)
-                {
-                    user.Id = Convert.ToInt32(TempData["UserId"]);
-                    user.Password = Convert.ToString(TempData["UserPassword"]);
-                    user.ConfirmPassword = user.Password;
-                }
-
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
                 HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user, TempData["UserToken"].ToString());
             }

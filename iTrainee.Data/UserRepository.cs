@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace iTrainee.Data
 {
-    public class UserRepository :  IUserRepository
+    public class UserRepository : IUserRepository
     {
         private IDataManager _dataManager = null;
         public UserRepository(IDataManager dataManager)
@@ -19,6 +19,7 @@ namespace iTrainee.Data
         public User GetUser(int id)
         {
             var user = new User();
+
             try
             {
                 var parameters = new List<SqlParameter>();
@@ -48,7 +49,7 @@ namespace iTrainee.Data
                         user.Qualification = Convert.ToString(item["Qualification"]);
                         user.Password = Convert.ToString(item["Password"]);
                         user.UserName = Convert.ToString(item["UserName"]);
-                        user.DOB = Convert.ToDateTime(item["DOB"]);
+                        user.DOB = Convert.ToDateTime(item["DOB"]).ToShortDateString();
                     }
                 }
 
@@ -57,7 +58,7 @@ namespace iTrainee.Data
                 DataColumn col = roleOfUser.Tables[0].Columns["RoleId"];
                 foreach (DataRow row in roleOfUser.Tables[0].Rows)
                 {
-                    if(Convert.ToString(row[col]) == "1")
+                    if (Convert.ToString(row[col]) == "1")
                     {
                         user.IsAdmin = true;
                     }
@@ -77,6 +78,8 @@ namespace iTrainee.Data
             }
             return user;
         }
+
+
 
         public IEnumerable<User> GetUsersByBatch(string role, string id)
         {
@@ -103,7 +106,7 @@ namespace iTrainee.Data
                         users.Add(new User
                         {
                             Id = Convert.ToInt32(item["Id"]),
-                            FirstName = Convert.ToString(item["FirstName"])
+                            FirstName = Convert.ToString(item["UserName"])
                         });
                     }
                 }
@@ -141,7 +144,7 @@ namespace iTrainee.Data
                             Id = Convert.ToInt32(item["Id"]),
                             FirstName = Convert.ToString(item["FirstName"]),
                             LastName = Convert.ToString(item["LastName"]),
-                            DOB = Convert.ToDateTime(item["DOB"]),
+                            DOB = Convert.ToDateTime(item["DOB"]).ToShortDateString(),
                             Qualification = Convert.ToString(item["Qualification"]),
                             UserName = Convert.ToString(item["UserName"])
                         });
@@ -160,30 +163,31 @@ namespace iTrainee.Data
             var users = new List<User>();
             try
             {
-                    var parameters = new List<SqlParameter>();
-                    parameters.Add(new SqlParameter
-                    {
-                        ParameterName = "BatchId",
-                        Value = batchId
-                    });
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter
+                {
+                    ParameterName = "BatchId",
+                    Value = batchId
+                });
 
-                    DataSet result = _dataManager.ExecuteStoredProcedure("spGetAssignedTrainees", parameters);
-                    if (result?.Tables?.Count != 0)
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetAssignedTrainees", parameters);
+                if (result?.Tables?.Count != 0)
+                {
+                    foreach (DataRow item in result.Tables[0].Rows)
                     {
-                        foreach (DataRow item in result.Tables[0].Rows)
+                        users.Add(new User
                         {
-                            users.Add(new User
-                            {
-                                Id = Convert.ToInt32(item["Id"]),
-                                BatchName = Convert.ToString(item["BatchName"]),
-                                FirstName = Convert.ToString(item["FirstName"]),
-                                LastName = Convert.ToString(item["LastName"]),
-                                DOB = Convert.ToDateTime(item["DOB"]),
-                                Qualification = Convert.ToString(item["Qualification"]),
-                                UserName = Convert.ToString(item["UserName"])
-                            });
-                        }
+                            Id = Convert.ToInt32(item["Id"]),
+                            FirstName = Convert.ToString(item["FirstName"]),
+                            LastName = Convert.ToString(item["LastName"]),
+                            DOB = Convert.ToDateTime(item["DOB"]).ToShortDateString(),
+                            Qualification = Convert.ToString(item["Qualification"]),
+                            UserName = Convert.ToString(item["UserName"])
+                        });
                     }
+                }
+
+
             }
             catch (Exception ex)
             {
@@ -219,7 +223,7 @@ namespace iTrainee.Data
                         user.Password = Convert.ToString(item["Password"]);
                         user.UnreadMessagesCount = Convert.ToInt32(item["UnreadMessagesCount"]);
                     }
-                } 
+                }
             }
             catch (Exception ex)
             {
