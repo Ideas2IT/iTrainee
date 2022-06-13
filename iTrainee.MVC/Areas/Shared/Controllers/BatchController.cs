@@ -164,13 +164,14 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             return new JsonResult("failed");
         }
 
-        public IActionResult DeleteBatch(int id)
+        [HttpDelete]
+        public JsonResult DeleteBatch(int id)
         {
-            TempData.Keep("UserToken");
-            TempData.Keep("Title");
+            
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             HttpClientHelper.ExecuteDeleteApiMethod<Batch>(baseUrl, "/Batch/DeleteBatch?", "Id=" + id, Convert.ToString(TempData["UserToken"]));
-            return RedirectToAction("ManageBatch", new { Area = "Shared", title= Convert.ToString(TempData["Title"]) });
+            TempData.Keep("UserToken");
+            return new JsonResult("success");
         }
     }
 }

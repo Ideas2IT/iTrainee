@@ -178,6 +178,7 @@ namespace iTrainee.Data
                         users.Add(new User
                         {
                             Id = Convert.ToInt32(item["Id"]),
+                            BatchName = Convert.ToString(item["BatchName"]),
                             FirstName = Convert.ToString(item["FirstName"]),
                             LastName = Convert.ToString(item["LastName"]),
                             DOB = Convert.ToDateTime(item["DOB"]).ToShortDateString(),
