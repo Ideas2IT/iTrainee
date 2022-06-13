@@ -27,7 +27,10 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             List<Batch> batchList = new List<Batch>();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var token = TempData["UserToken"].ToString();
-            TempData["Title"] = title;
+            if (title != null)
+            {
+                TempData["Title"] = title;
+            }
             if (TempData["HeaderRole"].ToString() == "Mentor")
             {
                 batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + TempData["UserId"].ToString(), "", token);
@@ -36,6 +39,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             {
                 batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=0", "", token);
             }
+            TempData.Keep("Title");
 
             return View(batchList);
         }
@@ -166,7 +170,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             TempData.Keep("Title");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             HttpClientHelper.ExecuteDeleteApiMethod<Batch>(baseUrl, "/Batch/DeleteBatch?", "Id=" + id, Convert.ToString(TempData["UserToken"]));
-            return RedirectToAction("ManageBatch", new { Area = "Shared" });
+            return RedirectToAction("ManageBatch", new { Area = "Shared", title= Convert.ToString(TempData["Title"]) });
         }
     }
 }
