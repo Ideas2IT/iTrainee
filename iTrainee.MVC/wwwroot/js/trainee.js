@@ -28,8 +28,10 @@ $("#SaveProgress").click(function () {
         type: "POST",
         url: "/Trainee/Home/UpdateDailyprogress",
         data: a,
+        contentType: "Json",
         success: function () {
             $("#myModal1").modal("hide");
+            window.location.reload();
         },
         error: function () {
             alert("Unable to save/update data");

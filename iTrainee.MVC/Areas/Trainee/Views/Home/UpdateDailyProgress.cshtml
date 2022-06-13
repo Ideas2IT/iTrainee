@@ -20,7 +20,6 @@
                 <div class="form-group">
                     <label asp-for="Status" class="control-label">Status</label>
                     <select name="Status" class="form-control" id="Status">
-                        <option></option>
                         <option value="In Progress">In Progress</option>
                         <option value="Completed">Completed</option>
                         @if (Convert.ToString(TempData["HeaderRole"]).Equals("Mentor"))
