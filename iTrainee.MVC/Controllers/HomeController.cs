@@ -76,8 +76,6 @@ namespace iTrainee.Controllers
 
             HttpContext.Session.SetString("username", user.UserName);
 
-            HttpContext.Session.SetString("username", user.UserName);
-
             TempData["UserId"] = user.Id;
             TempData["HeaderRole"] = user.RoleName;
             TempData["CurrentUserName"] = user.FirstName + " " + user.LastName;
@@ -141,20 +139,10 @@ namespace iTrainee.Controllers
 
         public IActionResult Logout()
         { 
-            if (HttpContext.Session != null)
-            {
-                 HttpContext.Session.Clear();
-                // HttpContext.Session.Remove("username");
-            }
-
-            if (HttpContext.Session == null)
-            {
-                HttpContext.Session.Remove("username");
-            }
-
+            HttpContext.Session.Clear();
+           // HttpContext.Session.Remove("username");
             return RedirectToAction("Login");
         }
-
     }
 }
 

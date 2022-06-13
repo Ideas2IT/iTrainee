@@ -67,7 +67,7 @@
             </td>
                 @if (TempData["HeaderRole"].Equals("Mentor") || (TempData["HeaderRole"].Equals("Trainee")) ){
                     <td class="text-center">
-                     <a href="@Url.Action("Index","Home",new {Area = "Trainee" ,userId = item.Id, auditId = 0})">
+                     <a href="@Url.Action("Index","Home",new {Area = "Trainee" ,userId = item.Id, auditId = 0, traineeName = item.FirstName})">
                      <i class="fa fa-eye fa-lg"></i>
                      </a>
                      </td>
