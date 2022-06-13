@@ -23,7 +23,7 @@ namespace iTrainee.Models
         public string StreamName { get; set; }
 
         [NotMapped]
-        public virtual List<SubTopics> SubTopics { get; set; }
+        public virtual List<SubTopics> SubTopic { get; set; }
 
     }
 }

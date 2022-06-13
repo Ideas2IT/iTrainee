@@ -3,6 +3,7 @@ using iTrainee.Data.Interfaces;
 using iTrainee.Models;
 using iTrainee.Services.Interfaces;
 using System.Collections.Generic;
+using System.Text;
 
 namespace iTrainee.Services.Implementations
 {
@@ -25,7 +26,23 @@ namespace iTrainee.Services.Implementations
 	
 		public bool AddUserTopic(UserTopics userTopic)
 		{
-			return _userTopicsRepository.InsertUserTopic(userTopic);
+			int i = 0;
+			bool isSuccess = false;
+			UserTopics newUserTopics = userTopic;
+			foreach (Topics topic in userTopic.TopicList)
+            {
+				newUserTopics.TopicId = topic.Id;
+				string[] subtopicArray = new string[topic.SubTopic.Count];
+				foreach (SubTopics subTopics in topic.SubTopic)
+                {
+					subtopicArray[i++] = subTopics.Id.ToString();
+				}
+				i = 0;
+				newUserTopics.SelectedTraineeList = userTopic.SelectedTraineeList;
+				newUserTopics.SelectedSubTopicList = string.Join(",", subtopicArray);
+				isSuccess = _userTopicsRepository.InsertUserTopic(newUserTopics);
+			}
+			return isSuccess;
 		}
 
 		public IEnumerable<SubTopics> GetSubTopicsByUserIdAndTopicId(int userId, int topicId)

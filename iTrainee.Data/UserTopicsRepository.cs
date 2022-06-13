@@ -280,10 +280,5 @@ namespace iTrainee.Data
 
             return isSuccess;
         }
-
-        public IEnumerable<UserTopics> GetAllUserTopics()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
