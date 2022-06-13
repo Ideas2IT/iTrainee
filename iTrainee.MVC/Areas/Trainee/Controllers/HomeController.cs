@@ -62,14 +62,19 @@ namespace iTrainee.MVC.Areas.Trainee.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken()]
-        public JsonResult UpdateDailyProgress(DailyProgress dailyProgress)
+        public IActionResult UpdateDailyProgress(DailyProgress dailyProgress)
         {
             TempData.Keep("UserToken");
             TempData.Keep("UserFirstName");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             HttpClientHelper.ExecutePostApiMethod<DailyProgress>(baseUrl, "/UserTopics/UpdateDailyProgress", dailyProgress, Convert.ToString(TempData["UserToken"]));
+            var role = 0;
+            if(Convert.ToString(TempData["HeaderRole"]) == "Trainee")
+            {
+                role = 1;
+            }
 
-            return new JsonResult("success");
+            return RedirectToAction("Index", new { auditId = role, userId = dailyProgress.UserId });
         }
 
         public PartialViewResult SubTopicList(int topicId, int userId)
