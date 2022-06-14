@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using iTrainee.MVC.Helpers;
 using Microsoft.AspNetCore.Routing;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace iTrainee.MVC.Areas.Admin.Controllers
 {
@@ -28,11 +29,26 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult ManageUser(string role, int userId)
+        public JsonResult CheckUsernameAvailability(string userName)
+        {
+            TempData.Keep("UserToken");
+            var token = Convert.ToString(TempData["UserToken"]);
+            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
+            User user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUserByUserName?", "UserName=" + userName, token);
+           
+            if(user.UserName != null)
+            {
+                return Json(1);
+            } 
+            return Json(0);
+        }
+
+        public IActionResult ManageUser(string role, int userId, string searchString)
         {
             var token = Convert.ToString(TempData["UserToken"]);
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             List<User> user = new List<User>();
+            
             if (Convert.ToString(TempData["HeaderRole"]) == "Admin")
             {
                 user = (List<User>)HttpClientHelper.ExecuteGetAllApiMethod<User>(baseUrl, "/User/GetUsers?", "role=" + role, token);
@@ -73,8 +89,6 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
             {
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
                 user = (User)HttpClientHelper.ExecuteGetApiMethod<User>(baseUrl, "/User/GetUser?", "Id=" + id, Convert.ToString(TempData["UserToken"]));
-                TempData["UserId"] = id;
-                TempData["UserPassword"] = user.Password;
             }
 
             return PartialView(user);
@@ -89,14 +103,6 @@ namespace iTrainee.MVC.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-
-                if (0 < user.Id)
-                {
-                    user.Id = Convert.ToInt32(TempData["UserId"]);
-                    user.Password = Convert.ToString(TempData["UserPassword"]);
-                    user.ConfirmPassword = user.Password;
-                }
-
                 var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
                 HttpClientHelper.ExecutePostApiMethod<User>(baseUrl, "/User/SaveUser", user, TempData["UserToken"].ToString());
             }

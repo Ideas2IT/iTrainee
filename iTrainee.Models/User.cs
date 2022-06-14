@@ -1,5 +1,4 @@
-﻿using iTrainee.Models.common;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,6 +8,8 @@ namespace iTrainee.Models
     {
         public int Id { get; set; }
 
+        public string BatchName { get; set; }
+
         [Required(ErrorMessage = "Please enter first name")]
         [RegularExpression(@"^([a-zA-Z .]*)$", ErrorMessage = "Invalid format")]
         public string FirstName { get; set; }
@@ -17,27 +18,25 @@ namespace iTrainee.Models
         [RegularExpression(@"^([a-zA-Z .]*)$", ErrorMessage = "Invalid format")]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "Please enter date of birth")]
-        [DataType(DataType.Date)]
-        [DateValidation]
-        public DateTime DOB { get; set; }
+        public string DOB { get; set; }
 
         public int RoleId { get; set; }
 
+        [Required(ErrorMessage = "Please select qualification")]
         public string Qualification { get; set; }
 
         [Required(ErrorMessage = "Please enter user name")]
         [DataType(DataType.EmailAddress)]
         public string UserName { get; set; }
 
-        //[Required(ErrorMessage = "Please enter your Password")]
-        //[DataType(DataType.Password)]
-        //[StringLength(8, ErrorMessage = "The password must be atleast 8 characters long", MinimumLength = 8)]
+        [Required(ErrorMessage = "Please enter your Password")]
+        [DataType(DataType.Password)]
+        [StringLength(50, ErrorMessage = "The password must be atleast 8 characters long", MinimumLength = 8)]
         public string Password { get; set; }
 
-        //[Required(ErrorMessage = "Confirm password is required")]
-        //[DataType(DataType.Password)]
-        //[Compare("Password", ErrorMessage = "Does not match password")]
+        [Required(ErrorMessage = "Confirm password is required")]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Does not match password")]
         public string ConfirmPassword { get; set; }
 
         public Boolean IsAdmin { get; set; }

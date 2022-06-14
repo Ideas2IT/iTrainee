@@ -55,12 +55,12 @@
 
 
 
-								<td class="text-center">
+				<td class="text-center">
 					<a href="#" onclick="AddEditTopic(@item.Id)" ><i class="fa fa-pencil edit-icon"></i></a> 
 					</td>
 					<td class="text-center">
-					<a  href="/Shared/Topics/DeleteTopic/@item.Id" ><i class="fa fa-trash delete-icon"></i></a>
-				</td>
+                    <a data-id-to-delete="@item.Id" data-toggle="modal" data-target="#delete-topic"><i class="fa fa-trash delete-icon"></i></a>
+                </td>
 			</tr>
 			Count += 1;
 		}
@@ -79,8 +79,27 @@
 	</div>
 </div>
 
+<div class="modal fade" id="delete-topic" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure want to delete <span id="name-to-delete"></span>???</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id="delete-topic-button" data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-
+@section scripts {
 <script type="text/javascript">
 
 	var AddEditTopic = function (id) {
@@ -90,5 +109,29 @@
 		});
 	};
 
+	$('#delete-topic').on('show.bs.modal', function (event) {
+                            debugger;
+
+        var button = $(event.relatedTarget)
+        var id = button.data('id-to-delete')
+
+        $('#delete-topic-button').on('click', function () {
+                    debugger;
+
+            $.ajax({
+                url: "/Shared/Topics/DeleteTopic?id=" + id,
+                type: "Delete",
+                dataType: "JSON",
+                success: function () {
+                    $("#myModal1").modal("hide");
+                    window.location.reload();
+                },
+                error: function () {
+                    alert("Unable to delete data");
+                },
+            })
+        })
+    })
 
 </script>
+}

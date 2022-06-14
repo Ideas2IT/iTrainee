@@ -84,8 +84,6 @@ namespace iTrainee.WebAPI
             services.AddSingleton<ISubTopicsService, SubTopicsService>();
             services.AddSingleton<IUserTopicsService, UserTopicsService>();
             services.AddSingleton<IJWTManagerRepository, JWTManagerRepository>();
-
-           
         }
 
 

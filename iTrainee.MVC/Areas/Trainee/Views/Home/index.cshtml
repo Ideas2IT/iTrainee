@@ -11,7 +11,7 @@
     <div class="row" onload="GetSubTopicList(@Model.UserId, @Model.AssignedTopicsList.First().Id)">
         @if (Convert.ToString(TempData["FirstName"]) == "TraineeName")
         {
-            <h5 class="font-weight-bold mt-4 mb-3 hello-name">Hello @TempData["UserFirstName"],</h5>
+            <h5 class="font-weight-bold mb-3 hello-name">Hello @TempData["UserFirstName"],</h5>
         }
 
         @if (Convert.ToString(TempData["FirstName"]) == "MentorName")
@@ -43,7 +43,7 @@
             }
         }
         else
-        {
+        {    
             <h4 class="mt-lg-5">No topics were assigned</h4>
         }
 

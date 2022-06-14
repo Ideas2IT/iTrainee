@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "ManageBatch";
 }
-
 <style>
 	.delete-icon {
         color: red;
@@ -28,8 +27,12 @@
 <div class="d-flex justify-content-between mt-4">
 
 <h3>Manage Batches</h3>
+@if(TempData["Title"].ToString() == "ManageBatch")
+                {
 <a href="/Shared/Batch/AddEditBatch?Id=0" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Batch</a>
+}
 </div>
+                
 
 <table class="table table-hover table-bordered">
     <thead>
@@ -45,7 +48,7 @@
         @{
             int Count = 1;
         }
-@foreach (var item in Model) {
+        @foreach (var item in Model) {
         <tr>
             <td>
                 @Count
@@ -53,16 +56,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-				<td class="text-center">
+            @if(TempData["Title"].ToString() == "ManageBatch")
+                {
+                    <td class="text-center">
+					    <a href="/Shared/Batch/AddEditBatch?Id=@item.Id" ><i class="fa fa-pencil edit-icon"></i></a> 
+                    </td>
+                    <td class="text-center">
+                         <a data-id-to-delete="@item.Id" data-toggle="modal" data-target="#delete-batch"><i class="fa fa-trash delete-icon"></i></a>
+                </td>
+                } else
+                {
+                 <td class="text-center">	
+                    <a href="/Shared/UserTopics/AddEditUserTopics?Id=@item.Id" >Assign Topics</a>
+                 </td>
                     
-					<a href="/Shared/Batch/AddEditBatch?Id=@item.Id" ><i class="fa fa-pencil edit-icon"></i></a> 
-                    </td>
-                    <td class="text-center">
-                    <a  href="/Shared/Batch/DeleteBatch?Id=@item.Id" ><i class="fa fa-trash delete-icon"></i></a>
-                    </td>
-                    <td class="text-center">
-                 <a href="/Shared/UserTopics/AddEditUserTopics?Id=@item.Id" >Assign Topics</a>
-				</td>
+                }
+                
                
             </tr>
             Count += 1;
@@ -70,8 +79,8 @@
     </tbody>
 </table>
 
-<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="delete-batch" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
@@ -84,7 +93,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" id="delete-yes-button" data-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-danger" id="delete-batch-button" data-dismiss="modal">Delete</button>
             </div>
         </div>
     </div>
@@ -93,21 +102,28 @@
 @section scripts {
 <script type="text/javascript">
 
-    $('#delete').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget)
-            var id = button.data('id-to-delete')
+    $('#delete-batch').on('show.bs.modal', function (event) {
+                            debugger;
 
-                    $('#delete-yes-button').on('click', function () {
-                        $.ajax({
-                            url: "/Shared/Batch/DeleteBatch?Id=" + id,
-                            type: "POST",
-                            contentType: "application/json;charset=UTF-8",
-                            dataType: "json",
-                            success: function () {
-					            window.location.href;
-				            },
-                        })
-                    })
+        var button = $(event.relatedTarget)
+        var id = button.data('id-to-delete')
+
+        $('#delete-batch-button').on('click', function () {
+                    debugger;
+
+            $.ajax({
+                url: "/Shared/Batch/DeleteBatch?id=" + id,
+                type: "DELETE",
+                dataType: "JSON",
+                success: function () {
+                    $("#myModal1").modal("hide");
+                    window.location.reload();
+                },
+                error: function () {
+                    alert("Unable to delete data");
+                },
+            })
         })
+    })
 </script>
 }

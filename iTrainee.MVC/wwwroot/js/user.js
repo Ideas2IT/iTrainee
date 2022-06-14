@@ -1,10 +1,4 @@
 ﻿$(function () {
-    //var GetUser = function (id) {
-    //    var UserPath = "/Admin/Home/SaveUser?Id=" + id;
-    //    $("#myModalBodyDiv1").load(UserPath, function () {
-    //        $("#myModal1").modal("show");
-    //    });
-    //};
 
     $(document).on('click', '.addDatePicker', function () {
         setTimeout(function () {

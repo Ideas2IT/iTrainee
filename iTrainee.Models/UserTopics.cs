@@ -12,29 +12,34 @@ namespace iTrainee.Models
         public string TopicName { get; set; }
 
         [NotMapped]
+        public int TopicId { get; set; }
+
+        [NotMapped]
         public string SubTopicName { get; set; }
 
-        [NotMapped]
         public string id { get; set; }
 
-        [NotMapped]
         public string parent { get; set; }
 
-        [NotMapped]
         public string text { get; set; }
 
         [NotMapped]
-        public int TopicId { get; set; }
-
         public string SelectedTraineeList { get; set; }
 
         [NotMapped]
         public string SelectedSubTopicList { get; set; }
 
+
         [NotMapped]
         public string[] SelectedTrainees { get; set; }
 
         [NotMapped]
+        public string[] SelectedSubtopics { get; set; }
+
+        [NotMapped]
         public List<User> TraineeList { get; set; }
+
+        [NotMapped]
+        public virtual List<Topics> TopicList { get; set; }
     }
 }

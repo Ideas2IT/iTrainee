@@ -22,12 +22,15 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             _logger = logger;
             _configuration = configuration;
         }
-        public IActionResult ManageBatch()
+        public IActionResult ManageBatch(string title)
         {
             List<Batch> batchList = new List<Batch>();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             var token = TempData["UserToken"].ToString();
-
+            if (title != null)
+            {
+                TempData["Title"] = title;
+            }
             if (TempData["HeaderRole"].ToString() == "Mentor")
             {
                 batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=" + TempData["UserId"].ToString(), "", token);
@@ -36,6 +39,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             {
                 batchList = (List<Batch>)HttpClientHelper.ExecuteGetAllApiMethod<Batch>(baseUrl, "/Batch/GetAllBatches?UserId=0", "", token);
             }
+            TempData.Keep("Title");
 
             return View(batchList);
         }
@@ -45,6 +49,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         {
             var token = Convert.ToString(TempData["UserToken"]);
             TempData.Keep("UserToken");
+            TempData.Keep("Title");
             Batch batch = new Batch();
             User user = new User();
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
@@ -81,6 +86,7 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
         public JsonResult AddEditBatch(Batch batch)
         {
             TempData.Keep("UserToken");
+            TempData.Keep("Title");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             if (ModelState.IsValid)
             {
@@ -158,12 +164,14 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             return new JsonResult("failed");
         }
 
-        public IActionResult DeleteBatch(int id)
+        [HttpDelete]
+        public JsonResult DeleteBatch(int id)
         {
-            TempData.Keep("UserToken");
+            
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
             HttpClientHelper.ExecuteDeleteApiMethod<Batch>(baseUrl, "/Batch/DeleteBatch?", "Id=" + id, Convert.ToString(TempData["UserToken"]));
-            return RedirectToAction("ManageBatch", new { Area = "Shared" });
+            TempData.Keep("UserToken");
+            return new JsonResult("success");
         }
     }
 }
