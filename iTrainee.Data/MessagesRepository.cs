@@ -18,29 +18,50 @@ namespace iTrainee.Data
             _dataManager = dataManager;
         }
 
-        public IEnumerable<Messages> GetMessagesByUserId(int Id)
+        public IEnumerable<UserMessages> GetMessagesByUserId(int Id, string Role)
         {
-            List<Messages> messages = new List<Messages>();
+            List<UserMessages> messages = new List<UserMessages>();
             try
             {
                 var parameters = new List<SqlParameter>
                 {
                     new SqlParameter
                     {
-                        ParameterName = "FromId",
+                        ParameterName = "UserId",
                         Value = Id
+                    },
+                    new SqlParameter
+                    {
+                        ParameterName = "Role",
+                        Value = Role
                     }
                 };
-                DataSet result = _dataManager.ExecuteStoredProcedure("spGetMessagesByUserId", parameters);
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserMessagesByRole", parameters);
                 if (result?.Tables?.Count != 0)
                 {
-                    foreach (DataRow item in result.Tables[0].Rows)
+                    if (Role.Equals("Trainee"))
                     {
-                        messages.Add(new Messages
+                        foreach (DataRow item in result.Tables[0].Rows)
                         {
-                            Id = Convert.ToInt32(item["Id"]),
-                            Message = Convert.ToString(item["Message"])
-                        });
+                            messages.Add(new UserMessages
+                            {
+                                MessageId = Convert.ToInt32(item["MessageId"]),
+                                Message = Convert.ToString(item["Message"]),
+                                Sender = Convert.ToString(item["Sender"]),
+                                IsRead = (bool)item["IsRead"]
+                            });
+                        }
+                    }
+                    else
+                    {
+                        foreach (DataRow item in result.Tables[0].Rows)
+                        {
+                            messages.Add(new UserMessages
+                            {
+                                MessageId = Convert.ToInt32(item["MessageId"]),
+                                Message = Convert.ToString(item["Message"])
+                            });
+                        }
                     }
                 }
             }
@@ -64,7 +85,7 @@ namespace iTrainee.Data
                         Value = Id
                     }
                 };
-                DataSet result = _dataManager.ExecuteStoredProcedure("[spGetUserMessages]", parameters);
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserMessages", parameters);
                 if (result?.Tables?.Count != 0)
                 {
                     foreach (DataRow item in result.Tables[0].Rows)
@@ -113,7 +134,7 @@ namespace iTrainee.Data
             try
             {
                 var parameters = new List<SqlParameter>();
-                if(message.Id > 0)
+                if (message.Id > 0)
                 {
                     parameters.Add(new SqlParameter
                     {
@@ -126,12 +147,12 @@ namespace iTrainee.Data
                     SqlParameter OutputParam = new SqlParameter("Id", SqlDbType.Int);
                     OutputParam.Direction = ParameterDirection.Output;
                     parameters.Add(OutputParam);
-                }                
+                }
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "FromId",
                     Value = message.FromId
-                }) ;
+                });
                 parameters.Add(new SqlParameter
                 {
                     ParameterName = "Message",

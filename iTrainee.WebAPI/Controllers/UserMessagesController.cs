@@ -30,15 +30,15 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpGet]
-        public string[] GetSelectedTrainees(int Id)
+        public IEnumerable<UserMessages> GetUserMessageResponse(int AlertId, int UserId, string Role)
         {
-            return _userMessagesService.GetSelectedTrainees(Id);
+            return _userMessagesService.GetUserMessageResponse(AlertId, UserId, Role);
         }
 
         [HttpGet]
-        public IEnumerable<UserMessages> GetTraineeMessagesByUserId(int Id)
+        public string[] GetSelectedTrainees(int Id)
         {
-            return _userMessagesService.GetTraineeMessagesByUserId(Id);
+            return _userMessagesService.GetSelectedTrainees(Id);
         }
     }
 }

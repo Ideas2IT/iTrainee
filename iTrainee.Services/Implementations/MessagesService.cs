@@ -13,9 +13,9 @@ namespace iTrainee.Services.Implementations
         {
             _messagesRepository = messagesRepository;
         }
-        public IEnumerable<Messages> GetMessagesByUserId(int Id)
+        public IEnumerable<UserMessages> GetMessagesByUserId(int Id, string Role)
         {
-            return _messagesRepository.GetMessagesByUserId(Id);
+            return _messagesRepository.GetMessagesByUserId(Id, Role);
         }
 
         public IEnumerable<UserMessages> GetUserMessagesByMessageId(int Id)

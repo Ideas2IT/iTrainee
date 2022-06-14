@@ -1,4 +1,4 @@
-﻿@model IEnumerable<iTrainee.Models.Messages>
+﻿@model IEnumerable<iTrainee.Models.UserMessages>
 
 @{
     ViewData["Title"] = "ManageMessages";
@@ -23,78 +23,112 @@
         width: 100px;
     }
 
-    .send-message-bar {
-        float: left;
-        justify-content: left !important;
-    }
-
-    .send-icon {
-        float: right;
-        position: relative;
-        cursor: pointer !important;
-        color: #007bff;
-        font-size: large;
-    }
-
-    .modal-footer {
-        border-top: none !important;
-    }
-
     .modal-body {
         padding: 0px !important;
+    }
+
+    .message-read {
+        font-weight: 700;
+    }
+
+    .message-unread {
+        font-weight: lighter;
     }
 </style>
 
 <div class="d-flex justify-content-between mt-4">
 
     <h3>Messages</h3>
-    <a href="/Shared/Messages/AddEditMessages?Id=0" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Alert</a>
+    @if (!TempData["HeaderRole"].Equals("Trainee"))
+    {
+        <a href="/Shared/Messages/AddEditMessages?Id=0" class="btn btn-primary btn-add-gradient float-right mb-3"> Add New Alert</a>
+    }
 </div>
 
-<table class="table table-hover table-bordered">
-    <thead>
-        <tr class="text-center">
-            <th>
-                @Html.DisplayNameFor(model => model.Message)
-            </th>
-            <th colspan="3">
-                Actions
-            </th>
-        </tr>
-    </thead>
-    <tbody>
+@if (!TempData["HeaderRole"].Equals("Trainee"))
+{
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr class="text-center">
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Message)
-                </td>
-                <td class="text-center actions-column">
-                    <a href="/Shared/Messages/AddEditMessages?Id=@item.Id"><i class="fa fa-pencil edit-icon"></i></a>
-                </td>
-                <td class="text-center actions-column">
-                    @using (Html.BeginRouteForm(routeName: "Shared",
-                   routeValues: new
-                   {
-                       action = "DeleteMessage",
-                       controller = "Messages",
-                       area = "Shared",
-                       id = item.Id
-                   }, FormMethod.Post))
-                    {
-                        <button class="btn shadow-none" type="submit" onclick="return confirm('Are you sure want to delete this message \'@item.Message\'?')">
-                            <i class="fa fa-trash delete-icon"></i>
-                        </button>
-                    }
-                </td>
-                <td class="text-center actions-column">
-                    <a href="#" onclick="ViewAlertDetails(@item.Id)"><i class="fa fa-eye view-icon"></i></a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Message)
+                </th>
+                <th colspan="3">
+                    Actions
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Message)
+                    </td>
+                    <td class="text-center actions-column">
+                        <a href="/Shared/Messages/AddEditMessages?Id=@item.MessageId"><i class="fa fa-pencil edit-icon"></i></a>
+                    </td>
+                    <td class="text-center actions-column">
+                        @using (Html.BeginRouteForm(routeName: "Shared",
+                       routeValues: new
+                       {
+                           action = "DeleteMessage",
+                           controller = "Messages",
+                           area = "Shared",
+                           id = item.MessageId
+                       }, FormMethod.Post))
+                        {
+                            <button class="btn shadow-none" type="submit" onclick="return confirm('Are you sure want to delete this message \'@item.Message\'?')">
+                                <i class="fa fa-trash delete-icon"></i>
+                            </button>
+                        }
+                    </td>
+                    <td class="text-center actions-column">
+                        <a href="#" onclick="ViewAlertDetails(@item.MessageId)"><i class="fa fa-eye view-icon"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr class="text-center">
+                <th>
+                    From
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Message)
+                </th>
+                <th>
+                    Reply
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="@("message-" + (!item.IsRead ? "read" : "unread"))">
+                        @Html.DisplayFor(modelItem => item.Sender)
+                    </td>
+                    <td class="@("message-" + (!item.IsRead ? "read" : "unread"))">
+                        @Html.DisplayFor(modelItem => item.Message)
+                    </td>
+                    <td class="text-center actions-column">
+                        <a href="#" onclick="ViewAlertDetails(@item.MessageId)"><i class="fa fa-reply view-icon"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
 
 <div class="modal fade" id="alertModal">
     <div class="modal-dialog">
@@ -112,7 +146,7 @@
 <script type="text/javascript">
 
     function ViewAlertDetails(id) {
-        var url = "/Shared/Messages/ViewAlertDetails?Id=" + id;
+        var url = "/Shared/Messages/ViewAlertDetails?AlertId=" + id;
         $("#alertModalBodyDiv").load(url, function () {
             $("#alertModal").modal("show");
         });

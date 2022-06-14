@@ -7,7 +7,7 @@ namespace iTrainee.Data.Interfaces
 {
     public interface IMessagesRepository
     {
-        IEnumerable<Messages> GetMessagesByUserId(int Id);
+        IEnumerable<UserMessages> GetMessagesByUserId(int Id, string role);
         IEnumerable<UserMessages> GetUserMessagesByMessageId(int Id);
         bool DeleteMessage(int Id);
         int AddMessage(Messages message);

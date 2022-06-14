@@ -24,14 +24,14 @@ namespace iTrainee.Services.Implementations
             return _userMessagesRepository.GetSelectedTrainees(Id);
         }
 
-        public IEnumerable<UserMessages> GetTraineeMessagesByUserId(int Id)
-        {
-            return _userMessagesRepository.GetTraineeMessagesByUserId(Id);
-        }
-
         public IEnumerable<User> GetTrainees()
         {
             return _userMessagesRepository.GetTrainees();
+        }
+
+        public IEnumerable<UserMessages> GetUserMessageResponse(int alertId, int userId, string role)
+        {
+            return _userMessagesRepository.GetUserMessageResponse(alertId, userId, role);
         }
     }
 }

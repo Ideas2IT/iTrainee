@@ -4,22 +4,13 @@
     int count = 0;
 }
 <style>
-    .delete-icon {
-        color: red;
-        font-size: x-large;
-    }
 
-    .edit-icon {
-        color: #00239B;
-        font-size: x-large;
-    }
-
-    .view-icon {
-        font-size: x-large;
-    }
-
-    .actions-column {
-        width: 100px;
+    .send-icon {
+        float: right;
+        position: relative;
+        cursor: pointer !important;
+        color: #2360a1;
+        font-size: large;
     }
 
     .send-message-bar {
@@ -30,7 +21,7 @@
         border-bottom-left-radius: 0.3rem;
         width: 100%;
         padding: 1rem 0.2rem 1rem 1rem;
-        border: 1px #CCC solid;
+        border: 1px #eee8e8 solid;
     }
 
     .chat2 {
@@ -88,8 +79,24 @@
     </div>
 </div>
 
-<div class="send-message-bar">
-    <textarea type="text" class="form-control send-message shadow" id="floatingTextarea" placeholder="Send Message"></textarea>
-    <span class="fa fa-paper-plane send-icon"></span>
-</div>
+@if (TempData["HeaderRole"].Equals("Trainee"))
+{
+    <div class="send-message-bar">
+        <textarea type="text" class="form-control send-message shadow" id="floatingTextarea" placeholder="Send Message"></textarea>
+        <span class="fa fa-paper-plane send-icon"></span>
+    </div>
+}
 
+@*@using (Html.BeginRouteForm(routeName: "Shared",
+                      routeValues: new
+                      {
+                          action = "DeleteMessage",
+                          controller = "Messages",
+                          area = "Shared",
+                          id = item.MessageId
+                      }, FormMethod.Post))
+{
+    <button class="btn shadow-none" type="submit" onclick="return confirm('Are you sure want to delete this message \'@item.Message\'?')">
+        <i class="fa fa-trash delete-icon"></i>
+    </button>
+}*@

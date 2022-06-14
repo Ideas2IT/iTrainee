@@ -19,9 +19,9 @@ namespace iTrainee.APIs.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Messages> GetMessagesByUserId(int Id)
+        public IEnumerable<UserMessages> GetMessagesByUserId(int Id, string Role)
         {
-            return _messagesService.GetMessagesByUserId(Id);
+            return _messagesService.GetMessagesByUserId(Id, Role);
         }
 
         [HttpGet]

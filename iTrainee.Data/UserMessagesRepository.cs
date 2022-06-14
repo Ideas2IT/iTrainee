@@ -132,30 +132,40 @@ namespace iTrainee.Data
             return unassignedTrainees;
         }
 
-        public IEnumerable<UserMessages> GetTraineeMessagesByUserId(int Id)
+        public IEnumerable<UserMessages> GetUserMessageResponse(int alertId, int userId, string role)
         {
-            List<UserMessages> messages = new List<UserMessages>();
+            List<UserMessages> userMessages = new List<UserMessages>();
             try
             {
                 var parameters = new List<SqlParameter>
                 {
                     new SqlParameter
                     {
-                        ParameterName = "ToId",
-                        Value = Id
+                        ParameterName = "MessageId",
+                        Value = alertId
+                    },
+                    new SqlParameter
+                    {
+                        ParameterName = "UserId",
+                        Value = userId
+                    },
+                    new SqlParameter
+                    {
+                        ParameterName = "Role",
+                        Value = role
                     }
                 };
-                DataSet result = _dataManager.ExecuteStoredProcedure("spGetTraineeMessagesById", parameters);
+                DataSet result = _dataManager.ExecuteStoredProcedure("spGetUserMessageResponse", parameters);
                 if (result?.Tables?.Count != 0)
                 {
                     foreach (DataRow item in result.Tables[0].Rows)
                     {
-                        messages.Add(new UserMessages
+                        userMessages.Add(new UserMessages
                         {
-                            MessageId = Convert.ToInt32(item["MessageId"]),
-                            Message = Convert.ToString(item["Message"]),
                             Sender = Convert.ToString(item["Sender"]),
-                            IsRead = (bool)item["IsRead"]
+                            Receiver = Convert.ToString(item["Receiver"]),
+                            Message = Convert.ToString(item["Message"]),
+                            Comments = Convert.ToString(item["Comments"])
                         });
                     }
                 }
@@ -164,7 +174,7 @@ namespace iTrainee.Data
             {
                 throw ex;
             }
-            return messages;
+            return userMessages;
         }
     }
 }

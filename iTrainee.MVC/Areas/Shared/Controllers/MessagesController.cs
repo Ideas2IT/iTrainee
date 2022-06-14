@@ -35,28 +35,18 @@ namespace iTrainee.MVC.Areas.Shared.Controllers
             TempData.Keep("HeaderRole");
             TempData.Keep("UserId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            List<Messages> messages = (List<Messages>)HttpClientHelper.ExecuteGetAllApiMethod<Messages>(baseUrl, "/Messages/GetMessagesByUserId?", "Id=" + TempData.Peek("UserId"), TempData["UserToken"].ToString());
+            List<UserMessages> messages = (List<UserMessages>)HttpClientHelper.ExecuteGetAllApiMethod<UserMessages>(baseUrl, "/Messages/GetMessagesByUserId?", "Id=" + TempData.Peek("UserId") + "&Role=" + TempData.Peek("HeaderRole"), TempData["UserToken"].ToString());
 
             return View(messages);
         }
 
-        public IActionResult ManageTraineeMessages()
-        {
-            var token = Convert.ToString(TempData["UserToken"]);
-            TempData.Keep("HeaderRole");
-            TempData.Keep("UserId");
-            var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            List<UserMessages> messages = (List<UserMessages>)HttpClientHelper.ExecuteGetAllApiMethod<UserMessages>(baseUrl, "/UserMessages/GetTraineeMessagesByUserId?", "Id=" + TempData.Peek("UserId"), Convert.ToString(TempData["UserToken"]));
-
-            return View(messages);
-        }
-
-        public IActionResult ViewAlertDetails(int Id)
+        public IActionResult ViewAlertDetails(int AlertId)
         {
             TempData.Keep("UserToken");
             TempData.Keep("HeaderRole");
+            TempData.Keep("UserId");
             var baseUrl = _configuration.GetValue(typeof(string), "ApiURL").ToString();
-            var userMessages = HttpClientHelper.ExecuteGetAllApiMethod<UserMessages>(baseUrl, "/Messages/GetUserMessagesByMessageId?", "Id=" + Id, Convert.ToString(TempData["UserToken"]));
+            var userMessages = HttpClientHelper.ExecuteGetAllApiMethod<UserMessages>(baseUrl, "/UserMessages/GetUserMessageResponse?", "AlertId=" + AlertId + "&UserId=" + TempData.Peek("UserId") + "&Role=" + TempData.Peek("HeaderRole"), TempData["UserToken"].ToString());
 
             return PartialView("ViewAlertDetails", userMessages);
         }
